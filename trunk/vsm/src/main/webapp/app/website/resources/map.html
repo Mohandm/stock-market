@@ -1,0 +1,86 @@
+
+<div id="portfolioSheetWrapper">
+
+    <header id="project">
+        <div class="container">
+         <div class="row">
+          <div class="col-md-10">
+            <h1>How to find Misys</h1>
+        </div>
+        <div class="col-md-2">
+            <a href="javascript:$.pageslide.close()" class="btn pull-right"><i class="icon-cancel-outline"></i>Close</a>
+        </div>
+    </div>
+</div>
+</header>
+
+
+<section class="content">
+
+    <section class="mb15">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                	<iframe class="mapGoogle" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3888.366000875275!2d77.643811!3d12.948416!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae140d159a84e5%3A0x6b322a8addf22a97!2sMisys+Software+Solutions+India+Pvt.+Ltd.!5e0!3m2!1sen!2sin!4v1411014305616" width="800" height="600" frameborder="0" style="border:0"></iframe>
+			  </div>
+            </div>
+        </div>
+    </section>
+</section>
+
+<footer>
+    <div class="container">
+    	<div class="row">
+            <div class="col-md-2 col-md-offset-10">
+                <a href="javascript:$.pageslide.close()" class="btn pull-right"><i class="icon-cancel-outline"></i>Close</a>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+</div>
+<script type="text/javascript">
+   /*
+    |--------------------------------------------------------------------------
+    | OWL CAROUSEL
+    |--------------------------------------------------------------------------
+    */
+    if($('#portfolio-carousel').length){ 
+        $("#portfolio-carousel").owlCarousel(
+            {items : 1, navigation:true,navigationText:false}
+            );
+    }
+    
+
+    /*
+    |--------------------------------------------------------------------------
+    | SHARRRE
+    |--------------------------------------------------------------------------
+    */
+    if($('#shareme').length){
+
+        $('#shareme').sharrre({
+
+            share: {
+                googlePlus: true,
+                facebook: true,
+                twitter: true,
+                linkedin: true
+            },
+
+            buttons: {
+                googlePlus: {size: 'tall', annotation:'bubble'},
+                facebook: {layout: 'box_count'},
+                twitter: {count: 'vertical'},
+                linkedin: {counter: 'top'}
+            },
+
+            enableHover: false,
+            enableCounter: false,
+            enableTracking: true,
+          //url:'document.location.href'
+      });
+    } 
+
+    </script>

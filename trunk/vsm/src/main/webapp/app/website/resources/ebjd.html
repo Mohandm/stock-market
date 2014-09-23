@@ -1,0 +1,95 @@
+
+<div id="portfolioSheetWrapper">
+
+    <header id="project">
+        <div class="container">
+         <div class="row">
+          <div class="col-md-10">
+            <h1>Electric Blue Jack Dempsey</h1>
+        </div>
+        <div class="col-md-2">
+            <a href="javascript:$.pageslide.close()" class="btn pull-right"><i class="icon-cancel-outline"></i>Close</a>
+
+        </div>
+    </div>
+</div>
+</header>
+
+
+<section class="content">
+
+    <section class="mb15">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="portfolio-carousel" class="owl-carousel">
+                        <img src="app/website/images/portfolio/ebjd/carousel-1.jpg" alt="Electric Blue Jack Dempsey" class="img-responsive"/>
+                        <img src="app/website/images/portfolio/ebjd/carousel-2.jpg" alt="Electric Blue Jack Dempsey" class="img-responsive"/>
+                        <img src="app/website/images/portfolio/ebjd/carousel-3.jpg" alt="Electric Blue Jack Dempsey" class="img-responsive"/>
+						<img src="app/website/images/portfolio/ebjd/carousel-4.jpg" alt="Electric Blue Jack Dempsey" class="img-responsive"/>
+						<img src="app/website/images/portfolio/ebjd/carousel-5.jpg" alt="Electric Blue Jack Dempsey" class="img-responsive"/>
+					</div>
+                </div>
+            </div>
+        </div>
+    </section>
+  
+<!-- call to action -->     
+</section>
+
+<footer>
+    <div class="container">
+    	<div class="row">
+            <div class="col-md-2 col-md-offset-10">
+                <a href="javascript:$.pageslide.close()" class="btn pull-right"><i class="icon-cancel-outline"></i>Close</a>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+</div>
+<script type="text/javascript">
+   /*
+    |--------------------------------------------------------------------------
+    | OWL CAROUSEL
+    |--------------------------------------------------------------------------
+    */
+    if($('#portfolio-carousel').length){ 
+        $("#portfolio-carousel").owlCarousel(
+            {items : 1, navigation:true,navigationText:false}
+            );
+    }
+    
+
+    /*
+    |--------------------------------------------------------------------------
+    | SHARRRE
+    |--------------------------------------------------------------------------
+    */
+    if($('#shareme').length){
+
+        $('#shareme').sharrre({
+
+            share: {
+                googlePlus: true,
+                facebook: true,
+                twitter: true,
+                linkedin: true
+            },
+
+            buttons: {
+                googlePlus: {size: 'tall', annotation:'bubble'},
+                facebook: {layout: 'box_count'},
+                twitter: {count: 'vertical'},
+                linkedin: {counter: 'top'}
+            },
+
+            enableHover: false,
+            enableCounter: false,
+            enableTracking: true,
+          //url:'document.location.href'
+      });
+    } 
+
+    </script>

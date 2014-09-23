@@ -1,0 +1,7 @@
+{
+    "menus" :
+    [
+	    {"name" : "Home", "url" : "../stockmarket"},
+        {"name" : "Game", "url" : "#game"}
+	]
+}
