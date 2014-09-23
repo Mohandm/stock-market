@@ -1,0 +1,9 @@
+<ul class="dropdown-menu" ng-show="currentmenu.sub">
+    <li ng-repeat="subMenu in currentmenu.sub"  class="{{subMenu.divider || subMenu.className}}" >
+        <a ng-if="!subMenu.divider && !subMenu.isBranched" href="{{subMenu.url}}">{{subMenu.name}}</a>
+        <a ng-if="subMenu.isBranched">{{subMenu.name}}</a>
+        <dropdownmenu ng-if="subMenu.isBranched" currentmenu="subMenu"></dropdownmenu>
+    </li>
+</ul>
+
+
