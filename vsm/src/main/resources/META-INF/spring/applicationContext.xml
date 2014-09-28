@@ -67,4 +67,18 @@
         <property name="persistenceUnitName" value="persistenceUnit"/>
         <property name="dataSource" ref="dataSource"/>
     </bean>
+    <bean id="applicationProperties" class="com.misys.stockmarket.utility.PropertiesUtil">
+    	<property name="location" value="classpath:META-INF/spring/application.properties"/>
+	</bean>
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="10.80.52.222" />
+        <property name="port" value="25" />
+        <!-- <property name="username" value="bipinpdl@gmail.com" />
+        <property name="password" value="password" /> -->
+        <!-- <property name="javaMailProperties">
+            <props>
+                <prop key="mail.debug">true</prop>
+            </props>
+        </property> -->
+    </bean>
 </beans>

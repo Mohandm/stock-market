@@ -57,8 +57,25 @@
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <!-- main app -->
     <script src="app/scripts/vsm.js"></script>
+    
+    <!-- controllers -->
     <script src="app/scripts/controllers/main.js"></script>
+    <script type="text/javascript" src="app/scripts/controllers/FormController.js"></script>
+    <script type="text/javascript" src="app/scripts/controllers/FormSelectorController.js"></script>
+    <script type="text/javascript" src="app/scripts/controllers/ActionController.js"></script>
+    
+    <!-- directives -->
+    <script type="text/javascript" src="app/scripts/directives/dropdown-menu.js"></script>
+    <script type="text/javascript" src="app/scripts/directives/top-navigation-bar.js"></script>
+    <script type="text/javascript" src="app/scripts/directives/validation.js"></script>     
+    
+    <!-- services -->
+    <script type="text/javascript" src="app/scripts/services/formLoaderService.js"></script>
+    <script type="text/javascript" src="app/scripts/services/modalDialogService.js"></script>
+    <script type="text/javascript" src="app/scripts/services/validatorService.js"></script>
+    
     <!-- endbuild -->
 </body>
 </html>
