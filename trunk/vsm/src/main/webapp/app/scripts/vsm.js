@@ -1,85 +1,74 @@
-'use strict';
+//Define a function scope, variables used inside it will NOT be globally visible.
+(function () {
 
-/**
- * @ngdoc overview
- * @name vsmApp
- * @description
- * # vsmApp
- *
- * Main module of the application.
- */
-var vsmApp = angular.module('vsmApp', ['ngAnimate',
+    var
+    message, action,
+    //Define the main module.
+        vsmApp = angular.module('vsmApp', 
+            ['ngAnimate',
     'ngCookies',
     'ngResource',
     'ngRoute',
     'ngSanitize',
     'ngTouch']);
 
-vsmApp.config(function ($routeProvider) {
-    $routeProvider
+    vsmApp.config(function ($routeProvider, $httpProvider) {
+        //configure the rounting of ng-view
+       $routeProvider
         .when('/', {
             templateUrl: 'app/views/game.html'
         })
         .when('/game', {
             templateUrl: 'app/views/game.html'
         })
+        .when('/form/:formName', {
+            templateUrl: 'app/views/form.html',
+      controller: 'FormSelectorController',
+        })
+        .when('/action/:actionCode/:value', {
+            templateUrl: 'app/views/result.html',
+      controller: 'ActionController',
+        })
         .otherwise({
             redirectTo: '/'
         });
-});
 
-vsmApp.controller('DemoController', [
-    '$scope', function($scope) {
-        $scope.test = 'guru';
-    }
-]);
-
-vsmApp.directive('topnavigationbar', function() {
-   return{
-        restrict: 'E',
-        replace: true,
-        templateUrl: 'app/directive_templates/navigation/horizontalHeaderNavigation.html',
-        controller: function($scope, $http){
-            var actionUrl = 'app/json_meta_data/navigation_menu.json';
-            $http.get(actionUrl,{}).success(function (menuJSON) {
-                $scope.menus = menuJSON.menus;
-            });
-        }
-    };
-});
-
-vsmApp.directive('dropdownmenu', function($compile) {
-   return{
-        restrict: 'E',
-        replace: true,
-        scope : {
-          currentmenu : '='
-        },
-        templateUrl: 'app/directive_templates/navigation/dropDownMenu.html',
-        compile: function(tElement, tAttr, transclude) {
-           //We are removing the contents/innerHTML from the element we are going to be applying the
-           //directive to and saving it to adding it below to the $compile call as the template
-           var contents = tElement.contents().remove();
-           var compiledContents;
-           return function(scope, iElement, iAttr) {
-
-               if(!compiledContents) {
-                   //Get the link function with the contents frome top level template with
-                   //the transclude
-                   compiledContents = $compile(contents, transclude);
-               }
-               //Call the link function to link the given scope and
-               //a Clone Attach Function, http://docs.angularjs.org/api/ng.$compile :
-               // "Calling the linking function returns the element of the template.
-               //    It is either the original element passed in,
-               //    or the clone of the element if the cloneAttachFn is provided."
-               compiledContents(scope, function(clone, scope) {
-                   //Appending the cloned template to the instance element, "iElement",
-                   //on which the directive is to used.
-                   iElement.append(clone);
-               });
-           };
-        }
-    };
-});
-
+      //configure $http to catch message responses and show them
+        $httpProvider.responseInterceptors.push(function ($q, $timeout) {
+            
+            var setMessage = function (response) {
+                //if the response hvsmApp a text and a type property, it is a message to be shown
+                if (response.data && response.data.text && response.data.type) {
+                    message = {
+                        text: response.data.text,
+                        type: response.data.type,
+                        show: true
+                    };
+                    $timeout(function(){message = {};}, 5000);  
+                }
+            };
+            return function (promise) {
+                return promise.then(
+                    //this is called after each successful server request
+                    function (response) {
+                        setMessage(response);
+                        return response;
+                    },
+                    //this is called after each unsuccessful server request
+                    function (response) {
+                        setMessage(response);
+                        return $q.reject(response);
+                    }
+                );
+            };
+        });
+    });
+    
+    vsmApp.run(function ($rootScope,$http) {
+        //make current message accessible to root scope and therefore all scopes
+        $rootScope.message = function () {
+            return message;
+        };
+        
+    });
+}());

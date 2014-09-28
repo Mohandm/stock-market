@@ -13,6 +13,7 @@
         <roo.version>1.2.5.RELEASE</roo.version>
         <slf4j.version>1.7.5</slf4j.version>
         <spring.version>3.2.6.RELEASE</spring.version>
+		<spring.security.version>3.2.3.RELEASE</spring.security.version>
     </properties>
     <repositories>
         <repository>
@@ -29,6 +30,12 @@
             <id>spring-roo-repository</id>
             <name>Spring Roo Repository</name>
             <url>http://spring-roo-repository.springsource.org/release</url>
+        </repository>
+        <repository>
+          <id>maven2-repository.dev.java.net</id>
+          	<name>Java.net Repository for Maven</name>
+          	<url>http://download.java.net/maven/2/</url>
+          	<layout>default</layout>
         </repository>
     </repositories>
     <pluginRepositories>
@@ -285,11 +292,45 @@
             <artifactId>tiles-jsp</artifactId>
             <version>2.2.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.8</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+        </dependency>
         <dependency> 
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc14</artifactId>
-            <version>10.2.0.4.0</version> 
+            <version>10.2.0.5</version> 
         </dependency>
+        <!-- Spring Security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+ 
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		
+		<!-- Spring Security JSP Taglib -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+	 		<groupId>javax.mail</groupId>
+	 		<artifactId>mail</artifactId>
+	 		<version>1.4.3</version>
+    	</dependency>
     </dependencies>
     <build>
         <plugins>
@@ -443,6 +484,25 @@
                     </webAppConfig>
                 </configuration>
             </plugin>
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>false</downloadJavadocs>
+					<wtpversion>2.0</wtpversion>
+				</configuration>
+			</plugin>
         </plugins>
     </build>
 </project>

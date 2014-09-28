@@ -2,6 +2,8 @@
     "menus" :
     [
 	    {"name" : "Home", "url" : "../stockmarket"},
-        {"name" : "Game", "url" : "#game"}
-	]
+        {"name" : "Game", "url" : "#game"},
+        {"name" : "Register", "url": "#form/registration"},
+     	{"name" : "Forgot Password", "url": "#form/resetpassword"}
+     ]
 }

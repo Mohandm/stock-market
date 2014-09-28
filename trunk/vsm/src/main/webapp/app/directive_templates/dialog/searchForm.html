@@ -1,0 +1,10 @@
+<div class='table-responsive'>
+   	<table class='table table-hover'>
+	    <tr>
+	        <th ng-repeat='fieldName in fieldNames'>{{fieldName}}</th>
+	 	</tr>
+	    <tr ng-repeat='item in searchList track by $index' ng-click='select($index)'>
+	       <td ng-repeat='(key, data) in item'>{{data}}</td>
+	    </tr>
+	</table>
+</div>
