@@ -1,0 +1,242 @@
+/* Space out content a bit */
+body {
+  background: url(../images/background.jpg);
+  background-size: 100% 100%;
+  background-attachment: fixed;
+}
+
+body > .page-container {
+    padding: 60px 15px 0;
+}
+
+/*Original Bootstrap's CSS depends on empty href attributes to style cursors for several components (pagination, tabs etc.).
+But in AngularJS adding empty href attributes to link tags will cause unwanted route changes.
+This is why we need to remove empty href attributes from directive templates and as a result styling is not applied correctly.
+The remedy is simple, just add the following styling to your application:*/
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+#footer > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+code {
+    font-size: 80%;
+}
+
+.container .text-muted {
+    margin: 20px 0;
+}
+
+
+/* Sticky footer styles : Start */
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+}
+#footer .text-muted {
+    color: #2c717f;
+}
+/* Sticky footer styles : End */
+
+/* Common Style Classes : Start */
+.custom-border {
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+#time{
+    color : white;
+    font-size : 20px;
+    padding : 10px;
+}
+
+/* Common Style Classes : Start */
+
+
+/*Top Header Styles : Start*/
+.top-header-left-container{
+    height : 60px;
+}
+#menu-toggle{
+    padding : 15px 15px 10px 15px;
+    background-color: rgba(0,0,0,0.5);
+    height : 60px;
+    text-align: center;
+    float: left;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.logo{
+    background: rgba(0, 0, 0, 0.5);
+    width: 263px;
+    height: 60px;
+    padding-left : 60px;
+    text-align: center;
+}
+@media (max-width: 780px)
+{
+    .logo {
+        width: 100%;
+        margin: 0;
+        padding-left : 0px;
+    }
+}
+.logo img{
+    width : 150px;
+}
+.messages-icon , .notification-icon{
+    padding : 15px 15px 15px 25px;
+}
+.topRightNavigation .navbar-top-links li {
+    display: inline-block;
+}
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus{
+    background: rgba(0, 0, 0, 0.5);
+}
+.nav > li > a:hover, .nav > li > a:focus{
+    background: rgba(0, 0, 0, 0.5);
+}
+.topNavigation{
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+.navbar-top-links{
+    background: rgba(0, 0, 0, 0.6);
+}
+@media (max-width: 780px)
+{
+    .navbar-top-links{
+        background: none;
+    }
+    .navbar-top-links > li{
+        background: rgba(0, 0, 0, 0.6);
+    }
+    .topRightNavigation, .nav > li > a{
+        font-size:15px;
+    }
+}
+
+.topRightNavigation{
+    font-size:20px;
+    padding : 8px 0px 0px;
+    margin-right: 5px;
+    text-align: center;
+}
+.navbar-top-links .dropdown-user {
+    right: 0;
+    left: auto;
+}
+.navbar-top-links .dropdown-messages{
+    width: 310px;
+    min-width: 0;
+}
+.navbar-top-links .dropdown-menu li a div {
+    white-space: normal;
+}
+/*Top Header Styles : End*/
+
+/* Font Awesome Styles : Start */
+.fa{
+    color:white;
+}
+.custom-icon{
+    text-align: center;
+}
+/* Font Awesome Styles : End */
+
+/* Modals and DrapDowns : Start */
+.dropdown li:hover, .dropdown li:focus{
+    background: rgba(0,0,0,0.75);
+}
+.dropdown li {
+    padding: 5px 0px;
+}
+.dropdown-menu{
+    background: rgba(0, 0, 0, 0.85);
+    color : white;
+    border: 0;
+    margin: 0;
+    font-size: 12px;
+}
+.dropdown-menu > li > a{
+    color:white;
+}
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus{
+    background: rgba(0, 0, 0, 0.75);
+    color : white;
+}
+/* Modals and DrapDowns : End */
+/* Side bar : Start */
+#sidebar-wrapper{
+    top : 60px;
+    background: none;
+}
+#wrapper.toggled #sidebar-wrapper {
+    width: 54px;
+    overflow: visible;
+}
+#sidebar-wrapper,#sidebar-wrapper .nav > li > a > i{
+    font-size:20px;
+}
+#sidebar-wrapper,#sidebar-wrapper .nav li {
+    font-size:15px;
+}
+#sidebar-wrapper .nav .left-list-item {
+    position: absolute;
+    top: 5px;
+    left: 70px;
+    visibility: hidden;
+    opacity: 0;
+    background: rgba(0,0,0,.75);
+    -webkit-transition: all 230ms;
+    -moz-transition: all 230ms;
+    -o-transition: all 230ms;
+    color:white;
+    width: 209px;
+    padding: 5px 5px 5px 15px;
+    font-size:15px;
+}
+
+#sidebar-wrapper .nav .left-list-item a{
+    color:white;
+    padding : 8px;
+}
+#sidebar-wrapper .nav .left-list-item a:hover{
+    color:white;
+    text-decoration: none;
+}
+
+#sidebar-wrapper .nav > li:hover .left-list-item {
+    left: 54px;
+    opacity: 1;
+    z-index: 20;
+    visibility: visible;
+}
+#sidebar-wrapper .nav .dropdown .list-unstyled.left-list-item{
+    margin-top : 30px;
+}
+@media (min-width: 768px)
+{
+    #sidebar-wrapper {
+        width: 54px;
+        overflow: visible;
+    }
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0px;
+        overflow: hidden;
+    }
+}
+/* Side bar : End */

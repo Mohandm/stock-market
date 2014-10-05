@@ -58,7 +58,7 @@ a:focus {
     border-bottom: 1px solid rgba(255,255,255,.3);
     text-transform: uppercase;
     font-family: "Roboto Slab","Helvetica Neue",Helvetica,Arial,sans-serif;
-    /*background-color:#603352;*/
+    /*background-color:#0b0043;*/
 }
 
 .navbar-custom .navbar-brand {
@@ -108,10 +108,10 @@ a:focus {
 }
 
 .top-nav-collapse {
-   background-color:#603352;
+   background-color:#0b0043;
 }
 .navbar-collapse.in,.navbar-collapse.collapsing{
-    background-color:#603352;
+    background-color:#0b0043;
 }
 
 @media(min-width:767px) {
@@ -127,7 +127,7 @@ a:focus {
 
     .top-nav-collapse {
         padding: 0;
-        background-color:#603352;
+        background-color:#0b0043;
     }
 
     .navbar-custom.top-nav-collapse {
@@ -143,7 +143,7 @@ a:focus {
     text-align: center;
     color: #fff;
     background: url(../img/intro-bg.jpg) no-repeat scroll;
-    background-color:#603352;
+    background-color:#0b0043;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -261,7 +261,7 @@ a:focus {
     padding: 50px 0;
     color: #fff;
     background: url(../img/downloads-bg.jpg) no-repeat center center scroll;
-    background-color:#603352;
+    background-color:#0b0043;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -469,7 +469,7 @@ body {
     color:#FFFFFF;
 }
 .flexslider .flex-direction-nav a {
-    background-color:#603352;
+    background-color:#0b0043;
 }
 
 .flexslider .flex-control-paging li a:hover, #sliderWrapper .flex-control-paging li a.flex-active{
@@ -485,7 +485,7 @@ body {
 }
 .flexslider h1 {
     color:#fff;
-    background-color:#603352;
+    background-color:#0b0043;
 }
 .flexslider h2 {
     color:#fff;
