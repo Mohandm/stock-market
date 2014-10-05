@@ -54,7 +54,7 @@ public class StockMarketController {
     
     @RequestMapping("/game")
     public String app(Model model) {
-        return "app";
+        return "game";
     }
 }
 
