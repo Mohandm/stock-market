@@ -27,6 +27,10 @@ public class UserService {
 		userDAO.update(userMaster);
 	}
 
+	public UserMaster findById(Long userId) {
+		return userDAO.findById(UserMaster.class, userId);
+	}
+
 	public List<UserMaster> findAll() {
 		return userDAO.findAll(UserMaster.class);
 	}

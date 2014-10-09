@@ -3,20 +3,17 @@ package vsm;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.misys.stockmarket.exception.EmailNotFoundException;
 import com.misys.stockmarket.exception.LoginException;
 import com.misys.stockmarket.services.LoginService;
 
-public class LoginServiceTest {
+public class ChangePasswordTest {
 
-	public static void main(String[] args) throws EmailNotFoundException,
-			LoginException {
+	public static void main(String[] args) throws LoginException {
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
 				"META-INF\\spring\\applicationContext.xml");
 		LoginService loginService = (LoginService) applicationContext
 				.getBean("loginService");
-		System.out.println(loginService.validateLogin("sam.sundar@misys.com",
-				"password1"));
+		loginService.changePassword(1L, "password");
 	}
 
 }
