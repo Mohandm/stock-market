@@ -32,12 +32,12 @@ public class BaseDAO implements IBaseDAO {
 
 	}
 
-	/*@Override
-	public <T extends GtpBaseEntity, X extends GtpBasePK> T findById(
+	@Override
+	public <T extends BaseEntity, X extends Long> T findById(
 			Class<? extends T> type, X id) {
 		return entityManager.find(type, id);
 
-	}*/
+	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
