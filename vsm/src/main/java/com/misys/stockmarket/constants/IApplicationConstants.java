@@ -12,4 +12,8 @@ public interface IApplicationConstants {
 
 	public final String USER_PASSWORD_EXPIRED = "E";
 
+	public final String STOCK_ACTIVE = "A";
+
+	public final String STOCK_INACTIVE = "I";
+
 }
