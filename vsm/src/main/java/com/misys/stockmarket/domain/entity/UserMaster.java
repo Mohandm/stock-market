@@ -35,7 +35,7 @@ public class UserMaster implements BaseEntity, Serializable {
 	@Column(name = "LAST_NAME", length = 35)
 	private String lastName;
 
-	@Column(length = 35)
+	@Column(length = 60)
 	private String password;
 
 	@Column(length = 2)

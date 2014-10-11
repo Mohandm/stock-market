@@ -12,9 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.misys.stockmarket.handlers.user.UserBizHandler;
-import com.misys.stockmarket.mbeans.user.UserRegFormBean;
+import com.misys.stockmarket.mbeans.UserFormBean;
 import com.misys.stockmarket.platform.web.ResponseMessage;
-import com.misys.stockmarket.services.user.UserValidatorService;
  
 /**
  * @author Gurudath Reddy
@@ -26,16 +25,13 @@ public class StockMarketController {
 	@Inject
 	UserBizHandler userBizHandler;
 
-	@Inject
-	UserValidatorService userValidatorService;
-
 	@RequestMapping(value = "/registeruser", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseMessage registerUser(@RequestBody UserRegFormBean userRegFormBean) {
-		return userBizHandler.registerUser(userRegFormBean);
+	public ResponseMessage registerUser(@RequestBody UserFormBean userFormBean) {
+		return userBizHandler.registerUser(userFormBean);
 	}
 	
-	@RequestMapping(value = "/activateprofile/{token}", method = { RequestMethod.GET,
+	@RequestMapping(value = "/activateprofile/{token:.+}", method = { RequestMethod.GET,
 			RequestMethod.POST })
 	@ResponseBody
 	public ResponseMessage activateProfile(@PathVariable("token") String token) {
@@ -44,9 +40,10 @@ public class StockMarketController {
 
 	@RequestMapping(value = "/resetpassword", method = { RequestMethod.POST })
 	@ResponseBody
-	public ResponseMessage resetPassword(@RequestBody UserRegFormBean userRegFormBean) {
-		return userBizHandler.resetPassword(userRegFormBean);
+	public ResponseMessage resetPassword(@RequestBody UserFormBean userFormBean) {
+		return userBizHandler.resetPassword(userFormBean);
 	}
+
 	@RequestMapping("/")
     public String index(Model model) {
         return "index";
