@@ -1,8 +1,14 @@
 package com.misys.stockmarket.domain.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the STOCK_MASTER database table.
@@ -21,6 +27,12 @@ public class StockMaster implements BaseEntity, Serializable {
 
 	@Column(name = "TIKER_SYMBOL", length = 20)
 	private String tikerSymbol;
+
+	@Column(name = "ACTIVE", length = 1)
+	private String active;
+
+	@Column(name = "NAME", length = 50)
+	private String name;
 
 	// bi-directional many-to-one association to OrderMaster
 	/*
@@ -53,4 +65,58 @@ public class StockMaster implements BaseEntity, Serializable {
 	public void setTikerSymbol(String tikerSymbol) {
 		this.tikerSymbol = tikerSymbol;
 	}
+
+	public String getActive() {
+		return active;
+	}
+
+	public void setActive(String active) {
+		this.active = active;
+	}
+
+	@Override
+	public String toString() {
+		return "StockMaster [stockId=" + stockId + ", tikerSymbol="
+				+ tikerSymbol + ", name=" + name + ", active=" + active + "]";
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((tikerSymbol == null) ? 0 : tikerSymbol.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof StockMaster)) {
+			return false;
+		}
+		StockMaster other = (StockMaster) obj;
+		if (tikerSymbol == null) {
+			if (other.tikerSymbol != null) {
+				return false;
+			}
+		} else if (!tikerSymbol.equals(other.tikerSymbol)) {
+			return false;
+		}
+		return true;
+	}
+
 }

@@ -1,6 +1,7 @@
 package com.misys.stockmarket.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.misys.stockmarket.domain.entity.BaseEntity;
 
@@ -14,13 +15,13 @@ public interface IBaseDAO {
 
 	public <T extends BaseEntity, X extends Long> T findById(
 			Class<? extends T> type, X id);
+
 	/**
 	 * 
 	 * public <T extends BaseEntity> List<T> findAll(T entity);
 	 * 
-	 * 
-	 * public <T extends BaseEntity> List<T> findByFilter( Class<? extends T>
-	 * type, Map<String, Object> criteria);
 	 */
+	public <T extends BaseEntity> List<T> findByFilter(Class<? extends T> type,
+			Map<String, Object> criteria);
 
 }
