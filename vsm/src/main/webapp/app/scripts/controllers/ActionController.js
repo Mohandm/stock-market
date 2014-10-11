@@ -1,4 +1,4 @@
-var vsmApp = angular.module("vsmApp");
+var vsmApp = angular.module('vsmApp');
 
 vsmApp.controller('ActionController', ['$scope','$http','$routeParams','$location','modals', function ($scope, $http, $routeParams,$location,modals) {
 	

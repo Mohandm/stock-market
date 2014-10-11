@@ -1,5 +1,5 @@
 (function () {
-var vsmApp = angular.module("vsmApp");
+var vsmApp = angular.module('vsmApp');
 
 
 vsmApp.service('FormLoader',['$http', '$routeParams', '$location',function($http, $routeParams, $location){

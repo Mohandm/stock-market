@@ -10,6 +10,8 @@
         <!-- build:css(.) styles/vendor.css -->
         <!-- bower:css -->
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="app/scripts/thirdparty/ui-grid/ui-grid-unstable.min.css"/>
+        <link rel="stylesheet" href="app/scripts/thirdparty/news-ticker/jquery.breakingNews.css"/>
         <!-- endbower -->
         <!-- endbuild -->
 
@@ -243,8 +245,6 @@
                             </li>
                             <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
                             </li>
-                            <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                            </li>
                             <li class="divider"></li>
                             <li><a href="j_spring_security_logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                             </li>
@@ -337,6 +337,12 @@
         <script src="bower_components/angular-touch/angular-touch.js"></script>
         <script src="bower_components/angular-route/angular-route.js"></script>
         <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+        <script src="app/scripts/thirdparty/ui-bootstrap-tpls-0.10.0.js"></script>
+        <script src="app/scripts/thirdparty/ui-grid/ui-grid-unstable.min.js"></script>
+        <script src="app/scripts/thirdparty/feeds.min.js"></script>
+        <script src="app/scripts/thirdparty/jquery.sparkline.min.js"></script>
+        <script src="app/scripts/thirdparty/news-ticker/jquery.breakingNews.js"></script>
+        <script src="app/scripts/thirdparty/angular.easypiechart.min.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 
@@ -345,7 +351,7 @@
         <script src="app/scripts/vsm.js"></script>
         <script src="app/scripts/common.js"></script>
         <!-- controllers -->
-        <script src="app/scripts/controllers/main.js"></script>
+        <script src="app/scripts/controllers/DashboardController.js"></script>
         <script type="text/javascript" src="app/scripts/controllers/FormController.js"></script>
         <script type="text/javascript" src="app/scripts/controllers/FormSelectorController.js"></script>
         <script type="text/javascript" src="app/scripts/controllers/ActionController.js"></script>
@@ -359,7 +365,10 @@
         <script type="text/javascript" src="app/scripts/services/formLoaderService.js"></script>
         <script type="text/javascript" src="app/scripts/services/modalDialogService.js"></script>
         <script type="text/javascript" src="app/scripts/services/validatorService.js"></script>
-
+        <script type="text/javascript" src="app/scripts/services/newsService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/dashboardService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/stockQuotesService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/chartService.js"></script>
         <!-- endbuild -->
     </body>
 </html>

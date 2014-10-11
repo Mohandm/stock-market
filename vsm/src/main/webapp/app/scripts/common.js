@@ -1,7 +1,7 @@
 <!-- Timer -->
 (function(){
-    var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
-    var dayNames= ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+    var monthNames = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+    var dayNames= ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
 
     // Create a newDate() object
     var newDate = new Date();
@@ -10,7 +10,7 @@
     newDate.setDate(newDate.getDate());
 
     // Output the day, date, month and year
-    $('#date').html(dayNames[newDate.getDay()] + " " + newDate.getDate() + ' ' + monthNames[newDate.getMonth()] + ' ' + newDate.getFullYear());
+    $('#date').html(dayNames[newDate.getDay()] + ' ' + newDate.getDate() + ' ' + monthNames[newDate.getMonth()] + ' ' + newDate.getFullYear());
 
     setInterval( function() {
 
@@ -18,7 +18,7 @@
         var seconds = new Date().getSeconds();
 
         // Add a leading zero to seconds value
-        $("#sec").html(( seconds < 10 ? "0":"" ) + seconds);
+        $('#sec').html(( seconds < 10 ? '0':'' ) + seconds);
     },1000);
 
     setInterval( function() {
@@ -27,7 +27,7 @@
         var minutes = new Date().getMinutes();
 
         // Add a leading zero to the minutes value
-        $("#min").html(( minutes < 10 ? "0":"" ) + minutes);
+        $('#min').html(( minutes < 10 ? '0':'' ) + minutes);
     },1000);
 
     setInterval( function() {
@@ -36,12 +36,12 @@
         var hours = new Date().getHours();
 
         // Add a leading zero to the hours value
-        $("#hours").html(( hours < 10 ? "0" : "" ) + hours);
+        $('#hours').html(( hours < 10 ? '0' : '' ) + hours);
     }, 1000);
 
-    $("#menu-toggle").click(function(e) {
+    $('#menu-toggle').click(function(e) {
         e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
+        $('#wrapper').toggleClass('toggled');
     });
 
     /* Active Menu */
@@ -55,5 +55,5 @@
     $('#sidebar-wrapper .nav .dropdown > a').click(function(e){
         e.preventDefault();
     });
-
 })();
+
