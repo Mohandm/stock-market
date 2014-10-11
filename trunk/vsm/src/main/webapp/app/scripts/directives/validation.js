@@ -1,4 +1,4 @@
-var vsmApp = angular.module("vsmApp");
+var vsmApp = angular.module('vsmApp');
 
 vsmApp.directive('validate',['$http','ValidatorService', function($http,ValidatorService) {
    return {

@@ -10,24 +10,22 @@
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch']);
+    'ngTouch','ui.bootstrap','ui.grid','easypiechart']);
 
     vsmApp.config(function ($routeProvider, $httpProvider) {
         //configure the rounting of ng-view
        $routeProvider
         .when('/', {
-            templateUrl: 'app/views/game.html'
-        })
-        .when('/game', {
-            templateUrl: 'app/views/game.html'
+            templateUrl: 'app/views/dashboard.html',
+            controller: 'DashboardController'
         })
         .when('/form/:formName', {
             templateUrl: 'app/views/form.html',
-      controller: 'FormSelectorController',
+      controller: 'FormSelectorController'
         })
         .when('/action/:actionCode/:value', {
             templateUrl: 'app/views/result.html',
-      controller: 'ActionController',
+      controller: 'ActionController'
         })
         .otherwise({
             redirectTo: '/'
