@@ -2,6 +2,8 @@ package com.misys.stockmarket.services;
 
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,9 @@ public class LoginService {
 
 	@Inject
 	private UserService userService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	/**
 	 * Method to validate the login credentials
@@ -37,7 +42,7 @@ public class LoginService {
 				throw new LoginException(LOGIN_ERR_CODES.EMAIL_NOT_VERIFIED);
 			}
 			// CHECK IS USER ACTIVE
-			if (IApplicationConstants.USER_ACTIVE_NO.equals(userMaster
+			if (IApplicationConstants.USER_DEACTIVATED.equals(userMaster
 					.getActive())) {
 				throw new LoginException(LOGIN_ERR_CODES.USER_STATUS_INACTIVE);
 			}
@@ -57,7 +62,8 @@ public class LoginService {
 		UserMaster userMaster = userService.findById(userId);
 		if (userMaster != null) {
 			try {
-				userMaster.setPassword(newPassword);
+				userMaster.setPassword(passwordEncoder.encode(newPassword));
+				userMaster.setActive(IApplicationConstants.USER_PASSWORD_EXPIRED);
 				userService.updateUser(userMaster);
 			} catch (Exception e) {
 				throw new LoginException(LOGIN_ERR_CODES.UNKNOWN);

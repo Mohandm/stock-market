@@ -2,37 +2,38 @@ package com.misys.stockmarket.utility;
 
 import org.springframework.mail.SimpleMailMessage;
 
-import com.misys.stockmarket.model.User;
+import com.misys.stockmarket.domain.entity.UserMaster;
 
 public class EmailFormatter {
 
-	public static SimpleMailMessage generateActivationMessage(User user) {
-		SimpleMailMessage message = new SimpleMailMessage();
+	public static SimpleMailMessage generateActivationMessage(UserMaster user) {
 		String baseURL = PropertiesUtil.getProperty("base.url");
+		String email = user.getEmail();
+		
 		StringBuffer mailContent = new StringBuffer();
 		mailContent
 				.append("Please click on the below link to activate your profile. \n");
 
-		// TODO: Encrypt the email message
-		mailContent.append(baseURL).append("/#/action/activateprofile/")
-				.append(user.getEmailAddress());
+		// Encode the email address and send 
+		mailContent.append(baseURL).append("/game#/action/activateprofile/")
+				.append(SecurityUtil.encodeValue(email));
 
-		message.setTo(user.getEmailAddress());
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setTo(email);
 		message.setSubject("Account Verification");
 		message.setText(mailContent.toString());
 
 		return message;
 	}
-	
-	public static SimpleMailMessage resetPasswordMessage(User user) {
+
+	public static SimpleMailMessage resetPasswordMessage(UserMaster user, String password) {
 		SimpleMailMessage message = new SimpleMailMessage();
 		StringBuffer mailContent = new StringBuffer();
-		mailContent
-				.append("Your new password is ");
+		mailContent.append("Your new password is ");
 
-		mailContent.append(user.getPassword());
+		mailContent.append(password);
 
-		message.setTo(user.getEmailAddress());
+		message.setTo(user.getEmail());
 		message.setSubject("Password Reset Notification");
 		message.setText(mailContent.toString());
 
