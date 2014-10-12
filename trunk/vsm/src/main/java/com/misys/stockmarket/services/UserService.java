@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +42,18 @@ public class UserService {
 		} catch (DBRecordNotFoundException e) {
 			throw new EmailNotFoundException(e);
 		}
+	}
+	
+	/**
+	 * Get logged in user
+	 * @return
+	 * @throws EmailNotFoundException 
+	 */
+	public UserMaster getLoggedInUser() throws EmailNotFoundException {
+		String email = SecurityContextHolder.getContext().getAuthentication().getName();
+		// Retrieve user from database
+		UserMaster user = findByEmail(email);
+		return user; 
 	}
 
 }

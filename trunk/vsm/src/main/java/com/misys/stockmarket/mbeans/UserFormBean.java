@@ -1,6 +1,5 @@
 package com.misys.stockmarket.mbeans;
 
-
 public class UserFormBean {
 
 	private Long userId;
@@ -12,6 +11,8 @@ public class UserFormBean {
 	private String firstName;
 
 	private String lastName;
+
+	private String oldPassword;
 
 	private String password;
 
@@ -57,6 +58,14 @@ public class UserFormBean {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getOldPassword() {
+		return oldPassword;
+	}
+
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
 	}
 
 	public String getPassword() {
