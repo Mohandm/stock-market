@@ -8,61 +8,21 @@
 				</div>
 				<div class="panel-body">
 					 <form class="form-horizontal" name="mainForm" role="form" novalidate ng-controller="FormController">
-						 <div class="form-group">
-							<div class="col-sm-4 control-label">
-								  <span class="required-error" ng-show="true">*</span>
-								  <label >Email Address:</label>
-						  	</div>
-							<div class="col-sm-8">
-								<input type="email" ng-model="formmodel.email" ng-required="true" class="form-control" />
-							</div>
-						</div>
+						<field-wrapper label="Email Address" type="email" name="email" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
+						<field-wrapper label="Password" type="password" name="password" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
+						<field-wrapper label="Confirm Password" type="password" name="confirmPassword" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
+						<field-wrapper label="First Name" type="text" name="firstName" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
+						<field-wrapper label="Last Name" type="text" name="lastName" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
 						<div class="form-group">
-							<div class="col-sm-4 control-label">
-								  <span class="required-error" ng-show="true">*</span>
-								  <label >Password:</label>
-						  	</div>
-							<div class="col-sm-8">
-								<input type="password" ng-model="formmodel.password" ng-required="true" class="form-control" />
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-sm-4 control-label">
-								  <span class="required-error" ng-show="true">*</span>
-								  <label >Confirm Password:</label>
-						  	</div>
-							<div class="col-sm-8">
-								<input type="password" ng-model="formmodel.confirmPassword" ng-required="true" class="form-control" />
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-sm-4 control-label">
-								  <span class="required-error" ng-show="true">*</span>
-								  <label >First Name:</label>
-						  	</div>
-							<div class="col-sm-8">
-								<input type="text" ng-model="formmodel.firstName" ng-required="true" class="form-control" />
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-sm-4 control-label">
-								  <span class="required-error" ng-show="true">*</span>
-								  <label >Last Name:</label>
-						  	</div>
-							<div class="col-sm-8">
-								<input type="text" ng-model="formmodel.lastName" ng-required="true" class="form-control" />
-							</div>
-						</div>
-						 <div class="form-group">
 							<div class="col-sm-6"></div>
 							<div class="col-sm-6">
 								<div class="btn-group">
-						     		<button type="button" class="btn btn-success" ng-click="confirm('register')">Register</button>
+						     		<button type="button" class="btn btn-success" ng-click="confirm('registeruser')">Register</button>
 						     		<button type="button" class="btn btn-warning" ng-click="confirm('cancel')">Cancel
 						     		</button>
 						  		</div>
 						  	</div>
-						  </div>
+						</div>
 					</form>
 				</div>
 			</div>
