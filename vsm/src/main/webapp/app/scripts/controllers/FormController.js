@@ -4,66 +4,50 @@ angular.module('vsmApp')
   .controller('FormController',['$scope', '$location','$http','$routeParams', 'FormLoader','modals', function ($scope, $location, $http, $routeParams, FormLoader,modals)
   { 
        
-    
-    $scope.formControl = {submitted:false};
+    $scope.formmodel = {};
+    $scope.formcontrol = {};
     
      $scope.confirm = function(action){
      		
- 	    	var confirmAction, confirmMessage;
- 	    	switch(action) {
-             case 'register':
-             	confirmAction = function(){
-     				$scope.register();
-     			};	
-     			confirmMessage = "Are you sure you want to register?";
+ 	    	var confirmMessage;
+            switch(action) {
+             case 'registeruser':
+             	confirmMessage = "Are you sure you want to register?";
                  break;
             case 'changepassword':
-                confirmAction = function(){
-                    $scope.changePassword();
-                };  
                 confirmMessage = "Are you sure you want to change your password?";
                  break;
-            case 'reset':
-                confirmAction = function(){
-                    $scope.reset();
-                };  
+            case 'resetpassword':
                 confirmMessage = "Are you sure you want to reset your password?";
                  break;
 
              case 'cancel':
-             	confirmAction = function(){
- 					$scope.cancel();
- 				};	
- 				confirmMessage = "Are you sure you want to cancel?";
+             	confirmMessage = "Are you sure you want to cancel?";
  				break;
  	    	}
-     		modals.showConfirmation("Confirmation",confirmMessage,confirmAction);
+     		var confirmAction = function(){
+                $scope.perform(action);
+            };  
+            modals.showConfirmation("Confirmation",confirmMessage,confirmAction);
      	};
      	
-     	$scope.register = function(){
-         	$http.post('registeruser', $scope.formmodel).success(function (response) {
-         			modals.close();
-         			$location.path('/'); 
-         		});
-     	};
-
-        $scope.reset = function(){
-            $http.post('resetpassword', $scope.formmodel).success(function (response) {
-                    modals.close();
-                    $location.path('/'); 
-                });
-        };
-
-         $scope.changePassword = function(){
-            $http.post('changepassword', $scope.formmodel).success(function (response) {
-                    modals.close();
-                    $location.path('/'); 
-                });
-        };
      	
-     	$scope.cancel = function(){
- 			modals.close();
- 			$location.path('/'); 
-     	};
-       
+        $scope.perform = function(action){
+            if (action === 'cancel') {
+                modals.close();
+                $location.path('/'); 
+            }
+            else {
+                if ($scope.mainForm.$invalid) {
+                    $scope.formcontrol.submitted = true;
+                    modals.close();
+                }
+                else {
+                    $http.post(action, $scope.formmodel).success(function (response) {
+                        modals.close();
+                            $location.path('/'); 
+                    });
+                }
+            }
+        };
 }]);
