@@ -4,27 +4,16 @@ vsmApp.service('DashboardService', ['$http', function ($http) {
 
     this.getStockListDashboardGridOptions = function(){
         var columnDefs;
-        if($(window).width() < 500)
-        {
-            columnDefs = [
-                { field: 'Symbol', sort: {
-                    direction: 'asc',
-                    priority: 1
-                }, maxWidth: 100, displayName:'Ticker Symbol'},
-                { field: 'last_sale', displayName:'Last Sale'}
-            ];
-        }
-        else
-        {
-            columnDefs = [
-                { field: 'Symbol', sort: {
-                    direction: 'asc',
-                    priority: 1
-                }, displayName:'Ticker Symbol'},
-                { field: 'Name', displayName:'Name'},
-                { field: 'last_sale', displayName:'Last Sale'}
-            ];
-        }
+        columnDefs = [
+                      { field: 'Symbol', sort: {
+                          direction: 'asc',
+                          priority: 1
+                      	}, displayName:'Ticker Symbol',
+                      	cellTemplate:'<div><a ng-click="getExternalScopes().openStockSummary(row.entity)" class="anchor">{{row.entity.Symbol}}</a></div>'
+                      },
+                      { field: 'Name', displayName:'Name', 
+                      	cellTemplate:'<div><a ng-click="getExternalScopes().openStockSummary(row.entity)" class="anchor">{{row.entity.Name}}</a></div>'}
+                  ];
 
         return {
             enableSorting: true,
