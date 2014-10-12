@@ -5,5 +5,5 @@ package com.misys.stockmarket.enums;
  * 
  */
 public enum VALIDATION_MODE {
-	SAVE, UPDATE
+	SAVE, UPDATE, CHANGE_PASSWORD
 }

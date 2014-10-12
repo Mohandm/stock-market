@@ -17,6 +17,12 @@ angular.module('vsmApp')
      			};	
      			confirmMessage = "Are you sure you want to register?";
                  break;
+            case 'changepassword':
+                confirmAction = function(){
+                    $scope.changePassword();
+                };  
+                confirmMessage = "Are you sure you want to change your password?";
+                 break;
             case 'reset':
                 confirmAction = function(){
                     $scope.reset();
@@ -48,12 +54,13 @@ angular.module('vsmApp')
                 });
         };
 
-        $scope.login = function(){
-            $http.post('login', $scope.formmodel).success(function (response) {
+         $scope.changePassword = function(){
+            $http.post('changepassword', $scope.formmodel).success(function (response) {
                     modals.close();
                     $location.path('/'); 
                 });
-        };     	
+        };
+     	
      	$scope.cancel = function(){
  			modals.close();
  			$location.path('/'); 

@@ -4,21 +4,24 @@ import javax.inject.Inject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.domain.entity.UserMaster;
+import com.misys.stockmarket.enums.VALIDATION_MODE;
 import com.misys.stockmarket.exception.BaseException;
-import com.misys.stockmarket.exception.LoginException;
+import com.misys.stockmarket.exception.UserProfileValidationException;
 import com.misys.stockmarket.mbeans.UserFormBean;
 import com.misys.stockmarket.platform.web.ResponseMessage;
-import com.misys.stockmarket.services.LoginService;
 import com.misys.stockmarket.services.RegistrationService;
 import com.misys.stockmarket.services.UserService;
 import com.misys.stockmarket.services.email.EmailSenderService;
 import com.misys.stockmarket.utility.EmailFormatter;
 import com.misys.stockmarket.utility.SecurityUtil;
+import com.misys.stockmarket.validator.UserValidator;
 
 @Service("userBizHandler")
 public class UserBizHandler {
@@ -33,7 +36,10 @@ public class UserBizHandler {
 	private RegistrationService registrationService;
 
 	@Inject
-	private LoginService loginService;
+	private UserValidator userValidator;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	private static final Log LOG = LogFactory.getLog(UserBizHandler.class);
 
@@ -45,6 +51,12 @@ public class UserBizHandler {
 			return new ResponseMessage(
 					ResponseMessage.Type.success,
 					"You have been successfully registered. A verification link has been sent to your email. Please verify it to continue playing the game");
+		} catch (UserProfileValidationException e) {
+			// TODO: Implement error message from exception
+			e.printStackTrace();
+			return new ResponseMessage(ResponseMessage.Type.danger,
+					"There was a validation error while registering. Please try again");
+
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -77,11 +89,13 @@ public class UserBizHandler {
 			user = userService.findByEmail(userFormBean.getEmail());
 			// Autogenerate password
 			String passwordValue = SecurityUtil.autoGeneratePassword(12);
-			loginService.changePassword(user.getUserId(), passwordValue);
+			user.setPassword(passwordEncoder.encode(passwordValue));
+			user.setActive(IApplicationConstants.USER_PASSWORD_EXPIRED);
+			userService.saveUser(user);
 
 			// SEND PASSWORD CHANGE EMAIL NOTIFICATION
-			SimpleMailMessage message = EmailFormatter
-					.resetPasswordMessage(user,passwordValue);
+			SimpleMailMessage message = EmailFormatter.resetPasswordMessage(
+					user, passwordValue);
 
 			emailSender.sendEmail(message);
 
@@ -93,17 +107,35 @@ public class UserBizHandler {
 				ResponseMessage.Type.success,
 				"The new password has been sent to your registered email. Please log into the application using it.");
 	}
-	
-	public ResponseMessage loginUser (UserFormBean userFormBean) {
-		try {
-			loginService.validateLogin(userFormBean.getEmail(), userFormBean.getPassword());
-			return new ResponseMessage(ResponseMessage.Type.success,
-					"You have been successfully logged in.");
 
-		} catch (LoginException e) {
+	public ResponseMessage changePassword(UserFormBean userFormBean) {
+
+		// Get logged in user
+		try {
+
+			UserMaster user = userService.getLoggedInUser();
+
+			userValidator.isUserMasterDataValid(userFormBean,
+					VALIDATION_MODE.CHANGE_PASSWORD, user.getPassword());
+
+			String newPassword = userFormBean.getPassword();
+			user.setPassword(passwordEncoder.encode(newPassword));
+			user.setActive(IApplicationConstants.USER_ACTIVATED);
+			userService.updateUser(user);
+
+		} catch (UserProfileValidationException e) {
+			// TODO: Implement error message from exception
 			return new ResponseMessage(ResponseMessage.Type.danger,
-					"Unable to login. Please try again!!!");
+					"There was some validation errors. Please try again!!!");
 		}
-		
+
+		catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseMessage(ResponseMessage.Type.danger,
+					"Unable to change your password. Please try again!!!");
+		}
+		return new ResponseMessage(
+				ResponseMessage.Type.success,
+				"The new password has been sent to your registered email. Please log into the application using it.");
 	}
 }

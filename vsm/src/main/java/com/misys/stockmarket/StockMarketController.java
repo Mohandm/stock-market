@@ -43,6 +43,12 @@ public class StockMarketController {
 	public ResponseMessage resetPassword(@RequestBody UserFormBean userFormBean) {
 		return userBizHandler.resetPassword(userFormBean);
 	}
+	
+	@RequestMapping(value = "/changepassword", method = { RequestMethod.POST })
+	@ResponseBody
+	public ResponseMessage changePassword(@RequestBody UserFormBean userFormBean) {
+		return userBizHandler.changePassword(userFormBean);
+	}
 
 	@RequestMapping("/")
     public String index(Model model) {
