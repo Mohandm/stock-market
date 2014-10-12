@@ -1,0 +1,55 @@
+<div class="modal-body">
+    <div class="row stock-quote-summary-panel">
+        <div class="col-md-12">
+            <div class="panel panel-default" >
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h3 class="panel-title ">{{item.Name}} ({{item.Symbol}})</h3>
+                            <div>
+                                <span class="lastTradePrice">{{quoteData.LastTradePriceOnly}}</span>
+                            <span class="positiveChange" ng-class="{ negativeChange: quoteData.Change.indexOf('-') > -1}">
+                                <span>{{quoteData.Change}}</span>
+                                (<span>{{quoteData.ChangeinPercent}}</span>)
+                            </span>
+                            </div>
+                        </div>
+                        <!--<div class="col-md-5 col-md-offset-4">
+                            <div id="news-feed-ticker"></div>
+                        </div>-->
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-3">
+                        <div class="field-wrapper"><label>Last Trade Time:</label><span>{{quoteData.LastTradeTime}}</span></div>
+                        <div class="field-wrapper"><label>Last Trade Date:</label><span>{{quoteData.LastTradeDate}}</span></div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="field-wrapper"><label>Net Change:</label><span>{{quoteData.Change}}</span></div>
+                        <div class="field-wrapper"><label>Percentage Change:</label><span>{{quoteData.ChangeinPercent}}</span></div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="field-wrapper"><label>Days Range:</label><span>{{quoteData.DaysRange}}</span></div>
+                        <div class="field-wrapper"><label>Year Range:</label><span>{{quoteData.YearRange}}</span></div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="field-wrapper"><label>Prev Close:</label><span>{{quoteData.PreviousClose}}</span></div>
+                        <div class="field-wrapper"><label>Open:</label><span>{{quoteData.Open}}</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Historical Data</h3>
+                </div>
+                <div class="panel-body">
+                    <div ui-grid="getHistoryDataGridOptions" class="historical-stock-list-grid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
