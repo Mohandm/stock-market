@@ -38,6 +38,9 @@
 			that.cycle();
 		},
 
+
+        timeoutArray : [],
+
 		// The heart of the plugin ... 
 		cycle: function() {
 			var that = this;
@@ -139,16 +142,18 @@
 					$(el).html('');
 					$(el).parent().append('<span class="uscore">  _</span>');
 					$.each( text.split(''), function(m, letter) {
-						setTimeout(function() {
+                       var to = setTimeout(function() {
 							$(el).html( $(el).html() + letter );
 							if ( m >= text.length-2 ) {
 								$(el).parent().find('span.uscore').fadeOut(500);
 							}
 						}, speed * m);
+                        that.timeoutArray.push(to);
 					});
-					setTimeout(function() {
+					var tt = setTimeout(function() {
 						that.dataObj.itemsTransition();
 					}, that.options.refresh + (timePlus * speed) );
+                    that.timeoutArray.push(tt);
 				},
 
 				// SlideToggle effect like slideToggle jquery's effect
@@ -177,11 +182,10 @@
 	};
 
 	$.fn.breakingNews = function(options) {
- 		
-  		return this.each( function() {
-			var breakingNewsObj = Object.create( BreakingNewsObj );
-			breakingNewsObj.init(options, this);
-		});
+        var breakingNewsObj = Object.create( BreakingNewsObj );
+        breakingNewsObj.init(options, this);
+
+  		return breakingNewsObj;
 
 	};
 
