@@ -25,6 +25,7 @@ vsmApp.controller('DashboardController', ['$scope','$http', '$modal', '$log', 'N
 
    /* Stocks Listing */
     $scope.stockListDashboardGridOptions = DashboardService.getStockListDashboardGridOptions();
+    $scope.getHistoryDataGridOptions = DashboardService.getHistoryDataGridOptions();
     var stockListsPromise = StockQuotesService.getStockLists();
     stockListsPromise.then(function(data){
         $scope.stockLists = data;
@@ -44,6 +45,7 @@ vsmApp.controller('DashboardController', ['$scope','$http', '$modal', '$log', 'N
     var reloadSparklingCharts = function(symbol){
         StockQuotesService.getHistoricalStockLists(symbol).then(function(historicalData){
             ChartService.reloadSparklingCharts(symbol, historicalData, $scope.quotes[symbol]);
+            $scope.getHistoryDataGridOptions.data = historicalData;
         });
     };
 
@@ -54,14 +56,30 @@ vsmApp.controller('DashboardController', ['$scope','$http', '$modal', '$log', 'N
         reloadSparklingCharts($scope.tickerNewsSelected.Symbol);
     };
 
-    $scope.openStockSummary = function(item){
+    $scope.options = {
+        height : 160,
+        width : 300,
+        easing: 'easeOutBounce',
+        barColor: 'rgba(255,255,255,0.75)',
+        trackColor: 'rgba(0,0,0,0.3)',
+        scaleColor: 'rgba(255,255,255,0.3)',
+        lineCap: 'square',
+        lineWidth: 4,
+        size: 150,
+        animate: 3000,
+        onStep: function(from, to, percent) {
+            $(this.el).find('.percent').text(Math.round(percent*Math.pow(10,2))/Math.pow(10,2) + '%');
+        }
+    };
+
+    /*$scope.openStockSummary = function(item){
     	console.debug(item);
         StockQuotesService.getHistoricalStockLists(item.Symbol).then(function(historicalData){
             $scope.openStockSummaryModal(item, historicalData, $scope.quotes[item.Symbol]);
         });
-    };
+    };*/
 
-    $scope.openStockSummaryModal = function (item, historicalData, quoteData) {
+   /* $scope.openStockSummaryModal = function (item, historicalData, quoteData) {
 
         $scope.items = ['item1', 'item2', 'item3'];
         var modalInstance = $modal.open({
@@ -81,33 +99,15 @@ vsmApp.controller('DashboardController', ['$scope','$http', '$modal', '$log', 'N
             }
         });
 
-        /*modalInstance.result.then(function (selectedItem) {
+        modalInstance.result.then(function (selectedItem) {
             $scope.selected = selectedItem;
         }, function () {
             $log.info('Modal dismissed at: ' + new Date());
-        });*/
-    };
-
-    $scope.options = {
-        height : 160,
-        width : 300,
-        easing: 'easeOutBounce',
-        barColor: 'rgba(255,255,255,0.75)',
-        trackColor: 'rgba(0,0,0,0.3)',
-        scaleColor: 'rgba(255,255,255,0.3)',
-        lineCap: 'square',
-        lineWidth: 4,
-        size: 150,
-        animate: 3000,
-        onStep: function(from, to, percent) {
-            $(this.el).find('.percent').text(Math.round(percent*Math.pow(10,2))/Math.pow(10,2) + '%');
-        }
-    };
-
-
+        });
+    };*/
 }]);
 
-vsmApp.controller('StockSummaryModalCtrl', ['$scope', 'ChartService', '$modalInstance', '$timeout', 'item', 'historicalData', 'quoteData',
+/*vsmApp.controller('StockSummaryModalCtrl', ['$scope', 'ChartService', '$modalInstance', '$timeout', 'item', 'historicalData', 'quoteData',
     function ($scope, ChartService, $modalInstance, $timeout, item, historicalData, quoteData) {
 
         $scope.item = item;
@@ -140,5 +140,5 @@ vsmApp.controller('StockSummaryModalCtrl', ['$scope', 'ChartService', '$modalIns
             $modalInstance.dismiss('cancel');
         };
 
-}]);
+}]);*/
 

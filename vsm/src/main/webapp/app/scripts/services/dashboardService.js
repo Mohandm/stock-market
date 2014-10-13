@@ -9,10 +9,10 @@ vsmApp.service('DashboardService', ['$http', function ($http) {
                           direction: 'asc',
                           priority: 1
                       	}, displayName:'Ticker Symbol',
-                      	cellTemplate:'<div><a ng-click="getExternalScopes().openStockSummary(row.entity)" class="anchor">{{row.entity.Symbol}}</a></div>'
+                      	cellTemplate:'<a ng-click="getExternalScopes().openStockSummary(row.entity)" class="anchor">{{row.entity.Symbol}}</a>'
                       },
                       { field: 'Name', displayName:'Name', 
-                      	cellTemplate:'<div><a ng-click="getExternalScopes().openStockSummary(row.entity)" class="anchor">{{row.entity.Name}}</a></div>'}
+                      	cellTemplate:'<a ng-click="getExternalScopes().openStockSummary(row.entity)" class="anchor">{{row.entity.Name}}</a>'}
                   ];
 
         return {
@@ -21,5 +21,20 @@ vsmApp.service('DashboardService', ['$http', function ($http) {
             columnDefs: columnDefs
         };
     };
+
+    this.getHistoryDataGridOptions = function(){
+        return {
+            enableSorting: true,
+            enableFiltering: true,
+            columnDefs: [
+                { field: 'Date', displayName:'Date'},
+                { field: 'Open', displayName:'Open'},
+                { field: 'Close', displayName:'Close'},
+                { field: 'High', displayName:'High'},
+                { field: 'Low', displayName:'Low'}
+            ]
+        };
+    };
+
 
 }]);
