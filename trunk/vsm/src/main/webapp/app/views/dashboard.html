@@ -18,7 +18,7 @@
                     </div>
                 </div>
             </div>
-            <div class="panel-body">
+            <!--<div class="panel-body">
                 <div class="col-md-3">
                     <div class="field-wrapper"><label>Last Trade Time:</label><span>{{quotes['^NDX'].LastTradeTime}}</span></div>
                     <div class="field-wrapper"><label>Last Trade Date:</label><span>{{quotes['^NDX'].LastTradeDate}}</span></div>
@@ -35,19 +35,27 @@
                     <div class="field-wrapper"><label>Prev Close:</label><span>{{quotes['^NDX'].PreviousClose}}</span></div>
                     <div class="field-wrapper"><label>Open:</label><span>{{quotes['^NDX'].Open}}</span></div>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>
 <div class="row quote-statistics-container" ng-show="currentTickerQuote.LastTradePriceOnly">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-5">
             <h3  ng-bind="tickerNewsSelected.Name" class="companyTickerName"/>
         </div>
-        <div class="col-md-2 col-md-offset-7 pull-right">
-            <select type="text" ng-change="reloadTicker()" ng-model="tickerNewsSelected" ng-options="symbol as symbol.Symbol for symbol in stockLists  | filter:{Symbol:$viewValue}" class="form-control singleSelect"/>
+        <div class="col-md-4 col-md-offset-3 pull-right">
+            <select type="text" ng-change="reloadTicker()" ng-model="tickerNewsSelected" ng-options="stockList as (stockList.Name+' - '+ stockList.Symbol) for stockList in stockLists  | filter:{Symbol:$viewValue}" class="form-control singleSelect"/>
         </div>
 
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+
+        </div>
+        <div class="col-md-6">
+
+        </div>
     </div>
     <div class="col-md-3 col-sm-6 ">
         <div class="tile quote-statistics">
@@ -92,10 +100,11 @@
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">NASDAQ-100 Stock List</h3>
+                <h3 class="panel-title">Historical Data</h3>
             </div>
             <div class="panel-body">
-                <div ui-grid="stockListDashboardGridOptions" class="dashboard-stock-list-grid" external-scopes="$scope"></div>
+               <!-- <div ui-grid="stockListDashboardGridOptions" class="dashboard-stock-list-grid" external-scopes="$scope"></div>-->
+                <div ui-grid="getHistoryDataGridOptions" class="historical-stock-list-grid"></div>
             </div>
         </div>
     </div>
