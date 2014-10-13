@@ -6,7 +6,7 @@ body {
 }
 
 body > .page-container {
-    padding: 120px 20px 50px 60px;
+    padding: 80px 20px 30px 60px;
 }
 
 @media (max-width: 780px)
@@ -430,27 +430,27 @@ input[type="text"].ui-grid-filter-input{
 
 /* Charts : Start */
 .quote-statistics,.quote-statistics-pie {
-    padding: 20px 0px;
-    height: 200px;
+    padding: 5px 0px;
+    height: 160px;
     overflow: hidden;
 }
 .quote-statistics h2 {
     margin: 2px 0 1px 0;
     line-height: 29px;
     font-size: 30px;
-    left: 20px;
-    top: 20px;
+    left: 5px;
+    top: 10px;
     position: absolute;
     line-height: 100%;
 }
 .quote-statistics small{
-    top: 50px;
-    left: 20px;
+    top: 40px;
+    left: 5px;
     position: absolute;
 }
 .quote-statistics-pie small{
-    top: 25px;
-    left: 20px;
+    top: 15px;
+    left: 5px;
     position: absolute;
 }
 .quote-statistics small, .quote-statistics-pie small{
@@ -465,12 +465,17 @@ input[type="text"].ui-grid-filter-input{
 }
 .quote-statistics,.quote-statistics-pie{
     color : white;
+    position: relative;
+    max-width: 300px;
+}
+.blockContainer{
+	margin-right : 0px; 
 }
 .quote-statistics .chart-widget,.quote-statistics-pie .chart-widget{
     background: rgba(0,0,0,0.35);
 }
 .quote-statistics-container{
-    padding : 40px 30px;
+    padding : 10px 20px;
 }
 .jqstooltip{
     height : auto !important;
@@ -482,9 +487,10 @@ input[type="text"].ui-grid-filter-input{
     padding: 0px 70px;
 }
 .quote-statistics-pie .chart-widget span{
-    top: 75px;
     font-size: 30px;
     position: absolute;
-    left: 115px;
+	text-align: center;
+	width: 50%;
+	margin-top: 56px;
 }
 /* Charts : End */
