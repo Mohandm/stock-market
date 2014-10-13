@@ -327,6 +327,13 @@ select > option {
         padding : 20px;
     }
 }
+.stock-quote-summary-panel .panel-heading{
+    border-radius: 8px;
+    border: 2px solid white;
+}
+.stock-quote-summary-panel .panel-default{
+    border-radius: 8px;
+}
 /* Panels : End */
 
 /* RSS Feeds : Start */
