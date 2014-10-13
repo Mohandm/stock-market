@@ -11,7 +11,8 @@ vsmApp.controller('DashboardController', ['$scope','$http', '$modal', '$log', 'N
     };
 
     /* Headlines */
-    $('#news-feed-ticker').breakingNews({
+
+    var breakingNews = $('#news-feed-ticker').breakingNews({
         url: 'http://articlefeeds.nasdaq.com/nasdaq/symbols?symbol=AAPL',
         feedSize: {
             height: '60px',
@@ -23,7 +24,13 @@ vsmApp.controller('DashboardController', ['$scope','$http', '$modal', '$log', 'N
         effectDuration: 50
     });
 
-   /* Stocks Listing */
+    $scope.$on('$destroy', function(){
+        $(breakingNews.timeoutArray).each(function(index,item){
+            clearTimeout(item);
+        });
+    });
+
+    /* Stocks Listing */
     $scope.stockListDashboardGridOptions = DashboardService.getStockListDashboardGridOptions();
     $scope.getHistoryDataGridOptions = DashboardService.getHistoryDataGridOptions();
     var stockListsPromise = StockQuotesService.getStockLists();
