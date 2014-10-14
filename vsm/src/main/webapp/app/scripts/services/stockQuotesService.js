@@ -4,7 +4,7 @@ vsmApp.service('StockQuotesService', ['$http','$q','$log', function ($http, $q, 
 
     this.getStockLists = function(){
         var deferred = $q.defer();
-        var actionUrl = 'app/data/nasdaq100_stock_company_list.json';
+        var actionUrl = 'stockList/';
         $http.get(actionUrl,{})
             .success(function (json) {
                 deferred.resolve(json);
