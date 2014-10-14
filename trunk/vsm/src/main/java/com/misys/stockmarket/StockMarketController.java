@@ -1,6 +1,8 @@
 package com.misys.stockmarket;
 
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
@@ -11,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.misys.stockmarket.domain.entity.StockMaster;
 import com.misys.stockmarket.handlers.user.UserBizHandler;
 import com.misys.stockmarket.mbeans.UserFormBean;
 import com.misys.stockmarket.platform.web.ResponseMessage;
+import com.misys.stockmarket.services.StockService;
  
 /**
  * @author Gurudath Reddy
@@ -24,6 +28,9 @@ public class StockMarketController {
      
 	@Inject
 	UserBizHandler userBizHandler;
+	
+	@Inject
+	StockService stockService;
 
 	@RequestMapping(value = "/registeruser", method = RequestMethod.POST)
 	@ResponseBody
@@ -50,6 +57,12 @@ public class StockMarketController {
 		return userBizHandler.changePassword(userFormBean);
 	}
 
+	@RequestMapping(value = "/stockList", method = { RequestMethod.POST })
+	@ResponseBody
+	public List<StockMaster> stockList() {
+		return stockService.listAllActiveStocks(); 
+	}
+	
 	@RequestMapping("/")
     public String index(Model model) {
         return "index";

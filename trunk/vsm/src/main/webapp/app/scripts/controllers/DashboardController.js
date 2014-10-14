@@ -18,7 +18,7 @@ vsmApp.controller('DashboardController', ['$scope','$http', '$modal', '$log', 'N
             height: '60px',
             width: 'auto'
         },
-        numberToShow: 20,
+        numberToShow: 10,
         refresh: 2000,
         effect: 'tricker',
         effectDuration: 50
