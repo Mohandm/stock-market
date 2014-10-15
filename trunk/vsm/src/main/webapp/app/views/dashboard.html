@@ -27,7 +27,7 @@
 
         </div>
         <div class="col-md-4 col-md-offset-3 pull-right">
-            <select type="text" ng-change="reloadTicker()" ng-model="tickerNewsSelected" ng-options="stockList as (stockList.Name+' - '+ stockList.Symbol) for stockList in stockLists  | filter:{Symbol:$viewValue}" class="form-control singleSelect"/>
+            <select type="text" ng-change="reloadTicker()" ng-model="tickerNewsSelected" ng-options="stockList as (stockList.name+' - '+ stockList.tikerSymbol) for stockList in stockLists  | filter:{tikerSymbol:$viewValue}" class="form-control singleSelect"/>
         </div>
     </div>
     <div class="row blockContainer">
@@ -38,12 +38,12 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <h3 class="panel-title ">{{tickerNewsSelected.Name}} ({{tickerNewsSelected.Symbol}})</h3>
+                                    <h3 class="panel-title ">{{tickerNewsSelected.name}} ({{tickerNewsSelected.tikerSymbol}})</h3>
                                     <div>
-                                        <span class="lastTradePrice">{{quotes[tickerNewsSelected.Symbol].LastTradePriceOnly}}</span>
-                                        <span class="positiveChange" ng-class="{ negativeChange: quotes[tickerNewsSelected.Symbol].Change.indexOf('-') > -1}">
-                                            <span>{{quotes[tickerNewsSelected.Symbol].Change}}</span>
-                                            (<span>{{quotes[tickerNewsSelected.Symbol].ChangeinPercent}}</span>)
+                                        <span class="lastTradePrice">{{quotes[tickerNewsSelected.tikerSymbol].LastTradePriceOnly}}</span>
+                                        <span class="positiveChange" ng-class="{ negativeChange: quotes[tickerNewsSelected.tikerSymbol].Change.indexOf('-') > -1}">
+                                            <span>{{quotes[tickerNewsSelected.tikerSymbol].Change}}</span>
+                                            (<span>{{quotes[tickerNewsSelected.tikerSymbol].ChangeinPercent}}</span>)
                                         </span>
                                     </div>
                                 </div>
@@ -51,20 +51,20 @@
                         </div>
                         <div class="panel-body">
                             <div class="col-md-3">
-                                <div class="field-wrapper"><label>Last Trade Time:</label><span>{{quotes[tickerNewsSelected.Symbol].LastTradeTime}}</span></div>
-                                <div class="field-wrapper"><label>Last Trade Date:</label><span>{{quotes[tickerNewsSelected.Symbol].LastTradeDate}}</span></div>
+                                <div class="field-wrapper"><label>Last Trade Time:</label><span>{{quotes[tickerNewsSelected.tikerSymbol].LastTradeTime}}</span></div>
+                                <div class="field-wrapper"><label>Last Trade Date:</label><span>{{quotes[tickerNewsSelected.tikerSymbol].LastTradeDate}}</span></div>
                             </div>
                             <div class="col-md-3">
-                                <div class="field-wrapper"><label>Net Change:</label><span>{{quotes[tickerNewsSelected.Symbol].Change}}</span></div>
-                                <div class="field-wrapper"><label>Percentage Change:</label><span>{{quotes[tickerNewsSelected.Symbol].ChangeinPercent}}</span></div>
+                                <div class="field-wrapper"><label>Net Change:</label><span>{{quotes[tickerNewsSelected.tikerSymbol].Change}}</span></div>
+                                <div class="field-wrapper"><label>Percentage Change:</label><span>{{quotes[tickerNewsSelected.tikerSymbol].ChangeinPercent}}</span></div>
                             </div>
                             <div class="col-md-3">
-                                <div class="field-wrapper"><label>Days Range:</label><span>{{quotes[tickerNewsSelected.Symbol].DaysRange}}</span></div>
-                                <div class="field-wrapper"><label>Year Range:</label><span>{{quotes[tickerNewsSelected.Symbol].YearRange}}</span></div>
+                                <div class="field-wrapper"><label>Days Range:</label><span>{{quotes[tickerNewsSelected.tikerSymbol].DaysRange}}</span></div>
+                                <div class="field-wrapper"><label>Year Range:</label><span>{{quotes[tickerNewsSelected.tikerSymbol].YearRange}}</span></div>
                             </div>
                             <div class="col-md-3">
-                                <div class="field-wrapper"><label>Prev Close:</label><span>{{quotes[tickerNewsSelected.Symbol].PreviousClose}}</span></div>
-                                <div class="field-wrapper"><label>Open:</label><span>{{quotes[tickerNewsSelected.Symbol].Open}}</span></div>
+                                <div class="field-wrapper"><label>Prev Close:</label><span>{{quotes[tickerNewsSelected.tikerSymbol].PreviousClose}}</span></div>
+                                <div class="field-wrapper"><label>Open:</label><span>{{quotes[tickerNewsSelected.tikerSymbol].Open}}</span></div>
                             </div>
                         </div>
                     </div>
@@ -131,7 +131,7 @@
               <h3 class="panel-title">NASDAQ-100 News</h3>
           </div>
           <div class="panel-body">
-              <h3  ng-bind="tickerNewsSelected.Name" class="companyTickerName"/>
+              <h3  ng-bind="tickerNewsSelected.name" class="companyTickerName"/>
               <div id="news-feed"></div>
           </div>
         </div>
