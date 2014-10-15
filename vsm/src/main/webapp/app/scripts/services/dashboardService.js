@@ -5,14 +5,14 @@ vsmApp.service('DashboardService', ['$http', function ($http) {
     this.getStockListDashboardGridOptions = function(){
         var columnDefs;
         columnDefs = [
-                      { field: 'Symbol', sort: {
+                      { field: 'tikerSymbol', sort: {
                           direction: 'asc',
                           priority: 1
                       	}, displayName:'Ticker Symbol',
-                      	cellTemplate:'<a ng-click="getExternalScopes().openStockSummary(row.entity)" class="anchor">{{row.entity.Symbol}}</a>'
+                      	cellTemplate:'<a ng-click="getExternalScopes().openStockSummary(row.entity)" class="anchor">{{row.entity.tikerSymbol}}</a>'
                       },
-                      { field: 'Name', displayName:'Name', 
-                      	cellTemplate:'<a ng-click="getExternalScopes().openStockSummary(row.entity)" class="anchor">{{row.entity.Name}}</a>'}
+                      { field: 'name', displayName:'Name',
+                      	cellTemplate:'<a ng-click="getExternalScopes().openStockSummary(row.entity)" class="anchor">{{row.entity.name}}</a>'}
                   ];
 
         return {

@@ -20,7 +20,7 @@ vsmApp.service('StockQuotesService', ['$http','$q','$log', function ($http, $q, 
         var tickers = '';
         $(allStockLists).each(function() {
             tickers = tickers.concat(encodeURI('\''));
-            tickers = tickers.concat(this.Symbol);
+            tickers = tickers.concat(this.tikerSymbol);
             tickers = tickers.concat(encodeURI('\''));
             tickers = tickers.concat(encodeURI(','));
         });
@@ -34,7 +34,7 @@ vsmApp.service('StockQuotesService', ['$http','$q','$log', function ($http, $q, 
         $http.get(quotesUrl,{})
             .success(function (quotesJSON) {
                 $( quotesJSON.query.results.quote).each(function() {
-                    quotes[this.symbol] = this;
+                    quotes[this.Symbol] = this;
                 });
                 deferred.resolve(quotes);
             }).error(function(msg, code) {

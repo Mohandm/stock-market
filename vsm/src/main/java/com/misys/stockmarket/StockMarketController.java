@@ -57,7 +57,8 @@ public class StockMarketController {
 		return userBizHandler.changePassword(userFormBean);
 	}
 
-	@RequestMapping(value = "/stockList", method = { RequestMethod.POST })
+	@RequestMapping(value = "/stockList", method = { RequestMethod.GET,
+			RequestMethod.POST })
 	@ResponseBody
 	public List<StockMaster> stockList() {
 		return stockService.listAllActiveStocks(); 

@@ -7,7 +7,7 @@ vsmApp.controller('DashboardController', ['$scope','$http', '$modal', '$log', 'N
     /* News */
     NewsService.reloadNews(null);
     var reloadNewsFeed = function(){
-        NewsService.reloadNews($scope.tickerNewsSelected.Symbol);
+        NewsService.reloadNews($scope.tickerNewsSelected.tikerSymbol);
     };
 
     /* Headlines */
@@ -44,7 +44,7 @@ vsmApp.controller('DashboardController', ['$scope','$http', '$modal', '$log', 'N
         allCurrentQuotesPromise.then(function(data){
             $scope.quotes = data;
             reloadSparklingCharts('AAPL');
-            $scope.currentTickerQuote = $scope.quotes[$scope.tickerNewsSelected.Symbol];
+            $scope.currentTickerQuote = $scope.quotes[$scope.tickerNewsSelected.tikerSymbol];
         });
     });
 
@@ -58,9 +58,9 @@ vsmApp.controller('DashboardController', ['$scope','$http', '$modal', '$log', 'N
 
 
     $scope.reloadTicker = function(){
-        $scope.currentTickerQuote = $scope.quotes[$scope.tickerNewsSelected.Symbol];
+        $scope.currentTickerQuote = $scope.quotes[$scope.tickerNewsSelected.tikerSymbol];
         reloadNewsFeed();
-        reloadSparklingCharts($scope.tickerNewsSelected.Symbol);
+        reloadSparklingCharts($scope.tickerNewsSelected.tikerSymbol);
     };
 
     $scope.options = {
@@ -81,8 +81,8 @@ vsmApp.controller('DashboardController', ['$scope','$http', '$modal', '$log', 'N
 
     /*$scope.openStockSummary = function(item){
     	console.debug(item);
-        StockQuotesService.getHistoricalStockLists(item.Symbol).then(function(historicalData){
-            $scope.openStockSummaryModal(item, historicalData, $scope.quotes[item.Symbol]);
+        StockQuotesService.getHistoricalStockLists(item.tikerSymbol).then(function(historicalData){
+            $scope.openStockSummaryModal(item, historicalData, $scope.quotes[item.tikerSymbol]);
         });
     };*/
 
