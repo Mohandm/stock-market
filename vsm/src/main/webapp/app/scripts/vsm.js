@@ -19,13 +19,17 @@
             templateUrl: 'app/views/dashboard.html',
             controller: 'DashboardController'
         })
-        .when('/form/:formName', {
+       .when('/myPortfolio', {
+           templateUrl: 'app/views/myPortfolio.html',
+           controller: 'MyPortfolioController'
+       })
+       .when('/form/:formName', {
             templateUrl: 'app/views/form.html',
-      controller: 'FormSelectorController'
+            controller: 'FormSelectorController'
         })
         .when('/action/:actionCode/:value', {
             templateUrl: 'app/views/result.html',
-      controller: 'ActionController'
+            controller: 'ActionController'
         })
         .otherwise({
             redirectTo: '/'
