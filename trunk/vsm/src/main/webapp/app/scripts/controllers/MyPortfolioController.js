@@ -48,4 +48,11 @@ vsmApp.controller('MyPortfolioController', ['$scope', '$log', 'StockQuotesServic
         ]
     };
 
+    $("body").floatingShare({
+        place: "top-right",
+        buttons: ["facebook","twitter","linkedin"]
+    });
+
+
+
 }]);

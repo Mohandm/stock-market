@@ -52,6 +52,11 @@ $(document).ready(function() {
     }
 
 
+    $("body").floatingShare({
+        place: "top-right",
+        buttons: ["facebook","twitter","linkedin"]
+    });
+
     /*$('#about').waypoint(function() {
         $("#aboutContentLeft").effect( 'slide', {direction: "left" }, 500);
         $("#aboutContentRight").effect( 'slide', {direction: "Right" }, 500);
