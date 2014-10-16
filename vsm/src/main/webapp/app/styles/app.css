@@ -494,3 +494,19 @@ input[type="text"].ui-grid-filter-input{
 	margin-top: 56px;
 }
 /* Charts : End */
+/* Share buttons : Start */
+.fb-share-button{
+    top: 0px;
+    position: absolute;
+    right: 0px;
+}
+.in-share-button{
+    top: 0px;
+    position: absolute;
+    left : 0px;
+}
+.in-share-button img{
+    width : 88px;
+    height : 28px;
+}
+/* Share buttons : End */
