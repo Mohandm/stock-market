@@ -1,0 +1,27 @@
+{
+    "portfolioValue" : "10000.00",
+    "remainingBalance" : "5000.00",
+    "totalValue" : "15000.00",
+    "stockHoldings" : [
+           {"tikerSymbol" : "AAPL", "name" : "Apple Inc.", "volume" : "6", "pricePaid" : "16.19", "marketPrice" : "13.62", "marketCalculatedValue" : "81.72", "lifeTimeReturn" : "-15.87"},
+           {"tikerSymbol" : "GOOG", "name" : "Google Inc.", "volume" : "6", "pricePaid" : "16.19", "marketPrice" : "13.62", "marketCalculatedValue" : "81.72", "lifeTimeReturn" : "-15.87"},
+           {"tikerSymbol" : "GOOGL", "name" : "Google Inc.", "volume" : "6", "pricePaid" : "16.19", "marketPrice" : "13.62", "marketCalculatedValue" : "81.72", "lifeTimeReturn" : "-15.87"},
+           {"tikerSymbol" : "AMZN", "name" : "Amazon", "volume" : "6", "pricePaid" : "16.19", "marketPrice" : "13.62", "marketCalculatedValue" : "81.72", "lifeTimeReturn" : "-15.87"},
+           {"tikerSymbol" : "AKAM", "name" : "Akmai", "volume" : "6", "pricePaid" : "16.19", "marketPrice" : "13.62", "marketCalculatedValue" : "81.72", "lifeTimeReturn" : "-15.87"},
+           {"tikerSymbol" : "CA", "name" : "CA Inc.", "volume" : "6", "pricePaid" : "16.19", "marketPrice" : "13.62", "marketCalculatedValue" : "81.72", "lifeTimeReturn" : "-15.87"},
+           {"tikerSymbol" : "CSCO", "name" : "CISCO", "volume" : "6", "pricePaid" : "16.19", "marketPrice" : "13.62", "marketCalculatedValue" : "81.72", "lifeTimeReturn" : "-15.87"},
+           {"tikerSymbol" : "MSFT", "name" : "Microsoft", "volume" : "6", "pricePaid" : "16.19", "marketPrice" : "13.62", "marketCalculatedValue" : "81.72", "lifeTimeReturn" : "-15.87"},
+           {"tikerSymbol" : "NVDA", "name" : "Nvidia", "volume" : "6", "pricePaid" : "16.19", "marketPrice" : "13.62", "marketCalculatedValue" : "81.72", "lifeTimeReturn" : "-15.87"},
+           {"tikerSymbol" : "YHOO", "name" : "YAHOO", "volume" : "6", "pricePaid" : "16.19", "marketPrice" : "13.62", "marketCalculatedValue" : "81.72", "lifeTimeReturn" : "-15.87"},
+            {"tikerSymbol" : "AAPL", "name" : "Apple Inc.", "volume" : "6", "pricePaid" : "16.19", "marketPrice" : "13.62", "marketCalculatedValue" : "81.72", "lifeTimeReturn" : "-15.87"},
+            {"tikerSymbol" : "GOOG", "name" : "Google Inc.", "volume" : "6", "pricePaid" : "16.19", "marketPrice" : "13.62", "marketCalculatedValue" : "81.72", "lifeTimeReturn" : "-15.87"},
+            {"tikerSymbol" : "GOOGL", "name" : "Google Inc.", "volume" : "6", "pricePaid" : "16.19", "marketPrice" : "13.62", "marketCalculatedValue" : "81.72", "lifeTimeReturn" : "-15.87"},
+            {"tikerSymbol" : "AMZN", "name" : "Amazon", "volume" : "6", "pricePaid" : "16.19", "marketPrice" : "13.62", "marketCalculatedValue" : "81.72", "lifeTimeReturn" : "-15.87"},
+            {"tikerSymbol" : "AKAM", "name" : "Akmai", "volume" : "6", "pricePaid" : "16.19", "marketPrice" : "13.62", "marketCalculatedValue" : "81.72", "lifeTimeReturn" : "-15.87"},
+            {"tikerSymbol" : "CA", "name" : "CA Inc.", "volume" : "6", "pricePaid" : "16.19", "marketPrice" : "13.62", "marketCalculatedValue" : "81.72", "lifeTimeReturn" : "-15.87"},
+            {"tikerSymbol" : "CSCO", "name" : "CISCO", "volume" : "6", "pricePaid" : "16.19", "marketPrice" : "13.62", "marketCalculatedValue" : "81.72", "lifeTimeReturn" : "-15.87"},
+            {"tikerSymbol" : "MSFT", "name" : "Microsoft", "volume" : "6", "pricePaid" : "16.19", "marketPrice" : "13.62", "marketCalculatedValue" : "81.72", "lifeTimeReturn" : "-15.87"},
+            {"tikerSymbol" : "NVDA", "name" : "Nvidia", "volume" : "6", "pricePaid" : "16.19", "marketPrice" : "13.62", "marketCalculatedValue" : "81.72", "lifeTimeReturn" : "-15.87"},
+            {"tikerSymbol" : "YHOO", "name" : "YAHOO", "volume" : "6", "pricePaid" : "16.19", "marketPrice" : "13.62", "marketCalculatedValue" : "81.72", "lifeTimeReturn" : "-15.87"}
+    ]
+}

@@ -81,4 +81,44 @@ vsmApp.service('StockQuotesService', ['$http','$q','$log', function ($http, $q, 
             });
         return deferred.promise;
     };
+
+    this.getMyLeagues = function(){
+        var deferred = $q.defer();
+        var actionUrl = 'app/data/my_leagues.json';
+        $http.get(actionUrl,{})
+            .success(function (json) {
+                deferred.resolve(json);
+            }).error(function(msg, code) {
+                deferred.reject(msg);
+                $log.error(msg, code);
+            });
+        return deferred.promise;
+    }
+
+    this.getMyPortfolio = function(groupId){
+        var deferred = $q.defer();
+        var actionUrl = 'app/data/my_portfolio.json';
+        $http.get(actionUrl,{})
+            .success(function (json) {
+                deferred.resolve(json);
+            }).error(function(msg, code) {
+                deferred.reject(msg);
+                $log.error(msg, code);
+            });
+        return deferred.promise;
+    }
+
+    this.getMyRecentTrades = function(groupId){
+        var deferred = $q.defer();
+        var actionUrl = 'app/data/my_recent_trades.json';
+        $http.get(actionUrl,{})
+            .success(function (json) {
+                deferred.resolve(json);
+            }).error(function(msg, code) {
+                deferred.reject(msg);
+                $log.error(msg, code);
+            });
+        return deferred.promise;
+    }
+
 }]);
