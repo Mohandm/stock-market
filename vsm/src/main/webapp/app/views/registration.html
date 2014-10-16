@@ -1,31 +1,28 @@
-<div>
-	<div class="row">
-  		<div class="col-sm-12 page-content">
-  			<!-- Page Content Panel -->
-  			<div class="panel">
-			    <div class="panel-heading">
-				    <h3 class="text-center">Registration Form</h3>
-				</div>
-				<div class="panel-body">
-					 <form class="form-horizontal" name="mainForm" role="form" novalidate ng-controller="FormController">
-						<field-wrapper label="Email Address" type="email" name="email" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
-						<field-wrapper label="Password" type="password" name="password" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
-						<field-wrapper label="Confirm Password" type="password" name="confirmPassword" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
-						<field-wrapper label="First Name" type="text" name="firstName" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
-						<field-wrapper label="Last Name" type="text" name="lastName" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
-						<div class="form-group">
-							<div class="col-sm-6"></div>
-							<div class="col-sm-6">
-								<div class="btn-group">
-						     		<button type="button" class="btn btn-success" ng-click="confirm('registeruser')">Register</button>
-						     		<button type="button" class="btn btn-warning" ng-click="confirm('cancel')">Cancel
-						     		</button>
-						  		</div>
-						  	</div>
-						</div>
-					</form>
-				</div>
-			</div>
+<div class="row blockContainer formContainer">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Sign Up</h3>
+            </div>
+            <div class="panel-body">
+                 <form class="form-horizontal" name="mainForm" role="form" novalidate ng-controller="FormController">
+                    <field-wrapper label="Email Address" type="email" name="email" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
+                    <field-wrapper label="Password" type="password" name="password" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
+                    <field-wrapper label="Confirm Password" type="password" name="confirmPassword" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
+                    <field-wrapper label="First Name" type="text" name="firstName" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
+                    <field-wrapper label="Last Name" type="text" name="lastName" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
+                    <div class="form-group">
+                        <div class="col-sm-6"></div>
+                        <div class="col-sm-6">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-success" ng-click="confirm('registeruser')">Register</button>
+                                <button type="button" class="btn btn-warning" ng-click="confirm('cancel')">Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                 </form>
+		    </div>
 		</div>
 	</div>
 </div>
