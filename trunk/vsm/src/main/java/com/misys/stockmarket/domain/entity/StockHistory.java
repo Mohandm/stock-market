@@ -15,14 +15,14 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 /**
  * The persistent class for the STOCK_HISTORY database table.
  * 
  */
 @Entity
-@Table(name = "STOCK_HISTORY")
-@NamedQuery(name = "StockHistory.findAll", query = "SELECT s FROM StockHistory s")
+@Table(name = "STOCK_HISTORY",uniqueConstraints={@UniqueConstraint(columnNames = {"STOCK_ID" , "STOCK_DATE"})})
 public class StockHistory implements BaseEntity, Serializable {
 	private static final long serialVersionUID = 1L;
 
