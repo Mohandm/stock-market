@@ -1,6 +1,7 @@
 package com.misys.stockmarket.services;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +45,13 @@ public class StockService {
 		for (StockMaster stockMaster : newStocksList) {
 			stockDAO.persist(stockMaster);
 		}
+	}
+
+	public List<StockHistory> listStockHistory(String tickerSymbol,
+			Date startDate, Date endDate) {
+		StockMaster stockMaster = stockDAO.findByTickerSymbol(tickerSymbol);
+		return stockDAO.findStockHistory(stockMaster.getStockId(), startDate,
+				endDate);
 	}
 
 	public void saveStockHistory(

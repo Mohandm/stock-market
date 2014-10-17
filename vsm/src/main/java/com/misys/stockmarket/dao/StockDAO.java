@@ -63,7 +63,15 @@ public class StockDAO extends BaseDAO {
 		} catch (EmptyResultDataAccessException e) {
 			throw new DBRecordNotFoundException(e);
 		}
-
 	}
 
+	public List<StockHistory> findStockHistory(long stockId, Date startDate,
+			Date endDate) {
+		Query q = entityManager
+				.createQuery("select e from StockHistory e where e.stockMaster.stockId = ? and e.stockDate between ? and ? order by e.stockDate ");
+		q.setParameter(1, stockId);
+		q.setParameter(2, startDate);
+		q.setParameter(3, endDate);
+		return (List<StockHistory>) q.getResultList();
+	}
 }
