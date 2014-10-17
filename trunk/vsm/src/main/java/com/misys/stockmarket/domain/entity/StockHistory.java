@@ -22,7 +22,8 @@ import javax.persistence.UniqueConstraint;
  * 
  */
 @Entity
-@Table(name = "STOCK_HISTORY",uniqueConstraints={@UniqueConstraint(columnNames = {"STOCK_ID" , "STOCK_DATE"})})
+@Table(name = "STOCK_HISTORY", uniqueConstraints = { @UniqueConstraint(columnNames = {
+		"STOCK_ID", "STOCK_DATE" }) })
 public class StockHistory implements BaseEntity, Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -37,13 +38,13 @@ public class StockHistory implements BaseEntity, Serializable {
 
 	@Column(name = "OPEN", precision = 8, scale = 2)
 	private BigDecimal open;
-	
+
 	@Column(name = "HIGH", precision = 8, scale = 2)
 	private BigDecimal high;
-	
+
 	@Column(name = "LOW", precision = 8, scale = 2)
 	private BigDecimal low;
-	
+
 	@Column(name = "CLOSE", precision = 8, scale = 2)
 	private BigDecimal close;
 
@@ -123,6 +124,13 @@ public class StockHistory implements BaseEntity, Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		return "StockHistory [historyId=" + historyId + ", stockDate="
+				+ stockDate + ", open=" + open + ", high=" + high + ", low="
+				+ low + ", close=" + close + ", volume=" + volume + "]";
 	}
 
 }
