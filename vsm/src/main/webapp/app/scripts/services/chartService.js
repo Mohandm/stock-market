@@ -42,4 +42,27 @@ vsmApp.service('ChartService', ['$http', function ($http) {
         return null;
     };
 
+    this.reloadHistoricalCharts = function(symbol, data){
+        var chartDataOptions = {"key": symbol};
+        var values = [];
+
+        var firstItem = true;
+        $(data).each(function(index,item){
+            var format = d3.time.format("%Y-%m-%d");
+            var dateTemp = format.parse(item.Date);
+            if(!firstItem)
+            {
+                var perviousItem = data[index-1];
+                var difference = parseFloat(item.Close) - parseFloat(perviousItem.Close);
+                var percentage = (difference * 100)/parseFloat(perviousItem.Close);
+                values.push([dateTemp.getTime(), percentage]);
+            }
+            else
+            {
+                firstItem = false;
+            }
+        });
+        chartDataOptions.values = values;
+        return chartDataOptions;
+    };
 }]);

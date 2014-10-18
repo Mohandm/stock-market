@@ -10,7 +10,7 @@
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch','ui.bootstrap','ui.grid','easypiechart']);
+    'ngTouch','ui.bootstrap','ui.grid','easypiechart','nvd3ChartDirectives']);
 
     vsmApp.config(function ($routeProvider, $httpProvider) {
         //configure the rounting of ng-view
@@ -22,6 +22,10 @@
        .when('/myPortfolio', {
            templateUrl: 'app/views/myPortfolio.html',
            controller: 'MyPortfolioController'
+       })
+       .when('/charts', {
+           templateUrl: 'app/views/charts.html',
+           controller: 'ChartsController'
        })
        .when('/form/:formName', {
             templateUrl: 'app/views/form.html',
