@@ -2,7 +2,6 @@ package com.misys.stockmarket.services;
 
 import javax.inject.Inject;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
@@ -30,7 +29,7 @@ public class RegistrationService {
 	@Inject
 	private UserValidator userValidator;
 
-	@Autowired
+	@Inject
 	private PasswordEncoder passwordEncoder;
 
 	public void registerUser(UserFormBean userFormBean)

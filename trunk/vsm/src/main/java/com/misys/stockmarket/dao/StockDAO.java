@@ -31,6 +31,18 @@ public class StockDAO extends BaseDAO {
 		criteria.put("active", IApplicationConstants.STOCK_INACTIVE);
 		return findByFilter(StockMaster.class, criteria);
 	}
+	
+	public StockMaster findBySymbol(String symbol)
+			throws DBRecordNotFoundException {
+		try {
+			Query q = entityManager
+					.createQuery("select e from StockMaster e where e.tikerSymbol = ?");
+			q.setParameter(1, symbol);
+			return (StockMaster) q.getSingleResult();
+		} catch (EmptyResultDataAccessException e) {
+			throw new DBRecordNotFoundException(e);
+		}
+	}
 
 	/**
 	 * Method to return the list of all the active tiker symbols

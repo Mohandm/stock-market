@@ -4,7 +4,6 @@ import javax.inject.Inject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,7 +37,7 @@ public class UserBizHandler {
 	@Inject
 	private UserValidator userValidator;
 
-	@Autowired
+	@Inject
 	private PasswordEncoder passwordEncoder;
 
 	private static final Log LOG = LogFactory.getLog(UserBizHandler.class);

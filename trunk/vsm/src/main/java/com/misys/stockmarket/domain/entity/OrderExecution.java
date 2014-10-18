@@ -29,7 +29,7 @@ public class OrderExecution implements BaseEntity, Serializable {
 	@Column(name = "EXECUTION_ID", unique = true, nullable = false)
 	private long executionId;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "EXECUTION_DATE")
 	private Date executionDate;
 
