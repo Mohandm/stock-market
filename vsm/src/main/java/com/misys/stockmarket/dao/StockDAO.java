@@ -86,4 +86,11 @@ public class StockDAO extends BaseDAO {
 		q.setParameter(3, endDate);
 		return (List<StockHistory>) q.getResultList();
 	}
+
+	public Date findMaxStockHistoryStockDate(long stockId) {
+		Query q = entityManager
+				.createQuery("select max(e.stockDate) from StockHistory e where e.stockMaster.stockId = ? ");
+		q.setParameter(1, stockId);
+		return (Date) q.getSingleResult();
+	}
 }
