@@ -44,7 +44,7 @@ vsmApp.service('StockQuotesService', ['$http','$q','$log', function ($http, $q, 
         return deferred.promise;
     };
 
-    this.getHistoricalStockLists = function(ticker){
+    this.getHistoricalStockLists = function(ticker, periodDays){
         var deferred = $q.defer();
         var tickers = '';
         tickers = tickers.concat(encodeURI('\''));
@@ -61,7 +61,7 @@ vsmApp.service('StockQuotesService', ['$http','$q','$log', function ($http, $q, 
         };
 
         var d = new Date(); // today!
-        d.setDate(d.getDate() - 70);
+        d.setDate(d.getDate() - periodDays);
 
         var startDate = d.yyyymmdd();
         var endDate = new Date().yyyymmdd();

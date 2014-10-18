@@ -508,6 +508,42 @@ input[type="text"].ui-grid-filter-input{
 	width: 50%;
 	margin-top: 56px;
 }
+.chartToolTipHeader{
+    color: white;
+    border-bottom: 1px solid white;
+    margin: 0px 0 15px 0px;
+    text-align: center;
+    background: rgba(0,0,0,0.45);
+}
+.chartToolTipContent{
+    color : white;
+}
+.nvtooltip{
+    background : rgba(0,0,0,0.45);
+    padding : 0px;
+}
+.nvd3 .nv-axis line{
+    stroke: rgba(0,0,0,.1);
+}
+.nv-axis text{
+   fill: white;
+}
+.nv-axis .nv-axisMaxMin text{
+    fill: white;
+}
+.nvd3 .nv-axis path {
+    fill: none;
+    stroke: white;
+    stroke-opacity: .75;
+    shape-rendering: crispEdges;
+}
+.nv-controlsWrap .nv-legend .nv-series .nv-legend-symbol{
+    fill:white !important;
+    stroke:white !important;
+}
+.nv-legend .nv-series .nv-legend-text{
+    fill: white;
+}
 /* Charts : End */
 /* Share buttons : Start */
 .fb-share-button{
