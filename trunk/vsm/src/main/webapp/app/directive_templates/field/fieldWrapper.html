@@ -1,24 +1,29 @@
 <div class="form-group">
-<div class="col-sm-4 control-label">
-  <span class="required-error" ng-show="required">*</span>
-  <label>{{label}}<span ng-if="label">:</span></label>
-</div>
-<div class="col-sm-8" ng-class="{'has-error': (innerform.field.$dirty || formcontrol.submitted) && 		innerform.$invalid}">
-	<ng-form name="innerform">
-		<div ng-switch on="type">
-			<div ng-switch-when="email">
-				<input type="email" ng-model="formmodel[name]" ng-required="required" class="form-control" name="field"/>
+	<div class="col-sm-4 control-label">
+	  <span class="required-error" ng-show="required">*</span>
+	  <label>{{label}}<span ng-if="label">:</span></label>
+	</div>
+	<div class="col-sm-8" ng-class="{'has-error': (innerform.field.$dirty || formcontrol.submitted) && innerform.$invalid}">
+		<ng-form name="innerform">
+			<div ng-switch on="type">
+				<div ng-switch-when="email">
+					<input type="email" ng-model="formmodel[name]" ng-required="required" class="form-control" name="field"/>
+				</div>
+				<div ng-switch-when="password">
+					<input type="password" ng-model="formmodel[name]" ng-required="required" class="form-control" name="field"/>
+				</div>
+				<div ng-switch-default>
+					<input type="text" ng-model="formmodel[name]" ng-required="required" class="form-control" name="field"
+					validate validations={{validations}}>
+			    </div>
 			</div>
-			<div ng-switch-when="password">
-				<input type="password" ng-model="formmodel[name]" ng-required="required" class="form-control" name="field"/>
+			<div ng-show="innerform.field.$dirty || formcontrol.submitted">
+				<span class="help-block" ng-show = "innerform.field.$error.required">The field is required</span>
+				<span class="help-block" ng-show = "innerform.field.$error.email">The email is not valid</span>
+				<span  class="help-block" ng-hide = "innerform.field.$error.required" ng-repeat="validation in validations track by $index">
+					<span ng-show = "innerform.field.$error.{{validation.event}}">{{validation.errorMessage}}</span>
+				</span>
 			</div>
-			<div ng-switch-default>
-				<input type="text" ng-model="formmodel[name]" ng-required="required" class="form-control" name="field"/>
-		    </div>
-		</div>
-		<div ng-show="innerform.field.$dirty || formcontrol.submitted">
-			<span class="help-block" ng-show = "innerform.field.$error.required">The field is required</span>
-			<span class="help-block" ng-show = "innerform.field.$error.email">The email is not valid</span>
-		</div>
-	</ng-form>
+		</ng-form>
+	</div>
 </div>
