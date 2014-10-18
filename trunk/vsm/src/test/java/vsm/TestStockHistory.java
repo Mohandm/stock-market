@@ -19,7 +19,7 @@ public class TestStockHistory {
 				.getBean("stockService");
 
 		List<StockHistory> stockHistoryList = stockService.listStockHistory(
-				"AAPL", DateUtils.getPastDateFromCurrentDate(6), new Date());
+				"AAPL", DateUtils.getPastMonthFromCurrentDate(6), new Date());
 		System.out.println("HISTORY SIZE:" + stockHistoryList.size());
 		for (StockHistory stockHistory : stockHistoryList) {
 			System.out.println(stockHistory);
