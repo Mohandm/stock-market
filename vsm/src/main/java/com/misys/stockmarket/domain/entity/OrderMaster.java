@@ -24,7 +24,7 @@ public class OrderMaster implements BaseEntity, Serializable {
 	@Column(length = 1)
 	private String intraday;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "ORDER_DATE")
 	private Date orderDate;
 

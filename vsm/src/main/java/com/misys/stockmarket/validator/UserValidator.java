@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -30,7 +29,8 @@ public class UserValidator {
 
 	@Inject
 	private UserService userService;
-	@Autowired
+
+	@Inject
 	private PasswordEncoder passwordEncoder;
 
 	/**

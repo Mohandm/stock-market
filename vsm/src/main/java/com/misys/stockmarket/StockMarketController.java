@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.domain.entity.StockMaster;
 import com.misys.stockmarket.handlers.user.UserBizHandler;
+import com.misys.stockmarket.mbeans.OrderFormBean;
 import com.misys.stockmarket.mbeans.UserFormBean;
 import com.misys.stockmarket.platform.web.ResponseMessage;
+import com.misys.stockmarket.services.OrderService;
 import com.misys.stockmarket.services.StockService;
  
 /**
@@ -31,6 +34,9 @@ public class StockMarketController {
 	
 	@Inject
 	StockService stockService;
+	
+	@Inject
+	OrderService orderService;
 
 	@RequestMapping(value = "/registeruser", method = RequestMethod.POST)
 	@ResponseBody
@@ -56,7 +62,21 @@ public class StockMarketController {
 	public ResponseMessage changePassword(@RequestBody UserFormBean userFormBean) {
 		return userBizHandler.changePassword(userFormBean);
 	}
+	
+	@RequestMapping(value = "/buystock", method = { RequestMethod.POST })
+	@ResponseBody
+	public ResponseMessage buyStock(@RequestBody OrderFormBean orderFormBean) {
+		orderFormBean.setType(IApplicationConstants.BUY_TYPE);
+		return orderService.saveNewOrder(orderFormBean);		
+	}
 
+	@RequestMapping(value = "/sellstock", method = { RequestMethod.POST })
+	@ResponseBody
+	public ResponseMessage sellStock(@RequestBody OrderFormBean orderFormBean) {
+		orderFormBean.setType(IApplicationConstants.SELL_TYPE);
+		return orderService.saveNewOrder(orderFormBean);
+	}
+	
 	@RequestMapping(value = "/stockList", method = { RequestMethod.GET,
 			RequestMethod.POST })
 	@ResponseBody

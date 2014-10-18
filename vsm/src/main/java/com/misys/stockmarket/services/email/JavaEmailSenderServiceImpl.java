@@ -1,18 +1,18 @@
 package com.misys.stockmarket.services.email;
 
+import javax.inject.Inject;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Service;
 
 //@Service("emailSenderService")
 public class JavaEmailSenderServiceImpl implements EmailSenderService {
 
 	private static final Log LOG = LogFactory
 			.getLog(JavaEmailSenderServiceImpl.class);
-	@Autowired
+	@Inject
 	private JavaMailSender mailSender;
 
 	@Override

@@ -2,7 +2,6 @@ package com.misys.stockmarket.services;
 
 import javax.inject.Inject;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ public class LoginService {
 	@Inject
 	private UserService userService;
 	
-	@Autowired
+	@Inject
 	private PasswordEncoder passwordEncoder;
 
 	/**
