@@ -14,6 +14,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.misys.stockmarket.exception.FinancialServiceException;
 import com.misys.stockmarket.model.json.QuoteHistoryJSONModel;
 import com.misys.stockmarket.services.IFinancialService;
 import com.misys.stockmarket.services.StockService;
@@ -24,7 +25,8 @@ public class InstallNASDAQHistory {
 	private static final Log LOG = LogFactory
 			.getLog(InstallNASDAQHistory.class);
 
-	public static void main(String as[]) throws UnsupportedEncodingException {
+	public static void main(String as[]) throws UnsupportedEncodingException,
+			FinancialServiceException {
 
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
 				"META-INF\\spring\\applicationContext.xml");
@@ -36,7 +38,7 @@ public class InstallNASDAQHistory {
 
 		String responseJSONString = financialService.getStockHistory(
 				stockService.listAllActiveStockSymbols(),
-				DateUtils.getPastDateFromCurrentDate(6), new Date());
+				DateUtils.getPastMonthFromCurrentDate(6), new Date());
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			JsonNode rootNode = mapper.readValue(responseJSONString,

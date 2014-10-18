@@ -1,5 +1,6 @@
 package com.misys.stockmarket.services;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
@@ -8,6 +9,12 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +22,7 @@ import com.misys.stockmarket.dao.StockDAO;
 import com.misys.stockmarket.domain.entity.StockHistory;
 import com.misys.stockmarket.domain.entity.StockMaster;
 import com.misys.stockmarket.exception.DBRecordNotFoundException;
+import com.misys.stockmarket.exception.FinancialServiceException;
 import com.misys.stockmarket.model.json.QuoteHistoryJSONModel;
 import com.misys.stockmarket.utility.DateUtils;
 import com.misys.stockmarket.utility.YQLUtil;
@@ -22,8 +30,13 @@ import com.misys.stockmarket.utility.YQLUtil;
 @Service("stockService")
 @Repository
 public class StockService {
+
+	private static final Log LOG = LogFactory.getLog(StockService.class);
 	@Inject
 	private StockDAO stockDAO;
+
+	@Inject
+	IFinancialService financialService;
 
 	public List<String> listAllActiveStockSymbols() {
 		return stockDAO.findAllActiveStockSymbols();
@@ -95,4 +108,57 @@ public class StockService {
 		}
 	}
 
+	public void updateStockHistory(StockMaster stockMaster)
+			throws FinancialServiceException {
+		Date maxStockDate = stockDAO.findMaxStockHistoryStockDate(stockMaster
+				.getStockId());
+		int differenceInDays = 0;
+		if (maxStockDate != null) {
+			LOG.info("Last updated stock date for "
+					+ stockMaster.getTikerSymbol() + " " + maxStockDate);
+			differenceInDays = DateUtils.differenceInDays(new Date(),
+					maxStockDate);
+			LOG.info("Last Updated Stock Date vs Current Date days difference for "
+					+ stockMaster.getTikerSymbol() + " " + differenceInDays);
+		} else {
+			LOG.info("No History Found for ticker symbol "
+					+ stockMaster.getTikerSymbol());
+			differenceInDays = -1;
+			LOG.info("Updating Last Six Months History for ticker symbol "
+					+ stockMaster.getTikerSymbol());
+		}
+		Date pastStockDate = null;
+		if (differenceInDays > 1) {
+			pastStockDate = DateUtils
+					.getPastDateFromCurrentDate(differenceInDays);
+		} else if (differenceInDays == -1) {
+			pastStockDate = DateUtils.getPastMonthFromCurrentDate(6);
+		}
+		if (differenceInDays > 1 || differenceInDays == -1) {
+			String responseJSONString = financialService.getStockHistory(
+					stockMaster.getTikerSymbol(), pastStockDate, new Date());
+			ObjectMapper mapper = new ObjectMapper();
+			try {
+				JsonNode rootNode = mapper.readValue(responseJSONString,
+						JsonNode.class);
+				JsonNode quoteArray = rootNode.findValue("quote");
+				List<QuoteHistoryJSONModel> quoteHistoryJSONModels = mapper
+						.readValue(
+								quoteArray,
+								mapper.getTypeFactory()
+										.constructCollectionType(List.class,
+												QuoteHistoryJSONModel.class));
+				saveStockHistory(quoteHistoryJSONModels);
+			} catch (JsonParseException e) {
+				throw new FinancialServiceException(e);
+			} catch (JsonMappingException e) {
+				throw new FinancialServiceException(e);
+			} catch (IOException e) {
+				throw new FinancialServiceException(e);
+			}
+		} else {
+			LOG.info("No Further Update is required. The stock is up to date for Symbol: "
+					+ stockMaster.getTikerSymbol());
+		}
+	}
 }
