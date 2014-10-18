@@ -16,6 +16,8 @@ vsmApp.service('DialogService', function($compile, $http, $rootScope, $templateC
 	        childScope.form = options.form;
 	        childScope.mappings = options.mappings;
 	        childScope.targetURL = options.targetURL;
+            childScope.formURL = options.formURL;
+            childScope.showForm = options.showForm;
 	 
 	        $('body').append($compile(template)(childScope));
 	        $('#dialogModal').modal();
@@ -73,15 +75,16 @@ vsmApp.service('modals', function(DialogService,$http) {
                 mappings:JSON.parse(mappings)
        });
     };
-    
-    this.showEntities = function(form,mappings) {
-    	this.showSearch("List Of Entities",form,mappings,"jsonFiles/listOfEntity.json");
+
+    this.showForm = function(title, form) {
+            
+            DialogService.open({            
+                title: title,
+                showForm: true,
+                formURL:'app/views/'+form+'.html'
+       });
     };
-    
-    this.showCurrencies = function(form,mappings) {
-    	this.showSearch("List Of Currencies",form,mappings,"jsonFiles/listOfCurrencies.json");
-    };
-    
+     
     this.close = function()
     {
     	DialogService.close();

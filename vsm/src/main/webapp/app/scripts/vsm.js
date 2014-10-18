@@ -31,6 +31,10 @@
             templateUrl: 'app/views/result.html',
             controller: 'ActionController'
         })
+        .when('/trades', {
+            templateUrl: 'app/views/trades.html',
+      controller: 'TradesController'
+        })
         .otherwise({
             redirectTo: '/'
         });
