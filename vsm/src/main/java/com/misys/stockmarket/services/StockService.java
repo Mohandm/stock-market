@@ -103,26 +103,30 @@ public class StockService {
 			}
 		}
 	}
-	
+
 	public void updateStockCurrent(
 			List<QuoteCurrentJSONModel> quoteCurrentJSONModelList) {
 		Map<String, StockMaster> stockMasterByTickerMap = new HashMap<String, StockMaster>();
 		for (QuoteCurrentJSONModel quoteCurrentJSONModel : quoteCurrentJSONModelList) {
 			StockCurrentQuotes stockCurrent = new StockCurrentQuotes();
-			
+
 			LOG.debug("Symbol : " + quoteCurrentJSONModel.symbol);
 			stockCurrent.setChange(quoteCurrentJSONModel.Change);
-			stockCurrent.setChangeinPercent(quoteCurrentJSONModel.ChangeinPercent);
+			stockCurrent
+					.setChangeinPercent(quoteCurrentJSONModel.ChangeinPercent);
 			stockCurrent.setCurrency(quoteCurrentJSONModel.Currency);
 			stockCurrent.setDaysRange(quoteCurrentJSONModel.DaysRange);
 			stockCurrent.setLastTradeDate(quoteCurrentJSONModel.LastTradeDate);
-			stockCurrent.setLastTradePriceOnly(new BigDecimal(quoteCurrentJSONModel.LastTradePriceOnly));
+			stockCurrent.setLastTradePriceOnly(new BigDecimal(
+					quoteCurrentJSONModel.LastTradePriceOnly));
 			stockCurrent.setLastTradeTime(quoteCurrentJSONModel.LastTradeTime);
 			stockCurrent.setOpen(new BigDecimal(quoteCurrentJSONModel.Open));
-			stockCurrent.setPreviousClose(new BigDecimal(quoteCurrentJSONModel.PreviousClose));
-			stockCurrent.setVolume(new BigDecimal(quoteCurrentJSONModel.Volume));
+			stockCurrent.setPreviousClose(new BigDecimal(
+					quoteCurrentJSONModel.PreviousClose));
+			stockCurrent
+					.setVolume(new BigDecimal(quoteCurrentJSONModel.Volume));
 			stockCurrent.setYearRange(quoteCurrentJSONModel.YearRange);
-			
+
 			if (stockMasterByTickerMap
 					.containsKey(quoteCurrentJSONModel.symbol)) {
 				StockMaster stockMaster = stockMasterByTickerMap
@@ -135,13 +139,7 @@ public class StockService {
 				stockMasterByTickerMap.put(quoteCurrentJSONModel.symbol,
 						stockMaster);
 			}
-			try {
-				StockCurrentQuotes previousStockCurrent  = stockDAO.findStockCurrentByStockId(stockCurrent.getStockMaster().getStockId());
-				stockDAO.delete(previousStockCurrent);
-				stockDAO.persist(stockCurrent);
-			} catch (DBRecordNotFoundException e) {
-				stockDAO.persist(stockCurrent);
-			}
+			stockDAO.updateCurrentStock(stockCurrent);
 		}
 	}
 
