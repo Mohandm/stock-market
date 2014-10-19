@@ -215,12 +215,29 @@ public class StockService {
 				JsonNode rootNode = mapper.readValue(responseJSONString,
 						JsonNode.class);
 				JsonNode quoteArray = rootNode.findValue("quote");
-				List<QuoteHistoryJSONModel> quoteHistoryJSONModels = mapper
-						.readValue(
-								quoteArray,
-								mapper.getTypeFactory()
-										.constructCollectionType(List.class,
-												QuoteHistoryJSONModel.class));
+				List<QuoteHistoryJSONModel> quoteHistoryJSONModels;
+				if(!quoteArray.isArray()) 
+				{
+					String quoteString = quoteArray.toString();
+					ObjectMapper mapperTemp = new ObjectMapper();
+				    JsonNode actualObj = mapperTemp.readTree("["+quoteString+"]");
+					quoteHistoryJSONModels = mapper
+							.readValue(
+									actualObj,
+									mapper.getTypeFactory()
+											.constructCollectionType(List.class,
+													QuoteHistoryJSONModel.class));
+				}
+				else
+				{
+					quoteHistoryJSONModels = mapper
+							.readValue(
+									quoteArray,
+									mapper.getTypeFactory()
+											.constructCollectionType(List.class,
+													QuoteHistoryJSONModel.class));
+				}
+				
 				saveStockHistory(quoteHistoryJSONModels);
 			} catch (JsonParseException e) {
 				throw new FinancialServiceException(e);
