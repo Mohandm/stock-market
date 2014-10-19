@@ -57,12 +57,25 @@ public class StockDAO extends BaseDAO {
 		q.setParameter(1, IApplicationConstants.STOCK_ACTIVE);
 		return q.getResultList();
 	}
+	
+	public List<String> findAllStockSymbols() {
+		Query q = entityManager
+				.createQuery("select e.tikerSymbol from StockMaster e");
+		return q.getResultList();
+	}
 
 	public StockMaster findByTickerSymbol(String symbol) {
 		Query q = entityManager
 				.createQuery("select e from StockMaster e where e.tikerSymbol = ? and e.active = ? ");
 		q.setParameter(1, symbol);
 		q.setParameter(2, IApplicationConstants.STOCK_ACTIVE);
+		return (StockMaster) q.getSingleResult();
+	}
+	
+	public StockMaster findByAllTickerSymbol(String symbol) {
+		Query q = entityManager
+				.createQuery("select e from StockMaster e where e.tikerSymbol = ?");
+		q.setParameter(1, symbol);
 		return (StockMaster) q.getSingleResult();
 	}
 

@@ -43,6 +43,10 @@ public class StockService {
 	public List<String> listAllActiveStockSymbols() {
 		return stockDAO.findAllActiveStockSymbols();
 	}
+	
+	public List<String> listAllStockSymbols() {
+		return stockDAO.findAllStockSymbols();
+	}
 
 	public List<StockMaster> listAllActiveStocks() {
 		return stockDAO.findAllActiveStocks();
@@ -134,7 +138,7 @@ public class StockService {
 				stockCurrent.setStockMaster(stockMaster);
 			} else {
 				StockMaster stockMaster = stockDAO
-						.findByTickerSymbol(quoteCurrentJSONModel.symbol);
+						.findByAllTickerSymbol(quoteCurrentJSONModel.symbol);
 				stockCurrent.setStockMaster(stockMaster);
 				stockMasterByTickerMap.put(quoteCurrentJSONModel.symbol,
 						stockMaster);
