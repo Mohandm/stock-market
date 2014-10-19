@@ -19,10 +19,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.misys.stockmarket.dao.StockDAO;
+import com.misys.stockmarket.domain.entity.StockCurrentQuotes;
 import com.misys.stockmarket.domain.entity.StockHistory;
 import com.misys.stockmarket.domain.entity.StockMaster;
 import com.misys.stockmarket.exception.DBRecordNotFoundException;
 import com.misys.stockmarket.exception.FinancialServiceException;
+import com.misys.stockmarket.model.json.QuoteCurrentJSONModel;
 import com.misys.stockmarket.model.json.QuoteHistoryJSONModel;
 import com.misys.stockmarket.utility.DateUtils;
 import com.misys.stockmarket.utility.YQLUtil;
@@ -98,6 +100,47 @@ public class StockService {
 						.getStockDate());
 			} catch (DBRecordNotFoundException e) {
 				stockDAO.persist(stockHistory);
+			}
+		}
+	}
+	
+	public void updateStockCurrent(
+			List<QuoteCurrentJSONModel> quoteCurrentJSONModelList) {
+		Map<String, StockMaster> stockMasterByTickerMap = new HashMap<String, StockMaster>();
+		for (QuoteCurrentJSONModel quoteCurrentJSONModel : quoteCurrentJSONModelList) {
+			StockCurrentQuotes stockCurrent = new StockCurrentQuotes();
+			
+			LOG.debug("Symbol : " + quoteCurrentJSONModel.symbol);
+			stockCurrent.setChange(quoteCurrentJSONModel.Change);
+			stockCurrent.setChangeinPercent(quoteCurrentJSONModel.ChangeinPercent);
+			stockCurrent.setCurrency(quoteCurrentJSONModel.Currency);
+			stockCurrent.setDaysRange(quoteCurrentJSONModel.DaysRange);
+			stockCurrent.setLastTradeDate(quoteCurrentJSONModel.LastTradeDate);
+			stockCurrent.setLastTradePriceOnly(new BigDecimal(quoteCurrentJSONModel.LastTradePriceOnly));
+			stockCurrent.setLastTradeTime(quoteCurrentJSONModel.LastTradeTime);
+			stockCurrent.setOpen(new BigDecimal(quoteCurrentJSONModel.Open));
+			stockCurrent.setPreviousClose(new BigDecimal(quoteCurrentJSONModel.PreviousClose));
+			stockCurrent.setVolume(new BigDecimal(quoteCurrentJSONModel.Volume));
+			stockCurrent.setYearRange(quoteCurrentJSONModel.YearRange);
+			
+			if (stockMasterByTickerMap
+					.containsKey(quoteCurrentJSONModel.symbol)) {
+				StockMaster stockMaster = stockMasterByTickerMap
+						.get(quoteCurrentJSONModel.symbol);
+				stockCurrent.setStockMaster(stockMaster);
+			} else {
+				StockMaster stockMaster = stockDAO
+						.findByTickerSymbol(quoteCurrentJSONModel.symbol);
+				stockCurrent.setStockMaster(stockMaster);
+				stockMasterByTickerMap.put(quoteCurrentJSONModel.symbol,
+						stockMaster);
+			}
+			try {
+				StockCurrentQuotes previousStockCurrent  = stockDAO.findStockCurrentByStockId(stockCurrent.getStockMaster().getStockId());
+				stockDAO.delete(previousStockCurrent);
+				stockDAO.persist(stockCurrent);
+			} catch (DBRecordNotFoundException e) {
+				stockDAO.persist(stockCurrent);
 			}
 		}
 	}

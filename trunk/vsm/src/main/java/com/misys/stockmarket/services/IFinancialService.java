@@ -12,5 +12,7 @@ public interface IFinancialService {
 
 	public String getStockHistory(String tickerSymbol, Date startDate,
 			Date endDate) throws FinancialServiceException;
+	
+	public String getStockCurrent(List<String> stockList) throws FinancialServiceException;
 
 }

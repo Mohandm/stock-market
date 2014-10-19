@@ -519,7 +519,7 @@ input[type="text"].ui-grid-filter-input{
     color : white;
 }
 .nvtooltip{
-    background : rgba(0,0,0,0.45);
+    background : rgba(0,0,0,0.65);
     padding : 0px;
 }
 .nvd3 .nv-axis line{

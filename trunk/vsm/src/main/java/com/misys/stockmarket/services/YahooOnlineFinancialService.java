@@ -83,4 +83,31 @@ public class YahooOnlineFinancialService implements IFinancialService {
 			throw new FinancialServiceException(e);
 		}
 	}
+	
+	@Override
+	public String getStockCurrent(List<String> stockList) throws FinancialServiceException
+	{
+		String queryYQL = "select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(<STOCK_LIST>)%0A%09%09";
+
+		String hostURL = "http://query.yahooapis.com/v1/public/yql?env=http%3A%2F%2Fdatatables.org%2Falltables.env&format=json&q=";
+		
+		try {
+
+			String commaSeperatedStockList = YQLUtil
+					.getCommaSeperatedQuoteSymbols(stockList);
+
+			queryYQL = queryYQL.replace("<STOCK_LIST>",
+					YQLUtil.URLEncode(commaSeperatedStockList));
+			
+			StringBuffer requestBufferYQL = new StringBuffer();
+
+			requestBufferYQL.append(hostURL).append(queryYQL);
+
+			LOG.debug(requestBufferYQL.toString());
+
+			return YQLUtil.executeQuery(requestBufferYQL.toString());
+		} catch (YQLException e) {
+			throw new FinancialServiceException(e);
+		}
+	}
 }
