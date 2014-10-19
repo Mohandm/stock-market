@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.misys.stockmarket.constants.IApplicationConstants;
+import com.misys.stockmarket.domain.entity.StockCurrentQuotes;
 import com.misys.stockmarket.domain.entity.StockHistory;
 import com.misys.stockmarket.domain.entity.StockMaster;
 import com.misys.stockmarket.exception.DBRecordNotFoundException;
@@ -76,7 +77,18 @@ public class StockDAO extends BaseDAO {
 			throw new DBRecordNotFoundException(e);
 		}
 	}
-
+	
+	public StockCurrentQuotes findStockCurrentByStockId(long stockId) throws DBRecordNotFoundException {
+		try {
+			Query q = entityManager
+					.createQuery("select e from StockCurrentQuotes e where e.stockMaster.stockId = ?");
+			q.setParameter(1, stockId);
+			return (StockCurrentQuotes) q.getSingleResult();
+		} catch (EmptyResultDataAccessException e) {
+			throw new DBRecordNotFoundException(e);
+		}
+	}
+	
 	public List<StockHistory> findStockHistory(long stockId, Date startDate,
 			Date endDate) {
 		Query q = entityManager

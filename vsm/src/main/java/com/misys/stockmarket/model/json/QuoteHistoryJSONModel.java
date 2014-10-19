@@ -1,5 +1,8 @@
 package com.misys.stockmarket.model.json;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class QuoteHistoryJSONModel {
 
 	public String Symbol;

@@ -28,6 +28,13 @@ public class BaseDAO implements IBaseDAO {
 		entityManager.persist(anyEntity);
 
 	}
+	
+	@Transactional
+	@Override
+	public <T extends BaseEntity> void delete(T anyEntity) {
+		entityManager.remove(anyEntity);
+
+	}
 
 	@Transactional
 	@Override
