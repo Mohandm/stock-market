@@ -111,6 +111,8 @@ public class StockService {
 	public void updateStockCurrent(
 			List<QuoteCurrentJSONModel> quoteCurrentJSONModelList) {
 		Map<String, StockMaster> stockMasterByTickerMap = new HashMap<String, StockMaster>();
+		
+		Date date = new Date();
 		for (QuoteCurrentJSONModel quoteCurrentJSONModel : quoteCurrentJSONModelList) {
 			StockCurrentQuotes stockCurrent = new StockCurrentQuotes();
 
@@ -130,7 +132,8 @@ public class StockService {
 			stockCurrent
 					.setVolume(new BigDecimal(quoteCurrentJSONModel.Volume));
 			stockCurrent.setYearRange(quoteCurrentJSONModel.YearRange);
-
+			stockCurrent.setUpdatedTimeStamp(date);
+			
 			if (stockMasterByTickerMap
 					.containsKey(quoteCurrentJSONModel.symbol)) {
 				StockMaster stockMaster = stockMasterByTickerMap
@@ -152,7 +155,32 @@ public class StockService {
 			stockDAO.update(stockMaster);
 		}
 	}
-
+	
+	public void updateStockCurrentQuotes(List<String> stockList)
+			throws FinancialServiceException {
+		
+		String responseJSONString = financialService.getStockCurrent(stockList);
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			JsonNode rootNode = mapper.readValue(responseJSONString,
+					JsonNode.class);
+			JsonNode quoteArray = rootNode.findValue("quote");
+			List<QuoteCurrentJSONModel> quoteCurrentJSONModels = mapper
+					.readValue(
+							quoteArray,
+							mapper.getTypeFactory()
+									.constructCollectionType(List.class,
+											QuoteCurrentJSONModel.class));
+			updateStockCurrent(quoteCurrentJSONModels);
+		} catch (JsonParseException e) {
+			throw new FinancialServiceException(e);
+		} catch (JsonMappingException e) {
+			throw new FinancialServiceException(e);
+		} catch (IOException e) {
+			throw new FinancialServiceException(e);
+		}
+	}
+	
 	public void updateStockHistory(StockMaster stockMaster)
 			throws FinancialServiceException {
 		Date maxStockDate = stockDAO.findMaxStockHistoryStockDate(stockMaster
