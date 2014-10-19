@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.domain.entity.StockCurrentQuotes;
@@ -32,7 +33,7 @@ public class StockDAO extends BaseDAO {
 		criteria.put("active", IApplicationConstants.STOCK_INACTIVE);
 		return findByFilter(StockMaster.class, criteria);
 	}
-	
+
 	public StockMaster findBySymbol(String symbol)
 			throws DBRecordNotFoundException {
 		try {
@@ -77,8 +78,9 @@ public class StockDAO extends BaseDAO {
 			throw new DBRecordNotFoundException(e);
 		}
 	}
-	
-	public StockCurrentQuotes findStockCurrentByStockId(long stockId) throws DBRecordNotFoundException {
+
+	public StockCurrentQuotes findStockCurrentByStockId(long stockId)
+			throws DBRecordNotFoundException {
 		try {
 			Query q = entityManager
 					.createQuery("select e from StockCurrentQuotes e where e.stockMaster.stockId = ?");
@@ -88,7 +90,20 @@ public class StockDAO extends BaseDAO {
 			throw new DBRecordNotFoundException(e);
 		}
 	}
-	
+
+	@Transactional
+	public void updateCurrentStock(StockCurrentQuotes stockCurrentQuotes) {
+		try {
+			Query q = entityManager
+					.createQuery("delete from StockCurrentQuotes e where e.stockMaster.stockId = ?");
+			q.setParameter(1, stockCurrentQuotes.getStockMaster().getStockId());
+			q.executeUpdate();
+			entityManager.persist(stockCurrentQuotes);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public List<StockHistory> findStockHistory(long stockId, Date startDate,
 			Date endDate) {
 		Query q = entityManager
