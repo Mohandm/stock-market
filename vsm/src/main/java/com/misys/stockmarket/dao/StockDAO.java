@@ -92,16 +92,11 @@ public class StockDAO extends BaseDAO {
 		}
 	}
 
-	public StockCurrentQuotes findStockCurrentByStockId(long stockId)
-			throws DBRecordNotFoundException {
-		try {
-			Query q = entityManager
-					.createQuery("select e from StockCurrentQuotes e where e.stockMaster.stockId = ?");
-			q.setParameter(1, stockId);
-			return (StockCurrentQuotes) q.getSingleResult();
-		} catch (EmptyResultDataAccessException e) {
-			throw new DBRecordNotFoundException(e);
-		}
+	public StockCurrentQuotes findStockCurrentQuoteByStockId(long stockId){
+		Query q = entityManager
+				.createQuery("select e from StockCurrentQuotes e where e.stockMaster.stockId = ?");
+		q.setParameter(1, stockId);
+		return (StockCurrentQuotes) q.getSingleResult();
 	}
 
 	@Transactional

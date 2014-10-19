@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.misys.stockmarket.constants.IApplicationConstants;
+import com.misys.stockmarket.domain.entity.StockCurrentQuotes;
 import com.misys.stockmarket.domain.entity.StockMaster;
 import com.misys.stockmarket.handlers.user.UserBizHandler;
 import com.misys.stockmarket.mbeans.OrderFormBean;
@@ -82,6 +84,13 @@ public class StockMarketController {
 	@ResponseBody
 	public List<StockMaster> stockList() {
 		return stockService.listAllActiveStocks(); 
+	}
+	
+	@RequestMapping(value = "/stockListCurrentQuotes", method = { RequestMethod.GET,
+			RequestMethod.POST })
+	@ResponseBody
+	public StockCurrentQuotes stockListCurrentQuotes(@RequestParam("stockSymbol") String symbol) {
+		return stockService.getStockCurrentQuoteByStockSymbol(symbol); 
 	}
 	
 	@RequestMapping("/")

@@ -40,27 +40,34 @@ vsmApp.controller('DashboardController', ['$scope','$http', '$modal', '$log', 'N
         $scope.tickerNewsSelected = data[8];
     }).then(function(){
         /* All Quotes */
-        var allCurrentQuotesPromise = StockQuotesService.getAllCurrentQuotes($scope.stockLists);
+        var allCurrentQuotesPromise = StockQuotesService.getCurrentQuote($scope.tickerNewsSelected.tikerSymbol);
         allCurrentQuotesPromise.then(function(data){
-            $scope.quotes = data;
-            reloadSparklingCharts('AAPL');
-            $scope.currentTickerQuote = $scope.quotes[$scope.tickerNewsSelected.tikerSymbol];
+            reloadSparklingCharts($scope.tickerNewsSelected.tikerSymbol);
+            $scope.currentTickerQuote = data;
+        });
+
+        var ndxQuotesPromise = StockQuotesService.getCurrentQuote('%5ENDX');
+        ndxQuotesPromise.then(function(data){
+            $scope.ndxTickerQuote = data;
         });
     });
 
     /* Reload Charts */
     var reloadSparklingCharts = function(symbol){
         StockQuotesService.getHistoricalStockLists(symbol, 70).then(function(historicalData){
-            ChartService.reloadSparklingCharts(symbol, historicalData, $scope.quotes[symbol]);
+            ChartService.reloadSparklingCharts(symbol, historicalData, $scope.currentTickerQuote);
             $scope.getHistoryDataGridOptions.data = historicalData;
         });
     };
 
 
     $scope.reloadTicker = function(){
-        $scope.currentTickerQuote = $scope.quotes[$scope.tickerNewsSelected.tikerSymbol];
-        reloadNewsFeed();
-        reloadSparklingCharts($scope.tickerNewsSelected.tikerSymbol);
+        var allCurrentQuotesPromise = StockQuotesService.getCurrentQuote($scope.tickerNewsSelected.tikerSymbol);
+        allCurrentQuotesPromise.then(function(data){
+            $scope.currentTickerQuote = data;
+            reloadNewsFeed();
+            reloadSparklingCharts($scope.tickerNewsSelected.tikerSymbol);
+        });
     };
 
     $scope.options = {

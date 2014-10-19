@@ -72,6 +72,11 @@ public class StockService {
 		return stockDAO.findStockHistory(stockMaster.getStockId(), startDate,
 				endDate);
 	}
+	
+	public StockCurrentQuotes getStockCurrentQuoteByStockSymbol(String tickerSymbol) {
+		StockMaster stockMaster = stockDAO.findByAllTickerSymbol(tickerSymbol);
+		return stockDAO.findStockCurrentQuoteByStockId(stockMaster.getStockId());
+	}
 
 	public void saveStockHistory(
 			List<QuoteHistoryJSONModel> quoteHistoryJSONModelList) {

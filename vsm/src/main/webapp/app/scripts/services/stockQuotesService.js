@@ -3,8 +3,8 @@ var vsmApp = angular.module('vsmApp');
 vsmApp.service('StockQuotesService', ['$http','$q','$log', function ($http, $q, $log) {
 
     this.getStockLists = function(){
-        var deferred = $q.defer();
-        var actionUrl = 'stockList/';
+        var deferred = $q.defer(),
+            actionUrl = 'stockList/';
         $http.get(actionUrl,{})
             .success(function (json) {
                 deferred.resolve(json);
@@ -15,28 +15,12 @@ vsmApp.service('StockQuotesService', ['$http','$q','$log', function ($http, $q, 
         return deferred.promise;
     };
 
-    this.getAllCurrentQuotes = function(allStockLists){
-        var deferred = $q.defer();
-        var tickers = '';
-        $(allStockLists).each(function() {
-            tickers = tickers.concat(encodeURI('\''));
-            tickers = tickers.concat(this.tikerSymbol);
-            tickers = tickers.concat(encodeURI('\''));
-            tickers = tickers.concat(encodeURI(','));
-        });
-
-        tickers = tickers.concat(encodeURI('\''));
-        tickers = tickers.concat('^NDX');
-        tickers = tickers.concat(encodeURI('\''));
-
-        var quotesUrl = 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20('+ tickers +')%0A%09%09&env=http%3A%2F%2Fdatatables.org%2Falltables.env&format=json';
-        var quotes = {};
-        $http.get(quotesUrl,{})
+    this.getCurrentQuote = function(symbol){
+        var deferred = $q.defer(),
+            actionUrl = 'stockListCurrentQuotes?stockSymbol=';
+        $http.get(actionUrl+symbol,{})
             .success(function (quotesJSON) {
-                $( quotesJSON.query.results.quote).each(function() {
-                    quotes[this.Symbol] = this;
-                });
-                deferred.resolve(quotes);
+                deferred.resolve(quotesJSON);
             }).error(function(msg, code) {
                 deferred.reject(msg);
                 $log.error(msg, code);
