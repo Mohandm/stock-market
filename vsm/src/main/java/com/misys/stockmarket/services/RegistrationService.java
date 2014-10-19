@@ -30,6 +30,9 @@ public class RegistrationService {
 	private UserValidator userValidator;
 
 	@Inject
+	private LeagueService leagueService;
+
+	@Inject
 	private PasswordEncoder passwordEncoder;
 
 	public void registerUser(UserFormBean userFormBean)
@@ -48,6 +51,9 @@ public class RegistrationService {
 		userMaster.setVerified(IApplicationConstants.EMAIL_VERIFIED_NO);
 		userMaster.setActive(IApplicationConstants.USER_DEACTIVATED);
 		userService.saveUser(userMaster);
+
+		// LINK TO DEFAULT GROUP
+		leagueService.addUserToDefaultLeague(userMaster);
 
 		// SEND ACTIVATION ACCOUNT EMAIL NOTIFICATION
 		SimpleMailMessage message = EmailFormatter

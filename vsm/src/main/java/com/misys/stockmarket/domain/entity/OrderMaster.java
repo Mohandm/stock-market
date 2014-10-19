@@ -50,6 +50,10 @@ public class OrderMaster implements BaseEntity, Serializable {
 
 	private BigDecimal volume;
 
+	@ManyToOne
+	@JoinColumn(name = "LEAGUE_ID")
+	private LeagueMaster leagueMaster;
+
 	public OrderMaster() {
 	}
 
@@ -131,6 +135,14 @@ public class OrderMaster implements BaseEntity, Serializable {
 
 	public void setUserMaster(UserMaster userMaster) {
 		this.userMaster = userMaster;
+	}
+
+	public LeagueMaster getLeagueMaster() {
+		return leagueMaster;
+	}
+
+	public void setLeagueMaster(LeagueMaster leagueMaster) {
+		this.leagueMaster = leagueMaster;
 	}
 
 }

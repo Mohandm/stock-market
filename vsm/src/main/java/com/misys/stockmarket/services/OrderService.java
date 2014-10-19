@@ -37,7 +37,7 @@ public class OrderService {
 	private UserService userService;
 
 	@Inject
-	private OrderExecutionService orderExecutionService;
+	private LeagueService leagueService;
 
 	public ResponseMessage saveNewOrder(OrderFormBean orderFormBean) {
 		// Validate bean
@@ -56,6 +56,8 @@ public class OrderService {
 			// Set some default values
 			orderMaster.setOrderDate(new Date());
 			orderMaster.setStatus(IApplicationConstants.ORDER_STATUS_PENDING);
+			// TODO: Needs to change to support multiple leagues
+			orderMaster.setLeagueMaster(leagueService.getDefaultLeague());
 			orderMasterDAO.persist(orderMaster);
 
 			return new ResponseMessage(ResponseMessage.Type.success,
