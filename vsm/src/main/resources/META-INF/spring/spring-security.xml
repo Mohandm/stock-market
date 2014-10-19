@@ -28,8 +28,6 @@
 		</authentication-provider>
 	</authentication-manager>
 	
-	<beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
-	
 	<beans:bean id="exceptionTranslationFilter" class="org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler">
     <beans:property name="exceptionMappings">
         <beans:props>           
