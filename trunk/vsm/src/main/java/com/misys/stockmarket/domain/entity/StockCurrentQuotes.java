@@ -2,6 +2,7 @@ package com.misys.stockmarket.domain.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 
@@ -35,6 +38,18 @@ public class StockCurrentQuotes implements BaseEntity, Serializable {
 
 	public void setCurrentQuoteId(long currentQuoteId) {
 		this.currentQuoteId = currentQuoteId;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "UPDATED_TIMESTAMP")
+	private Date updatedTimeStamp;
+	
+	public Date getUpdatedTimeStamp() {
+		return updatedTimeStamp;
+	}
+
+	public void setUpdatedTimeStamp(Date updatedTimeStamp) {
+		this.updatedTimeStamp = updatedTimeStamp;
 	}
 
 	@Column(name = "CURRENCY", length = 3)
@@ -179,7 +194,7 @@ public class StockCurrentQuotes implements BaseEntity, Serializable {
 
 	@Override
 	public String toString() {
-		return "StockCurrentQuotes [currentQuoteId="+ currentQuoteId +", currency=" + currency + 
+		return "StockCurrentQuotes [currentQuoteId="+ currentQuoteId +", currency=" + currency + ", updatedTimeStamp=" + updatedTimeStamp +
 				", daysRange=" + daysRange + ", yearRange=" + yearRange + ", lastTradePriceOnly=" + lastTradePriceOnly + 
 				", open=" + open + ", previousClose=" + previousClose + 
 				", change=" + change + ", changeinPercent=" + changeinPercent + 
