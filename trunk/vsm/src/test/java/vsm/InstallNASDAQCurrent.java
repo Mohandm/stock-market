@@ -34,7 +34,7 @@ public class InstallNASDAQCurrent {
 		StockService stockService = (StockService) applicationContext
 				.getBean("stockService");
 
-		String responseJSONString = financialService.getStockCurrent(stockService.listAllActiveStockSymbols());
+		String responseJSONString = financialService.getStockCurrent(stockService.listAllStockSymbols());
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			JsonNode rootNode = mapper.readValue(responseJSONString,
