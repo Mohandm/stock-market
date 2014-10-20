@@ -122,6 +122,13 @@ public class StockDAO extends BaseDAO {
 		return (List<StockHistory>) q.getResultList();
 	}
 
+	public List<StockHistory> findStockHistoryByStockId(long stockId) {
+		Query q = entityManager
+				.createQuery("select e from StockHistory e where e.stockMaster.stockId = ? order by e.stockDate");
+		q.setParameter(1, stockId);
+		return (List<StockHistory>) q.getResultList();
+	}
+	
 	public Date findMaxStockHistoryStockDate(long stockId) {
 		Query q = entityManager
 				.createQuery("select max(e.stockDate) from StockHistory e where e.stockMaster.stockId = ? ");

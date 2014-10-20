@@ -14,8 +14,9 @@ vsmApp.controller('ChartsController', ['$scope', '$log', 'ChartService', 'StockQ
         $scope.historicalChartDataThird;
         $scope.historicalChartDataFourth;
         $scope.reloadComparisonChart = function(symbol, position){
-            StockQuotesService.getHistoricalStockLists(symbol.tikerSymbol, 30).then(function(historicalData){
-                var historicalChartDataOptions = ChartService.reloadHistoricalCharts(symbol.tikerSymbol,historicalData);
+            StockQuotesService.getHistoricalStockLists(symbol.tikerSymbol).then(function(historicalData){
+                var reducedHistoricalData = StockQuotesService.reducedHistoricalData(historicalData, 30);
+                var historicalChartDataOptions = ChartService.reloadHistoricalCharts(symbol.tikerSymbol,reducedHistoricalData);
                 if(position === 1){
                     $scope.historicalChartDataFirst = historicalChartDataOptions;
                 }

@@ -54,8 +54,9 @@ vsmApp.controller('DashboardController', ['$scope','$http', '$modal', '$log', 'N
 
     /* Reload Charts */
     var reloadSparklingCharts = function(symbol){
-        StockQuotesService.getHistoricalStockLists(symbol, 70).then(function(historicalData){
-            ChartService.reloadSparklingCharts(symbol, historicalData, $scope.currentTickerQuote);
+        StockQuotesService.getHistoricalStockLists(symbol).then(function(historicalData){
+            var reducedHistoricalData = StockQuotesService.reducedHistoricalData(historicalData, 50);
+            ChartService.reloadSparklingCharts(symbol, reducedHistoricalData, $scope.currentTickerQuote);
             $scope.getHistoryDataGridOptions.data = historicalData;
         });
     };
