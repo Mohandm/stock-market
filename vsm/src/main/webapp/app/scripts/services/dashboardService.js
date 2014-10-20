@@ -27,11 +27,11 @@ vsmApp.service('DashboardService', ['$http', function ($http) {
             enableSorting: true,
             enableFiltering: true,
             columnDefs: [
-                { field: 'Date', displayName:'Date'},
-                { field: 'Open', displayName:'Open'},
-                { field: 'Close', displayName:'Close'},
-                { field: 'High', displayName:'High'},
-                { field: 'Low', displayName:'Low'}
+                { field: 'stockDate', displayName:'Date'},
+                { field: 'open', displayName:'Open'},
+                { field: 'close', displayName:'Close'},
+                { field: 'high', displayName:'High'},
+                { field: 'low', displayName:'Low'}
             ]
         };
     };

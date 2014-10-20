@@ -73,6 +73,11 @@ public class StockService {
 				endDate);
 	}
 	
+	public List<StockHistory> listStockHistory(String tickerSymbol) {
+		StockMaster stockMaster = stockDAO.findByTickerSymbol(tickerSymbol);
+		return stockDAO.findStockHistoryByStockId(stockMaster.getStockId());
+	}
+	
 	public StockCurrentQuotes getStockCurrentQuoteByStockSymbol(String tickerSymbol) {
 		StockMaster stockMaster = stockDAO.findByAllTickerSymbol(tickerSymbol);
 		return stockDAO.findStockCurrentQuoteByStockId(stockMaster.getStockId());

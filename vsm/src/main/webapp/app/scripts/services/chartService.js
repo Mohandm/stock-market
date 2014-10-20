@@ -6,9 +6,9 @@ vsmApp.service('ChartService', ['$http', function ($http) {
 
         var chartData = [];
         $(historicalData).each(function(index, item){
-            chartData.push(item.Close);
+            chartData.push(item.close);
         });
-        chartData = chartData.reverse();
+        //chartData = chartData.reverse();
         $("#stats-line").sparkline(chartData, {
             type: 'line',
             width: '300',
@@ -49,12 +49,12 @@ vsmApp.service('ChartService', ['$http', function ($http) {
         var firstItem = true;
         $(data).each(function(index,item){
             var format = d3.time.format("%Y-%m-%d");
-            var dateTemp = format.parse(item.Date);
+            var dateTemp = format.parse(item.stockDate);
             if(!firstItem)
             {
                 var perviousItem = data[index-1];
-                var difference = parseFloat(item.Close) - parseFloat(perviousItem.Close);
-                var percentage = (difference * 100)/parseFloat(perviousItem.Close);
+                var difference = parseFloat(item.close) - parseFloat(perviousItem.close);
+                var percentage = (difference * 100)/parseFloat(perviousItem.close);
                 values.push([dateTemp.getTime(), percentage]);
             }
             else
