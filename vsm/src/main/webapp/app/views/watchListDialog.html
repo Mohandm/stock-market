@@ -1,0 +1,43 @@
+<div ng-controller="WatchListDialogController">
+    <div class="row">
+        <div class="col-sm-12 page-content">
+            <!-- Page Content Panel -->
+            <div class="panel">
+                <div class="panel-body">
+                    <form class="form-horizontal" name="mainForm" role="form" novalidate>
+                        <div class="form-group">
+                            <div class="col-sm-4 control-label">
+                                <label>Stock Symbol:</label>
+                            </div>
+                            <div class="col-sm-8 control-value">
+                                <label>{{passValuesToDialog.tikerSymbol}}</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4 control-label">
+                                <label>Company:</label>
+                            </div>
+                            <div class="col-sm-8 control-value">
+                                <label>{{passValuesToDialog.name}}</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4 control-label">
+                                <label>Current Price:</label>
+                            </div>
+                            <div class="col-sm-8 control-value">
+                                <label>{{passValuesToDialog.lastTradePrice}}</label>
+                            </div>
+                        </div>
+                        <field-wrapper label="Watch Price Higher Limit" type="text" name="limit" required="true" formmodel="formmodel" formcontrol="formcontrol" validations='[{"validator":"isNumber","event":"isNumber","errorMessage":"It should be a number", "scopeValue":"symbol"}]'></field-wrapper>
+                        <field-wrapper label="Watch Price Lower Limit" type="text" name="lowerLimit" required="true" formmodel="formmodel" formcontrol="formcontrol" validations='[{"validator":"isNumber","event":"isNumber","errorMessage":"It should be a number", "scopeValue":"symbol"}]'></field-wrapper>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" ng-click="perform('watchStock')">Watch</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+    </div>
+</div>

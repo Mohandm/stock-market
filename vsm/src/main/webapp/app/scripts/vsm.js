@@ -27,6 +27,10 @@
            templateUrl: 'app/views/charts.html',
            controller: 'ChartsController'
        })
+       .when('/watchList', {
+           templateUrl: 'app/views/watchList.html',
+           controller: 'WatchListController'
+       })
        .when('/form/:formName', {
             templateUrl: 'app/views/form.html',
             controller: 'FormSelectorController'
@@ -37,7 +41,7 @@
         })
         .when('/trades', {
             templateUrl: 'app/views/trades.html',
-      controller: 'TradesController'
+            controller: 'TradesController'
         })
         .otherwise({
             redirectTo: '/'
@@ -74,11 +78,17 @@
         });
     });
     
-    vsmApp.run(function ($rootScope,$http) {
+    vsmApp.run(function ($rootScope,$http, AlertsService) {
         //make current message accessible to root scope and therefore all scopes
         $rootScope.message = function () {
             return message;
         };
-        
+
+        $rootScope.onPageLoad = function(){
+            var alertsListPromise = AlertsService.getAlertsList();
+            alertsListPromise.then(function(data){
+                $rootScope.alertsList = data;
+            });
+        };
     });
 }());

@@ -59,6 +59,10 @@ public class StockService {
 	public List<StockMaster> listAllStocks() {
 		return stockDAO.findAll(StockMaster.class);
 	}
+	
+	public List<StockCurrentQuotes> listAllCurrentStockQuotes() {
+		return stockDAO.findAll(StockCurrentQuotes.class);
+	}
 
 	public void saveStocks(List<StockMaster> newStocksList) {
 		for (StockMaster stockMaster : newStocksList) {

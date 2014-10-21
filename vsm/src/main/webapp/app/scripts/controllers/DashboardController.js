@@ -1,9 +1,13 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.controller('DashboardController', ['$scope','$http', '$modal', '$log', 'NewsService','DashboardService','StockQuotesService','ChartService',
-    function ($scope, $http, $modal, $log, NewsService, DashboardService, StockQuotesService, ChartService) {
+vsmApp.controller('DashboardController', ['$scope', '$rootScope', '$http', '$modal', '$log', 'NewsService','DashboardService','StockQuotesService','ChartService',
+    function ($scope, $rootScope, $http, $modal, $log, NewsService, DashboardService, StockQuotesService, ChartService) {
 
     $scope.$scope = $scope;
+
+    //Add this to all page controllers
+    $rootScope.onPageLoad();
+
     /* News */
     NewsService.reloadNews(null);
     var reloadNewsFeed = function(){

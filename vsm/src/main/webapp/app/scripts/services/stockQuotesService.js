@@ -15,6 +15,19 @@ vsmApp.service('StockQuotesService', ['$http','$q','$log', function ($http, $q, 
         return deferred.promise;
     };
 
+    this.getAllCurrentQuotes = function(){
+        var deferred = $q.defer(),
+            actionUrl = 'stockListAllCurrentQuotes/';
+        $http.get(actionUrl,{})
+            .success(function (quotesJSON) {
+                deferred.resolve(quotesJSON);
+            }).error(function(msg, code) {
+                deferred.reject(msg);
+                $log.error(msg, code);
+            });
+        return deferred.promise;
+    };
+
     this.getCurrentQuote = function(symbol){
         var deferred = $q.defer(),
             actionUrl = 'stockListCurrentQuotes?stockSymbol=';

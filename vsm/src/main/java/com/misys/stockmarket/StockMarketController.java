@@ -18,10 +18,13 @@ import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.domain.entity.StockCurrentQuotes;
 import com.misys.stockmarket.domain.entity.StockHistory;
 import com.misys.stockmarket.domain.entity.StockMaster;
+import com.misys.stockmarket.domain.entity.UserAlerts;
 import com.misys.stockmarket.handlers.user.UserBizHandler;
 import com.misys.stockmarket.mbeans.OrderFormBean;
 import com.misys.stockmarket.mbeans.UserFormBean;
+import com.misys.stockmarket.mbeans.WatchListFormBean;
 import com.misys.stockmarket.platform.web.ResponseMessage;
+import com.misys.stockmarket.services.AlertsService;
 import com.misys.stockmarket.services.OrderService;
 import com.misys.stockmarket.services.StockService;
  
@@ -40,6 +43,9 @@ public class StockMarketController {
 	
 	@Inject
 	OrderService orderService;
+	
+	@Inject
+	AlertsService alertsService;
 
 	@RequestMapping(value = "/registeruser", method = RequestMethod.POST)
 	@ResponseBody
@@ -80,6 +86,19 @@ public class StockMarketController {
 		return orderService.saveNewOrder(orderFormBean);
 	}
 	
+	@RequestMapping(value = "/watchStock", method = { RequestMethod.POST })
+	@ResponseBody
+	public ResponseMessage watchStock(@RequestBody WatchListFormBean watchListFormBean) {
+		return alertsService.saveNewWatchStock(watchListFormBean);
+	}
+	
+	@RequestMapping(value = "/alertList", method = { RequestMethod.GET,
+			RequestMethod.POST })
+	@ResponseBody
+	public List<UserAlerts> alertList() {
+		return alertsService.listAllAlerts(); 
+	}
+	
 	@RequestMapping(value = "/stockList", method = { RequestMethod.GET,
 			RequestMethod.POST })
 	@ResponseBody
@@ -92,6 +111,13 @@ public class StockMarketController {
 	@ResponseBody
 	public StockCurrentQuotes stockListCurrentQuotes(@RequestParam("stockSymbol") String symbol) {
 		return stockService.getStockCurrentQuoteByStockSymbol(symbol); 
+	}
+	
+	@RequestMapping(value = "/stockListAllCurrentQuotes", method = { RequestMethod.GET,
+			RequestMethod.POST })
+	@ResponseBody
+	public List<StockCurrentQuotes> stockListAllCurrentQuotes() {
+		return stockService.listAllCurrentStockQuotes(); 
 	}
 	
 	@RequestMapping(value = "/stockListHistory", method = { RequestMethod.GET,

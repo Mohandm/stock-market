@@ -1,7 +1,10 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.controller('ChartsController', ['$scope', '$log', 'ChartService', 'StockQuotesService',
-    function ($scope, $log, ChartService, StockQuotesService) {
+vsmApp.controller('ChartsController', ['$scope', '$rootScope', '$log', 'ChartService', 'StockQuotesService',
+    function ($scope, $rootScope, $log, ChartService, StockQuotesService) {
+
+        //Add this to all page controllers
+        $rootScope.onPageLoad();
 
         var stockListsPromise = StockQuotesService.getStockLists();
         stockListsPromise.then(function(data){
