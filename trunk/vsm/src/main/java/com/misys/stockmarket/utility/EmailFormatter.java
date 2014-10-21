@@ -25,6 +25,17 @@ public class EmailFormatter {
 
 		return message;
 	}
+	
+	public static SimpleMailMessage generateWatchListAlertsMessage(UserMaster user, String messageText) {
+		String email = user.getEmail();
+		
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setTo(email);
+		message.setSubject("Stock Price Alert");
+		message.setText(messageText);
+
+		return message;
+	}
 
 	public static SimpleMailMessage resetPasswordMessage(UserMaster user, String password) {
 		SimpleMailMessage message = new SimpleMailMessage();

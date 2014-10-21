@@ -31,6 +31,11 @@ label{
     margin-right : 5px;
     color : white;
 }
+button{
+    background: rgba(0,0,0,0.35);
+    border: 1px solid white;
+}
+
 @media (min-width: 768px) {
     .col-xs-offset-2{
         margin-left:0px;
@@ -99,6 +104,9 @@ body {
 .control-label{
     text-align: right;
     padding-top: 6px;
+}
+.control-value{
+    padding-top: 7px;
 }
 
 select > option {
@@ -236,9 +244,15 @@ select > option {
     background: rgba(0, 0, 0, 0.75);
     color : orange;
 }
-.modal-dialog{
-	width : auto;
-	margin: 30px;
+@media (max-width: 780px)
+{
+    .modal-dialog {
+        width: auto;
+        margin: 20px;
+    }
+}
+.modal-header, .modal-body{
+    color:white;
 }
 .modal-content{
   background: url(../images/background.jpg);
@@ -421,7 +435,8 @@ input[type="text"].ui-grid-filter-input{
     -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
-.historical-stock-list-grid,.stock-holdings-list-grid,.recent-trades-list-grid{
+.historical-stock-list-grid,.stock-holdings-list-grid,
+.recent-trades-list-grid, .stock-list-grid,.alerts-trades-list-grid{
     height : 600px;
 }
 /* Grids : End */

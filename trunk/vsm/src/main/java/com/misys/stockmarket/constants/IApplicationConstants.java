@@ -54,6 +54,10 @@ public interface IApplicationConstants {
 
 	public final String DEFAULT_LEAGUE_NAME = "Global";
 
+	public final String WATCH_STOCK_STATUS_PENDING = "P";
+	
+	public final String WATCH_STOCK_STATUS_COMPLETED = "C";
+	
 	public final BigDecimal DEFAULT_LEAGUE_START_AMOUNT = BigDecimal
 			.valueOf(1000000);
 

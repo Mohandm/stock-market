@@ -3,14 +3,11 @@
 			<div class="col-sm-12 page-content">
 				<!-- Page Content Panel -->
 				<div class="panel">
-			    <div class="panel-heading">
-				    <h3 class="text-center">Sell Stocks</h3>
-				</div>
-				<div class="panel-body">
+			    <div class="panel-body">
 					 <form class="form-horizontal" name="mainForm" role="form" novalidate>
 					 	<div class="form-group">
 							<div class="col-sm-4 control-label">
-							 	<label>*Company:</label>
+							 	<label>*Stock Symbol:</label>
 							</div>  
 						 	<div class="col-sm-8" ng-class="{'has-error': (mainForm.symbol.$dirty || formcontrol.submitted) && mainForm.symbol.$invalid}">
 						 		<select type="text" ng-required="true" name="symbol"	

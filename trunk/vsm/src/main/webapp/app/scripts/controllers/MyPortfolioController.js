@@ -1,7 +1,10 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.controller('MyPortfolioController', ['$scope', '$log', 'StockQuotesService',
-    function ($scope, $log, StockQuotesService) {
+vsmApp.controller('MyPortfolioController', ['$scope', '$rootScope', '$log', 'StockQuotesService',
+    function ($scope, $rootScope, $log, StockQuotesService) {
+
+    //Add this to all page controllers
+    $rootScope.onPageLoad();
 
     $scope.userId = '007';
     StockQuotesService.getMyLeagues().then(function(data){

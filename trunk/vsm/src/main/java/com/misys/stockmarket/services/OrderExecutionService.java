@@ -41,6 +41,8 @@ public class OrderExecutionService {
 
 				LOG.info("Executing the order " + orderMaster.getOrderId());
 
+				// TODO: Check user has adequate amount to complete the order
+
 				// Create order execution entry
 				OrderExecution orderExecution = new OrderExecution();
 				orderExecution.setOrderMaster(orderMaster);
@@ -53,11 +55,12 @@ public class OrderExecutionService {
 
 				LOG.info("Completed executing the order "
 						+ orderMaster.getOrderId());
-
 				// Update order master entry
 				orderMaster
 						.setStatus(IApplicationConstants.ORDER_STATUS_COMPLETED);
 				orderExecutionDAO.update(orderMaster);
+				
+				// TODO: Update LEAGUE_USER table to update the remaining value
 			}
 		}
 	}

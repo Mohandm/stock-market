@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.misys.stockmarket.exception.FinancialServiceException;
+import com.misys.stockmarket.services.AlertsService;
 import com.misys.stockmarket.services.StockService;
 
 @Component
@@ -21,6 +22,9 @@ public class ScheduledTaskUpdateStockCurrentQuotes {
 
 	@Inject
 	private StockService stockService;
+	
+	@Inject
+	private AlertsService alertsService;
 
 	/**
 	 * Currently hard coded to 10 mins interval TODO: Need to externalize this
@@ -32,6 +36,7 @@ public class ScheduledTaskUpdateStockCurrentQuotes {
 		List<String> stockList = stockService.listAllStockSymbols();
 		try {
 			stockService.updateStockCurrentQuotes(stockList);
+			alertsService.triggerWatchStockAlerts();
 		} catch (FinancialServiceException e) {
 			LOG.error(
 					"Technical Error while updating stock current quotes for stock: ", e);

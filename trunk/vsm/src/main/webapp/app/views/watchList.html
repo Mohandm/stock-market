@@ -1,0 +1,25 @@
+<div ng-show="message().show">
+    <alert type="message().type" close="message().show=false">{{message().text}}</alert>
+</div>
+<div class="row blockContainer">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Stocks List</h3>
+            </div>
+            <div class="panel-body">
+                <div ui-grid="stockListGridOptions" class="stock-list-grid" external-scopes="$scope"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Alerts</h3>
+            </div>
+            <div class="panel-body">
+                <div ui-grid="getAlertsDataGridOptions" class="alerts-trades-list-grid" external-scopes="$scope"></div>
+            </div>
+        </div>
+    </div>
+</div>

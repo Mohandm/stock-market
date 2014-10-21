@@ -176,54 +176,20 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" >
                             <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
                         </a>
-                        <ul class="dropdown-menu dropdown-alerts">
+                        <ul class="dropdown-menu dropdown-messages">
+
+                                <li ng-repeat="alert in alertsList | limitTo:5">
+                                    <a>
+                                        <div>
+                                            <i class="fa fa-envelope fa-fw"></i> {{alert.message}}
+                                            <span class="pull-right text-muted small">{{alert.notifiedDate}}</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+
                             <li>
-                                <a href="#">
-                                    <div>
-                                        <i class="fa fa-comment fa-fw"></i> New Comment
-                                        <span class="pull-right text-muted small">4 minutes ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                        <span class="pull-right text-muted small">12 minutes ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                        <span class="pull-right text-muted small">4 minutes ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <i class="fa fa-tasks fa-fw"></i> New Task
-                                        <span class="pull-right text-muted small">4 minutes ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                        <span class="pull-right text-muted small">4 minutes ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a class="text-center" href="#">
+                                <a class="text-center" href="#/watchList">
                                     <strong>See All Alerts</strong>
                                     <i class="fa fa-angle-right"></i>
                                 </a>
@@ -309,6 +275,14 @@
                             <li><a href="#/trades">Trades</a></li>
                         </ul>
                     </li>
+                    <li>
+                        <a>
+                            <i class="fa fa-bell fa-fw"></i>
+                        </a>
+                        <ul class="list-unstyled left-list-item">
+                            <li><a href="#/watchList">Watch List</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
             <!-- /#sidebar-wrapper -->
@@ -370,6 +344,7 @@
         <script type="text/javascript" src="app/scripts/controllers/ChartsController.js"></script>
         <script type="text/javascript" src="app/scripts/controllers/TradesController.js"></script>
         <script type="text/javascript" src="app/scripts/controllers/DialogFormController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/WatchListController.js"></script>
         
         <!-- directives -->
         <script type="text/javascript" src="app/scripts/directives/dropdown-menu.js"></script>
@@ -385,6 +360,8 @@
         <script type="text/javascript" src="app/scripts/services/dashboardService.js"></script>
         <script type="text/javascript" src="app/scripts/services/stockQuotesService.js"></script>
         <script type="text/javascript" src="app/scripts/services/chartService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/alertsService.js"></script>
+
         <!-- endbuild -->
     </body>
 </html>

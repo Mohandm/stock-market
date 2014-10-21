@@ -18,7 +18,9 @@ vsmApp.service('DialogService', function($compile, $http, $rootScope, $templateC
 	        childScope.targetURL = options.targetURL;
             childScope.formURL = options.formURL;
             childScope.showForm = options.showForm;
-	 
+            childScope.modalSize = options.modalSize;
+            childScope.passValuesToDialog = options.passValuesToDialog;
+
 	        $('body').append($compile(template)(childScope));
 	        $('#dialogModal').modal();
 	 
@@ -76,12 +78,14 @@ vsmApp.service('modals', function(DialogService,$http) {
        });
     };
 
-    this.showForm = function(title, form) {
+    this.showForm = function(title, form, passValuesToDialog , modalSize) {
             
             DialogService.open({            
                 title: title,
                 showForm: true,
-                formURL:'app/views/'+form+'.html'
+                formURL:'app/views/'+form+'.html',
+                passValuesToDialog:passValuesToDialog,
+                modalSize:modalSize
        });
     };
      
