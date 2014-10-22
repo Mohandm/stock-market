@@ -78,7 +78,7 @@
         });
     });
     
-    vsmApp.run(function ($rootScope,$http, AlertsService) {
+    vsmApp.run(function ($rootScope,$http, AlertsService, $location) {
         //make current message accessible to root scope and therefore all scopes
         $rootScope.message = function () {
             return message;
@@ -90,5 +90,16 @@
                 $rootScope.alertsList = data;
             });
         };
+
+        $rootScope.$on("$locationChangeStart", function (event, next, current) {
+            var array = ['/','/myPortfolio','/charts','/trades','/watchList'];
+            $rootScope.animateTransition = false;
+            $(array).each(function(index,item){
+                if($location.path() === item)
+                {
+                    $rootScope.animateTransition = true;
+                }
+            });
+        });
     });
 }());

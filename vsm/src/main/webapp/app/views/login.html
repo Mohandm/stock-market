@@ -1,4 +1,4 @@
-<div class="row blockContainer formContainer">
+<div class="row blockContainer">
     <div class="col-md-6 col-md-offset-3">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -7,27 +7,27 @@
             <div class="panel-body">
                 <form class="form-horizontal" name="mainForm" role="form" ng-controller="FormController"
                       action="j_spring_security_check.action" method="POST" novalidate>
-                    <div class="form-group">
-                        <div class="col-sm-4 control-label">
+                    <div class="row form-group">
+                        <div class="col-md-4 control-label">
                             <span class="required-error" ng-show="true">*</span>
                             <label >Email Address:</label>
                         </div>
-                        <div class="col-sm-8">
+                        <div class="col-md-8">
                             <input type="email" name="email" ng-model="formmodel.email" ng-required="true" class="form-control" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-sm-4 control-label">
+                    <div class="row form-group">
+                        <div class="col-md-4 control-label">
                             <span class="required-error" ng-show="true">*</span>
                             <label >Password:</label>
                         </div>
-                        <div class="col-sm-8">
+                        <div class="col-md-8">
                             <input type="password" name="password" ng-model="formmodel.password" ng-required="true" class="form-control" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-sm-6"></div>
-                        <div class="col-sm-6">
+                    <div class="row form-group">
+                        <div class="col-md-6"></div>
+                        <div class="col-md-6">
                             <input type="submit" class="btn btn-success" value = "Login"/>
                         </div>
                     </div>
