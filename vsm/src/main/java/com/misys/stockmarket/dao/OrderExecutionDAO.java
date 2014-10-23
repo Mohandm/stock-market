@@ -8,14 +8,15 @@ import org.springframework.stereotype.Service;
 
 import com.misys.stockmarket.domain.entity.OrderExecution;
 import com.misys.stockmarket.domain.entity.OrderMaster;
+import com.misys.stockmarket.exception.DAOException;
 import com.misys.stockmarket.exception.DBRecordNotFoundException;
 
 @Service("orderExecutionDAO")
 @Repository
-public class OrderExecutionDAO  extends BaseDAO {
-	
+public class OrderExecutionDAO extends BaseDAO {
+
 	public OrderExecution findByOrderMaster(OrderMaster orderMaster)
-			throws DBRecordNotFoundException {
+			throws DAOException {
 		try {
 			Query q = entityManager
 					.createQuery("select e from OrderExecution e where e.orderMaster = ?");
@@ -23,6 +24,8 @@ public class OrderExecutionDAO  extends BaseDAO {
 			return (OrderExecution) q.getSingleResult();
 		} catch (EmptyResultDataAccessException e) {
 			throw new DBRecordNotFoundException(e);
+		} catch (Exception e) {
+			throw new DAOException(e);
 		}
 	}
 

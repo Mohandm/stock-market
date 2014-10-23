@@ -17,11 +17,13 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.misys.stockmarket.dao.StockDAO;
 import com.misys.stockmarket.domain.entity.StockCurrentQuotes;
 import com.misys.stockmarket.domain.entity.StockHistory;
 import com.misys.stockmarket.domain.entity.StockMaster;
+import com.misys.stockmarket.enums.STOCK_ERR_CODES;
 import com.misys.stockmarket.exception.DAOException;
 import com.misys.stockmarket.exception.DBRecordNotFoundException;
 import com.misys.stockmarket.exception.FinancialServiceException;
@@ -43,8 +45,13 @@ public class StockService {
 	@Inject
 	IFinancialService financialService;
 
-	public List<String> listAllActiveStockSymbols() {
-		return stockDAO.findAllActiveStockSymbols();
+	public List<String> listAllActiveStockSymbols()
+			throws StockServiceException {
+		try {
+			return stockDAO.findAllActiveStockSymbols();
+		} catch (DAOException e) {
+			throw new StockServiceException(e);
+		}
 	}
 
 	public List<String> listAllStockSymbols() {
@@ -59,7 +66,8 @@ public class StockService {
 		}
 	}
 
-	public List<StockMaster> listAllInActiveStocks() throws StockServiceException {
+	public List<StockMaster> listAllInActiveStocks()
+			throws StockServiceException {
 		try {
 			return stockDAO.findAllInActiveStocks();
 		} catch (DAOException e) {
@@ -96,27 +104,43 @@ public class StockService {
 	}
 
 	public List<StockHistory> listStockHistory(String tickerSymbol,
-			Date startDate, Date endDate) {
-		StockMaster stockMaster = stockDAO.findByTickerSymbol(tickerSymbol);
-		return stockDAO.findStockHistory(stockMaster.getStockId(), startDate,
-				endDate);
+			Date startDate, Date endDate) throws StockServiceException {
+		try {
+			StockMaster stockMaster = stockDAO.findByTickerSymbol(tickerSymbol);
+			return stockDAO.findStockHistory(stockMaster.getStockId(),
+					startDate, endDate);
+		} catch (DAOException e) {
+			throw new StockServiceException(e);
+		}
 	}
 
-	public List<StockHistory> listStockHistory(String tickerSymbol) {
-		StockMaster stockMaster = stockDAO.findByTickerSymbol(tickerSymbol);
-		return stockDAO.findStockHistoryByStockId(stockMaster.getStockId());
+	public List<StockHistory> listStockHistory(String tickerSymbol)
+			throws StockServiceException {
+		try {
+			StockMaster stockMaster = stockDAO.findByTickerSymbol(tickerSymbol);
+			return stockDAO.findStockHistoryByStockId(stockMaster.getStockId());
+		} catch (DAOException e) {
+			throw new StockServiceException(e);
+		}
 	}
 
 	public StockCurrentQuotes getStockCurrentQuoteByStockSymbol(
-			String tickerSymbol) {
-		return stockDAO.findStockCurrentQuoteByTickerSymbol(tickerSymbol);
+			String tickerSymbol) throws StockServiceException {
+		try {
+			return stockDAO.findStockCurrentQuoteByTickerSymbol(tickerSymbol);
+		} catch (DBRecordNotFoundException e) {
+			throw new StockServiceException(
+					STOCK_ERR_CODES.CURRENT_DAY_STOCK_NOT_FOUND, e);
+		} catch (DAOException e) {
+			throw new StockServiceException(e);
+		}
 	}
 
 	public StockCurrentQuotes getStockCurrentQuoteByStockId(long stockId) {
 		return stockDAO.findStockCurrentQuoteByStockId(stockId);
 	}
 
-	public void saveStockHistory(
+	public void saveStockHistoryList(
 			List<QuoteHistoryJSONModel> quoteHistoryJSONModelList) {
 		Map<String, StockMaster> stockMasterByTickerMap = new HashMap<String, StockMaster>();
 		for (QuoteHistoryJSONModel quoteHistoryJSONModel : quoteHistoryJSONModelList) {
@@ -135,8 +159,13 @@ public class StockService {
 						.get(quoteHistoryJSONModel.Symbol);
 				stockHistory.setStockMaster(stockMaster);
 			} else {
-				StockMaster stockMaster = stockDAO
-						.findByTickerSymbol(quoteHistoryJSONModel.Symbol);
+				StockMaster stockMaster;
+				try {
+					stockMaster = stockDAO
+							.findByTickerSymbol(quoteHistoryJSONModel.Symbol);
+				} catch (DAOException e) {
+					continue;
+				}
 				stockHistory.setStockMaster(stockMaster);
 				stockMasterByTickerMap.put(quoteHistoryJSONModel.Symbol,
 						stockMaster);
@@ -146,12 +175,20 @@ public class StockService {
 						.getStockMaster().getStockId(), stockHistory
 						.getStockDate());
 			} catch (DBRecordNotFoundException e) {
-				try {
-					stockDAO.persist(stockHistory);
-				} catch (DAOException daoException) {
-					LOG.error(daoException);
-				}
+				saveStockHistory(stockHistory);
 			}
+		}
+	}
+
+	/**
+	 * @param stockHistory
+	 */
+	@Transactional(rollbackFor = DAOException.class)
+	private void saveStockHistory(StockHistory stockHistory) {
+		try {
+			stockDAO.persist(stockHistory);
+		} catch (DAOException daoException) {
+			LOG.error(daoException);
 		}
 	}
 
@@ -193,7 +230,11 @@ public class StockService {
 				stockMasterByTickerMap.put(quoteCurrentJSONModel.symbol,
 						stockMaster);
 			}
-			stockDAO.updateCurrentStock(stockCurrent);
+			try {
+				stockDAO.updateCurrentStock(stockCurrent);
+			} catch (DAOException e) {
+				LOG.error(e);
+			}
 		}
 	}
 
@@ -283,7 +324,7 @@ public class StockService {
 									List.class, QuoteHistoryJSONModel.class));
 				}
 
-				saveStockHistory(quoteHistoryJSONModels);
+				saveStockHistoryList(quoteHistoryJSONModels);
 			} catch (JsonParseException e) {
 				throw new FinancialServiceException(e);
 			} catch (JsonMappingException e) {

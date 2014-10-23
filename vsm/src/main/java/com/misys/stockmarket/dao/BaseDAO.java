@@ -9,8 +9,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import com.misys.stockmarket.domain.entity.BaseEntity;
 import com.misys.stockmarket.exception.DAOException;
 
@@ -23,7 +21,6 @@ public class BaseDAO implements IBaseDAO {
 		this.entityManager = entityManager;
 	}
 
-	// @Transactional
 	@Override
 	public <T extends BaseEntity> void persist(T anyEntity) throws DAOException {
 		try {
@@ -33,7 +30,6 @@ public class BaseDAO implements IBaseDAO {
 		}
 	}
 
-	@Transactional
 	@Override
 	public <T extends BaseEntity> void delete(T anyEntity) throws DAOException {
 		try {
@@ -43,7 +39,6 @@ public class BaseDAO implements IBaseDAO {
 		}
 	}
 
-	// @Transactional
 	@Override
 	public <T extends BaseEntity> void update(T anyEntity) throws DAOException {
 		try {

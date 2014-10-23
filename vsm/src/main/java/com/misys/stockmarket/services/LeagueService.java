@@ -59,6 +59,8 @@ public class LeagueService {
 					.findByName(IApplicationConstants.DEFAULT_LEAGUE_NAME);
 		} catch (DBRecordNotFoundException e) {
 			throw new LeagueException(LEAGUE_ERR_CODES.LEAGUE_NOT_FOUND);
+		} catch (DAOException e) {
+			throw new LeagueException(LEAGUE_ERR_CODES.UNKNOWN);
 		}
 	}
 

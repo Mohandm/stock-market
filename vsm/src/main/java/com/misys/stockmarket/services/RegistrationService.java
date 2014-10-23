@@ -12,6 +12,7 @@ import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.domain.entity.UserMaster;
 import com.misys.stockmarket.enums.VALIDATION_MODE;
 import com.misys.stockmarket.exception.BaseException;
+import com.misys.stockmarket.exception.DAOException;
 import com.misys.stockmarket.exception.LeagueException;
 import com.misys.stockmarket.mbeans.UserFormBean;
 import com.misys.stockmarket.services.email.EmailSenderService;
@@ -37,7 +38,7 @@ public class RegistrationService {
 	@Inject
 	private PasswordEncoder passwordEncoder;
 
-	@Transactional(rollbackFor = BaseException.class)
+	@Transactional(rollbackFor = DAOException.class)
 	public void registerUser(UserFormBean userFormBean) throws BaseException {
 
 		// LINK TO DEFAULT GROUP

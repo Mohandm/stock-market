@@ -44,21 +44,17 @@ public class UserBizHandler {
 
 	public ResponseMessage registerUser(UserFormBean userFormBean) {
 		try {
-
 			registrationService.registerUser(userFormBean);
-
 			return new ResponseMessage(
 					ResponseMessage.Type.success,
 					"You have been successfully registered. A verification link has been sent to your email. Please verify it to continue playing the game");
 		} catch (UserProfileValidationException e) {
-			// TODO: Implement error message from exception
-			e.printStackTrace();
+			LOG.error(e);
 			return new ResponseMessage(ResponseMessage.Type.danger,
 					"There was a validation error while registering. Please try again");
 
 		} catch (Exception e) {
-
-			e.printStackTrace();
+			LOG.error(e);
 			return new ResponseMessage(ResponseMessage.Type.danger,
 					"There was a technical error while registering. Please try again");
 		}

@@ -12,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.dao.OrderExecutionDAO;
@@ -22,6 +23,11 @@ import com.misys.stockmarket.domain.entity.OrderExecution;
 import com.misys.stockmarket.domain.entity.OrderMaster;
 import com.misys.stockmarket.domain.entity.UserMaster;
 import com.misys.stockmarket.exception.BaseException;
+import com.misys.stockmarket.exception.DAOException;
+import com.misys.stockmarket.exception.DBRecordNotFoundException;
+import com.misys.stockmarket.exception.EmailNotFoundException;
+import com.misys.stockmarket.exception.LeagueException;
+import com.misys.stockmarket.exception.service.OrderServiceException;
 import com.misys.stockmarket.mbeans.OrderFormBean;
 import com.misys.stockmarket.platform.web.ResponseMessage;
 
@@ -46,10 +52,10 @@ public class OrderService {
 	@Inject
 	private LeagueService leagueService;
 
-	 @PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseMessage saveNewOrder(OrderFormBean orderFormBean) {
-		// Validate bean
-
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@Transactional(rollbackFor = DAOException.class)
+	public void saveNewOrder(OrderFormBean orderFormBean)
+			throws OrderServiceException {
 		// Process order
 		try {
 			OrderMaster orderMaster = new OrderMaster();
@@ -69,27 +75,34 @@ public class OrderService {
 					.getLoggedInUser().getUserId());
 			orderMaster.setLeagueUser(leagueUser);
 			orderMasterDAO.persist(orderMaster);
-			return new ResponseMessage(ResponseMessage.Type.success,
-					"Your order has been placed.");
-		} catch (BaseException e) {
-			LOG.error(e);
-			return new ResponseMessage(ResponseMessage.Type.danger,
-					"There was a technical error while processing your order. Please try again");
+		} catch (DBRecordNotFoundException e) {
+			throw new OrderServiceException(e);
+		} catch (LeagueException e) {
+			throw new OrderServiceException(e);
+		} catch (EmailNotFoundException e) {
+			throw new OrderServiceException(e);
+		} catch (DAOException e) {
+			throw new OrderServiceException(e);
 		}
 	}
 
 	public List<OrderExecution> getAllCompletedOrdersForLoggedInUser()
-			throws Exception {
-
+			throws OrderServiceException {
 		List<OrderExecution> completedOrders = new ArrayList<OrderExecution>();
-		UserMaster userMaster = userService.getLoggedInUser();
-		List<OrderMaster> completedOrderMasters = orderMasterDAO
-				.findAllCompletedOrders(userMaster);
-		for (Iterator<OrderMaster> iterator = completedOrderMasters.iterator(); iterator
-				.hasNext();) {
-			OrderMaster orderMaster = (OrderMaster) iterator.next();
-			completedOrders.add(orderExecutionDAO
-					.findByOrderMaster(orderMaster));
+		try {
+			UserMaster userMaster = userService.getLoggedInUser();
+			List<OrderMaster> completedOrderMasters = orderMasterDAO
+					.findAllCompletedOrders(userMaster);
+			for (OrderMaster orderMaster : completedOrderMasters) {
+				completedOrders.add(orderExecutionDAO
+						.findByOrderMaster(orderMaster));
+			}
+		} catch (EmailNotFoundException e) {
+			LOG.error(e);
+			throw new OrderServiceException(e);
+		} catch (DAOException e) {
+			LOG.error(e);
+			throw new OrderServiceException(e);
 		}
 		return completedOrders;
 	}

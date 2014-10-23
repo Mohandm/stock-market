@@ -35,15 +35,16 @@ public class StockDAO extends BaseDAO {
 		return findByFilter(StockMaster.class, criteria);
 	}
 
-	public StockMaster findBySymbol(String symbol)
-			throws DBRecordNotFoundException {
+	public StockMaster findBySymbol(String symbol) throws DAOException {
 		try {
 			Query q = entityManager
-					.createQuery("select e from StockMaster e where e.tikerSymbol = ?");
+					.createQuery("select e from StockMaster e where e.tikerSymbol = ?1 ");
 			q.setParameter(1, symbol);
 			return (StockMaster) q.getSingleResult();
 		} catch (EmptyResultDataAccessException e) {
 			throw new DBRecordNotFoundException(e);
+		} catch (Exception e) {
+			throw new DAOException(e);
 		}
 	}
 
@@ -51,12 +52,17 @@ public class StockDAO extends BaseDAO {
 	 * Method to return the list of all the active tiker symbols
 	 * 
 	 * @return List<String>
+	 * @throws DAOException
 	 */
-	public List<String> findAllActiveStockSymbols() {
-		Query q = entityManager
-				.createQuery("select e.tikerSymbol from StockMaster e where e.active = ? ");
-		q.setParameter(1, IApplicationConstants.STOCK_ACTIVE);
-		return q.getResultList();
+	public List<String> findAllActiveStockSymbols() throws DAOException {
+		try {
+			Query q = entityManager
+					.createQuery("select e.tikerSymbol from StockMaster e where e.active = ?1 ");
+			q.setParameter(1, IApplicationConstants.STOCK_ACTIVE);
+			return q.getResultList();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
 	}
 
 	public List<String> findAllStockSymbols() {
@@ -65,17 +71,23 @@ public class StockDAO extends BaseDAO {
 		return q.getResultList();
 	}
 
-	public StockMaster findByTickerSymbol(String symbol) {
-		Query q = entityManager
-				.createQuery("select e from StockMaster e where e.tikerSymbol = ? and e.active = ? ");
-		q.setParameter(1, symbol);
-		q.setParameter(2, IApplicationConstants.STOCK_ACTIVE);
-		return (StockMaster) q.getSingleResult();
+	public StockMaster findByTickerSymbol(String symbol) throws DAOException {
+		try {
+			Query q = entityManager
+					.createQuery("select e from StockMaster e where e.tikerSymbol = ?1 and e.active = ?2 ");
+			q.setParameter(1, symbol);
+			q.setParameter(2, IApplicationConstants.STOCK_ACTIVE);
+			return (StockMaster) q.getSingleResult();
+		} catch (EmptyResultDataAccessException e) {
+			throw new DBRecordNotFoundException(e);
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
 	}
 
 	public StockMaster findByAllTickerSymbol(String symbol) {
 		Query q = entityManager
-				.createQuery("select e from StockMaster e where e.tikerSymbol = ?");
+				.createQuery("select e from StockMaster e where e.tikerSymbol = ?1 ");
 		q.setParameter(1, symbol);
 		return (StockMaster) q.getSingleResult();
 	}
@@ -84,7 +96,7 @@ public class StockDAO extends BaseDAO {
 			Date stockDate) throws DBRecordNotFoundException {
 		try {
 			Query q = entityManager
-					.createQuery("select e from StockHistory e where e.stockMaster.stockId = ? and e.stockDate = ? ");
+					.createQuery("select e from StockHistory e where e.stockMaster.stockId = ?1 and e.stockDate = ?2 ");
 			q.setParameter(1, stockId);
 			q.setParameter(2, stockDate);
 			return (StockHistory) q.getSingleResult();
@@ -95,52 +107,68 @@ public class StockDAO extends BaseDAO {
 
 	public StockCurrentQuotes findStockCurrentQuoteByStockId(long stockId) {
 		Query q = entityManager
-				.createQuery("select e from StockCurrentQuotes e where e.stockMaster.stockId = ?");
+				.createQuery("select e from StockCurrentQuotes e where e.stockMaster.stockId = ?1 ");
 		q.setParameter(1, stockId);
 		return (StockCurrentQuotes) q.getSingleResult();
 	}
 
 	public StockCurrentQuotes findStockCurrentQuoteByTickerSymbol(
-			String tickerSymbol) {
-		Query q = entityManager
-				.createQuery("select e from StockCurrentQuotes e join fetch e.stockMaster where e.stockMaster.tikerSymbol = ?");
-		q.setParameter(1, tickerSymbol);
-		return (StockCurrentQuotes) q.getSingleResult();
+			String tickerSymbol) throws DAOException {
+		try {
+			Query q = entityManager
+					.createQuery("select e from StockCurrentQuotes e join fetch e.stockMaster where e.stockMaster.tikerSymbol = ?1 ");
+			q.setParameter(1, tickerSymbol);
+			return (StockCurrentQuotes) q.getSingleResult();
+		} catch (EmptyResultDataAccessException e) {
+			throw new DBRecordNotFoundException(e);
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
 	}
 
 	@Transactional
-	public void updateCurrentStock(StockCurrentQuotes stockCurrentQuotes) {
+	public void updateCurrentStock(StockCurrentQuotes stockCurrentQuotes)
+			throws DAOException {
 		try {
 			Query q = entityManager
-					.createQuery("delete from StockCurrentQuotes e where e.stockMaster.stockId = ?");
+					.createQuery("delete from StockCurrentQuotes e where e.stockMaster.stockId = ?1");
 			q.setParameter(1, stockCurrentQuotes.getStockMaster().getStockId());
 			q.executeUpdate();
 			entityManager.persist(stockCurrentQuotes);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new DAOException(e);
 		}
 	}
 
 	public List<StockHistory> findStockHistory(long stockId, Date startDate,
-			Date endDate) {
-		Query q = entityManager
-				.createQuery("select e from StockHistory e where e.stockMaster.stockId = ? and e.stockDate between ? and ? order by e.stockDate ");
-		q.setParameter(1, stockId);
-		q.setParameter(2, startDate);
-		q.setParameter(3, endDate);
-		return (List<StockHistory>) q.getResultList();
+			Date endDate) throws DAOException {
+		try {
+			Query q = entityManager
+					.createQuery("select e from StockHistory e where e.stockMaster.stockId = ?1 and e.stockDate between ?2 and ?3 order by e.stockDate ");
+			q.setParameter(1, stockId);
+			q.setParameter(2, startDate);
+			q.setParameter(3, endDate);
+			return (List<StockHistory>) q.getResultList();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
 	}
 
-	public List<StockHistory> findStockHistoryByStockId(long stockId) {
-		Query q = entityManager
-				.createQuery("select e from StockHistory e where e.stockMaster.stockId = ? order by e.stockDate");
-		q.setParameter(1, stockId);
-		return (List<StockHistory>) q.getResultList();
+	public List<StockHistory> findStockHistoryByStockId(long stockId)
+			throws DAOException {
+		try {
+			Query q = entityManager
+					.createQuery("select e from StockHistory e where e.stockMaster.stockId = ?1 order by e.stockDate");
+			q.setParameter(1, stockId);
+			return (List<StockHistory>) q.getResultList();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
 	}
 
 	public Date findMaxStockHistoryStockDate(long stockId) {
 		Query q = entityManager
-				.createQuery("select max(e.stockDate) from StockHistory e where e.stockMaster.stockId = ? ");
+				.createQuery("select max(e.stockDate) from StockHistory e where e.stockMaster.stockId = ?1 ");
 		q.setParameter(1, stockId);
 		return (Date) q.getSingleResult();
 	}

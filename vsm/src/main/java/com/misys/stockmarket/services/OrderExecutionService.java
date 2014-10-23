@@ -70,17 +70,39 @@ public class OrderExecutionService {
 	@Transactional(rollbackFor = BaseException.class)
 	private void executeOrder(OrderMaster orderMaster) throws BaseException {
 		if (isEligible(orderMaster)) {
-			BigDecimal volume = orderMaster.getVolume();
-			BigDecimal executionPrice = getCurrentPrice(
-					orderMaster.getStockMaster()).multiply(volume);
 			LOG.info("Executing the order " + orderMaster.getOrderId());
 			try {
+				BigDecimal volume = orderMaster.getVolume();
+				BigDecimal executionPrice = getCurrentPrice(
+						orderMaster.getStockMaster()).multiply(volume);
 				LeagueUser leagueUser = leagueService
 						.getLeagueUserById(orderMaster.getLeagueUser()
 								.getLeagueUserId());
-				if (leagueUser.getRemainingAmount().compareTo(executionPrice) >= 0) {
+				if (IApplicationConstants.BUY_TYPE
+						.equals(orderMaster.getType())) {
+					if (leagueUser.getRemainingAmount().compareTo(
+							executionPrice) >= 0) {
+						// SUBSTRACT FROM LEAGUE AMOUNT
+						leagueUser.setRemainingAmount(leagueUser
+								.getRemainingAmount().subtract(executionPrice));
+						leagueDAO.update(leagueUser);
+						// Create order execution entry
+						OrderExecution orderExecution = new OrderExecution();
+						orderExecution.setOrderMaster(orderMaster);
+						orderExecution.setUnitsTraded(volume);
+						orderExecution.setExecutionPrice(executionPrice);
+						orderExecution.setExecutionDate(new Date());
+						orderDAO.persist(orderExecution);
+						orderMaster
+								.setStatus(IApplicationConstants.ORDER_STATUS_COMPLETED);
+					} else {
+						orderMaster
+								.setStatus(IApplicationConstants.ORDER_STATUS_INSUFFICIENT_FUNDS);
+					}
+				} else {
+					// ADD TO LEAGUE AMOUNT
 					leagueUser.setRemainingAmount(leagueUser
-							.getRemainingAmount().subtract(executionPrice));
+							.getRemainingAmount().add(executionPrice));
 					leagueDAO.update(leagueUser);
 					// Create order execution entry
 					OrderExecution orderExecution = new OrderExecution();
@@ -88,21 +110,18 @@ public class OrderExecutionService {
 					orderExecution.setUnitsTraded(volume);
 					orderExecution.setExecutionPrice(executionPrice);
 					orderExecution.setExecutionDate(new Date());
-
+					orderDAO.persist(orderExecution);
 					orderMaster
 							.setStatus(IApplicationConstants.ORDER_STATUS_COMPLETED);
-					orderDAO.persist(orderExecution);
-				} else {
-					orderMaster
-							.setStatus(IApplicationConstants.ORDER_STATUS_INSUFFICIENT_FUNDS);
 				}
+				LOG.info("Completed executing the order "
+						+ orderMaster.getOrderId());
+				// Update order master entry
+				orderExecutionDAO.update(orderMaster);
 			} catch (LeagueException e) {
 				LOG.error(e);
 			}
-			LOG.info("Completed executing the order "
-					+ orderMaster.getOrderId());
-			// Update order master entry
-			orderExecutionDAO.update(orderMaster);
+
 		}
 	}
 

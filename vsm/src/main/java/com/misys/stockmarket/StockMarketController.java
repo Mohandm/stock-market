@@ -20,8 +20,10 @@ import com.misys.stockmarket.domain.entity.StockCurrentQuotes;
 import com.misys.stockmarket.domain.entity.StockHistory;
 import com.misys.stockmarket.domain.entity.StockMaster;
 import com.misys.stockmarket.domain.entity.UserAlerts;
+import com.misys.stockmarket.enums.STOCK_ERR_CODES;
 import com.misys.stockmarket.exception.ServiceException;
 import com.misys.stockmarket.exception.service.AlertsServiceException;
+import com.misys.stockmarket.exception.service.OrderServiceException;
 import com.misys.stockmarket.exception.service.StockServiceException;
 import com.misys.stockmarket.handlers.user.UserBizHandler;
 import com.misys.stockmarket.mbeans.OrderFormBean;
@@ -83,14 +85,28 @@ public class StockMarketController {
 	@ResponseBody
 	public ResponseMessage buyStock(@RequestBody OrderFormBean orderFormBean) {
 		orderFormBean.setType(IApplicationConstants.BUY_TYPE);
-		return orderService.saveNewOrder(orderFormBean);
+		try {
+			orderService.saveNewOrder(orderFormBean);
+			return new ResponseMessage(ResponseMessage.Type.success,
+					"Your order has been placed.");
+		} catch (OrderServiceException e) {
+			return new ResponseMessage(ResponseMessage.Type.danger,
+					"There was a technical error while processing your order. Please try again");
+		}
 	}
 
 	@RequestMapping(value = "/sellstock", method = { RequestMethod.POST })
 	@ResponseBody
 	public ResponseMessage sellStock(@RequestBody OrderFormBean orderFormBean) {
 		orderFormBean.setType(IApplicationConstants.SELL_TYPE);
-		return orderService.saveNewOrder(orderFormBean);
+		try {
+			orderService.saveNewOrder(orderFormBean);
+			return new ResponseMessage(ResponseMessage.Type.success,
+					"Your order has been placed.");
+		} catch (OrderServiceException e) {
+			return new ResponseMessage(ResponseMessage.Type.danger,
+					"There was a technical error while processing your order. Please try again");
+		}
 	}
 
 	@RequestMapping(value = "/watchStock", method = { RequestMethod.POST })
@@ -131,7 +147,19 @@ public class StockMarketController {
 	@ResponseBody
 	public StockCurrentQuotes stockListCurrentQuotes(
 			@RequestParam("stockSymbol") String symbol) {
-		return stockService.getStockCurrentQuoteByStockSymbol(symbol);
+		try {
+			return stockService.getStockCurrentQuoteByStockSymbol(symbol);
+		} catch (StockServiceException e) {
+			if (STOCK_ERR_CODES.CURRENT_DAY_STOCK_NOT_FOUND.compareTo(e
+					.getErrorCode()) == 0) {
+				LOG.error("Current Day Stock Not Found for Ticker Symbol: "
+						+ symbol, e);
+			} else {
+				LOG.error(e);
+			}
+			// TODO: HANDLE WHEN EXCEPTION
+			return null;
+		}
 	}
 
 	@RequestMapping(value = "/stockListAllCurrentQuotes", method = {
@@ -152,7 +180,13 @@ public class StockMarketController {
 	@ResponseBody
 	public List<StockHistory> stockListHistory(
 			@RequestParam("stockSymbol") String symbol) {
-		return stockService.listStockHistory(symbol);
+		try {
+			return stockService.listStockHistory(symbol);
+		} catch (StockServiceException e) {
+			LOG.error(e);
+			// TODO: HANDLE WHEN EXCEPTION
+			return null;
+		}
 	}
 
 	@RequestMapping("/")
