@@ -540,3 +540,21 @@ input[type="text"].ui-grid-filter-input{
     height : 28px;
 }
 /* Share buttons : End */
+.popover{
+    background : rgba(0,0,0,.85);
+    color:white;
+}
+.popover-title{
+    background : rgba(0,0,0,.55);
+    color:white;
+}
+.popover .btn{
+    background : rgba(0,0,0,.65);
+    color:white;
+}
+.popover.top > .arrow:after{
+    border-top-color : rgba(0,0,0,.65);
+}
+.popover.bottom > .arrow:after{
+    border-bottom-color : rgba(0,0,0,.65);
+}

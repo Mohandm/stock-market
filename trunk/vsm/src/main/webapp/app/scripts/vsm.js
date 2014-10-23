@@ -78,7 +78,7 @@
         });
     });
     
-    vsmApp.run(function ($rootScope,$http, AlertsService, $location) {
+    vsmApp.run(function ($rootScope,$http, AlertsService, $location,TourService) {
         //make current message accessible to root scope and therefore all scopes
         $rootScope.message = function () {
             return message;
@@ -89,6 +89,18 @@
             alertsListPromise.then(function(data){
                 $rootScope.alertsList = data;
             });
+        };
+
+        $rootScope.startTour = function(){
+            var steps = TourService.getCurrentPageSetup();
+
+            $rootScope.tour = new Tour({
+                steps: steps,
+            });
+            // Initialize the tour
+            $rootScope.tour.init();
+
+            $rootScope.tour.start(true);
         };
 
         $rootScope.$on("$locationChangeStart", function (event, next, current) {

@@ -5,7 +5,7 @@
                 <h3 class="panel-title">Comparison Charts</h3>
             </div>
             <div class="panel-body">
-                <div class="row blockContainer">
+                <div class="row blockContainer" id="charts-symbols-id">
                     <div class="col-md-3">
                         <div class="field-wrapper"><label>First Symbol:</label><select type="text" ng-change="reloadComparisonChart(tickerSelectedFirst,1)" ng-model="tickerSelectedFirst" ng-options="stockList as (stockList.name+' - '+ stockList.tikerSymbol) for stockList in stockLists  | filter:{tikerSymbol:$viewValue}" class="form-control singleSelect"/></div>
                     </div>
@@ -23,7 +23,7 @@
                     <h4>Daily Percentage Changes are taken into consideration for comparisons</h4>
                 </div>
                 <!---->
-                <div>
+                <div id="charts-multi-bar-id">
                     <nvd3-multi-bar-chart
                             data="historicalChartData"
                             id="historicalChartDataId"
@@ -41,7 +41,7 @@
                         <svg></svg>
                     </nvd3-multi-bar-chart>
                 </div>
-                <div>
+                <div id="charts-stacked-area-id">
                     <nvd3-stacked-area-chart
                             data="historicalChartData"
                             id="historicalChartDataId1"

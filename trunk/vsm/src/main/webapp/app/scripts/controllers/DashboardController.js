@@ -1,12 +1,13 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.controller('DashboardController', ['$scope', '$rootScope', '$http', '$modal', '$log', 'NewsService','DashboardService','StockQuotesService','ChartService',
-    function ($scope, $rootScope, $http, $modal, $log, NewsService, DashboardService, StockQuotesService, ChartService) {
+vsmApp.controller('DashboardController', ['$scope', '$rootScope', '$http', '$modal', '$log', 'NewsService','DashboardService','StockQuotesService','ChartService','TourService',
+    function ($scope, $rootScope, $http, $modal, $log, NewsService, DashboardService, StockQuotesService, ChartService, TourService) {
 
     $scope.$scope = $scope;
 
     //Add this to all page controllers
     $rootScope.onPageLoad();
+    TourService.setupTour('dashboard');
 
     /* News */
     NewsService.reloadNews(null);
@@ -32,6 +33,11 @@ vsmApp.controller('DashboardController', ['$scope', '$rootScope', '$http', '$mod
         $(breakingNews.timeoutArray).each(function(index,item){
             clearTimeout(item);
         });
+        if($rootScope.tour)
+        {
+            $rootScope.tour.end();
+            $rootScope.tour = null;
+        }
     });
 
     /* Stocks Listing */

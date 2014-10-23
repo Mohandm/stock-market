@@ -1,14 +1,23 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.controller('ChartsController', ['$scope', '$rootScope', '$log', 'ChartService', 'StockQuotesService',
-    function ($scope, $rootScope, $log, ChartService, StockQuotesService) {
+vsmApp.controller('ChartsController', ['$scope', '$rootScope', '$log', 'ChartService', 'StockQuotesService','TourService',
+    function ($scope, $rootScope, $log, ChartService, StockQuotesService, TourService) {
 
         //Add this to all page controllers
         $rootScope.onPageLoad();
+        TourService.setupTour('chart');
 
         var stockListsPromise = StockQuotesService.getStockLists();
         stockListsPromise.then(function(data){
             $scope.stockLists = data;
+        });
+
+        $scope.$on('$destroy', function(){
+            if($rootScope.tour)
+            {
+                $rootScope.tour.end();
+                $rootScope.tour = null;
+            }
         });
 
         $scope.historicalChartData = [];
