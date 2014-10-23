@@ -105,6 +105,7 @@
 
             $rootScope.tour = new Tour({
                 steps: steps,
+                storage : false
             });
             // Initialize the tour
             $rootScope.tour.init();
