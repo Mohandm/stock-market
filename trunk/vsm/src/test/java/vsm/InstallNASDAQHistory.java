@@ -15,6 +15,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.misys.stockmarket.exception.FinancialServiceException;
+import com.misys.stockmarket.exception.service.StockServiceException;
 import com.misys.stockmarket.model.json.QuoteHistoryJSONModel;
 import com.misys.stockmarket.services.IFinancialService;
 import com.misys.stockmarket.services.StockService;
@@ -26,7 +27,7 @@ public class InstallNASDAQHistory {
 			.getLog(InstallNASDAQHistory.class);
 
 	public static void main(String as[]) throws UnsupportedEncodingException,
-			FinancialServiceException {
+			FinancialServiceException, StockServiceException {
 
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
 				"META-INF\\spring\\applicationContext.xml");
@@ -49,7 +50,7 @@ public class InstallNASDAQHistory {
 							quoteArray,
 							mapper.getTypeFactory().constructCollectionType(
 									List.class, QuoteHistoryJSONModel.class));
-			stockService.saveStockHistory(quoteHistoryJSONModels);
+			stockService.saveStockHistoryList(quoteHistoryJSONModels);
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {

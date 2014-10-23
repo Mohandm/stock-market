@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.misys.stockmarket.domain.entity.StockHistory;
+import com.misys.stockmarket.exception.service.StockServiceException;
 import com.misys.stockmarket.services.StockService;
 import com.misys.stockmarket.utility.DateUtils;
 
@@ -18,11 +19,17 @@ public class TestStockHistory {
 		StockService stockService = (StockService) applicationContext
 				.getBean("stockService");
 
-		List<StockHistory> stockHistoryList = stockService.listStockHistory(
-				"AAPL", DateUtils.getPastMonthFromCurrentDate(6), new Date());
-		System.out.println("HISTORY SIZE:" + stockHistoryList.size());
-		for (StockHistory stockHistory : stockHistoryList) {
-			System.out.println(stockHistory);
+		try {
+			List<StockHistory> stockHistoryList = stockService
+					.listStockHistory("AAPL",
+							DateUtils.getPastMonthFromCurrentDate(6),
+							new Date());
+			System.out.println("HISTORY SIZE:" + stockHistoryList.size());
+			for (StockHistory stockHistory : stockHistoryList) {
+				System.out.println(stockHistory);
+			}
+		} catch (StockServiceException e) {
+			e.printStackTrace();
 		}
 	}
 

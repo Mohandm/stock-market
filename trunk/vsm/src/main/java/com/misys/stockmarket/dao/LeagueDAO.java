@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.misys.stockmarket.domain.entity.LeagueMaster;
 import com.misys.stockmarket.domain.entity.LeagueUser;
+import com.misys.stockmarket.exception.DAOException;
 import com.misys.stockmarket.exception.DBRecordNotFoundException;
 
 @Service("leagueDAO")
 @Repository
 public class LeagueDAO extends BaseDAO {
 
-	public LeagueMaster findByName(String name)
-			throws DBRecordNotFoundException {
+	public LeagueMaster findByName(String name) throws DAOException {
 		try {
 			Query q = entityManager
 					.createQuery("select e from LeagueMaster e where e.name = ? ");
@@ -23,6 +23,8 @@ public class LeagueDAO extends BaseDAO {
 			return (LeagueMaster) q.getSingleResult();
 		} catch (EmptyResultDataAccessException e) {
 			throw new DBRecordNotFoundException(e);
+		} catch (Exception e) {
+			throw new DAOException(e);
 		}
 	}
 
