@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.misys.stockmarket.exception.FinancialServiceException;
 import com.misys.stockmarket.services.AlertsService;
+import com.misys.stockmarket.services.OrderExecutionService;
 import com.misys.stockmarket.services.StockService;
 
 @Component
@@ -22,7 +23,10 @@ public class ScheduledTaskUpdateStockCurrentQuotes {
 
 	@Inject
 	private StockService stockService;
-	
+
+	@Inject
+	private OrderExecutionService orderExecutionService;
+
 	@Inject
 	private AlertsService alertsService;
 
@@ -36,11 +40,17 @@ public class ScheduledTaskUpdateStockCurrentQuotes {
 		List<String> stockList = stockService.listAllStockSymbols();
 		try {
 			stockService.updateStockCurrentQuotes(stockList);
+			LOG.info("SCHEDULED TASK: UPDATE STOCK CURRENT QUOTES ENDED");
+			LOG.info("SCHEDULED TASK: TRIGGER WATCH ALERTS STARTED");
 			alertsService.triggerWatchStockAlerts();
+			LOG.info("SCHEDULED TASK: TRIGGER WATCH ALERTS ENDED");
+			LOG.info("SCHEDULED TASK: EXECUTE ORDERS STARTED");
+			orderExecutionService.executeOrders();
+			LOG.info("SCHEDULED TASK: EXECUTE ORDERS ENDED");
 		} catch (FinancialServiceException e) {
 			LOG.error(
-					"Technical Error while updating stock current quotes for stock: ", e);
+					"Technical Error while updating stock current quotes for stock: ",
+					e);
 		}
-		LOG.info("SCHEDULED TASK: UPDATE STOCK CURRENT QUOTES ENDED");
 	}
 }

@@ -44,15 +44,12 @@ public class OrderMaster implements BaseEntity, Serializable {
 	@JoinColumn(name = "STOCK_ID")
 	private StockMaster stockMaster;
 
+	
 	@ManyToOne
-	@JoinColumn(name = "USER_ID")
-	private UserMaster userMaster;
-
+	@JoinColumn(name = "LEAGUE_USER_ID")
+	private LeagueUser leagueUser;
+	
 	private BigDecimal volume;
-
-	@ManyToOne
-	@JoinColumn(name = "LEAGUE_ID")
-	private LeagueMaster leagueMaster;
 
 	public OrderMaster() {
 	}
@@ -129,20 +126,12 @@ public class OrderMaster implements BaseEntity, Serializable {
 		this.stockMaster = stockMaster;
 	}
 
-	public UserMaster getUserMaster() {
-		return userMaster;
+	public LeagueUser getLeagueUser() {
+		return leagueUser;
 	}
 
-	public void setUserMaster(UserMaster userMaster) {
-		this.userMaster = userMaster;
-	}
-
-	public LeagueMaster getLeagueMaster() {
-		return leagueMaster;
-	}
-
-	public void setLeagueMaster(LeagueMaster leagueMaster) {
-		this.leagueMaster = leagueMaster;
+	public void setLeagueUser(LeagueUser leagueUser) {
+		this.leagueUser = leagueUser;
 	}
 
 }

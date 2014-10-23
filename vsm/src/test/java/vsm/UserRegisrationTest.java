@@ -3,6 +3,7 @@ package vsm;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.misys.stockmarket.exception.BaseException;
 import com.misys.stockmarket.exception.UserProfileValidationException;
 import com.misys.stockmarket.mbeans.UserFormBean;
 import com.misys.stockmarket.services.RegistrationService;
@@ -23,7 +24,7 @@ public class UserRegisrationTest {
 			userFormBean.setPassword("password");
 			userFormBean.setConfirmPassword("password");
 			registrationService.registerUser(userFormBean);
-		} catch (UserProfileValidationException e) {
+		} catch (BaseException e) {
 		}
 	}
 

@@ -10,17 +10,19 @@ import org.springframework.stereotype.Service;
 import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.domain.entity.OrderMaster;
 import com.misys.stockmarket.domain.entity.UserMaster;
+import com.misys.stockmarket.exception.DAOException;
 
 @Service("orderMasterDAO")
 @Repository
 public class OrderMasterDAO extends BaseDAO {
-	public List<OrderMaster> findAllPendingOrders() {
+	public List<OrderMaster> findAllPendingOrders() throws DAOException {
 		Map<String, Object> criteria = new HashMap<String, Object>();
 		criteria.put("status", IApplicationConstants.ORDER_STATUS_PENDING);
 		return findByFilter(OrderMaster.class, criteria);
 	}
-	
-	public List<OrderMaster> findAllCompletedOrders (UserMaster userMaster) {
+
+	public List<OrderMaster> findAllCompletedOrders(UserMaster userMaster)
+			throws DAOException {
 		Map<String, Object> criteria = new HashMap<String, Object>();
 		criteria.put("userMaster", userMaster);
 		criteria.put("status", IApplicationConstants.ORDER_STATUS_COMPLETED);

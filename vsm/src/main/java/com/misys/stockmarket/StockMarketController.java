@@ -1,10 +1,11 @@
 package com.misys.stockmarket;
 
-
 import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,9 @@ import com.misys.stockmarket.domain.entity.StockCurrentQuotes;
 import com.misys.stockmarket.domain.entity.StockHistory;
 import com.misys.stockmarket.domain.entity.StockMaster;
 import com.misys.stockmarket.domain.entity.UserAlerts;
+import com.misys.stockmarket.exception.ServiceException;
+import com.misys.stockmarket.exception.service.AlertsServiceException;
+import com.misys.stockmarket.exception.service.StockServiceException;
 import com.misys.stockmarket.handlers.user.UserBizHandler;
 import com.misys.stockmarket.mbeans.OrderFormBean;
 import com.misys.stockmarket.mbeans.UserFormBean;
@@ -27,23 +31,26 @@ import com.misys.stockmarket.platform.web.ResponseMessage;
 import com.misys.stockmarket.services.AlertsService;
 import com.misys.stockmarket.services.OrderService;
 import com.misys.stockmarket.services.StockService;
- 
+
 /**
  * @author Gurudath Reddy
  * @version 1.0
  */
 @Controller
 public class StockMarketController {
-     
+
+	private static final Log LOG = LogFactory
+			.getLog(StockMarketController.class);
+
 	@Inject
 	UserBizHandler userBizHandler;
-	
+
 	@Inject
 	StockService stockService;
-	
+
 	@Inject
 	OrderService orderService;
-	
+
 	@Inject
 	AlertsService alertsService;
 
@@ -52,9 +59,9 @@ public class StockMarketController {
 	public ResponseMessage registerUser(@RequestBody UserFormBean userFormBean) {
 		return userBizHandler.registerUser(userFormBean);
 	}
-	
-	@RequestMapping(value = "/activateprofile/{token:.+}", method = { RequestMethod.GET,
-			RequestMethod.POST })
+
+	@RequestMapping(value = "/activateprofile/{token:.+}", method = {
+			RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public ResponseMessage activateProfile(@PathVariable("token") String token) {
 		return userBizHandler.activateProfile(token);
@@ -65,18 +72,18 @@ public class StockMarketController {
 	public ResponseMessage resetPassword(@RequestBody UserFormBean userFormBean) {
 		return userBizHandler.resetPassword(userFormBean);
 	}
-	
+
 	@RequestMapping(value = "/changepassword", method = { RequestMethod.POST })
 	@ResponseBody
 	public ResponseMessage changePassword(@RequestBody UserFormBean userFormBean) {
 		return userBizHandler.changePassword(userFormBean);
 	}
-	
+
 	@RequestMapping(value = "/buystock", method = { RequestMethod.POST })
 	@ResponseBody
 	public ResponseMessage buyStock(@RequestBody OrderFormBean orderFormBean) {
 		orderFormBean.setType(IApplicationConstants.BUY_TYPE);
-		return orderService.saveNewOrder(orderFormBean);		
+		return orderService.saveNewOrder(orderFormBean);
 	}
 
 	@RequestMapping(value = "/sellstock", method = { RequestMethod.POST })
@@ -85,56 +92,76 @@ public class StockMarketController {
 		orderFormBean.setType(IApplicationConstants.SELL_TYPE);
 		return orderService.saveNewOrder(orderFormBean);
 	}
-	
+
 	@RequestMapping(value = "/watchStock", method = { RequestMethod.POST })
 	@ResponseBody
-	public ResponseMessage watchStock(@RequestBody WatchListFormBean watchListFormBean) {
+	public ResponseMessage watchStock(
+			@RequestBody WatchListFormBean watchListFormBean) {
 		return alertsService.saveNewWatchStock(watchListFormBean);
 	}
-	
+
 	@RequestMapping(value = "/alertList", method = { RequestMethod.GET,
 			RequestMethod.POST })
 	@ResponseBody
 	public List<UserAlerts> alertList() {
-		return alertsService.listAllAlerts(); 
+		try {
+			return alertsService.listAllAlerts();
+		} catch (AlertsServiceException e) {
+			LOG.error(e);
+			// TODO: HANDLE WHEN EXCEPTION
+			return null;
+		}
 	}
-	
+
 	@RequestMapping(value = "/stockList", method = { RequestMethod.GET,
 			RequestMethod.POST })
 	@ResponseBody
 	public List<StockMaster> stockList() {
-		return stockService.listAllActiveStocks(); 
+		try {
+			return stockService.listAllActiveStocks();
+		} catch (StockServiceException e) {
+			LOG.error(e);
+			// TODO: HANDLE WHEN EXCEPTION
+			return null;
+		}
 	}
-	
-	@RequestMapping(value = "/stockListCurrentQuotes", method = { RequestMethod.GET,
-			RequestMethod.POST })
+
+	@RequestMapping(value = "/stockListCurrentQuotes", method = {
+			RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
-	public StockCurrentQuotes stockListCurrentQuotes(@RequestParam("stockSymbol") String symbol) {
-		return stockService.getStockCurrentQuoteByStockSymbol(symbol); 
+	public StockCurrentQuotes stockListCurrentQuotes(
+			@RequestParam("stockSymbol") String symbol) {
+		return stockService.getStockCurrentQuoteByStockSymbol(symbol);
 	}
-	
-	@RequestMapping(value = "/stockListAllCurrentQuotes", method = { RequestMethod.GET,
-			RequestMethod.POST })
+
+	@RequestMapping(value = "/stockListAllCurrentQuotes", method = {
+			RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public List<StockCurrentQuotes> stockListAllCurrentQuotes() {
-		return stockService.listAllCurrentStockQuotes(); 
+		try {
+			return stockService.listAllCurrentStockQuotes();
+		} catch (ServiceException e) {
+			LOG.error(e);
+			// TODO: HANDLE WHEN EXCEPTION
+			return null;
+		}
 	}
-	
+
 	@RequestMapping(value = "/stockListHistory", method = { RequestMethod.GET,
 			RequestMethod.POST })
 	@ResponseBody
-	public List<StockHistory> stockListHistory(@RequestParam("stockSymbol") String symbol) {
-		return stockService.listStockHistory(symbol); 
+	public List<StockHistory> stockListHistory(
+			@RequestParam("stockSymbol") String symbol) {
+		return stockService.listStockHistory(symbol);
 	}
-	
-	@RequestMapping("/")
-    public String index(Model model) {
-        return "index";
-    }
-    
-    @RequestMapping("/game")
-    public String app(Model model) {
-        return "game";
-    }
-}
 
+	@RequestMapping("/")
+	public String index(Model model) {
+		return "index";
+	}
+
+	@RequestMapping("/game")
+	public String app(Model model) {
+		return "game";
+	}
+}
