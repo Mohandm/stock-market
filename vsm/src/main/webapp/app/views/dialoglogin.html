@@ -1,0 +1,19 @@
+<div ng-controller="LoginController">
+    <div class="row">
+            <div class="col-sm-12 page-content">
+                <!-- Page Content Panel -->
+                <div class="panel">
+                <div class="panel-body">
+                     <form class="form-horizontal" name="mainForm" role="form" novalidate>
+                         <field-wrapper label="Email Address" type="email" name="email" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
+                        <field-wrapper label="Password" type="password" name="password" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
+                        <input type="hidden" ng-model="closeDialog"  ng-init="closeDialog='true'"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" ng-click="login()">Login</button>
+    </div>
+</div>

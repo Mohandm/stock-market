@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +40,7 @@ public class OrderService {
 	@Inject
 	private LeagueService leagueService;
 
+	 @PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseMessage saveNewOrder(OrderFormBean orderFormBean) {
 		// Validate bean
 

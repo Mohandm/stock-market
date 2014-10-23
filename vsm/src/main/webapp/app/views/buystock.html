@@ -37,12 +37,12 @@
 					 	
 					 	<field-wrapper label="Price" type="text" name="orderPrice" required="isNotMarket()" formmodel="formmodel" formcontrol="formcontrol" ng-show="isNotMarket()" validations='[{"validator":"isNumber","event":"isNumber","errorMessage":"It should be a number", "scopeValue":"symbol"}]'></field-wrapper>
 					 	
-					 	<div class="form-group">
+					 	<div class="form-group" ng-show="isNotMarket()">
 							<div class="col-sm-4 control-label">
 							 	<label>*Intraday:</label>
 							</div> 
 						 	<div class="col-sm-8"  ng-class="{'has-error': (mainForm.intraday.$dirty || formcontrol.submitted) && mainForm.intraday.$invalid}">
-					       		<select type="text" ng-required="true" name="intraday"
+					       		<select type="text" ng-required="isNotMarket()" name="intraday"
 								ng-options="option.value as option.title for option in intraDayOptions" 
 								class="form-control" ng-model="formmodel.intraday" >
 								</select>

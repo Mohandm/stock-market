@@ -3,8 +3,7 @@ var vsmApp = angular.module('vsmApp');
  
 vsmApp.service('DialogService', function($compile, $http, $rootScope, $templateCache, $cacheFactory) {
     this.open = function(options) {
-    	
-    	$http.get('app/directive_templates/dialog/standardModal.html').success(function (template) {
+    	   $http.get('app/directive_templates/dialog/standardModal.html').success(function (template) {
 	        var childScope = $rootScope.$new();
 	        childScope.title = options.title;
 	        childScope.content = options.content;
@@ -36,7 +35,7 @@ vsmApp.service('DialogService', function($compile, $http, $rootScope, $templateC
 });
  
 
-vsmApp.service('modals', function(DialogService,$http) {
+vsmApp.service('modals', function(DialogService,$http,$timeout) {
     this.showInfo = function(title, content) {
         DialogService.open({            
             title: title,
@@ -80,13 +79,17 @@ vsmApp.service('modals', function(DialogService,$http) {
 
     this.showForm = function(title, form, passValuesToDialog , modalSize) {
             
+        var openForm = function() {
             DialogService.open({            
                 title: title,
                 showForm: true,
                 formURL:'app/views/'+form+'.html',
                 passValuesToDialog:passValuesToDialog,
                 modalSize:modalSize
-       });
+            });
+        }
+        DialogService.close();
+        $timeout(openForm,500);
     };
      
     this.close = function()
