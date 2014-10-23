@@ -35,7 +35,7 @@
             templateUrl: 'app/views/form.html',
             controller: 'FormSelectorController'
         })
-        .when('/action/:actionCode/:value', {
+        .when('/action/:actionCode/:value?', {
             templateUrl: 'app/views/result.html',
             controller: 'ActionController'
         })
