@@ -47,6 +47,11 @@
             redirectTo: '/'
         });
 
+        // Configure $http to catch authentication error responses
+        $httpProvider.interceptors.push(['$injector',function ($injector) {
+            return $injector.get('AuthInterceptorService');
+        }]);
+
       //configure $http to catch message responses and show them
         $httpProvider.responseInterceptors.push(function ($q, $timeout) {
             
@@ -78,10 +83,14 @@
         });
     });
     
-    vsmApp.run(function ($rootScope,$http, AlertsService, $location,TourService) {
+    vsmApp.run(function ($rootScope,$http, AlertsService, $location,TourService, AuthService) {
         //make current message accessible to root scope and therefore all scopes
         $rootScope.message = function () {
             return message;
+        };
+
+        $rootScope.isAuthenticated = function () {
+            return AuthService.isAuthenticated();
         };
 
         $rootScope.onPageLoad = function(){

@@ -5,30 +5,14 @@
                 <h3 class="panel-title">Login</h3>
             </div>
             <div class="panel-body">
-                <form class="form-horizontal" name="mainForm" role="form" ng-controller="FormController"
-                      action="j_spring_security_check.action" method="POST" novalidate>
-                    <div class="row form-group">
-                        <div class="col-md-4 control-label">
-                            <span class="required-error" ng-show="true">*</span>
-                            <label >Email Address:</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="email" name="email" ng-model="formmodel.email" ng-required="true" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-4 control-label">
-                            <span class="required-error" ng-show="true">*</span>
-                            <label >Password:</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="password" name="password" ng-model="formmodel.password" ng-required="true" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-6"></div>
-                        <div class="col-md-6">
-                            <input type="submit" class="btn btn-success" value = "Login"/>
+                <form class="form-horizontal" name="mainForm" role="form" ng-controller="LoginController"
+                      novalidate>
+                    <field-wrapper label="Email Address" type="email" name="email" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
+                    <field-wrapper label="Password" type="password" name="password" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
+                    <div class="form-group">
+                        <div class="col-sm-6"></div>
+                        <div class="col-sm-6">
+                           <button type="button" class="btn btn-success" ng-click="login()">Login</button>
                         </div>
                     </div>
                 </form>
