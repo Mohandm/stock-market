@@ -1,3 +1,4 @@
+
 describe('Unit: DashboardController', function() {
     // Load the module with MainController
     beforeEach(module('vsmApp'));
@@ -14,10 +15,8 @@ describe('Unit: DashboardController', function() {
         });
     }));
 
-    it('should create $scope.greeting when calling sayHello',
-        function() {
-            expect(scope.greeting).toBeUndefined();
-            scope.sayHello();
-            expect(scope.greeting).toEqual("Hello Ari");
-        });
+    it('should define options for the animated pie chart',function() {
+        expect(scope.options).toBeDefined();
+        expect(scope.options.animate).toEqual(3000);
+    });
 })
