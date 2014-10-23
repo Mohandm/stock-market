@@ -7,10 +7,10 @@
 		<ng-form name="innerform">
 			<div ng-switch on="type">
 				<div ng-switch-when="email">
-					<input type="email" ng-model="formmodel[name]" ng-required="required" class="form-control" name="field"/>
+					<input type="email" ng-model="formmodel[name]" ng-required="required" class="form-control email-field" name="field"/>
 				</div>
 				<div ng-switch-when="password">
-					<input type="password" ng-model="formmodel[name]" ng-required="required" class="form-control" name="field"/>
+					<input type="password" ng-model="formmodel[name]" ng-required="required" class="form-control password-field" name="field"/>
 				</div>
 				<div ng-switch-default>
 					<input type="text" ng-model="formmodel[name]" ng-required="required" class="form-control" name="field"
