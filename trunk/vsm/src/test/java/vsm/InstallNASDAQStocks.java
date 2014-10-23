@@ -15,6 +15,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.domain.entity.StockMaster;
+import com.misys.stockmarket.exception.service.StockServiceException;
 import com.misys.stockmarket.model.json.StockJSONModel;
 import com.misys.stockmarket.services.StockService;
 
@@ -22,7 +23,7 @@ public class InstallNASDAQStocks {
 
 	private static final Log LOG = LogFactory.getLog(InstallNASDAQStocks.class);
 
-	public static void main(String as[]) {
+	public static void main(String as[]) throws StockServiceException {
 
 		String fileName = "D:\\portalplatform\\STSWORKSPACE_FEB\\vsm\\src\\test\\resources\\nasdaq100_stock_list.json";
 

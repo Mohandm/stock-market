@@ -22,8 +22,11 @@ import com.misys.stockmarket.dao.StockDAO;
 import com.misys.stockmarket.domain.entity.StockCurrentQuotes;
 import com.misys.stockmarket.domain.entity.StockHistory;
 import com.misys.stockmarket.domain.entity.StockMaster;
+import com.misys.stockmarket.exception.DAOException;
 import com.misys.stockmarket.exception.DBRecordNotFoundException;
 import com.misys.stockmarket.exception.FinancialServiceException;
+import com.misys.stockmarket.exception.ServiceException;
+import com.misys.stockmarket.exception.service.StockServiceException;
 import com.misys.stockmarket.model.json.QuoteCurrentJSONModel;
 import com.misys.stockmarket.model.json.QuoteHistoryJSONModel;
 import com.misys.stockmarket.utility.DateUtils;
@@ -43,30 +46,52 @@ public class StockService {
 	public List<String> listAllActiveStockSymbols() {
 		return stockDAO.findAllActiveStockSymbols();
 	}
-	
+
 	public List<String> listAllStockSymbols() {
 		return stockDAO.findAllStockSymbols();
 	}
 
-	public List<StockMaster> listAllActiveStocks() {
-		return stockDAO.findAllActiveStocks();
+	public List<StockMaster> listAllActiveStocks() throws StockServiceException {
+		try {
+			return stockDAO.findAllActiveStocks();
+		} catch (DAOException e) {
+			throw new StockServiceException(e);
+		}
 	}
 
-	public List<StockMaster> listAllInActiveStocks() {
-		return stockDAO.findAllInActiveStocks();
+	public List<StockMaster> listAllInActiveStocks() throws StockServiceException {
+		try {
+			return stockDAO.findAllInActiveStocks();
+		} catch (DAOException e) {
+			throw new StockServiceException(e);
+		}
 	}
 
-	public List<StockMaster> listAllStocks() {
-		return stockDAO.findAll(StockMaster.class);
+	public List<StockMaster> listAllStocks() throws ServiceException {
+		try {
+			return stockDAO.findAll(StockMaster.class);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
 	}
-	
-	public List<StockCurrentQuotes> listAllCurrentStockQuotes() {
-		return stockDAO.findAll(StockCurrentQuotes.class);
+
+	public List<StockCurrentQuotes> listAllCurrentStockQuotes()
+			throws ServiceException {
+		try {
+			return stockDAO.findAll(StockCurrentQuotes.class);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
 	}
 
 	public void saveStocks(List<StockMaster> newStocksList) {
 		for (StockMaster stockMaster : newStocksList) {
-			stockDAO.persist(stockMaster);
+			try {
+				stockDAO.persist(stockMaster);
+			} catch (DAOException e) {
+				// TODO: SHOULD I CONTINUE WITH EXCEPTION CHECK LATER?
+				LOG.error(e);
+			}
 		}
 	}
 
@@ -76,15 +101,19 @@ public class StockService {
 		return stockDAO.findStockHistory(stockMaster.getStockId(), startDate,
 				endDate);
 	}
-	
+
 	public List<StockHistory> listStockHistory(String tickerSymbol) {
 		StockMaster stockMaster = stockDAO.findByTickerSymbol(tickerSymbol);
 		return stockDAO.findStockHistoryByStockId(stockMaster.getStockId());
 	}
-	
-	public StockCurrentQuotes getStockCurrentQuoteByStockSymbol(String tickerSymbol) {
-		StockMaster stockMaster = stockDAO.findByAllTickerSymbol(tickerSymbol);
-		return stockDAO.findStockCurrentQuoteByStockId(stockMaster.getStockId());
+
+	public StockCurrentQuotes getStockCurrentQuoteByStockSymbol(
+			String tickerSymbol) {
+		return stockDAO.findStockCurrentQuoteByTickerSymbol(tickerSymbol);
+	}
+
+	public StockCurrentQuotes getStockCurrentQuoteByStockId(long stockId) {
+		return stockDAO.findStockCurrentQuoteByStockId(stockId);
 	}
 
 	public void saveStockHistory(
@@ -117,7 +146,11 @@ public class StockService {
 						.getStockMaster().getStockId(), stockHistory
 						.getStockDate());
 			} catch (DBRecordNotFoundException e) {
-				stockDAO.persist(stockHistory);
+				try {
+					stockDAO.persist(stockHistory);
+				} catch (DAOException daoException) {
+					LOG.error(daoException);
+				}
 			}
 		}
 	}
@@ -125,7 +158,7 @@ public class StockService {
 	public void updateStockCurrent(
 			List<QuoteCurrentJSONModel> quoteCurrentJSONModelList) {
 		Map<String, StockMaster> stockMasterByTickerMap = new HashMap<String, StockMaster>();
-		
+
 		Date date = new Date();
 		for (QuoteCurrentJSONModel quoteCurrentJSONModel : quoteCurrentJSONModelList) {
 			StockCurrentQuotes stockCurrent = new StockCurrentQuotes();
@@ -147,7 +180,7 @@ public class StockService {
 					.setVolume(new BigDecimal(quoteCurrentJSONModel.Volume));
 			stockCurrent.setYearRange(quoteCurrentJSONModel.YearRange);
 			stockCurrent.setUpdatedTimeStamp(date);
-			
+
 			if (stockMasterByTickerMap
 					.containsKey(quoteCurrentJSONModel.symbol)) {
 				StockMaster stockMaster = stockMasterByTickerMap
@@ -166,13 +199,18 @@ public class StockService {
 
 	public void updateStocks(List<StockMaster> updateStocksList) {
 		for (StockMaster stockMaster : updateStocksList) {
-			stockDAO.update(stockMaster);
+			try {
+				stockDAO.update(stockMaster);
+			} catch (DAOException e) {
+				// TODO: SHOULD I CONTINUE WITH THIS OR NOT. CHECK LATER
+				LOG.error(e);
+			}
 		}
 	}
-	
+
 	public void updateStockCurrentQuotes(List<String> stockList)
 			throws FinancialServiceException {
-		
+
 		String responseJSONString = financialService.getStockCurrent(stockList);
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -182,9 +220,8 @@ public class StockService {
 			List<QuoteCurrentJSONModel> quoteCurrentJSONModels = mapper
 					.readValue(
 							quoteArray,
-							mapper.getTypeFactory()
-									.constructCollectionType(List.class,
-											QuoteCurrentJSONModel.class));
+							mapper.getTypeFactory().constructCollectionType(
+									List.class, QuoteCurrentJSONModel.class));
 			updateStockCurrent(quoteCurrentJSONModels);
 		} catch (JsonParseException e) {
 			throw new FinancialServiceException(e);
@@ -194,7 +231,7 @@ public class StockService {
 			throw new FinancialServiceException(e);
 		}
 	}
-	
+
 	public void updateStockHistory(StockMaster stockMaster)
 			throws FinancialServiceException {
 		Date maxStockDate = stockDAO.findMaxStockHistoryStockDate(stockMaster
@@ -230,28 +267,22 @@ public class StockService {
 						JsonNode.class);
 				JsonNode quoteArray = rootNode.findValue("quote");
 				List<QuoteHistoryJSONModel> quoteHistoryJSONModels;
-				if(!quoteArray.isArray()) 
-				{
+				if (!quoteArray.isArray()) {
 					String quoteString = quoteArray.toString();
 					ObjectMapper mapperTemp = new ObjectMapper();
-				    JsonNode actualObj = mapperTemp.readTree("["+quoteString+"]");
-					quoteHistoryJSONModels = mapper
-							.readValue(
-									actualObj,
-									mapper.getTypeFactory()
-											.constructCollectionType(List.class,
-													QuoteHistoryJSONModel.class));
+					JsonNode actualObj = mapperTemp.readTree("[" + quoteString
+							+ "]");
+					quoteHistoryJSONModels = mapper.readValue(
+							actualObj,
+							mapper.getTypeFactory().constructCollectionType(
+									List.class, QuoteHistoryJSONModel.class));
+				} else {
+					quoteHistoryJSONModels = mapper.readValue(
+							quoteArray,
+							mapper.getTypeFactory().constructCollectionType(
+									List.class, QuoteHistoryJSONModel.class));
 				}
-				else
-				{
-					quoteHistoryJSONModels = mapper
-							.readValue(
-									quoteArray,
-									mapper.getTypeFactory()
-											.constructCollectionType(List.class,
-													QuoteHistoryJSONModel.class));
-				}
-				
+
 				saveStockHistory(quoteHistoryJSONModels);
 			} catch (JsonParseException e) {
 				throw new FinancialServiceException(e);
