@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="app/scripts/thirdparty/ui-grid/ui-grid-unstable.min.css"/>
         <link rel="stylesheet" href="app/scripts/thirdparty/news-ticker/jquery.breakingNews.css"/>
         <link rel="stylesheet" href="app/scripts/thirdparty/charts/nv.d3.min.css"/>
+        <link rel="stylesheet" href="app/scripts/thirdparty/tour/bootstrap-tour.min.css"/>
         <!-- endbower -->
         <!-- endbuild -->
 
@@ -214,6 +215,8 @@
                             </li>
                             <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
                             </li>
+                            <li><a ng-click="startTour()"><i class="fa fa-binoculars fa-fw"></i> Tour</a>
+                            </li>
                             <li class="divider"></li>
                             <li><a href="j_spring_security_logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                             </li>
@@ -317,6 +320,7 @@
         <script src="app/scripts/thirdparty/charts/d3.min.js"></script>
         <script src="app/scripts/thirdparty/charts/nv.d3.min.js"></script>
         <script src="app/scripts/thirdparty/charts/angularjs-nvd3-directives.min.js"></script>
+        <script src="app/scripts/thirdparty/tour/bootstrap-tour.min.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 
@@ -350,7 +354,7 @@
         <script type="text/javascript" src="app/scripts/services/stockQuotesService.js"></script>
         <script type="text/javascript" src="app/scripts/services/chartService.js"></script>
         <script type="text/javascript" src="app/scripts/services/alertsService.js"></script>
-
+        <script type="text/javascript" src="app/scripts/services/tourService.js"></script>
         <!-- endbuild -->
     </body>
 </html>
