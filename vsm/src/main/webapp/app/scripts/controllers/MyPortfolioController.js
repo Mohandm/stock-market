@@ -61,7 +61,6 @@ vsmApp.controller('MyPortfolioController', ['$scope', '$rootScope', '$log', 'Sto
         columnDefs: [
             { field: 'tikerSymbol', displayName:'Symbol'},
             { field: 'volume', displayName:'Volume'},
-            { field: 'pricePaid', displayName:'Price Paid'},
             { field: 'marketCalculatedValue', displayName:'Market Value'},
             {name: 'sell', displayName: '', enableFiltering : false, enableSorting : false, cellTemplate: '<button id="buyBtn" type="button" class="btn-small" ng-click="getExternalScopes().sell(row.entity)" >Sell</button> '}
         ]

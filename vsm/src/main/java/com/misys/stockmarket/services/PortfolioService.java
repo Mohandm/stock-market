@@ -12,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.domain.entity.LeagueUser;
 import com.misys.stockmarket.domain.entity.OrderExecution;
 import com.misys.stockmarket.domain.entity.OrderMaster;
@@ -64,10 +65,19 @@ public class PortfolioService {
 					}
 					stockHoldingFormBean.setTikerSymbol(tickerSymbol);
 					stockHoldingFormBean.setName(stockMaster.getName());
-					stockHoldingFormBean.addVolume(orderExecution
-							.getUnitsTraded());
-					stockHoldingFormBean.addPricePaid(orderExecution
-							.getExecutionPrice());
+					
+					if(orderMaster.getType().equals(IApplicationConstants.BUY_TYPE))
+					{
+						stockHoldingFormBean.addVolume(orderExecution
+								.getUnitsTraded());
+					}
+					else if(orderMaster.getType().equals(IApplicationConstants.SELL_TYPE))
+					{
+						stockHoldingFormBean.subtractVolume(orderExecution
+								.getUnitsTraded());
+					}
+					/*stockHoldingFormBean.addPricePaid(orderExecution
+							.getExecutionPrice());*/
 					StockCurrentQuotes stockCurrentQuotes = stockService
 							.getStockCurrentQuoteByStockId(stockMaster
 									.getStockId());
@@ -75,12 +85,14 @@ public class PortfolioService {
 							.getLastTradePriceOnly().toPlainString());
 					
 					BigDecimal marketValue = stockCurrentQuotes.getLastTradePriceOnly().multiply(new BigDecimal(stockHoldingFormBean.getVolume()));
-					// UPDATE TOTAL PORTFOLIO VALUE
-					portfolioValue = portfolioValue.add(marketValue);
 					
 					stockHoldingFormBean
 							.setMarketCalculatedValue(marketValue.toPlainString());
 				}
+			}
+			for (StockHoldingFormBean stockHoldingFormBean : stockHoldingBySymbolMap.values())
+			{
+				portfolioValue = portfolioValue.add(new BigDecimal(stockHoldingFormBean.getMarketCalculatedValue()));
 			}
 			MyPortfolioFormBean myPortfolioFormBean = new MyPortfolioFormBean();
 			myPortfolioFormBean.setPortfolioValue(portfolioValue

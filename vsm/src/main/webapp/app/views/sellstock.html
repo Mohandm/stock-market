@@ -5,21 +5,37 @@
 				<div class="panel">
 			    <div class="panel-body">
 					 <form class="form-horizontal" name="mainForm" role="form" novalidate>
-					 	<div class="form-group">
+					 	<!--<div class="form-group">
 							<div class="col-sm-4 control-label">
 							 	<label>*Stock Symbol:</label>
-							</div>  
+							</div>
 						 	<div class="col-sm-8" ng-class="{'has-error': (mainForm.symbol.$dirty || formcontrol.submitted) && mainForm.symbol.$invalid}">
-						 		<select type="text" ng-required="true" name="symbol"	
+						 		<select type="text" ng-required="true" name="symbol"
 								ng-options="stockList.tikerSymbol as (stockList.name+' - '+ stockList.tikerSymbol) for stockList in myStockHoldings" class="form-control" ng-model="formmodel.symbol">
 								</select>
 								<div ng-show="mainForm.symbol.$dirty || formcontrol.submitted">
 									<span class="help-block" ng-show = "mainForm.symbol.$error.required">The field is required</span>
 								</div>
 							</div>
-						</div>
+						</div>-->
 
-					 	<field-wrapper label="Volume" type="text" name="volume" required="true" formmodel="formmodel" 	formcontrol="formcontrol" validations='[{"validator":"isNumber","event":"isNumber","errorMessage":"It should be a number", "scopeValue":"symbol"},{"validator":"validateSellVolume","event":"validateSellVolume","errorMessage":"You donot have that many stocks for this company", "scopeValue":"symbol"}]'></field-wrapper>
+                         <div class="form-group">
+                             <div class="col-sm-4 control-label">
+                                 <label>Stock Symbol:</label>
+                             </div>
+                             <div class="col-sm-8 control-value">
+                                 <label>{{passValuesToDialog.tikerSymbol}}</label>
+                             </div>
+                         </div>
+                         <div class="form-group">
+                             <div class="col-sm-4 control-label">
+                                 <label>Company:</label>
+                             </div>
+                             <div class="col-sm-8 control-value">
+                                 <label>{{passValuesToDialog.name}}</label>
+                             </div>
+                         </div>
+                         <field-wrapper label="Volume" type="text" name="volume" required="true" formmodel="formmodel" 	formcontrol="formcontrol" validations='[{"validator":"isNumber","event":"isNumber","errorMessage":"It should be a number", "scopeValue":"symbol"},{"validator":"validateSellVolume","event":"validateSellVolume","errorMessage":"You donot have that many stocks for this company", "scopeValue":"symbol"}]'></field-wrapper>
 						
 						<div class="form-group">
 							<div class="col-sm-4 control-label">
