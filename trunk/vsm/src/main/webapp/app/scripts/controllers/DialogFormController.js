@@ -4,8 +4,14 @@ vsmApp.controller('DialogFormController', ['$scope','$http','modals', 'StockQuot
 	
     $scope.formmodel = {};
     $scope.formcontrol = {};
+    $scope.formmodel.symbol = '';
 
-    var stockListsPromise = StockQuotesService.getStockLists();
+    setTimeout(function(){
+        $scope.formmodel.symbol = $scope.passValuesToDialog.tikerSymbol;
+        $scope.formmodel.leagueUserId = $scope.passValuesToDialog.leagueUserId;
+    },1000);
+
+   var stockListsPromise = StockQuotesService.getStockLists();
     stockListsPromise.then(function(data){
         $scope.stockLists = data;
     });
@@ -21,15 +27,10 @@ vsmApp.controller('DialogFormController', ['$scope','$http','modals', 'StockQuot
         {"title":"No", "value":"N"}
     ];
 
-    // TODO: Remove hardcoded league id
-     StockQuotesService.getMyPortfolio(1).then(function(data){
-        $scope.myPortfolio  = data;
-        $scope.myStockHoldings = data.stockHoldings;
-     });
-
-    $scope.formmodel.priceType = "01";
+    $scope.formmodel.priceType = '01';
 
     $scope.perform = function(action){
+
         if (action === 'cancel') {
             modals.close();
         }

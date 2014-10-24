@@ -48,11 +48,8 @@ public class PortfolioService {
 			BigDecimal portfolioValue = new BigDecimal(0);
 			Map<String, StockHoldingFormBean> stockHoldingBySymbolMap = new HashMap<String, StockHoldingFormBean>();
 			for (OrderMaster orderMaster : completedPurchaseOrderList) {
-				for (OrderExecution orderExecution : orderMaster
-						.getOrderExecutions()) {
-					// UPDATE TOTAL PORTFOLIO VALUE
-					portfolioValue = portfolioValue.add(orderExecution
-							.getExecutionPrice());
+				for (OrderExecution orderExecution : orderMaster.getOrderExecutions()) { 
+					
 					// SUM UP ALL SAME STOCKS
 					StockMaster stockMaster = orderMaster.getStockMaster();
 					String tickerSymbol = stockMaster.getTikerSymbol();
@@ -76,13 +73,13 @@ public class PortfolioService {
 									.getStockId());
 					stockHoldingFormBean.setMarketPrice(stockCurrentQuotes
 							.getLastTradePriceOnly().toPlainString());
+					
+					BigDecimal marketValue = stockCurrentQuotes.getLastTradePriceOnly().multiply(new BigDecimal(stockHoldingFormBean.getVolume()));
+					// UPDATE TOTAL PORTFOLIO VALUE
+					portfolioValue = portfolioValue.add(marketValue);
+					
 					stockHoldingFormBean
-							.setMarketCalculatedValue(stockCurrentQuotes
-									.getLastTradePriceOnly()
-									.multiply(
-											new BigDecimal(stockHoldingFormBean
-													.getVolume()))
-									.toPlainString());
+							.setMarketCalculatedValue(marketValue.toPlainString());
 				}
 			}
 			MyPortfolioFormBean myPortfolioFormBean = new MyPortfolioFormBean();

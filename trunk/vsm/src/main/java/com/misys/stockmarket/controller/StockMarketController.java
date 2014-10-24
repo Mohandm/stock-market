@@ -1,4 +1,4 @@
-package com.misys.stockmarket;
+package com.misys.stockmarket.controller;
 
 import java.util.List;
 

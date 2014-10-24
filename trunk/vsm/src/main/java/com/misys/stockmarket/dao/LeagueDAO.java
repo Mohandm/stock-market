@@ -1,5 +1,9 @@
 package com.misys.stockmarket.dao;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.persistence.Query;
 
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -8,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import com.misys.stockmarket.domain.entity.LeagueMaster;
 import com.misys.stockmarket.domain.entity.LeagueUser;
+import com.misys.stockmarket.domain.entity.UserAlerts;
+import com.misys.stockmarket.domain.entity.UserMaster;
 import com.misys.stockmarket.exception.DAOException;
 import com.misys.stockmarket.exception.DBRecordNotFoundException;
 
@@ -60,5 +66,10 @@ public class LeagueDAO extends BaseDAO {
 			throw new DBRecordNotFoundException(e);
 		}
 	}
-
+	
+	public List<LeagueUser> findLeagueUserByUserId(UserMaster user) throws DAOException {
+		Map<String, Object> criteria = new HashMap<String, Object>();
+		criteria.put("userMaster", user);
+		return findByFilter(LeagueUser.class, criteria);
+	}
 }
