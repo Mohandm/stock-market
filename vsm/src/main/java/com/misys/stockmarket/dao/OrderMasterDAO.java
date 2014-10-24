@@ -35,7 +35,7 @@ public class OrderMasterDAO extends BaseDAO {
 			long leagueUserId) throws DAOException {
 		try {
 			Query q = entityManager
-					.createQuery("select e from OrderMaster e join e.orderExecutions where e.leagueUser.leagueUserId = ?1 ");
+					.createQuery("select e from OrderMaster e join fetch e.orderExecutions where e.leagueUser.leagueUserId = ?1 ");
 			q.setParameter(1, leagueUserId);
 			return q.getResultList();
 		} catch (Exception e) {
