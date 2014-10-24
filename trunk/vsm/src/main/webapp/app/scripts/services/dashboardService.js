@@ -29,9 +29,9 @@ vsmApp.service('DashboardService', ['$http', function ($http) {
             columnDefs: [
                 { field: 'stockDate', displayName:'Date'},
                 { field: 'open', displayName:'Open'},
-                { field: 'close', displayName:'Close'},
                 { field: 'high', displayName:'High'},
-                { field: 'low', displayName:'Low'}
+                { field: 'low', displayName:'Low'},
+                { field: 'close', displayName:'Close'}
             ]
         };
     };

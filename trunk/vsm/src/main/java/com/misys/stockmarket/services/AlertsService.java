@@ -13,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.dao.AlertsDAO;
@@ -51,6 +52,7 @@ public class AlertsService {
 	@Inject
 	private UserService userService;
 
+	@Transactional(rollbackFor = DAOException.class)
 	public ResponseMessage saveNewWatchStock(WatchListFormBean watchListFormBean) {
 		// Validate bean
 
