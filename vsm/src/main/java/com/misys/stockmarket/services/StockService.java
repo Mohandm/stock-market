@@ -92,14 +92,21 @@ public class StockService {
 		}
 	}
 
-	public void saveStocks(List<StockMaster> newStocksList) {
+	public void saveStockList(List<StockMaster> newStocksList) {
 		for (StockMaster stockMaster : newStocksList) {
-			try {
-				stockDAO.persist(stockMaster);
-			} catch (DAOException e) {
-				// TODO: SHOULD I CONTINUE WITH EXCEPTION CHECK LATER?
-				LOG.error(e);
-			}
+			saveStock(stockMaster);
+		}
+	}
+
+	/**
+	 * @param stockMaster
+	 */
+	@Transactional(rollbackFor = DAOException.class)
+	private void saveStock(StockMaster stockMaster) {
+		try {
+			stockDAO.persist(stockMaster);
+		} catch (DAOException e) {
+			LOG.error(e);
 		}
 	}
 
@@ -238,14 +245,21 @@ public class StockService {
 		}
 	}
 
-	public void updateStocks(List<StockMaster> updateStocksList) {
+	public void updateStockList(List<StockMaster> updateStocksList) {
 		for (StockMaster stockMaster : updateStocksList) {
-			try {
-				stockDAO.update(stockMaster);
-			} catch (DAOException e) {
-				// TODO: SHOULD I CONTINUE WITH THIS OR NOT. CHECK LATER
-				LOG.error(e);
-			}
+			updateStock(stockMaster);
+		}
+	}
+
+	/**
+	 * @param stockMaster
+	 */
+	@Transactional(rollbackFor = DAOException.class)
+	private void updateStock(StockMaster stockMaster) {
+		try {
+			stockDAO.update(stockMaster);
+		} catch (DAOException e) {
+			LOG.error(e);
 		}
 	}
 
