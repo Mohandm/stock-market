@@ -1,11 +1,22 @@
 package com.misys.stockmarket.domain.entity;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the ORDER_MASTER database table.
@@ -45,11 +56,14 @@ public class OrderMaster implements BaseEntity, Serializable {
 	@JoinColumn(name = "STOCK_ID")
 	private StockMaster stockMaster;
 
-	
 	@ManyToOne
 	@JoinColumn(name = "LEAGUE_USER_ID")
 	private LeagueUser leagueUser;
-	
+
+	@OneToMany
+	@JoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID")
+	private List<OrderExecution> orderExecutions;
+
 	private BigDecimal volume;
 
 	public OrderMaster() {
@@ -133,6 +147,16 @@ public class OrderMaster implements BaseEntity, Serializable {
 
 	public void setLeagueUser(LeagueUser leagueUser) {
 		this.leagueUser = leagueUser;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderMaster [orderId=" + orderId + ", intraday=" + intraday
+				+ ", orderDate=" + orderDate + ", orderPrice=" + orderPrice
+				+ ", priceType=" + priceType + ", status=" + status + ", type="
+				+ type + ", stockMaster=" + stockMaster + ", leagueUser="
+				+ leagueUser + ", orderExecutions=" + orderExecutions
+				+ ", volume=" + volume + "]";
 	}
 
 }

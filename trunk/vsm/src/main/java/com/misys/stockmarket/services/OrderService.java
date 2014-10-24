@@ -106,4 +106,15 @@ public class OrderService {
 		}
 		return completedOrders;
 	}
+
+	public List<OrderMaster> getAllCompletedPurchaseOrders(long leagueUserId)
+			throws OrderServiceException {
+		try {
+			return orderMasterDAO
+					.findAllCompletedOrdersByLeaugeUser(leagueUserId);
+		} catch (DAOException e) {
+			LOG.error(e);
+			throw new OrderServiceException(e);
+		}
+	}
 }

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Query;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -27,5 +29,17 @@ public class OrderMasterDAO extends BaseDAO {
 		criteria.put("userMaster", userMaster);
 		criteria.put("status", IApplicationConstants.ORDER_STATUS_COMPLETED);
 		return findByFilter(OrderMaster.class, criteria);
+	}
+
+	public List<OrderMaster> findAllCompletedOrdersByLeaugeUser(
+			long leagueUserId) throws DAOException {
+		try {
+			Query q = entityManager
+					.createQuery("select e from OrderMaster e join e.orderExecutions where e.leagueUser.leagueUserId = ?1 ");
+			q.setParameter(1, leagueUserId);
+			return q.getResultList();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
 	}
 }

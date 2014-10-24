@@ -132,18 +132,44 @@ public class OrderExecutionService {
 	}
 
 	private boolean isEligible(OrderMaster orderMaster) {
+		boolean isEligible = false;
+		StockCurrentQuotes stockCurrentQuotes = stockService
+				.getStockCurrentQuoteByStockId(orderMaster.getStockMaster()
+						.getStockId());
 		if (IApplicationConstants.ORDER_PRICE_TYPE_MARKET.equals(orderMaster
 				.getPriceType())) {
-			StockCurrentQuotes stockCurrentQuotes = stockService
-					.getStockCurrentQuoteByStockId(orderMaster.getStockMaster()
-							.getStockId());
 			if (stockCurrentQuotes.getUpdatedTimeStamp().after(
 					orderMaster.getOrderDate())) {
-				return true;
+				isEligible = true;
 			}
-			return false;
-		} else {
-			return false;
+		} else if (IApplicationConstants.ORDER_PRICE_TYPE_LIMIT
+				.equals(orderMaster.getPriceType())) {
+			if (stockCurrentQuotes.getUpdatedTimeStamp().after(
+					orderMaster.getOrderDate())) {
+				// IN CASE OF BUY THE MARKET PRICE SHOULD BE LESS THAN OR EQUAL
+				// TO LIMIT PRICE
+				if (IApplicationConstants.BUY_TYPE
+						.equals(orderMaster.getType())) {
+					if (stockCurrentQuotes.getLastTradePriceOnly().compareTo(
+							orderMaster.getOrderPrice()) <= 0) {
+						isEligible = true;
+					}
+				}
+				// IN CASE OF SELL THE MARKET PRICE SHOULD BE GREATER THAN OR
+				// EQUAL TO LIMIT PRICE
+				else if (IApplicationConstants.SELL_TYPE.equals(orderMaster
+						.getType())) {
+					if (stockCurrentQuotes.getLastTradePriceOnly().compareTo(
+							orderMaster.getOrderPrice()) >= 0) {
+						isEligible = true;
+					}
+				}
+			}
+		} else if (IApplicationConstants.ORDER_PRICE_TYPE_STOPLOSS
+				.equals(orderMaster.getPriceType())) {
+			// TODO:PENDING
+			isEligible = false;
 		}
+		return isEligible;
 	}
 }
