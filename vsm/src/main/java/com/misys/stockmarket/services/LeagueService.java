@@ -6,6 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.dao.LeagueDAO;
@@ -26,6 +27,7 @@ public class LeagueService {
 	@Inject
 	private LeagueDAO leagueDAO;
 
+	@Transactional(rollbackFor = DAOException.class)
 	public void addUserToLeague(UserMaster user, LeagueMaster league)
 			throws LeagueException {
 		try {
@@ -40,10 +42,12 @@ public class LeagueService {
 		}
 	}
 
+	@Transactional(rollbackFor = DAOException.class)
 	public void addUserToDefaultLeague(UserMaster user) throws LeagueException {
 		addUserToLeague(user, getDefaultLeague());
 	}
 
+	@Transactional(rollbackFor = DAOException.class)
 	public void addLeague(LeagueMaster league) throws LeagueException {
 		try {
 			leagueDAO.persist(league);

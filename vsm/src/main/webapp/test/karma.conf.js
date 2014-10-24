@@ -46,6 +46,7 @@ module.exports = function(config) {
     'app/scripts/thirdparty/tour/bootstrap-tour.min.js',
     'app/scripts/vsm.js',
         'app/scripts/common.js',
+        'app/scripts/constants/AuthEvents.js',
         'app/scripts/controllers/**/*.js',
         'app/scripts/directives/**/*.js',
         'app/scripts/services/**/*.js',

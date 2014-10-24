@@ -40,7 +40,7 @@ public class UserAlerts implements BaseEntity, Serializable {
 	@Column(name = "MESSAGE", length = 500)
 	private String message;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "NOTIFIED_DATE")
 	private Date notifiedDate;
 	
