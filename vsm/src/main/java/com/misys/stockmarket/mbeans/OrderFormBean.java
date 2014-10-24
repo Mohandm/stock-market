@@ -16,7 +16,17 @@ public class OrderFormBean {
 	private String symbol;
 	
 	private String type;
+	
+	private long leagueUserId;
 
+
+	public long getLeagueUserId() {
+		return leagueUserId;
+	}
+
+	public void setLeagueUserId(long leagueUserId) {
+		this.leagueUserId = leagueUserId;
+	}
 
 	public String getIntraday() {
 		return intraday;

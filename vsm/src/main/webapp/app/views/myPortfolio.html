@@ -1,3 +1,7 @@
+<div ng-show="message().show">
+    <alert type="message().type" close="message().show=false">{{message().text}}</alert>
+</div>
+
     <div class="row blockContainer">
         <div class="col-md-4 col-md-offset-8 pull-right">
             <div class="field-wrapper"><label>Select Portfolio:</label><select type="text" ng-change="reloadMyPortfolio" ng-model="leagueSelected" ng-options="league as league.name for league in myLeagues  | filter:{league:$viewValue}" class="form-control singleSelect"/></div>
@@ -22,7 +26,7 @@
         </div>
     </div>
     <div class="row blockContainer">
-        <!--<div class="col-md-6">-->
+        <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Stock Holdings</h3>
@@ -31,8 +35,20 @@
                     <div ui-grid="getStockHoldingsDataGridOptions" class="stock-holdings-list-grid"></div>
                 </div>
             </div>
-       <!-- </div>
-        <div class="col-md-6">-->
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Stocks List</h3>
+                </div>
+                <div class="panel-body">
+                    <div ui-grid="stockListGridOptions" class="stock-list-grid" external-scopes="$scope"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row blockContainer">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">My Recent Trades</h3>
@@ -41,5 +57,5 @@
                     <div ui-grid="getRecentTradesDataGridOptions" class="recent-trades-list-grid"></div>
                 </div>
             </div>
-        <!--</div>-->
+        </div>
     </div>

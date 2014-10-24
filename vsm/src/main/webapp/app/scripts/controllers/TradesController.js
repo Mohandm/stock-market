@@ -1,7 +1,7 @@
 var vsmApp = angular.module('vsmApp');
 
 vsmApp.controller('TradesController', ['$scope', '$rootScope', 'modals',
-    function ($scope, $rootScope, modals, StockQuotesService) {
+    function ($scope, $rootScope, modals) {
 
      //Add this to all page controllers
      $rootScope.onPageLoad();

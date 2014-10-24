@@ -69,9 +69,8 @@ public class OrderService {
 			// Set some default values
 			orderMaster.setOrderDate(new Date());
 			orderMaster.setStatus(IApplicationConstants.ORDER_STATUS_PENDING);
-			// TODO: Needs to change to support multiple leagues
-			LeagueUser leagueUser = leagueService.getLeagueUser(leagueService
-					.getDefaultLeague().getLeagueId(), userService
+			// TODO: Done, Handled to support multiple leagues
+			LeagueUser leagueUser = leagueService.getLeagueUser(orderFormBean.getLeagueUserId(), userService
 					.getLoggedInUser().getUserId());
 			orderMaster.setLeagueUser(leagueUser);
 			orderMasterDAO.persist(orderMaster);

@@ -59,12 +59,10 @@ vsmApp.service('StockQuotesService', ['$http','$q','$log', function ($http, $q, 
         return historicalData.slice(length - count, length);
     };
 
-
-
     this.getMyLeagues = function(){
         var deferred = $q.defer();
-        var actionUrl = 'app/data/my_leagues.json';
-        $http.get(actionUrl,{})
+        var actionUrl = 'userLeaguesList/';
+        $http.post(actionUrl,{})
             .success(function (json) {
                 deferred.resolve(json);
             }).error(function(msg, code) {
@@ -74,10 +72,10 @@ vsmApp.service('StockQuotesService', ['$http','$q','$log', function ($http, $q, 
         return deferred.promise;
     }
 
-    this.getMyPortfolio = function(groupId){
+    this.getMyPortfolio = function(leagueId){
         var deferred = $q.defer();
-        var actionUrl = 'app/data/my_portfolio.json';
-        $http.get(actionUrl,{})
+        var actionUrl = 'myPortfolio?leagueId=';
+        $http.post(actionUrl+leagueId,{})
             .success(function (json) {
                 deferred.resolve(json);
             }).error(function(msg, code) {

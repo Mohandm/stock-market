@@ -1,5 +1,9 @@
 package com.misys.stockmarket.services;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.commons.logging.Log;
@@ -12,11 +16,16 @@ import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.dao.LeagueDAO;
 import com.misys.stockmarket.domain.entity.LeagueMaster;
 import com.misys.stockmarket.domain.entity.LeagueUser;
+import com.misys.stockmarket.domain.entity.StockMaster;
 import com.misys.stockmarket.domain.entity.UserMaster;
+import com.misys.stockmarket.domain.entity.WatchStock;
 import com.misys.stockmarket.enums.LEAGUE_ERR_CODES;
 import com.misys.stockmarket.exception.DAOException;
 import com.misys.stockmarket.exception.DBRecordNotFoundException;
+import com.misys.stockmarket.exception.EmailNotFoundException;
 import com.misys.stockmarket.exception.LeagueException;
+import com.misys.stockmarket.exception.ServiceException;
+import com.misys.stockmarket.exception.service.AlertsServiceException;
 
 @Service("leagueService")
 @Repository
@@ -26,6 +35,9 @@ public class LeagueService {
 
 	@Inject
 	private LeagueDAO leagueDAO;
+	
+	@Inject
+	private UserService userService;
 
 	@Transactional(rollbackFor = DAOException.class)
 	public void addUserToLeague(UserMaster user, LeagueMaster league)
@@ -56,6 +68,23 @@ public class LeagueService {
 			throw new LeagueException(e);
 		}
 	}
+	
+	public List<LeagueMaster> listAllUserLeagues() throws ServiceException {
+		try {
+			List<LeagueUser> leaguesUsers = getLeagueUsersByUserId(userService.getLoggedInUser());
+			List<LeagueMaster> leagueMasters = new ArrayList<LeagueMaster>();
+			for (Iterator<LeagueUser> iterator = leaguesUsers
+					.iterator(); iterator.hasNext();)
+			{
+				LeagueUser leagueUser = (LeagueUser) iterator.next();
+				leagueMasters.add(leagueUser.getLeagueMaster());
+			}
+			return leagueMasters;
+			
+		} catch (EmailNotFoundException e) {
+			throw new ServiceException(e);
+		}
+	}
 
 	public LeagueMaster getDefaultLeague() throws LeagueException {
 		try {
@@ -83,6 +112,16 @@ public class LeagueService {
 			return leagueDAO.findLeagueById(leagueUserId);
 		} catch (DBRecordNotFoundException e) {
 			throw new LeagueException(LEAGUE_ERR_CODES.LEAGUE_USER_NOT_FOUND);
+		}
+	}
+	
+	public List<LeagueUser> getLeagueUsersByUserId(UserMaster user)
+			throws LeagueException {
+		try {
+			return leagueDAO.findLeagueUserByUserId(user);
+		} catch (DAOException e) {
+			LOG.error(e);
+			throw new LeagueException(e);
 		}
 	}
 }
