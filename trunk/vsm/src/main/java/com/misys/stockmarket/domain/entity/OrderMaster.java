@@ -5,8 +5,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -61,6 +63,7 @@ public class OrderMaster implements BaseEntity, Serializable {
 	private LeagueUser leagueUser;
 
 	@OneToMany
+	@Basic(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID")
 	private List<OrderExecution> orderExecutions;
 
@@ -157,6 +160,14 @@ public class OrderMaster implements BaseEntity, Serializable {
 				+ type + ", stockMaster=" + stockMaster + ", leagueUser="
 				+ leagueUser + ", orderExecutions=" + orderExecutions
 				+ ", volume=" + volume + "]";
+	}
+
+	public List<OrderExecution> getOrderExecutions() {
+		return orderExecutions;
+	}
+
+	public void setOrderExecutions(List<OrderExecution> orderExecutions) {
+		this.orderExecutions = orderExecutions;
 	}
 
 }
