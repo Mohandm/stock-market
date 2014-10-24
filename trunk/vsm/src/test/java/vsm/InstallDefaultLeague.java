@@ -56,7 +56,7 @@ public class InstallDefaultLeague {
 		LOG.info("Add all current users to the default group");
 		try {
 			List<UserMaster> allUsers = userService.findAll();
-			UserMaster user = null;
+			
 			for (UserMaster userMaster : allUsers) {
 				try {
 					leagueService.getLeagueUser(defaultLeague.getLeagueId(),
@@ -64,7 +64,7 @@ public class InstallDefaultLeague {
 				} catch (LeagueException e) {
 					if (e.getErrorCode().compareTo(
 							LEAGUE_ERR_CODES.LEAGUE_USER_NOT_FOUND) == 0) {
-						leagueService.addUserToLeague(user, defaultLeague);
+						leagueService.addUserToLeague(userMaster, defaultLeague);
 					}
 				}
 			}
