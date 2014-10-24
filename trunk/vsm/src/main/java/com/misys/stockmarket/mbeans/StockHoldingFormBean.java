@@ -73,11 +73,11 @@ public class StockHoldingFormBean {
 		unitsTradedCurrentValue = unitsTradedCurrentValue.add(unitsTraded);
 		this.volume = unitsTradedCurrentValue.toPlainString();
 	}
-
-	public void addPricePaid(BigDecimal executionPrice) {
-		BigDecimal pricePaidCurrentValue = this.pricePaid == null ? new BigDecimal(
-				"0.00") : new BigDecimal(this.pricePaid);
-		pricePaidCurrentValue = pricePaidCurrentValue.add(executionPrice);
-		this.pricePaid = pricePaidCurrentValue.toPlainString();
+	
+	public void subtractVolume(BigDecimal unitsTraded) {
+		BigDecimal unitsTradedCurrentValue = this.volume == null ? new BigDecimal(
+				"0.00") : new BigDecimal(this.volume);
+		unitsTradedCurrentValue = unitsTradedCurrentValue.subtract(unitsTraded);
+		this.volume = unitsTradedCurrentValue.toPlainString();
 	}
 }

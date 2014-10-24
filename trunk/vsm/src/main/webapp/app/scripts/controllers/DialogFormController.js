@@ -11,12 +11,7 @@ vsmApp.controller('DialogFormController', ['$scope','$http','modals', 'StockQuot
         $scope.formmodel.leagueUserId = $scope.passValuesToDialog.leagueUserId;
     },1000);
 
-   var stockListsPromise = StockQuotesService.getStockLists();
-    stockListsPromise.then(function(data){
-        $scope.stockLists = data;
-    });
-
-    $scope.priceTypeMappings = [
+   $scope.priceTypeMappings = [
         {"name":"Market", "type":"01"},
         {"name":"Limit", "type":"02"},
         {"name":"StopLoss", "type":"03"}
