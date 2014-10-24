@@ -2,7 +2,7 @@
 describe('Misys - Stock Market League', function() {
 
     beforeEach(function() {
-        browser.get('http://localhost:8080/stockmarket/game#/form/login');
+        browser.get('http://localhost:9091/stockmarket/game#/form/login');
     });
 
     it('should have a title', function() {
