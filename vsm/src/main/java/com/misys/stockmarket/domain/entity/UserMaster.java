@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -15,11 +16,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "USER_MASTER")
+@SequenceGenerator(name = "SEQ_USER_MASTER")
 public class UserMaster implements BaseEntity, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_USER_MASTER")
 	@Column(name = "USER_ID", unique = true, nullable = false)
 	private Long userId;
 

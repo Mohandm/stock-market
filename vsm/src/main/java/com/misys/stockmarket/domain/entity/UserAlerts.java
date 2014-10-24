@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,12 +22,13 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "USER_ALERTS")
+@SequenceGenerator(name = "SEQ_USER_ALERTS")
 public class UserAlerts implements BaseEntity, Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_USER_ALERTS")
 	@Column(name = "USER_ALERTS_ID")
 	private long userAlertsId;
 	

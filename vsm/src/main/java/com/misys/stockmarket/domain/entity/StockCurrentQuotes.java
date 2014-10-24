@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,11 +25,12 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "STOCK_CURRENT_QUOTES", uniqueConstraints = { @UniqueConstraint(columnNames = {
 		"STOCK_ID"}) })
+@SequenceGenerator(name = "SEQ_STOCK_CURRENT_QUOTES")
 public class StockCurrentQuotes implements BaseEntity, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_STOCK_CURRENT_QUOTES")
 	@Column(name = "CURRENT_QUOTE_ID")
 	private long currentQuoteId;
 
