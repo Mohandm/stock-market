@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,13 +21,13 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "LEAGUE_MASTER", uniqueConstraints = { @UniqueConstraint(columnNames = { "NAME" }) })
-@NamedQuery(name = "LeagueMaster.findAll", query = "SELECT s FROM LeagueMaster s")
+@SequenceGenerator(name = "SEQ_LEAGUE_MASTER")
 public class LeagueMaster implements BaseEntity, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_LEAGUE_MASTER")
 	@Column(name = "LEAGUE_ID")
 	private long leagueId;
 

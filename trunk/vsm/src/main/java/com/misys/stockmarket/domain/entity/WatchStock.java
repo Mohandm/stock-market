@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -18,11 +19,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "WATCH_STOCK")
+@SequenceGenerator(name = "SEQ_WATCH_STOCK")
 public class WatchStock implements BaseEntity, Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_WATCH_STOCK")
 	@Column(name = "WATCH_STOCK_ID")
 	private long watchStockId;
 	

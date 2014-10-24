@@ -13,11 +13,12 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "ORDER_MASTER")
+@SequenceGenerator(name = "SEQ_ORDER_MASTER")
 public class OrderMaster implements BaseEntity, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ORDER_MASTER")
 	@Column(name = "ORDER_ID")
 	private long orderId;
 
