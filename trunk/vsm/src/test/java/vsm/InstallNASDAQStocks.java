@@ -66,8 +66,8 @@ public class InstallNASDAQStocks {
 			LOG.info("NEW STOCKS SIZE:" + newStocksList.size());
 			LOG.info("UPDATE STOCK SIZE:" + updateStocksList.size());
 
-			stockService.saveStocks(newStocksList);
-			stockService.updateStocks(updateStocksList);
+			stockService.saveStockList(newStocksList);
+			stockService.updateStockList(updateStocksList);
 		} catch (JsonParseException e) {
 			LOG.error(e);
 		} catch (JsonMappingException e) {
