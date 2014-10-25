@@ -55,6 +55,12 @@ public interface IApplicationConstants {
 	public final String LEAGUE_STATUS_COMPLETED = "C";
 
 	public final String DEFAULT_LEAGUE_NAME = "Global";
+	
+	public final String PREMIER_LEAGUE_NAME = "Premier";
+	
+	public final String CHAMPIONS_LEAGUE_NAME = "Champions";
+	
+	public final String LEGENDS_LEAGUE_NAME = "Legends";
 
 	public final String WATCH_STOCK_STATUS_PENDING = "P";
 

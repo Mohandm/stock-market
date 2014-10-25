@@ -3,12 +3,17 @@ package com.misys.stockmarket.domain.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -49,6 +54,14 @@ public class LeagueMaster implements BaseEntity, Serializable {
 
 	@Column(length = 1)
 	private String status;
+
+	@Column(name = "STAGE", precision = 1)
+	private BigDecimal stage;
+
+	@OneToMany
+	@Basic(fetch = FetchType.LAZY)
+	@JoinColumn(name = "LEAGUE_ID", referencedColumnName = "LEAGUE_ID")
+	private List<LeagueUser> leagueUsers;
 
 	public long getLeagueId() {
 		return leagueId;
@@ -104,6 +117,22 @@ public class LeagueMaster implements BaseEntity, Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public List<LeagueUser> getLeagueUsers() {
+		return leagueUsers;
+	}
+
+	public void setLeagueUsers(List<LeagueUser> leagueUsers) {
+		this.leagueUsers = leagueUsers;
+	}
+
+	public BigDecimal getStage() {
+		return stage;
+	}
+
+	public void setStage(BigDecimal stage) {
+		this.stage = stage;
 	}
 
 }
