@@ -1,4 +1,4 @@
-package com.misys.stockmarket.services;
+package com.misys.stockmarket.security;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,17 +11,13 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.dao.UserDAO;
 import com.misys.stockmarket.domain.entity.UserMaster;
 import com.misys.stockmarket.exception.DBRecordNotFoundException;
 
-@Service("userDetailsServiceImpl")
-@Repository
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
 
 	@Inject
 	UserDAO userDao;
@@ -34,12 +30,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			UserMaster user = userDao.findByEmail(email);
 			boolean userEnabled = IApplicationConstants.EMAIL_VERIFIED_YES
 					.equals(user.getVerified());
-			boolean credentialsNonExpired = !IApplicationConstants.USER_PASSWORD_EXPIRED
-					.equals(user.getActive());
-			boolean accountNonLocked = IApplicationConstants.USER_ACTIVATED
-					.equals(user.getActive());
 			userDetails = new User(user.getEmail(), user.getPassword(),
-					userEnabled, true, credentialsNonExpired, accountNonLocked,
+					userEnabled, true, true, true,
 					buildDefaultGrantedAuthority());
 			return userDetails;
 		} catch (DBRecordNotFoundException e) {

@@ -85,8 +85,7 @@ public class UserBizHandler {
 			// Autogenerate password
 			String passwordValue = SecurityUtil.autoGeneratePassword(12);
 			user.setPassword(passwordEncoder.encode(passwordValue));
-			user.setActive(IApplicationConstants.USER_PASSWORD_EXPIRED);
-			userService.saveUser(user);
+			userService.updateUser(user);
 
 			// SEND PASSWORD CHANGE EMAIL NOTIFICATION
 			SimpleMailMessage message = EmailFormatter.resetPasswordMessage(
