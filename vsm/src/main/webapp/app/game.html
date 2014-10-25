@@ -44,7 +44,7 @@
             <a class="logo pull-left" href="../stockmarket"><img src="app/images/misys_logo_white.png" alt="Misys - Stock Market League"/></a>
             <div class="topRightNavigation">
                 <ul class="nav navbar-top-links navbar-right">
-                    <li class="dropdown">
+                    <li class="dropdown" ng-show="isAuthenticated()">
                         <a class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
                         </a>
@@ -95,7 +95,7 @@
                         <!-- /.dropdown-messages -->
                     </li>
                     <!-- /.dropdown -->
-                    <li class="dropdown">
+                    <li class="dropdown" ng-show="isAuthenticated()">
                         <a class="dropdown-toggle" data-toggle="dropdown" >
                             <i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
                         </a>
@@ -174,7 +174,7 @@
                         <!-- /.dropdown-tasks -->
                     </li>
                     <!-- /.dropdown -->
-                    <li class="dropdown">
+                    <li class="dropdown" ng-show="isAuthenticated()">
                         <a class="dropdown-toggle" data-toggle="dropdown" >
                             <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
                         </a>
@@ -191,7 +191,7 @@
                                 <li class="divider"></li>
 
                             <li>
-                                <a class="text-center" href="#/watchList">
+                                <a class="text-center" href="#/alerts">
                                     <strong>See All Alerts</strong>
                                     <i class="fa fa-angle-right"></i>
                                 </a>
@@ -257,22 +257,41 @@
                             Interactive Charts
                         </a>
                     </li>
+                    <li>
+                        <a href="#/leaderBoard" class="nav-a-side-bar">
+                            <i class="fa fa-beer fa-fw"></i>
+                            Leader Board
+                        </a>
+                    </li>
+                    <li ng-show="isAuthenticated()">
+                        <a href="#/leagues" class="nav-a-side-bar">
+                            <i class="fa fa-flag-checkered fa-fw"></i>
+                            Leagues
+                        </a>
+                    </li>
+
                     <li ng-show="isAuthenticated()">
                         <a href="#/myPortfolio" class="nav-a-side-bar">
                             <i class="fa fa-usd fa-fw"></i>
                             My Portfolio
                         </a>
                     </li>
-                    <!--<li>
-                         <a href="#/trades" class="nav-a-side-bar">
-                            <i class="fa fa-usd fa-fw"></i>
-                             Trades
-                        </a>
-                    </li>-->
                     <li ng-show="isAuthenticated()">
                         <a href="#/watchList" class="nav-a-side-bar">
-                            <i class="fa fa-bell fa-fw"></i>
+                            <i class="fa fa-bullhorn fa-fw"></i>
                             Watch List
+                        </a>
+                    </li>
+                    <li ng-show="isAuthenticated()">
+                        <a href="#/followers" class="nav-a-side-bar">
+                            <i class="fa fa-group fa-fw"></i>
+                            Followers
+                        </a>
+                    </li>
+                    <li ng-show="isAuthenticated()">
+                        <a href="#/alerts" class="nav-a-side-bar">
+                            <i class="fa fa-bell fa-fw"></i>
+                            Alerts
                         </a>
                     </li>
                 </ul>
@@ -346,6 +365,11 @@
         <script type="text/javascript" src="app/scripts/controllers/DialogFormController.js"></script>
         <script type="text/javascript" src="app/scripts/controllers/WatchListController.js"></script>
         <script type="text/javascript" src="app/scripts/controllers/LoginController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/FollowersController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/LeaderBoardController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/LeaguesController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/AlertsController.js"></script>
+
         <!-- directives -->
         <script type="text/javascript" src="app/scripts/directives/dropdown-menu.js"></script>
         <script type="text/javascript" src="app/scripts/directives/top-navigation-bar.js"></script>
@@ -365,6 +389,7 @@
         <script type="text/javascript" src="app/scripts/services/AuthInterceptorService.js"></script>
         <script type="text/javascript" src="app/scripts/services/AuthService.js"></script>
         <script type="text/javascript" src="app/scripts/services/tourService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/leaguesService.js"></script>
         <!-- endbuild -->
     </body>
 </html>

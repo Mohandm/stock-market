@@ -24,10 +24,28 @@
            controller: 'MyPortfolioController',
            needsLogin : true
        })
-       .when('/charts', {
+       .when('/leaderBoard', {
+           templateUrl: 'app/views/leaderBoard.html',
+           controller: 'LeaderBoardController'
+       })
+       .when('/leagues', {
+           templateUrl: 'app/views/leagues.html',
+           controller: 'LeaguesController',
+           needsLogin : true
+       })
+       .when('/followers', {
+           templateUrl: 'app/views/followers.html',
+           controller: 'FollowersController',
+           needsLogin : true
+       })
+        .when('/charts', {
            templateUrl: 'app/views/charts.html',
            controller: 'ChartsController'
        })
+        .when('/alerts', {
+            templateUrl: 'app/views/alerts.html',
+            controller: 'AlertsController'
+        })
        .when('/watchList', {
            templateUrl: 'app/views/watchList.html',
            controller: 'WatchListController'
@@ -115,7 +133,7 @@
         };
 
         $rootScope.$on("$locationChangeStart", function (event, next, current) {
-            var array = ['/','/myPortfolio','/charts','/trades','/watchList'];
+            var array = ['/','/myPortfolio','/charts','/watchList','/alerts','/leaderBoard','/leagues','/followers'];
             $rootScope.animateTransition = false;
             $(array).each(function(index,item){
                 if($location.path() === item)
