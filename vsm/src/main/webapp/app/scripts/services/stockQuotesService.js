@@ -70,7 +70,7 @@ vsmApp.service('StockQuotesService', ['$http','$q','$log', function ($http, $q, 
                 $log.error(msg, code);
             });
         return deferred.promise;
-    }
+    };
 
     this.getMyPortfolio = function(leagueId){
         var deferred = $q.defer();
@@ -83,7 +83,7 @@ vsmApp.service('StockQuotesService', ['$http','$q','$log', function ($http, $q, 
                 $log.error(msg, code);
             });
         return deferred.promise;
-    }
+    };
 
     this.getMyRecentTrades = function(leagueId){
         var deferred = $q.defer();
@@ -96,6 +96,6 @@ vsmApp.service('StockQuotesService', ['$http','$q','$log', function ($http, $q, 
                 $log.error(msg, code);
             });
         return deferred.promise;
-    }
+    };
 
 }]);

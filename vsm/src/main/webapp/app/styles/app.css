@@ -593,3 +593,32 @@ input[type="text"].ui-grid-filter-input{
     border-color: white;
     border: 2px solid white;
 }
+.leagues-icon-1,.leagues-icon-2,.leagues-icon-3{
+    font-size : 200px;
+    text-align: center;
+}
+.league-1, .league-1 .fa,.league-1:hover{
+    color : rgba(255,128,0,1);
+}
+
+.league-2,.league-2 .fa,.league-2:hover{
+    color : rgba(51,153,255,1);
+}
+
+.league-3,.league-3 .fa,.league-3:hover{
+    color : rgba(255,0,0,1);
+}
+.leagues-lock-text-1,.leagues-lock-text-2,.leagues-lock-text-3{
+    text-align: center;
+    font-size: 30px;
+}
+
+.leagues-dashboard .btn-success  {
+    background-color: rgba(0,0,0,.5);
+    border-color: white;
+}
+
+.leagues-dashboard .btn-success:hover  {
+    background-color: rgba(0,0,0,.75);
+    border-color: white;
+}
