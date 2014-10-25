@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.misys.stockmarket.dao.UserDAO;
 import com.misys.stockmarket.domain.entity.UserMaster;
@@ -31,6 +32,7 @@ public class UserService {
 		}
 	}
 
+	@Transactional(rollbackFor = DAOException.class)
 	public void updateUser(UserMaster userMaster) throws UserServiceException {
 		try {
 			userDAO.update(userMaster);
