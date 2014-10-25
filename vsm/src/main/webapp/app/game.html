@@ -252,15 +252,15 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#/myPortfolio" class="nav-a-side-bar">
-                            <i class="fa fa-usd fa-fw"></i>
-                            My Portfolio
-                        </a>
-                    </li>
-                    <li>
                         <a href="#/charts" class="nav-a-side-bar">
                             <i class="fa fa-line-chart fa-fw"></i>
                             Interactive Charts
+                        </a>
+                    </li>
+                    <li ng-show="isAuthenticated()">
+                        <a href="#/myPortfolio" class="nav-a-side-bar">
+                            <i class="fa fa-usd fa-fw"></i>
+                            My Portfolio
                         </a>
                     </li>
                     <!--<li>

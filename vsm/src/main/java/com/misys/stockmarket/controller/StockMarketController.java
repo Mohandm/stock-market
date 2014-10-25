@@ -1,5 +1,8 @@
 package com.misys.stockmarket.controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -20,6 +23,7 @@ import com.misys.stockmarket.domain.entity.StockCurrentQuotes;
 import com.misys.stockmarket.domain.entity.StockHistory;
 import com.misys.stockmarket.domain.entity.StockMaster;
 import com.misys.stockmarket.domain.entity.UserAlerts;
+import com.misys.stockmarket.domain.entity.WatchStock;
 import com.misys.stockmarket.enums.STOCK_ERR_CODES;
 import com.misys.stockmarket.exception.ServiceException;
 import com.misys.stockmarket.exception.service.AlertsServiceException;
@@ -27,6 +31,7 @@ import com.misys.stockmarket.exception.service.OrderServiceException;
 import com.misys.stockmarket.exception.service.StockServiceException;
 import com.misys.stockmarket.handlers.user.UserBizHandler;
 import com.misys.stockmarket.mbeans.OrderFormBean;
+import com.misys.stockmarket.mbeans.UserAlertsBean;
 import com.misys.stockmarket.mbeans.UserFormBean;
 import com.misys.stockmarket.mbeans.WatchListFormBean;
 import com.misys.stockmarket.platform.web.ResponseMessage;
@@ -124,9 +129,21 @@ public class StockMarketController {
 	@RequestMapping(value = "/alertList", method = { RequestMethod.GET,
 			RequestMethod.POST })
 	@ResponseBody
-	public List<UserAlerts> alertList() {
+	public List<UserAlertsBean> alertList() {
 		try {
-			return alertsService.listAllAlerts();
+			List<UserAlerts> alerts = alertsService.listAllAlerts();
+			List<UserAlertsBean> userAlertsBeans = new ArrayList<UserAlertsBean>();
+			for(Iterator<UserAlerts> iterator = alerts
+					.iterator(); iterator.hasNext();)
+			{
+				UserAlerts userAlerts = (UserAlerts) iterator.next();
+				UserAlertsBean userAlertsBean = new UserAlertsBean();
+				userAlertsBean.setMessage(userAlerts.getMessage());
+				userAlertsBean.setNotifiedDate(userAlerts.getNotifiedDate().toString());
+				userAlertsBeans.add(userAlertsBean);
+			}
+			Collections.reverse(userAlertsBeans);
+			return userAlertsBeans;
 		} catch (AlertsServiceException e) {
 			LOG.error(e);
 			// TODO: HANDLE WHEN EXCEPTION

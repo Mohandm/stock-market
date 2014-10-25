@@ -92,6 +92,7 @@ public class AlertsService {
 		}
 	}
 
+	@Transactional(rollbackFor = DAOException.class)
 	public void triggerWatchStockAlerts() {
 		// Trigger Watch Stock
 		try {

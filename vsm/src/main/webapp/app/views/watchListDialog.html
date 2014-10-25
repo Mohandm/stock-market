@@ -29,8 +29,8 @@
                                 <label>{{passValuesToDialog.lastTradePrice}}</label>
                             </div>
                         </div>
-                        <field-wrapper label="Watch Price Higher Limit" type="text" name="limit" required="true" formmodel="formmodel" formcontrol="formcontrol" validations='[{"validator":"isNumber","event":"isNumber","errorMessage":"It should be a number", "scopeValue":"symbol"}]'></field-wrapper>
-                        <field-wrapper label="Watch Price Lower Limit" type="text" name="lowerLimit" required="true" formmodel="formmodel" formcontrol="formcontrol" validations='[{"validator":"isNumber","event":"isNumber","errorMessage":"It should be a number", "scopeValue":"symbol"}]'></field-wrapper>
+                        <field-wrapper label="Watch Price Higher Limit" type="text" name="limit" required="true" formmodel="formmodel" formcontrol="formcontrol" validations='[{"validator":"isNumber","event":"isNumber","errorMessage":"It should be a number", "scopeValue":"symbol"},{"validator":"validateHigherLimit","event":"validateHigherLimit","errorMessage":"Higher Limit should be greater than Current Market Price", "scopeValue":"lastTradePrice"}]'></field-wrapper>
+                        <field-wrapper label="Watch Price Lower Limit" type="text" name="lowerLimit" required="true" formmodel="formmodel" formcontrol="formcontrol" validations='[{"validator":"isNumber","event":"isNumber","errorMessage":"It should be a number", "scopeValue":"symbol"},{"validator":"validateLowerLimit","event":"validateLowerLimit","errorMessage":"Lower Limit should be lesser than Current Market Price", "scopeValue":"lastTradePrice"}]'></field-wrapper>
                     </form>
                 </div>
             </div>

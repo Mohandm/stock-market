@@ -14,6 +14,28 @@ vsmApp.service('ValidatorService', function($compile, $http, $rootScope, StockQu
         return true;
 	};
 
+    this.validateHigherLimit = function(limit,currentPrice)
+    {
+        if(limit)
+        {
+            if(parseFloat(limit) < parseFloat(currentPrice)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    this.validateLowerLimit = function(limit,currentPrice)
+    {
+        if(limit)
+        {
+            if(parseFloat(limit) > parseFloat(currentPrice)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 	this.isNumber = function(value) {
 		return !isNaN(value);
 	};
