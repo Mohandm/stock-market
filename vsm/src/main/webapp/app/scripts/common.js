@@ -44,6 +44,16 @@
         $('#wrapper').toggleClass('toggled');
     });
 
+    $('#menu-toggle').mouseenter(function(e) {
+        e.preventDefault();
+        $('#wrapper').toggleClass('toggled');
+    });
+
+    $('#wrapper').mouseleave(function(e) {
+        e.preventDefault();
+        $('#wrapper').toggleClass('toggled');
+    });
+
     /* Active Menu */
     $('#sidebar-wrapper .menu-item').hover(function(){
         $(this).closest('.dropdown').addClass('hovered');
