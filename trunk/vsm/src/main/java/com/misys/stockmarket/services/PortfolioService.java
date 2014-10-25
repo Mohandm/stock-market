@@ -1,6 +1,7 @@
 package com.misys.stockmarket.services;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,9 +91,17 @@ public class PortfolioService {
 							.setMarketCalculatedValue(marketValue.toPlainString());
 				}
 			}
+			
+			List<StockHoldingFormBean> stockHoldingFormBeanFinalList = new ArrayList<StockHoldingFormBean>(); 
 			for (StockHoldingFormBean stockHoldingFormBean : stockHoldingBySymbolMap.values())
 			{
 				portfolioValue = portfolioValue.add(new BigDecimal(stockHoldingFormBean.getMarketCalculatedValue()));
+				BigDecimal volume = new BigDecimal(stockHoldingFormBean.getVolume());
+				if(volume.compareTo(new BigDecimal(0)) > 0)
+				{
+					stockHoldingFormBean.setVolume(Long.toString(volume.longValue()));
+					stockHoldingFormBeanFinalList.add(stockHoldingFormBean);
+				}
 			}
 			MyPortfolioFormBean myPortfolioFormBean = new MyPortfolioFormBean();
 			myPortfolioFormBean.setPortfolioValue(portfolioValue
@@ -104,8 +113,7 @@ public class PortfolioService {
 			myPortfolioFormBean.setTotalValue(remainingAmount.add(
 					new BigDecimal(myPortfolioFormBean.getPortfolioValue()))
 					.toPlainString());
-			myPortfolioFormBean.getStockHoldings().addAll(
-					stockHoldingBySymbolMap.values());
+			myPortfolioFormBean.getStockHoldings().addAll(stockHoldingFormBeanFinalList);
 			return myPortfolioFormBean;
 		} catch (OrderServiceException e) {
 			LOG.error(e);
