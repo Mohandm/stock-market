@@ -2,7 +2,11 @@ angular.module('vsmApp')
   .service('Session', function () {
   this.create = function (email) {
     this.email = email;
- };
+  };
+  this.populatecsrftoken = function (csrfTokenHeader,csrfTokenValue) {
+    this.csrfTokenHeader = csrfTokenHeader;
+    this.csrfTokenValue = csrfTokenValue;
+  };
   this.destroy = function () {
     this.email = null;
   };
@@ -17,6 +21,13 @@ angular.module('vsmApp')
     return $http.post('j_spring_security_check', credentials)
       .then(function (res) {
         Session.create(res.data.email);
+      });
+  };
+
+  authService.logout = function () {
+    return $http.post('j_spring_security_logout', {})
+      .then(function (res) {   
+        Session.destroy();
       });
   };
 

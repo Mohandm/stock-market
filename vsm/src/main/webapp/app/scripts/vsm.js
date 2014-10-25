@@ -132,6 +132,16 @@
             $rootScope.tour.start(true);
         };
 
+        var setLogoutMessage = function ($timeout) {
+            message = {
+                text: "You have been successfully logged out.",
+                type: "success",
+                show: true
+            };
+        };
+
+        $rootScope.$on(AUTH_EVENTS.logoutSuccess, setLogoutMessage);
+
         $rootScope.$on("$locationChangeStart", function (event, next, current) {
             var array = ['/','/myPortfolio','/charts','/watchList','/alerts','/leaderBoard','/leagues','/followers'];
             $rootScope.animateTransition = false;
