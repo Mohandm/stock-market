@@ -565,3 +565,31 @@ input[type="text"].ui-grid-filter-input{
 .my-portfolio-container{
     font-size : 20px;
 }
+
+.alert-success {
+    color: white;
+    background-color: rgba(0,204,0,0.35);
+    border-color: white;
+    border: 2px solid white;
+}
+
+.alert-info {
+    color: white;
+    background-color: rgba(102, 178, 255, 0.35);
+    border-color: white;
+    border: 2px solid white;
+}
+
+.alert-warning {
+    color: white;
+    background-color: rgba(255, 153, 0, 0.35);
+    border-color: white;
+    border: 2px solid white;
+}
+
+.alert-danger {
+    color: white;
+    background-color: rgba(255, 51, 51, 0.35);
+    border-color: white;
+    border: 2px solid white;
+}
