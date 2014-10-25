@@ -5,10 +5,12 @@ vsmApp.controller('DialogFormController', ['$scope','$http','modals', 'StockQuot
     $scope.formmodel = {};
     $scope.formcontrol = {};
     $scope.formmodel.symbol = '';
+    $scope.formmodel.stockHoldingVolume = '';
 
     setTimeout(function(){
         $scope.formmodel.symbol = $scope.passValuesToDialog.tikerSymbol;
         $scope.formmodel.leagueUserId = $scope.passValuesToDialog.leagueUserId;
+        $scope.formmodel.stockHoldingVolume = $scope.passValuesToDialog.volume;
     },1000);
 
    $scope.priceTypeMappings = [

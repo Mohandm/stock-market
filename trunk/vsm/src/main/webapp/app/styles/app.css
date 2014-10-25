@@ -558,3 +558,6 @@ input[type="text"].ui-grid-filter-input{
 .popover.bottom > .arrow:after{
     border-bottom-color : rgba(0,0,0,.65);
 }
+.has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline{
+    color : red;
+}
