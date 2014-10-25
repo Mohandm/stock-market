@@ -15,10 +15,6 @@ vsmApp.directive('fieldWrapper', function ($http, $compile) {
                 required:"=",
                 formcontrol:"=",
                 validations:"="
-            },
-            controller: ['$scope','modals','$location',function(scope,modals,location){
-                console.log(1231);
-                
-            }]
+            }
         };
   });

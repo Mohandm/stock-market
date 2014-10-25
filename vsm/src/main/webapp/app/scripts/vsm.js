@@ -21,7 +21,8 @@
         })
        .when('/myPortfolio', {
            templateUrl: 'app/views/myPortfolio.html',
-           controller: 'MyPortfolioController'
+           controller: 'MyPortfolioController',
+           needsLogin : true
        })
        .when('/charts', {
            templateUrl: 'app/views/charts.html',
@@ -83,7 +84,7 @@
         });
     });
     
-    vsmApp.run(function ($rootScope,$http, AlertsService, $location,TourService, AuthService) {
+    vsmApp.run(function ($rootScope,$http, AlertsService, $location,TourService, AuthService, AUTH_EVENTS) {
         //make current message accessible to root scope and therefore all scopes
         $rootScope.message = function () {
             return message;
@@ -122,6 +123,19 @@
                     $rootScope.animateTransition = true;
                 }
             });
+        });
+
+        $rootScope.$on('$routeChangeStart', function(event, currRoute, prevRoute){
+            // If user is not logged in try to sync the session and show login modal dialog if required
+            if (!AuthService.isAuthenticated()) {
+                // Session might still be active on the server side
+                AuthService.syncSession().then(function () {
+                  // If user is not logged in and the route needs login show the modal dialog
+                  if (!AuthService.isAuthenticated() && angular.isDefined(currRoute.needsLogin) && currRoute.needsLogin) {
+                    $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+                }
+              });
+            }
         });
     });
 }());

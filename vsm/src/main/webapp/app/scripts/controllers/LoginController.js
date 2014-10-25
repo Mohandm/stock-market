@@ -17,10 +17,12 @@ angular.module('vsmApp')
         else {
           $location.path('/'); 
         }
-      }, 
-      function () {
-        $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
       })
     }
   };
+
+  var setError = function () {
+    $scope.formcontrol.haserror = true;
+  }
+  $rootScope.$on(AUTH_EVENTS.notAuthenticated, setError);
 });

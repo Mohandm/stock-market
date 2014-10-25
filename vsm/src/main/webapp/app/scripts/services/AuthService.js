@@ -19,6 +19,15 @@ angular.module('vsmApp')
         Session.create(res.data.email);
       });
   };
+
+  authService.syncSession = function () {
+    return $http.get('getuserdetails', {})
+      .then(function (res) {
+        if (angular.isDefined(res.data.email)) {
+          Session.create(res.data.email);
+        }
+      });
+  };
  
   authService.isAuthenticated = function () {
     return !!Session.email;

@@ -30,9 +30,11 @@ import com.misys.stockmarket.mbeans.OrderFormBean;
 import com.misys.stockmarket.mbeans.UserFormBean;
 import com.misys.stockmarket.mbeans.WatchListFormBean;
 import com.misys.stockmarket.platform.web.ResponseMessage;
+import com.misys.stockmarket.security.LoginResponse;
 import com.misys.stockmarket.services.AlertsService;
 import com.misys.stockmarket.services.OrderService;
 import com.misys.stockmarket.services.StockService;
+import com.misys.stockmarket.services.UserService;
 
 /**
  * @author Gurudath Reddy
@@ -46,6 +48,9 @@ public class StockMarketController {
 
 	@Inject
 	UserBizHandler userBizHandler;
+
+	@Inject
+	private UserService userService;
 
 	@Inject
 	StockService stockService;
@@ -189,6 +194,14 @@ public class StockMarketController {
 		}
 	}
 
+	@RequestMapping(value = "/getuserdetails", method = { RequestMethod.GET,
+			RequestMethod.POST })
+	@ResponseBody
+	public LoginResponse getUserDetails() {
+			return userService.getLoggedInUserResponse();
+		
+	}
+	
 	@RequestMapping("/")
 	public String index(Model model) {
 		return "index";
