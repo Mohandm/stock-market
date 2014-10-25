@@ -23,7 +23,10 @@ import com.misys.stockmarket.exception.LeagueException;
 import com.misys.stockmarket.exception.service.OrderServiceException;
 import com.misys.stockmarket.exception.service.PortfolioServiceException;
 import com.misys.stockmarket.mbeans.MyPortfolioFormBean;
+import com.misys.stockmarket.mbeans.MyRecentTradeFormBean;
+import com.misys.stockmarket.mbeans.OrderHistoryFormBean;
 import com.misys.stockmarket.mbeans.StockHoldingFormBean;
+import com.misys.stockmarket.utility.DateUtils;
 
 @Service("portfolioService")
 @Repository
@@ -50,8 +53,9 @@ public class PortfolioService {
 			BigDecimal portfolioValue = new BigDecimal(0);
 			Map<String, StockHoldingFormBean> stockHoldingBySymbolMap = new HashMap<String, StockHoldingFormBean>();
 			for (OrderMaster orderMaster : completedPurchaseOrderList) {
-				for (OrderExecution orderExecution : orderMaster.getOrderExecutions()) { 
-					
+				for (OrderExecution orderExecution : orderMaster
+						.getOrderExecutions()) {
+
 					// SUM UP ALL SAME STOCKS
 					StockMaster stockMaster = orderMaster.getStockMaster();
 					String tickerSymbol = stockMaster.getTikerSymbol();
@@ -66,40 +70,46 @@ public class PortfolioService {
 					}
 					stockHoldingFormBean.setTikerSymbol(tickerSymbol);
 					stockHoldingFormBean.setName(stockMaster.getName());
-					
-					if(orderMaster.getType().equals(IApplicationConstants.BUY_TYPE))
-					{
+
+					if (orderMaster.getType().equals(
+							IApplicationConstants.BUY_TYPE)) {
 						stockHoldingFormBean.addVolume(orderExecution
 								.getUnitsTraded());
-					}
-					else if(orderMaster.getType().equals(IApplicationConstants.SELL_TYPE))
-					{
+					} else if (orderMaster.getType().equals(
+							IApplicationConstants.SELL_TYPE)) {
 						stockHoldingFormBean.subtractVolume(orderExecution
 								.getUnitsTraded());
 					}
-					/*stockHoldingFormBean.addPricePaid(orderExecution
-							.getExecutionPrice());*/
+					/*
+					 * stockHoldingFormBean.addPricePaid(orderExecution
+					 * .getExecutionPrice());
+					 */
 					StockCurrentQuotes stockCurrentQuotes = stockService
 							.getStockCurrentQuoteByStockId(stockMaster
 									.getStockId());
 					stockHoldingFormBean.setMarketPrice(stockCurrentQuotes
 							.getLastTradePriceOnly().toPlainString());
-					
-					BigDecimal marketValue = stockCurrentQuotes.getLastTradePriceOnly().multiply(new BigDecimal(stockHoldingFormBean.getVolume()));
-					
-					stockHoldingFormBean
-							.setMarketCalculatedValue(marketValue.toPlainString());
+
+					BigDecimal marketValue = stockCurrentQuotes
+							.getLastTradePriceOnly().multiply(
+									new BigDecimal(stockHoldingFormBean
+											.getVolume()));
+
+					stockHoldingFormBean.setMarketCalculatedValue(marketValue
+							.toPlainString());
 				}
 			}
-			
-			List<StockHoldingFormBean> stockHoldingFormBeanFinalList = new ArrayList<StockHoldingFormBean>(); 
-			for (StockHoldingFormBean stockHoldingFormBean : stockHoldingBySymbolMap.values())
-			{
-				portfolioValue = portfolioValue.add(new BigDecimal(stockHoldingFormBean.getMarketCalculatedValue()));
-				BigDecimal volume = new BigDecimal(stockHoldingFormBean.getVolume());
-				if(volume.compareTo(new BigDecimal(0)) > 0)
-				{
-					stockHoldingFormBean.setVolume(Long.toString(volume.longValue()));
+
+			List<StockHoldingFormBean> stockHoldingFormBeanFinalList = new ArrayList<StockHoldingFormBean>();
+			for (StockHoldingFormBean stockHoldingFormBean : stockHoldingBySymbolMap
+					.values()) {
+				portfolioValue = portfolioValue.add(new BigDecimal(
+						stockHoldingFormBean.getMarketCalculatedValue()));
+				BigDecimal volume = new BigDecimal(
+						stockHoldingFormBean.getVolume());
+				if (volume.compareTo(new BigDecimal(0)) > 0) {
+					stockHoldingFormBean.setVolume(Long.toString(volume
+							.longValue()));
 					stockHoldingFormBeanFinalList.add(stockHoldingFormBean);
 				}
 			}
@@ -113,7 +123,8 @@ public class PortfolioService {
 			myPortfolioFormBean.setTotalValue(remainingAmount.add(
 					new BigDecimal(myPortfolioFormBean.getPortfolioValue()))
 					.toPlainString());
-			myPortfolioFormBean.getStockHoldings().addAll(stockHoldingFormBeanFinalList);
+			myPortfolioFormBean.getStockHoldings().addAll(
+					stockHoldingFormBeanFinalList);
 			return myPortfolioFormBean;
 		} catch (OrderServiceException e) {
 			LOG.error(e);
@@ -122,5 +133,65 @@ public class PortfolioService {
 			LOG.error(e);
 			throw new PortfolioServiceException(e);
 		}
+	}
+
+	public MyRecentTradeFormBean getMyRecentTrades(long leagueId, long userId)
+			throws PortfolioServiceException {
+		MyRecentTradeFormBean myRecentTradeFormBean = new MyRecentTradeFormBean();
+		try {
+			LeagueUser leagueUser = leagueService.getLeagueUser(leagueId,
+					userId);
+			List<OrderMaster> allOrdersList = orderService
+					.getAllOrders(leagueUser.getLeagueUserId());
+			for (OrderMaster orderMaster : allOrdersList) {
+				OrderHistoryFormBean orderHistoryFormBean = new OrderHistoryFormBean();
+				orderHistoryFormBean
+						.setDateTime(DateUtils
+								.getFormattedDateTimeString(orderMaster
+										.getOrderDate()));
+				orderHistoryFormBean.setTikerSymbol(orderMaster
+						.getStockMaster().getTikerSymbol());
+				orderHistoryFormBean.setName(orderMaster.getStockMaster()
+						.getName());
+				// TODO: Change later to II8n
+				if (IApplicationConstants.BUY_TYPE
+						.equals(orderMaster.getType())) {
+					orderHistoryFormBean.setOrderType("Buy");
+				} else {
+					orderHistoryFormBean.setOrderType("Sell");
+				}
+				if (IApplicationConstants.ORDER_PRICE_TYPE_MARKET
+						.equals(orderMaster.getPriceType())) {
+					orderHistoryFormBean.setPriceType("Market");
+				} else if (IApplicationConstants.ORDER_PRICE_TYPE_LIMIT
+						.equals(orderMaster.getPriceType())) {
+					orderHistoryFormBean.setPriceType("Limit");
+				} else if (IApplicationConstants.ORDER_PRICE_TYPE_STOPLOSS
+						.equals(orderMaster.getPriceType())) {
+					orderHistoryFormBean.setPriceType("Stop Loss");
+				}
+				orderHistoryFormBean.setQuantity(orderMaster.getVolume()
+						.toPlainString());
+				if (IApplicationConstants.ORDER_STATUS_COMPLETED
+						.equals(orderMaster.getStatus())) {
+					orderHistoryFormBean.setStatus("Completed");
+				} else if (IApplicationConstants.ORDER_STATUS_PENDING
+						.equals(orderMaster.getStatus())) {
+					orderHistoryFormBean.setStatus("Pending");
+				} else if (IApplicationConstants.ORDER_STATUS_INSUFFICIENT_FUNDS
+						.equals(orderMaster.getStatus())) {
+					orderHistoryFormBean.setStatus("Failed");
+				}
+				myRecentTradeFormBean.getRecentTrades().add(
+						orderHistoryFormBean);
+			}
+		} catch (OrderServiceException e) {
+			LOG.error(e);
+			throw new PortfolioServiceException(e);
+		} catch (LeagueException e) {
+			LOG.error(e);
+			throw new PortfolioServiceException(e);
+		}
+		return myRecentTradeFormBean;
 	}
 }
