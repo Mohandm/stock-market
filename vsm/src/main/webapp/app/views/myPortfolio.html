@@ -7,18 +7,20 @@
             <div class="field-wrapper"><label>Select Portfolio:</label><select type="text" ng-change="reloadMyPortfolio" ng-model="leagueSelected" ng-options="league as league.name for league in myLeagues  | filter:{league:$viewValue}" class="form-control singleSelect"/></div>
         </div>
     </div>
-    <div class="row stock-quote-summary-panel blockContainer">
+    <div class="row stock-quote-summary-panel my-portfolio-container blockContainer">
        <div class="col-md-12">
             <div class="panel panel-default" >
                 <div class="panel-heading">
+                    <!--<h3 class="panel-title">{{leagueSelected.name}}</h3>-->
                     <div class="row">
                         <div class="col-md-4">
-                            <h3 class="panel-title">{{leagueSelected.name}}</h3>
-                            <div class="panelContainer">
-                                <div class="field-wrapper"><label>Portfolio Value:</label><span>{{myPortfolio.portfolioValue}}</span></div>
-                                <div class="field-wrapper"><label>Remaining Cash Balance:</label><span>{{myPortfolio.remainingBalance}}</span></div>
-                                <div class="field-wrapper"><label>Total Value:</label><span>{{myPortfolio.totalValue}}</span></div>
-                            </div>
+                            <div class="field-wrapper"><label>Portfolio Value:</label><span><i class="fa fa-usd fa-fw"/><span class="counter">{{myPortfolio.portfolioValue}}</span></span></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="field-wrapper"><label>Cash Balance:</label><span><i class="fa fa-usd fa-fw"/><span class="counter">{{myPortfolio.remainingBalance}}</span></span></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="field-wrapper"><label>Total Value:</label><span><i class="fa fa-usd fa-fw"/><span class="counter">{{myPortfolio.totalValue}}</span></span></div>
                         </div>
                     </div>
                 </div>
