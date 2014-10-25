@@ -1,1 +1,56 @@
-<div>Guru</div>
+<div ng-show="message().show">
+    <alert type="message().type" close="message().show=false">{{message().text}}</alert>
+</div>
+<div class="row blockContainer leagues-dashboard">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title league-1">{{leagueList1.name}} - <i class="fa fa-star-o fa-fw"></i></h3>
+            </div>
+            <div class="panel-body">
+                <div class="leagues-icon-1 league-1"><i class="fa fa-star fa-fw"></i></div>
+                <div class="leagues-lock-text-1 league-1">
+                    <span ng-if="leagueList1.locked"><i class="fa fa-lock fa-fw"></i>Locked</span>
+                    <span ng-if="!leagueList1.locked"><i class="fa fa-unlock fa-fw"></i>Unlocked</span>
+                </div>
+                <div class="leagues-lock-text-1">
+                    <button type="button" class="btn btn-success league-1" ng-click="unlockLeague1()">How to un-lock this league</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title league-2">{{leagueList2.name}} - <i class="fa fa-star-o fa-fw"></i><i class="fa fa-star-o fa-fw"></i></h3>
+            </div>
+            <div class="panel-body">
+                <div class="leagues-icon-2 league-2"><i class="fa fa-trophy fa-fw"></i></div>
+                <div class="leagues-lock-text-2 league-2">
+                    <span ng-if="leagueList2.locked"><i class="fa fa-lock fa-fw"></i>Locked</span>
+                    <span ng-if="!leagueList2.locked"><i class="fa fa-unlock fa-fw"></i>Unlocked</span>
+                </div>
+                <div class="leagues-lock-text-2">
+                    <button type="button" class="btn btn-success league-2" ng-click="unlockLeague2()">How to un-lock this league</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title league-3">{{leagueList3.name}} - <i class="fa fa-star-o fa-fw"></i><i class="fa fa-star-o fa-fw"></i><i class="fa fa-star-o fa-fw"></i></h3>
+            </div>
+            <div class="panel-body">
+                <div class="leagues-icon-3 league-3"><i class="fa fa-flag-checkered fa-fw"></i></div>
+                <div class="leagues-lock-text-3 league-3">
+                    <span ng-if="leagueList3.locked"><i class="fa fa-lock fa-fw"></i>Locked</span>
+                    <span ng-if="!leagueList3.locked"><i class="fa fa-unlock fa-fw"></i>Unlocked</span>
+                </div>
+                <div class="leagues-lock-text-3">
+                    <button type="button" class="btn btn-success league-3" ng-click="unlockLeague3()">How to un-lock this league</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

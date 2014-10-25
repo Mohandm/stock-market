@@ -1,4 +1,3 @@
-[{"leagueId":"1","name":"Global"},
-    {"leagueId":"2","name":"Personal League"},
-    {"leagueId":"3","name":"Office League"},
-    {"leagueId":"4","name":"Family League"}]
+[{"leagueId":"1","name":"Premier League","locked" : false, "level" : "1"},
+    {"leagueId":"2","name":"Champions League","locked" : true, "level" : "2"},
+    {"leagueId":"3","name":"Legends League","locked" : true, "level" : "3"}]
