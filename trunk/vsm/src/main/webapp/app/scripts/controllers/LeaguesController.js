@@ -29,7 +29,7 @@ vsmApp.controller('LeaguesController', ['$scope', '$rootScope', 'modals','League
             });
             setTimeout(function() {
                 $('.counter').counterUp({
-                    delay: 10,
+                    delay: 2,
                     time: 1000
                 });
             },500);
@@ -66,6 +66,8 @@ vsmApp.controller('LeaguesDialogController', ['$scope','$http','modals', functio
 
 vsmApp.controller('LeagueUsersDialogController', ['$scope','$http','modals','LeaguesService', function ($scope, $http, modals, LeaguesService) {
 
+    $scope.$scope = $scope;
+
     $scope.getLeagueUsersDataGridOptions = {
         enableSorting: true,
         enableFiltering: true,
@@ -74,7 +76,8 @@ vsmApp.controller('LeagueUsersDialogController', ['$scope','$http','modals','Lea
             { field: 'name', displayName:'Name'},
             { field: 'ranking', displayName:'Ranking'},
             { field: 'totalValue', displayName:'Total Value'},
-            { field: 'followerCount', displayName:'Followers'}
+            { field: 'followerCount', displayName:'Followers'},
+            {name: 'follow', displayName: '', enableFiltering : false, enableSorting : false, cellTemplate: '<button id="followBtn" type="button" class="btn-small" ng-click="getExternalScopes().follow(row.entity)" >Follow</button> '}
         ]
     };
 
@@ -85,5 +88,12 @@ vsmApp.controller('LeagueUsersDialogController', ['$scope','$http','modals','Lea
             $('#leagueUsersDialogContainer').resize();
         },1000);
     });
+
+    $scope.follow = function(item){
+        var actionUrl = 'followUser?UserId=';
+        $http.post(actionUrl+item.userId,{}).success(function (response) {
+            modals.close();
+        });
+    };
 }]);
 
