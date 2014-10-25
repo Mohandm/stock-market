@@ -7,6 +7,7 @@
             <div class="panel-body">
                 <form class="form-horizontal" name="mainForm" role="form" ng-controller="LoginController"
                       novalidate>
+                    <span class="help-block" ng-show="formcontrol.haserror">Invalid credentials. Please try again.</span>
                     <field-wrapper label="Email Address" type="email" name="email" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
                     <field-wrapper label="Password" type="password" name="password" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
                     <div class="form-group">

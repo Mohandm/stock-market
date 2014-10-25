@@ -14,6 +14,7 @@ import com.misys.stockmarket.exception.DAOException;
 import com.misys.stockmarket.exception.DBRecordNotFoundException;
 import com.misys.stockmarket.exception.EmailNotFoundException;
 import com.misys.stockmarket.exception.service.UserServiceException;
+import com.misys.stockmarket.security.LoginResponse;
 
 @Service("userService")
 @Repository
@@ -74,6 +75,17 @@ public class UserService {
 		// Retrieve user from database
 		UserMaster user = findByEmail(email);
 		return user;
+	}
+
+	public LoginResponse getLoggedInUserResponse() {
+		try {
+			UserMaster user = getLoggedInUser();
+			LoginResponse loginResponse = new LoginResponse();
+			loginResponse.setEmail(user.getEmail());
+			return loginResponse;
+		} catch (EmailNotFoundException e) {
+			return null;
+		}
 	}
 
 }
