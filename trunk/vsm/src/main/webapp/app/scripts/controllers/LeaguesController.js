@@ -27,6 +27,12 @@ vsmApp.controller('LeaguesController', ['$scope', '$rootScope', 'modals','League
                     $scope.leagueList3 = item;
                 }
             });
+            setTimeout(function() {
+                $('.counter').counterUp({
+                    delay: 10,
+                    time: 1000
+                });
+            },500);
         });
 }]);
 
