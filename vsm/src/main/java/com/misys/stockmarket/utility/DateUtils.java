@@ -17,6 +17,8 @@ public class DateUtils {
 
 	public static final long DAYS_IN_WEEK = 7;
 
+	public static final String DISPLAY_DATE_TIME_FORMAT = "MM/dd/yyyy, HH:mm";
+
 	/**
 	 * Returns a Timestamp object standing for the given String date interpreted
 	 * using the localized DATE_TIME_FORMAT. Creation date: (8/31/00 8:16:15 AM)
@@ -74,5 +76,10 @@ public class DateUtils {
 		Calendar calendar2 = Calendar.getInstance();
 		calendar2.setTime(date2);
 		return dateDifference(calendar1, calendar2);
+	}
+
+	public static String getFormattedDateTimeString(Date inputDate) {
+		SimpleDateFormat format = new SimpleDateFormat(DISPLAY_DATE_TIME_FORMAT);
+		return format.format(inputDate);
 	}
 }

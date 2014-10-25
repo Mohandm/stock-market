@@ -70,8 +70,9 @@ public class OrderService {
 			orderMaster.setOrderDate(new Date());
 			orderMaster.setStatus(IApplicationConstants.ORDER_STATUS_PENDING);
 			// TODO: Done, Handled to support multiple leagues
-			LeagueUser leagueUser = leagueService.getLeagueUser(orderFormBean.getLeagueUserId(), userService
-					.getLoggedInUser().getUserId());
+			LeagueUser leagueUser = leagueService.getLeagueUser(orderFormBean
+					.getLeagueUserId(), userService.getLoggedInUser()
+					.getUserId());
 			orderMaster.setLeagueUser(leagueUser);
 			orderMasterDAO.persist(orderMaster);
 		} catch (DBRecordNotFoundException e) {
@@ -111,6 +112,17 @@ public class OrderService {
 		try {
 			return orderMasterDAO
 					.findAllCompletedOrdersByLeaugeUser(leagueUserId);
+		} catch (DAOException e) {
+			LOG.error(e);
+			throw new OrderServiceException(e);
+		}
+	}
+
+	public List<OrderMaster> getAllOrders(long leagueUserId)
+			throws OrderServiceException {
+		try {
+			return orderMasterDAO
+					.findAllOrdersByLeaugeUser(leagueUserId);
 		} catch (DAOException e) {
 			LOG.error(e);
 			throw new OrderServiceException(e);
