@@ -16,16 +16,15 @@ import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.dao.LeagueDAO;
 import com.misys.stockmarket.domain.entity.LeagueMaster;
 import com.misys.stockmarket.domain.entity.LeagueUser;
-import com.misys.stockmarket.domain.entity.StockMaster;
 import com.misys.stockmarket.domain.entity.UserMaster;
-import com.misys.stockmarket.domain.entity.WatchStock;
 import com.misys.stockmarket.enums.LEAGUE_ERR_CODES;
 import com.misys.stockmarket.exception.DAOException;
 import com.misys.stockmarket.exception.DBRecordNotFoundException;
 import com.misys.stockmarket.exception.EmailNotFoundException;
 import com.misys.stockmarket.exception.LeagueException;
 import com.misys.stockmarket.exception.ServiceException;
-import com.misys.stockmarket.exception.service.AlertsServiceException;
+import com.misys.stockmarket.exception.service.UserServiceException;
+import com.misys.stockmarket.mbeans.MyLeagueFormBean;
 
 @Service("leagueService")
 @Repository
@@ -35,7 +34,7 @@ public class LeagueService {
 
 	@Inject
 	private LeagueDAO leagueDAO;
-	
+
 	@Inject
 	private UserService userService;
 
@@ -68,19 +67,19 @@ public class LeagueService {
 			throw new LeagueException(e);
 		}
 	}
-	
+
 	public List<LeagueMaster> listAllUserLeagues() throws ServiceException {
 		try {
-			List<LeagueUser> leaguesUsers = getLeagueUsersByUserId(userService.getLoggedInUser());
+			List<LeagueUser> leaguesUsers = getLeagueUsersByUserId(userService
+					.getLoggedInUser());
 			List<LeagueMaster> leagueMasters = new ArrayList<LeagueMaster>();
-			for (Iterator<LeagueUser> iterator = leaguesUsers
-					.iterator(); iterator.hasNext();)
-			{
+			for (Iterator<LeagueUser> iterator = leaguesUsers.iterator(); iterator
+					.hasNext();) {
 				LeagueUser leagueUser = (LeagueUser) iterator.next();
 				leagueMasters.add(leagueUser.getLeagueMaster());
 			}
 			return leagueMasters;
-			
+
 		} catch (EmailNotFoundException e) {
 			throw new ServiceException(e);
 		}
@@ -90,6 +89,17 @@ public class LeagueService {
 		try {
 			return leagueDAO
 					.findByName(IApplicationConstants.DEFAULT_LEAGUE_NAME);
+		} catch (DBRecordNotFoundException e) {
+			throw new LeagueException(LEAGUE_ERR_CODES.LEAGUE_NOT_FOUND);
+		} catch (DAOException e) {
+			throw new LeagueException(LEAGUE_ERR_CODES.UNKNOWN);
+		}
+	}
+
+	public LeagueMaster getLeagueByName(String leagueName)
+			throws LeagueException {
+		try {
+			return leagueDAO.findByName(leagueName);
 		} catch (DBRecordNotFoundException e) {
 			throw new LeagueException(LEAGUE_ERR_CODES.LEAGUE_NOT_FOUND);
 		} catch (DAOException e) {
@@ -114,7 +124,7 @@ public class LeagueService {
 			throw new LeagueException(LEAGUE_ERR_CODES.LEAGUE_USER_NOT_FOUND);
 		}
 	}
-	
+
 	public List<LeagueUser> getLeagueUsersByUserId(UserMaster user)
 			throws LeagueException {
 		try {
@@ -123,5 +133,47 @@ public class LeagueService {
 			LOG.error(e);
 			throw new LeagueException(e);
 		}
+	}
+
+	public List<MyLeagueFormBean> getMyLeagues(long userId)
+			throws LeagueException {
+		List<MyLeagueFormBean> myLeagueFormBeanList = new ArrayList<MyLeagueFormBean>();
+		try {
+			UserMaster userMaster = userService.findById(userId);
+			List<LeagueMaster> leagueMasterList = leagueDAO
+					.findAllGameLeagues();
+			List<LeagueUser> leagueUserList = leagueDAO
+					.findLeagueUserByUserId(userMaster);
+			List<Long> leagueIdList = new ArrayList<Long>();
+			for (LeagueUser leagueUser : leagueUserList) {
+				leagueIdList.add(leagueUser.getLeagueMaster().getLeagueId());
+			}
+
+			for (LeagueMaster leagueMaster : leagueMasterList) {
+				MyLeagueFormBean myLeagueFormBean = new MyLeagueFormBean();
+				myLeagueFormBean.setLeagueId(String.valueOf(leagueMaster
+						.getLeagueId()));
+				myLeagueFormBean.setName(leagueMaster.getName());
+				List<LeagueUser> leagueUser = leagueDAO
+						.findAllLeagueUsers(leagueMaster.getLeagueId());
+				myLeagueFormBean.setPlayersCount(String.valueOf(leagueUser
+						.size()));
+				if (leagueIdList.contains(leagueMaster.getLeagueId())) {
+					myLeagueFormBean.setLocked("true");
+				} else {
+					myLeagueFormBean.setLocked("false");
+				}
+				myLeagueFormBean.setStage(String.valueOf(leagueMaster
+						.getStage()));
+				myLeagueFormBeanList.add(myLeagueFormBean);
+			}
+		} catch (DAOException e) {
+			LOG.error(e);
+			throw new LeagueException(e);
+		} catch (UserServiceException e) {
+			LOG.error(e);
+			throw new LeagueException(e);
+		}
+		return myLeagueFormBeanList;
 	}
 }

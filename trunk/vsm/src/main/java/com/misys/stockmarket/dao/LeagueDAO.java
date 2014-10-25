@@ -66,10 +66,35 @@ public class LeagueDAO extends BaseDAO {
 			throw new DBRecordNotFoundException(e);
 		}
 	}
-	
-	public List<LeagueUser> findLeagueUserByUserId(UserMaster user) throws DAOException {
+
+	public List<LeagueUser> findLeagueUserByUserId(UserMaster user)
+			throws DAOException {
 		Map<String, Object> criteria = new HashMap<String, Object>();
 		criteria.put("userMaster", user);
 		return findByFilter(LeagueUser.class, criteria);
+	}
+
+	public List<LeagueMaster> findAllGameLeagues() throws DAOException {
+		try {
+			Query q = entityManager
+					.createQuery("select distinct e from LeagueMaster e where e.stage <> 0 order by e.stage");
+			return q.getResultList();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+	}
+
+	public List<LeagueUser> findAllLeagueUsers(long leagueId)
+			throws DAOException {
+
+		try {
+			Query q = entityManager
+					.createQuery("select  e from LeagueUser e where e.leagueMaster.leagueId = ?1 ");
+			q.setParameter(1, leagueId);
+			return q.getResultList();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+
 	}
 }
