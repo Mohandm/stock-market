@@ -18,7 +18,17 @@ public class OrderFormBean {
 	private String type;
 	
 	private long leagueUserId;
+	
+	private String stockHoldingVolume;
 
+
+	public String getStockHoldingVolume() {
+		return stockHoldingVolume;
+	}
+
+	public void setStockHoldingVolume(String stockHoldingVolume) {
+		this.stockHoldingVolume = stockHoldingVolume;
+	}
 
 	public long getLeagueUserId() {
 		return leagueUserId;

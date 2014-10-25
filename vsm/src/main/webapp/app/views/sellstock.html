@@ -35,7 +35,7 @@
                                  <label>{{passValuesToDialog.name}}</label>
                              </div>
                          </div>
-                         <field-wrapper label="Volume" type="text" name="volume" required="true" formmodel="formmodel" 	formcontrol="formcontrol" validations='[{"validator":"isNumber","event":"isNumber","errorMessage":"It should be a number", "scopeValue":"symbol"},{"validator":"validateSellVolume","event":"validateSellVolume","errorMessage":"You donot have that many stocks for this company", "scopeValue":"symbol"}]'></field-wrapper>
+                         <field-wrapper label="Volume" type="text" name="volume" required="true" formmodel="formmodel" 	formcontrol="formcontrol" validations='[{"validator":"isNumber","event":"isNumber","errorMessage":"It should be a number", "scopeValue":"symbol"},{"validator":"validateSellVolume","event":"validateSellVolume","errorMessage":"You do not have that many stocks for this company", "scopeValue":"stockHoldingVolume"}]'></field-wrapper>
 						
 						<div class="form-group">
 							<div class="col-sm-4 control-label">
