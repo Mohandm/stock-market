@@ -85,10 +85,10 @@ vsmApp.service('StockQuotesService', ['$http','$q','$log', function ($http, $q, 
         return deferred.promise;
     }
 
-    this.getMyRecentTrades = function(groupId){
+    this.getMyRecentTrades = function(leagueId){
         var deferred = $q.defer();
-        var actionUrl = 'app/data/my_recent_trades.json';
-        $http.get(actionUrl,{})
+        var actionUrl = 'myRecentTrades?leagueId=';
+        $http.get(actionUrl+leagueId,{})
             .success(function (json) {
                 deferred.resolve(json);
             }).error(function(msg, code) {
