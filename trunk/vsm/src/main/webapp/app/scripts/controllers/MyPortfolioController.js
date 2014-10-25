@@ -76,12 +76,11 @@ vsmApp.controller('MyPortfolioController', ['$scope', '$rootScope', '$log', 'Sto
         enableSorting: true,
         enableFiltering: true,
         columnDefs: [
+            { field: 'dateTime', displayName:'Date'},
             { field: 'tikerSymbol', displayName:'Symbol'},
-            { field: 'name', displayName:'Company'},
-            { field: 'date', displayName:'Date'},
-            { field: 'time', displayName:'Time'},
-            { field: 'price', displayName:'Price'},
-            { field: 'orderType', displayName:'Order Type'}
+            { field: 'quantity', displayName:'Volume'},
+            { field: 'orderType', displayName:'Order Type'},
+            { field: 'status', displayName:'Status'}
         ]
     };
 

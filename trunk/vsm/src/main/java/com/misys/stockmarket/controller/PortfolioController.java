@@ -21,6 +21,7 @@ import com.misys.stockmarket.exception.ServiceException;
 import com.misys.stockmarket.exception.service.PortfolioServiceException;
 import com.misys.stockmarket.exception.service.StockServiceException;
 import com.misys.stockmarket.mbeans.MyPortfolioFormBean;
+import com.misys.stockmarket.mbeans.MyRecentTradeFormBean;
 import com.misys.stockmarket.services.LeagueService;
 import com.misys.stockmarket.services.PortfolioService;
 import com.misys.stockmarket.services.UserService;
@@ -65,6 +66,24 @@ public class PortfolioController {
 			@RequestParam("leagueId") long leagueId) {
 		try {
 			return portfolioService.getMyPortfolio(leagueId, userService.getLoggedInUser().getUserId());
+		}catch (EmailNotFoundException e) {
+			LOG.error(e);
+			// TODO: HANDLE WHEN EXCEPTION
+			return null;
+		} catch (PortfolioServiceException e) {
+			LOG.error(e);
+			// TODO: HANDLE WHEN EXCEPTION
+			return null;
+		} 
+	}
+	
+	@RequestMapping(value = "/myRecentTrades", method = {
+			RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public MyRecentTradeFormBean myRecentTrades(
+			@RequestParam("leagueId") long leagueId) { 
+		try {
+			return portfolioService.getMyRecentTrades(leagueId, userService.getLoggedInUser().getUserId());
 		}catch (EmailNotFoundException e) {
 			LOG.error(e);
 			// TODO: HANDLE WHEN EXCEPTION
