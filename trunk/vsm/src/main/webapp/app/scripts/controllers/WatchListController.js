@@ -19,16 +19,6 @@ vsmApp.controller('WatchListController', ['$scope', '$rootScope', 'StockQuotesSe
         ]
     };
 
-    $scope.getAlertsDataGridOptions = {
-        enableSorting: true,
-        enableFiltering: true,
-        columnDefs:  [
-            { field: 'message', displayName:'Alert',
-            cellTemplate:'<a ng-click="getExternalScopes().showAlert(row.entity)" class="anchor">{{row.entity.message}}</a>'},
-            { field: 'notifiedDate', displayName:'Date'}
-        ]
-    };
-
     var stockListsPromise = StockQuotesService.getStockLists();
     stockListsPromise.then(function(data){
         $scope.stockLists = data;
@@ -49,18 +39,8 @@ vsmApp.controller('WatchListController', ['$scope', '$rootScope', 'StockQuotesSe
         });
     });
 
-    var alertsListPromise = AlertsService.getAlertsList();
-    alertsListPromise.then(function(data){
-        $scope.getAlertsDataGridOptions.data = data;
-    });
-
     $scope.addWatch = function(item){
         modals.showForm('Watch Stocks','watchListDialog', item, "modal-lg");
-    };
-
-    $scope.showAlert = function(item)
-    {
-        modals.showInfo('Alert Description',item.message);
     };
 }]);
 
