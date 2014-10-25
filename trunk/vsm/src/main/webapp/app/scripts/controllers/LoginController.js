@@ -21,6 +21,13 @@ angular.module('vsmApp')
     }
   };
 
+  $scope.logout = function (){
+    AuthService.logout().then(function () {
+      $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
+      $location.path('/'); 
+    })
+  };
+
   var setError = function () {
     $scope.formcontrol.haserror = true;
   }

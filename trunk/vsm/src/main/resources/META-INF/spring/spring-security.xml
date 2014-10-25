@@ -10,7 +10,9 @@
 		entry-point-ref="customAuthenticationEntryPoint">
       	<intercept-url pattern="/**" access="permitAll"/>
 		<custom-filter ref="customUsernamePasswordAuthenticationFilter" position="FORM_LOGIN_FILTER "/>
+		<custom-filter ref="csrfTokenGeneratorFilter" position="LAST "/>
 		<logout logout-success-url="/game#/form/login?logout" />
+		<csrf/>
 	</http>
 
 	<authentication-manager alias="authenticationManager">
@@ -26,4 +28,5 @@
 	<beans:bean id="customUserDetailsService" class="com.misys.stockmarket.security.CustomUserDetailsService"/>
 	<beans:bean id="customAuthenticationSuccessHandler" class="com.misys.stockmarket.security.CustomAuthenticationSuccessHandler"/>
 	<beans:bean id="customAuthenticationEntryPoint" class="com.misys.stockmarket.security.CustomAuthenticationEntryPoint"/>
+	<beans:bean id="csrfTokenGeneratorFilter" class="com.misys.stockmarket.security.CsrfTokenGeneratorFilter"/>
 </beans:beans>
