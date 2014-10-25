@@ -460,7 +460,7 @@ input[type="text"].ui-grid-filter-input{
 .quote-statistics,.quote-statistics-pie{
     color : white;
     position: relative;
-    max-width: 300px;
+    max-width: 250px;
 }
 .blockContainer{
 	margin-right : 0px;
@@ -476,15 +476,15 @@ input[type="text"].ui-grid-filter-input{
     width : auto !important;
 }
 .quote-statistics-pie .chart-widget{
-    width:300px;
+    width:250px;
     height:150px;
-    padding: 0px 70px;
+    padding: 0px 55px;
 }
 .quote-statistics-pie .chart-widget span{
     font-size: 30px;
     position: absolute;
 	text-align: center;
-	width: 50%;
+	width: 60%;
 	margin-top: 56px;
 }
 .chartToolTipHeader{
