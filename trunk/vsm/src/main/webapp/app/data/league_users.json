@@ -1,0 +1,11 @@
+[
+    {"name" : "Bipin", "photo" : "...", "totalValue" : "1011122.62", "followerCount" : "32", "ranking":"1"},
+    {"name" : "Sam", "photo" : "...", "totalValue" : "1032234.62", "followerCount" : "23", "ranking":"2"},
+    {"name" : "Raja", "photo" : "...", "totalValue" : "12233244.62", "followerCount" : "42", "ranking":"3"},
+    {"name" : "Guru", "photo" : "...", "totalValue" : "2343443.62", "followerCount" : "55", "ranking":"4"},
+    {"name" : "Deepak", "photo" : "...", "totalValue" : "1011122.62", "followerCount" : "12", "ranking":"5"},
+    {"name" : "Ram", "photo" : "...", "totalValue" : "1032234.62", "followerCount" : "3", "ranking":"6"},
+    {"name" : "Reddy", "photo" : "...", "totalValue" : "12233244.62", "followerCount" : "5", "ranking":"7"},
+    {"name" : "John", "photo" : "...", "totalValue" : "2343443.62", "followerCount" : "6", "ranking":"8"}
+]
+

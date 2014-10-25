@@ -16,4 +16,18 @@ vsmApp.service('LeaguesService', ['$http','$q','$log', function ($http, $q, $log
         return deferred.promise;
     };
 
+    this.getLeaguesUsers = function(leagueId){
+        var deferred = $q.defer();
+        //var actionUrl = 'leaguesUsersList?leagueId=';
+        var actionUrl = 'app/data/league_users.json';
+        $http.post(actionUrl,{})
+            .success(function (json) {
+                deferred.resolve(json);
+            }).error(function(msg, code) {
+                deferred.reject(msg);
+                $log.error(msg, code);
+            });
+        return deferred.promise;
+    };
+
 }]);

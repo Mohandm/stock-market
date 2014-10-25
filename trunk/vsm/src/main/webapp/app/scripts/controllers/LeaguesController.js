@@ -14,11 +14,11 @@ vsmApp.controller('LeaguesController', ['$scope', '$rootScope', 'modals','League
         var leagueListPromise = LeaguesService.getGameLeagues();
         leagueListPromise.then(function(data){
             $(data).each(function(index, item){
-                if(item.level === "1")
+                if(item.stage === "1")
                 {
                     $scope.leagueList1 = item;
                 }
-                else if(item.level === "2")
+                else if(item.stage === "2")
                 {
                     $scope.leagueList2 = item;
                 }
@@ -34,6 +34,12 @@ vsmApp.controller('LeaguesController', ['$scope', '$rootScope', 'modals','League
                 });
             },500);
         });
+
+        $scope.listOfUsersLeague = function(leagueId){
+            modals.showForm('League Players','leagueUsersDialog', {"leagueId" : leagueId}, "modal-lg");
+        };
+
+
 }]);
 
 vsmApp.controller('LeaguesDialogController', ['$scope','$http','modals', function ($scope, $http, modals) {
@@ -56,5 +62,28 @@ vsmApp.controller('LeaguesDialogController', ['$scope','$http','modals', functio
             }
         }
     };
+}]);
+
+vsmApp.controller('LeagueUsersDialogController', ['$scope','$http','modals','LeaguesService', function ($scope, $http, modals, LeaguesService) {
+
+    $scope.getLeagueUsersDataGridOptions = {
+        enableSorting: true,
+        enableFiltering: true,
+        columnDefs: [
+            { field: 'photo', displayName:'Profile Pic'},
+            { field: 'name', displayName:'Name'},
+            { field: 'ranking', displayName:'Ranking'},
+            { field: 'totalValue', displayName:'Total Value'},
+            { field: 'followerCount', displayName:'Followers'}
+        ]
+    };
+
+    var leaguesUsersPromise = LeaguesService.getLeaguesUsers($scope.passValuesToDialog.leagueId);
+    leaguesUsersPromise.then(function(data){
+        $scope.getLeagueUsersDataGridOptions.data = data;
+        setTimeout(function(){
+            $('#leagueUsersDialogContainer').resize();
+        },1000);
+    });
 }]);
 

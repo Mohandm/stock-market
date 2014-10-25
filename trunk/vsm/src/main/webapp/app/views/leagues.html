@@ -16,7 +16,7 @@
                 </div>
                 <div class="leagues-lock-text-1">
                     <button ng-if="leagueList1.locked" type="button" class="btn btn-success league-1" ng-click="unlockLeague1()">How to Unlock</button>
-                    <button type="button" class="btn btn-success league-1" ng-click="listOfUsersLeague1()">List of Players</button>
+                    <button type="button" class="btn btn-success league-1" ng-click="listOfUsersLeague(leagueList1.leagueId)">List of Players</button>
                 </div>
             </div>
         </div>
@@ -35,7 +35,7 @@
                 </div>
                 <div class="leagues-lock-text-2">
                     <button type="button" ng-if="leagueList2.locked" class="btn btn-success league-2" ng-click="unlockLeague2()">How to Unlock</button>
-                    <button type="button" class="btn btn-success league-2" ng-click="listOfUsersLeague2()">List of Players</button>
+                    <button type="button" class="btn btn-success league-2" ng-click="listOfUsersLeague(leagueList1.leagueId)">List of Players</button>
                 </div>
             </div>
         </div>
@@ -54,7 +54,7 @@
                 </div>
                 <div class="leagues-lock-text-3">
                     <button type="button" ng-if="leagueList3.locked" class="btn btn-success league-3" ng-click="unlockLeague3()">How to Unlock</button>
-                    <button type="button" class="btn btn-success league-3" ng-click="listOfUsersLeague3()">List of Players</button>
+                    <button type="button" class="btn btn-success league-3" ng-click="listOfUsersLeague(leagueList1.leagueId)">List of Players</button>
                 </div>
             </div>
         </div>
