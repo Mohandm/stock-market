@@ -20,6 +20,7 @@ import com.misys.stockmarket.exception.EmailNotFoundException;
 import com.misys.stockmarket.exception.ServiceException;
 import com.misys.stockmarket.exception.service.PortfolioServiceException;
 import com.misys.stockmarket.exception.service.StockServiceException;
+import com.misys.stockmarket.mbeans.MyLeagueFormBean;
 import com.misys.stockmarket.mbeans.MyPortfolioFormBean;
 import com.misys.stockmarket.mbeans.MyRecentTradeFormBean;
 import com.misys.stockmarket.services.LeagueService;
@@ -49,12 +50,16 @@ public class PortfolioController {
 	@RequestMapping(value = "/userLeaguesList", method = { RequestMethod.GET,
 			RequestMethod.POST })
 	@ResponseBody
-	public List<LeagueMaster> listAllUserLeagues() {
+	public List<MyLeagueFormBean> listAllUserLeagues() {
 		try {
-			return leagueService.listAllUserLeagues();
+			return leagueService.getMyLeaguesIncludingGlobal(userService.getLoggedInUser().getUserId());
 		} catch (ServiceException e) {
 			LOG.error(e);
 			// TODO: HANDLE WHEN EXCEPTION
+			return null;
+		} catch (EmailNotFoundException e) {
+			// TODO: HANDLE WHEN EXCEPTION
+			LOG.error(e);
 			return null;
 		}
 	}

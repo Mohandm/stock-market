@@ -68,23 +68,6 @@ public class LeagueService {
 		}
 	}
 
-	public List<LeagueMaster> listAllUserLeagues() throws ServiceException {
-		try {
-			List<LeagueUser> leaguesUsers = getLeagueUsersByUserId(userService
-					.getLoggedInUser());
-			List<LeagueMaster> leagueMasters = new ArrayList<LeagueMaster>();
-			for (Iterator<LeagueUser> iterator = leaguesUsers.iterator(); iterator
-					.hasNext();) {
-				LeagueUser leagueUser = (LeagueUser) iterator.next();
-				leagueMasters.add(leagueUser.getLeagueMaster());
-			}
-			return leagueMasters;
-
-		} catch (EmailNotFoundException e) {
-			throw new ServiceException(e);
-		}
-	}
-
 	public LeagueMaster getDefaultLeague() throws LeagueException {
 		try {
 			return leagueDAO
@@ -159,9 +142,50 @@ public class LeagueService {
 				myLeagueFormBean.setPlayersCount(String.valueOf(leagueUser
 						.size()));
 				if (leagueIdList.contains(leagueMaster.getLeagueId())) {
-					myLeagueFormBean.setLocked("true");
-				} else {
 					myLeagueFormBean.setLocked("false");
+				} else {
+					myLeagueFormBean.setLocked("true");
+				}
+				myLeagueFormBean.setStage(String.valueOf(leagueMaster
+						.getStage()));
+				myLeagueFormBeanList.add(myLeagueFormBean);
+			}
+		} catch (DAOException e) {
+			LOG.error(e);
+			throw new LeagueException(e);
+		} catch (UserServiceException e) {
+			LOG.error(e);
+			throw new LeagueException(e);
+		}
+		return myLeagueFormBeanList;
+	}
+	
+	public List<MyLeagueFormBean> getMyLeaguesIncludingGlobal(long userId)
+			throws LeagueException {
+		List<MyLeagueFormBean> myLeagueFormBeanList = new ArrayList<MyLeagueFormBean>();
+		try {
+			UserMaster userMaster = userService.findById(userId);
+			List<LeagueMaster> leagueMasterList = leagueDAO.findAll(LeagueMaster.class);
+			List<LeagueUser> leagueUserList = leagueDAO
+					.findLeagueUserByUserId(userMaster);
+			List<Long> leagueIdList = new ArrayList<Long>();
+			for (LeagueUser leagueUser : leagueUserList) {
+				leagueIdList.add(leagueUser.getLeagueMaster().getLeagueId());
+			}
+
+			for (LeagueMaster leagueMaster : leagueMasterList) {
+				MyLeagueFormBean myLeagueFormBean = new MyLeagueFormBean();
+				myLeagueFormBean.setLeagueId(String.valueOf(leagueMaster
+						.getLeagueId()));
+				myLeagueFormBean.setName(leagueMaster.getName());
+				List<LeagueUser> leagueUser = leagueDAO
+						.findAllLeagueUsers(leagueMaster.getLeagueId());
+				myLeagueFormBean.setPlayersCount(String.valueOf(leagueUser
+						.size()));
+				if (leagueIdList.contains(leagueMaster.getLeagueId())) {
+					myLeagueFormBean.setLocked("false");
+				} else {
+					myLeagueFormBean.setLocked("true");
 				}
 				myLeagueFormBean.setStage(String.valueOf(leagueMaster
 						.getStage()));
