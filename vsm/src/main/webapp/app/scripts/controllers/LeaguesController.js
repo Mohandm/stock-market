@@ -102,8 +102,9 @@ vsmApp.controller('LeaguesDialogController', ['$scope','$http','modals', functio
     };
 }]);
 
-vsmApp.controller('LeagueUsersDialogController', ['$scope','$http','modals','LeaguesService', function ($scope, $http, modals, LeaguesService) {
+vsmApp.controller('LeagueUsersDialogController', ['$scope','$rootScope','$http','modals','LeaguesService', function ($scope, $rootScope, $http, modals, LeaguesService) {
 
+    $scope.isAuthenticated = $rootScope.isAuthenticated();
     $scope.$scope = $scope;
 
     $scope.getLeagueUsersDataGridOptions = {
@@ -115,7 +116,7 @@ vsmApp.controller('LeagueUsersDialogController', ['$scope','$http','modals','Lea
             { field: 'ranking', displayName:'Ranking'},
             { field: 'totalValue', displayName:'League Value'},
             { field: 'followerCount', displayName:'Followers'},
-            {name: 'follow', displayName: '', enableFiltering : false, enableSorting : false, cellTemplate: '<button id="followBtn" type="button" class="btn-small" ng-click="getExternalScopes().follow(row.entity)" >Follow</button> '}
+            {name: 'follow', displayName: '', enableFiltering : false, enableSorting : false, cellTemplate: '<button id="followBtn" type="button" class="btn-small" ng-show="getExternalScopes().isAuthenticated()" ng-click="getExternalScopes().follow(row.entity)" >Follow</button> '}
         ]
     };
 

@@ -62,7 +62,7 @@ vsmApp.service('StockQuotesService', ['$http','$q','$log', function ($http, $q, 
     this.getMyLeagues = function(){
         var deferred = $q.defer();
         var actionUrl = 'userLeaguesList/';
-        $http.post(actionUrl,{})
+        $http.get(actionUrl,{})
             .success(function (json) {
                 deferred.resolve(json);
             }).error(function(msg, code) {
