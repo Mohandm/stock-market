@@ -1,0 +1,39 @@
+<div ng-controller="LeaguesDialogController">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title league-2">{{league.name}} - <i class="fa fa-star-o fa-fw"></i><i class="fa fa-star-o fa-fw"></i></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="leagues-icon-2 league-2"><i class="fa fa-star fa-fw"></i></div>
+                    <div class="leagues-lock-text-2 league-2">Players : <span class="counter">{{league.playersCount}}</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                   <h3 class="panel-title league-2">Qualification Criteria</h3>
+                </div>
+                <div class="panel-body">
+                    <p class="league-2 league-rules">
+                    Play the Premier League and make a League Value of <br/><i class="fa fa-usd fa-fw"></i>150,000.
+                    Then you will be automatically <i class="fa fa-unlock fa-fw"></i>unlocked to play this league.
+                    </p>
+                    <p class="league-2 league-rules">
+                       <h4 class="league-2 league-rules">Rules:</h4>
+                       <ul class="league-2 league-rules">
+                           <li class="league-2 league-rules">You will be given a initial Cash Amount of <br/><i class="fa fa-usd fa-fw"></i>100,000.</li>
+                           <li class="league-2 league-rules">To increase complexity, Stop Loss Orders will be disabled for this League</li>
+                           <li class="league-2 league-rules">Play fast and make more value, to become a Champions League Champion.</li>
+                       </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Ok</button>
+    </div>
+</div>
