@@ -16,39 +16,48 @@
         //configure the rounting of ng-view
        $routeProvider
         .when('/', {
-            templateUrl: 'app/views/dashboard.html',
-            controller: 'DashboardController'
+           templateUrl: 'app/views/dashboard.html',
+           controller: 'DashboardController',
+           needsTransition : true 
         })
        .when('/myPortfolio', {
            templateUrl: 'app/views/myPortfolio.html',
            controller: 'MyPortfolioController',
-           needsLogin : true
+           needsLogin : true,
+           needsTransition : true
        })
        .when('/leaderBoard', {
            templateUrl: 'app/views/leaderBoard.html',
-           controller: 'LeaderBoardController'
+           controller: 'LeaderBoardController',
+           needsTransition : true
        })
        .when('/leagues', {
            templateUrl: 'app/views/leagues.html',
            controller: 'LeaguesController',
-           needsLogin : true
+           needsLogin : true,
+           needsTransition : true
        })
        .when('/followers', {
            templateUrl: 'app/views/followers.html',
            controller: 'FollowersController',
-           needsLogin : true
+           needsLogin : true,
+           needsTransition : true
        })
         .when('/charts', {
            templateUrl: 'app/views/charts.html',
-           controller: 'ChartsController'
+           controller: 'ChartsController',
+           needsTransition : true
        })
         .when('/alerts', {
             templateUrl: 'app/views/alerts.html',
-            controller: 'AlertsController'
+            controller: 'AlertsController',
+           needsLogin : true,
+           needsTransition : true
         })
        .when('/watchList', {
            templateUrl: 'app/views/watchList.html',
-           controller: 'WatchListController'
+           controller: 'WatchListController',
+           needsLogin : true
        })
        .when('/form/:formName', {
             templateUrl: 'app/views/form.html',
@@ -57,10 +66,6 @@
         .when('/action/:actionCode/:value?', {
             templateUrl: 'app/views/result.html',
             controller: 'ActionController'
-        })
-        .when('/trades', {
-            templateUrl: 'app/views/trades.html',
-            controller: 'TradesController'
         })
         .otherwise({
             redirectTo: '/'
@@ -82,7 +87,6 @@
                         type: response.data.type,
                         show: true
                     };
-                    $timeout(function(){message = {};}, 5000);  
                 }
             };
             return function (promise) {
@@ -102,7 +106,7 @@
         });
     });
     
-    vsmApp.run(function ($rootScope,$http, AlertsService, $location,TourService, AuthService, AUTH_EVENTS) {
+    vsmApp.run(function ($rootScope,$http, AlertsService, $location,TourService, AuthService, AUTH_EVENTS,$timeout) {
         //make current message accessible to root scope and therefore all scopes
         $rootScope.message = function () {
             return message;
@@ -142,28 +146,24 @@
 
         $rootScope.$on(AUTH_EVENTS.logoutSuccess, setLogoutMessage);
 
-        $rootScope.$on("$locationChangeStart", function (event, next, current) {
-            var array = ['/','/myPortfolio','/charts','/watchList','/alerts','/leaderBoard','/leagues','/followers'];
-            $rootScope.animateTransition = false;
-            $(array).each(function(index,item){
-                if($location.path() === item)
-                {
-                    $rootScope.animateTransition = true;
-                }
-            });
-        });
-
         $rootScope.$on('$routeChangeStart', function(event, currRoute, prevRoute){
-            // If user is not logged in try to sync the session and show login modal dialog if required
-            if (!AuthService.isAuthenticated()) {
-                // Session might still be active on the server side
-                AuthService.syncSession().then(function () {
-                  // If user is not logged in and the route needs login show the modal dialog
-                  if (!AuthService.isAuthenticated() && angular.isDefined(currRoute.needsLogin) && currRoute.needsLogin) {
-                    $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-                }
-              });
+            // Sync the session with the server side and show login modal dialog if required
+            AuthService.syncSession().then(function () {
+                // If user is not logged in and the route needs login show the modal dialog
+                if (!AuthService.isAuthenticated() && angular.isDefined(currRoute.needsLogin) && currRoute.needsLogin) {
+                $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+              }
+            });
+            $rootScope.animateTransition = false;
+           
+            // Animate transitions if needed
+            if (angular.isDefined(currRoute.needsTransition) && currRoute.needsTransition) {
+              $rootScope.animateTransition = true;
             }
+
+            // Clear messages after some time
+            $timeout(function(){message = {};}, 5000);  
+
         });
     });
 }());
