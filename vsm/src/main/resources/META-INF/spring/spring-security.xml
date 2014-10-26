@@ -11,7 +11,7 @@
       	<intercept-url pattern="/**" access="permitAll"/>
 		<custom-filter ref="customUsernamePasswordAuthenticationFilter" position="FORM_LOGIN_FILTER "/>
 		<custom-filter ref="csrfTokenGeneratorFilter" position="LAST "/>
-		<logout logout-success-url="/game#/form/login?logout" />
+		<logout delete-cookies="JSESSIONID"  />
 		<csrf/>
 	</http>
 
