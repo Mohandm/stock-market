@@ -34,13 +34,13 @@ public class YahooOnlineFinancialService implements IFinancialService {
 					.getCommaSeperatedQuoteSymbols(stockList);
 
 			queryYQL = queryYQL.replace("<STOCK_LIST>",
-					YQLUtil.URLEncode(commaSeperatedStockList));
+					YQLUtil.uRLEncode(commaSeperatedStockList));
 
 			queryYQL = queryYQL.replace("<START_DATE>",
-					YQLUtil.URLEncode(YQLUtil.dateToYQLStringDate(startDate)));
+					YQLUtil.uRLEncode(YQLUtil.dateToYQLStringDate(startDate)));
 
 			queryYQL = queryYQL.replace("<END_DATE>",
-					YQLUtil.URLEncode(YQLUtil.dateToYQLStringDate(endDate)));
+					YQLUtil.uRLEncode(YQLUtil.dateToYQLStringDate(endDate)));
 
 			StringBuffer requestBufferYQL = new StringBuffer();
 
@@ -64,13 +64,13 @@ public class YahooOnlineFinancialService implements IFinancialService {
 		try {
 
 			queryYQL = queryYQL.replace("<STOCK_LIST>",
-					YQLUtil.URLEncode("\"" + tickerSymbol + "\""));
+					YQLUtil.uRLEncode("\"" + tickerSymbol + "\""));
 
 			queryYQL = queryYQL.replace("<START_DATE>",
-					YQLUtil.URLEncode(YQLUtil.dateToYQLStringDate(startDate)));
+					YQLUtil.uRLEncode(YQLUtil.dateToYQLStringDate(startDate)));
 
 			queryYQL = queryYQL.replace("<END_DATE>",
-					YQLUtil.URLEncode(YQLUtil.dateToYQLStringDate(endDate)));
+					YQLUtil.uRLEncode(YQLUtil.dateToYQLStringDate(endDate)));
 
 			StringBuffer requestBufferYQL = new StringBuffer();
 
@@ -97,7 +97,7 @@ public class YahooOnlineFinancialService implements IFinancialService {
 					.getCommaSeperatedQuoteSymbols(stockList);
 
 			queryYQL = queryYQL.replace("<STOCK_LIST>",
-					YQLUtil.URLEncode(commaSeperatedStockList));
+					YQLUtil.uRLEncode(commaSeperatedStockList));
 			
 			StringBuffer requestBufferYQL = new StringBuffer();
 

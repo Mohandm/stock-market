@@ -108,7 +108,7 @@ public class AlertsService {
 					.iterator(); iterator.hasNext();) {
 				StockCurrentQuotes stockCurrentQuote = (StockCurrentQuotes) iterator
 						.next();
-				stockCurrentQuotesMap.put(new Long(stockCurrentQuote
+				stockCurrentQuotesMap.put(Long.valueOf(stockCurrentQuote
 						.getStockMaster().getStockId()), stockCurrentQuote);
 			}
 
@@ -116,7 +116,7 @@ public class AlertsService {
 			for (Iterator<StockMaster> iterator = stockmasterList.iterator(); iterator
 					.hasNext();) {
 				StockMaster stockMaster = (StockMaster) iterator.next();
-				stockMasterMap.put(new Long(stockMaster.getStockId()),
+				stockMasterMap.put(Long.valueOf(stockMaster.getStockId()),
 						stockMaster);
 			}
 
