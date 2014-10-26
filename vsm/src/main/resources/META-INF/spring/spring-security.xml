@@ -24,9 +24,16 @@
 	<beans:bean id="customUsernamePasswordAuthenticationFilter" class="com.misys.stockmarket.security.CustomUsernamePasswordAuthenticationFilter">
     	<beans:property name="authenticationManager" ref="authenticationManager" />
     	<beans:property name="authenticationSuccessHandler" ref="customAuthenticationSuccessHandler"/>
+    	<beans:property name="sessionAuthenticationStrategy" ref="sessionControlStrategy"/>
 	</beans:bean>
 	<beans:bean id="customUserDetailsService" class="com.misys.stockmarket.security.CustomUserDetailsService"/>
 	<beans:bean id="customAuthenticationSuccessHandler" class="com.misys.stockmarket.security.CustomAuthenticationSuccessHandler"/>
 	<beans:bean id="customAuthenticationEntryPoint" class="com.misys.stockmarket.security.CustomAuthenticationEntryPoint"/>
 	<beans:bean id="csrfTokenGeneratorFilter" class="com.misys.stockmarket.security.CsrfTokenGeneratorFilter"/>
+	<beans:bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl"/>
+	<beans:bean id="sessionControlStrategy" class="org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy">
+	    <beans:constructor-arg ref="sessionRegistry"/>
+	    <!-- Uncomment below to enable unique session per user -->
+	    <!-- <beans:property name="maximumSessions" value="1"/> -->
+	</beans:bean>
 </beans:beans>
