@@ -638,3 +638,18 @@ input[type="text"].ui-grid-filter-input{
     background: rgba(0,0,0,.1);
     padding-top: 20px;
 }
+
+@media (min-width: 1000px)
+{
+    .leagues-panel{
+        min-width:300px;
+    }
+}
+
+@media (min-width: 1300px)
+{
+    .leagues-panel{
+        min-width:400px;
+    }
+}
+

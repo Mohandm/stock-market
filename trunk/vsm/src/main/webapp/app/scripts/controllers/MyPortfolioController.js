@@ -9,8 +9,16 @@ vsmApp.controller('MyPortfolioController', ['$scope', '$rootScope', '$log', 'Sto
     $rootScope.onPageLoad();
 
     StockQuotesService.getMyLeagues().then(function(data){
-        $scope.myLeagues  = data;
-        $scope.leagueSelected = data[0];
+        var arrayLeagues = [];
+        $(data).each(function(index,item){
+            if(item.locked !== "true")
+            {
+                arrayLeagues.push(item);
+            }
+        });
+
+        $scope.myLeagues  = arrayLeagues;
+        $scope.leagueSelected = arrayLeagues[0];
         $scope.reloadMyPortfolio();
     });
 
