@@ -622,3 +622,12 @@ input[type="text"].ui-grid-filter-input{
     background-color: rgba(0,0,0,.75);
     border-color: white;
 }
+.modal-body .leagues-icon-1,.modal-body .leagues-icon-2,.modal-body .leagues-icon-3{
+    font-size : 150px;
+}
+.modal-body  .league-rules{
+    font-size : 17px;
+}
+.wrongAnswer{
+    color : red;
+}
