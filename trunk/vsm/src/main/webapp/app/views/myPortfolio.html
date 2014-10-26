@@ -2,7 +2,7 @@
 
     <div class="row blockContainer">
         <div class="col-md-4 col-md-offset-8 pull-right">
-            <div class="field-wrapper"><label>Select Portfolio:</label><select type="text" ng-change="reloadMyPortfolio" ng-model="leagueSelected" ng-options="league as league.name for league in myLeagues  | filter:{league:$viewValue}" class="form-control singleSelect"/></div>
+            <div class="field-wrapper"><label>Select Portfolio:</label><select type="text" ng-change="reloadMyPortfolio()" ng-model="leagueSelected" ng-options="league as league.name for league in myLeagues  | filter:{league:$viewValue}" class="form-control singleSelect"/></div>
         </div>
     </div>
     <div class="row stock-quote-summary-panel my-portfolio-container blockContainer">
