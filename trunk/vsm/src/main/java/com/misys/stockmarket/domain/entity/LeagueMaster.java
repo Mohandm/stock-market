@@ -32,7 +32,7 @@ public class LeagueMaster implements BaseEntity, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_LEAGUE_MASTER")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ_LEAGUE_MASTER")
 	@Column(name = "LEAGUE_ID")
 	private long leagueId;
 
