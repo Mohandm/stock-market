@@ -65,7 +65,7 @@ public class YQLUtil {
 		return commaSeperatedQuotesBuffer.toString();
 	}
 
-	public static String URLEncode(String decodedValue) throws YQLException {
+	public static String uRLEncode(String decodedValue) throws YQLException {
 		try {
 			return URLEncoder.encode(decodedValue, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
