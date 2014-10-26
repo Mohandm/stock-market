@@ -119,13 +119,24 @@ vsmApp.controller('LeagueUsersDialogController', ['$scope','$http','modals','Lea
         ]
     };
 
-    var leaguesUsersPromise = LeaguesService.getLeaguesUsers($scope.passValuesToDialog.leagueId);
-    leaguesUsersPromise.then(function(data){
-        $scope.getLeagueUsersDataGridOptions.data = data;
+    if($scope.passValuesToDialog.players)
+    {
+        $scope.getLeagueUsersDataGridOptions.data = $scope.passValuesToDialog.players;
         setTimeout(function(){
             $('#leagueUsersDialogContainer').resize();
         },1000);
-    });
+    }
+    else
+    {
+        var leaguesUsersPromise = LeaguesService.getLeaguesUsers($scope.passValuesToDialog.leagueId);
+        leaguesUsersPromise.then(function(data){
+            $scope.getLeagueUsersDataGridOptions.data = data;
+            setTimeout(function(){
+                $('#leagueUsersDialogContainer').resize();
+            },1000);
+        });
+    }
+
 
     $scope.follow = function(item){
         var actionUrl = 'followUser?UserId=';

@@ -1,35 +1,45 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.controller('LeaderBoardController', ['$scope', '$rootScope', 'modals',
-    function ($scope, $rootScope, modals) {
+vsmApp.controller('LeaderBoardController', ['$scope', '$rootScope', 'modals','LeaguesService',
+    function ($scope, $rootScope, modals, LeaguesService) {
 
         $scope.$scope = $scope;
 
         //Add this to all page controllers
         $rootScope.onPageLoad();
 
-
-    }]);
-
-vsmApp.controller('LeaderBoardDialogController', ['$scope','$http','modals', function ($scope, $http, modals) {
-
-    $scope.formmodel = {};
-    $scope.formcontrol = {};
-
-    $scope.perform = function(action){
-        if (action === 'cancel') {
-            modals.close();
-        }
-        else {
-            if ($scope.mainForm.$invalid) {
-                $scope.formcontrol.submitted = true;
-            }
-            else {
-                $http.post(action, $scope.formmodel).success(function (response) {
-                    modals.close();
+        $scope.league1 = {};
+        $scope.league2 = {};
+        $scope.league3 = {};
+        var leaderBoardPromise = LeaguesService.getLeaderBoard();
+        leaderBoardPromise.then(function(data){
+            $(data).each(function(index, item){
+                if(item.stage === "1")
+                {
+                    $scope.league1 = item;
+                }
+                else if(item.stage === "2")
+                {
+                    $scope.league2 = item;
+                }
+                else
+                {
+                    $scope.league3 = item;
+                }
+            });
+            setTimeout(function() {
+                $('.counter').counterUp({
+                    delay: 2,
+                    time: 1000
                 });
-            }
-        }
-    };
+            },500);
+        });
+
+        $scope.listOfUsersLeague = function(league){
+            var dialogTitle = league.name +'- Top 10 Champions';
+            modals.showForm(dialogTitle,'leagueUsersDialog', league, "modal-lg");
+        };
+
 }]);
+
 
