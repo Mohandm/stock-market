@@ -67,7 +67,7 @@ public interface IApplicationConstants {
 	public final String WATCH_STOCK_STATUS_COMPLETED = "C";
 
 	public final BigDecimal DEFAULT_LEAGUE_START_AMOUNT = BigDecimal
-			.valueOf(1000000);
+			.valueOf(100000);
 
 	public final BigDecimal DEFAULT_LEAGUE_QUALIFYING_AMOUNT = BigDecimal
 			.valueOf(750000);
