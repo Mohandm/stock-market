@@ -21,7 +21,7 @@ public class UserMaster implements BaseEntity, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_USER_MASTER")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ_USER_MASTER")
 	@Column(name = "USER_ID", unique = true, nullable = false)
 	private Long userId;
 

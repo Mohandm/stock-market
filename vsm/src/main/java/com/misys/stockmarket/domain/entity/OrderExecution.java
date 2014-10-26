@@ -27,7 +27,7 @@ public class OrderExecution implements BaseEntity, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ORDER_EXECUTION")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ_ORDER_EXECUTION")
 	@Column(name = "EXECUTION_ID", unique = true, nullable = false)
 	private long executionId;
 

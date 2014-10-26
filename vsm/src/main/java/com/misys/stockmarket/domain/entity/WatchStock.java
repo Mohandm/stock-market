@@ -24,7 +24,7 @@ public class WatchStock implements BaseEntity, Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_WATCH_STOCK")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ_WATCH_STOCK")
 	@Column(name = "WATCH_STOCK_ID")
 	private long watchStockId;
 	

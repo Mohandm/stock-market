@@ -25,7 +25,7 @@ public class LeagueUser implements BaseEntity, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_LEAGUE_USER")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ_LEAGUE_USER")
 	@Column(name = "LEAGUE_USER_ID", unique = true, nullable = false)
 	private long leagueUserId;
 

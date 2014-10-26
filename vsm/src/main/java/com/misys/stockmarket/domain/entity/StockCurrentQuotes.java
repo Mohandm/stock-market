@@ -30,7 +30,7 @@ public class StockCurrentQuotes implements BaseEntity, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_STOCK_CURRENT_QUOTES")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ_STOCK_CURRENT_QUOTES")
 	@Column(name = "CURRENT_QUOTE_ID")
 	private long currentQuoteId;
 
@@ -66,7 +66,7 @@ public class StockCurrentQuotes implements BaseEntity, Serializable {
 	@Column(name = "LAST_TRADE_PRICE_ONLY", precision = 8, scale = 2)
 	private BigDecimal lastTradePriceOnly;
 	
-	@Column(name = "OPEN", precision = 8, scale = 2)
+	@Column(name = "OPEN_PRICE", precision = 8, scale = 2)
 	private BigDecimal open;
 	
 	@Column(name = "PREVIOUS_CLOSE", precision = 8, scale = 2)

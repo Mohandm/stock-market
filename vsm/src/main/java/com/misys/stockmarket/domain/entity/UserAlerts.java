@@ -28,7 +28,7 @@ public class UserAlerts implements BaseEntity, Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_USER_ALERTS")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ_USER_ALERTS")
 	@Column(name = "USER_ALERTS_ID")
 	private long userAlertsId;
 	

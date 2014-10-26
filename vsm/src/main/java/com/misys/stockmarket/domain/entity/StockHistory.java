@@ -29,7 +29,7 @@ public class StockHistory implements BaseEntity, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_STOCK_HISTORY")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ_STOCK_HISTORY")
 	@Column(name = "HISTORY_ID")
 	private long historyId;
 
@@ -37,7 +37,7 @@ public class StockHistory implements BaseEntity, Serializable {
 	@Column(name = "STOCK_DATE")
 	private Date stockDate;
 
-	@Column(name = "OPEN", precision = 8, scale = 2)
+	@Column(name = "OPEN_PRICE", precision = 8, scale = 2)
 	private BigDecimal open;
 
 	@Column(name = "HIGH", precision = 8, scale = 2)
@@ -46,7 +46,7 @@ public class StockHistory implements BaseEntity, Serializable {
 	@Column(name = "LOW", precision = 8, scale = 2)
 	private BigDecimal low;
 
-	@Column(name = "CLOSE", precision = 8, scale = 2)
+	@Column(name = "CLOSE_PRICE", precision = 8, scale = 2)
 	private BigDecimal close;
 
 	@Column(name = "VOLUME")
