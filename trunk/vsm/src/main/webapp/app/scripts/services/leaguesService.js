@@ -30,4 +30,19 @@ vsmApp.service('LeaguesService', ['$http','$q','$log', function ($http, $q, $log
         return deferred.promise;
     };
 
+    this.getLeaderBoard = function(){
+        var deferred = $q.defer();
+        //var actionUrl = 'leaderBoard/';
+        var actionUrl = 'app/data/leader_board.json';
+        $http.post(actionUrl,{})
+            .success(function (json) {
+                deferred.resolve(json);
+            }).error(function(msg, code) {
+                deferred.reject(msg);
+                $log.error(msg, code);
+            });
+        return deferred.promise;
+    };
+
+
 }]);

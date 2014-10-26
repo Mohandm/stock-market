@@ -613,12 +613,12 @@ input[type="text"].ui-grid-filter-input{
     font-size: 30px;
 }
 
-.leagues-dashboard .btn-success  {
+.leagues-dashboard .btn-success,.leader-board  .btn-success{
     background-color: rgba(0,0,0,.5);
     border-color: white;
 }
 
-.leagues-dashboard .btn-success:hover  {
+.leagues-dashboard .btn-success:hover,.leader-board  .btn-success:hover{
     background-color: rgba(0,0,0,.75);
     border-color: white;
 }
@@ -630,4 +630,11 @@ input[type="text"].ui-grid-filter-input{
 }
 .wrongAnswer{
     color : red;
+}
+.leader-board{
+    margin-bottom : 20px;
+}
+.leader-board-panel-container{
+    background: rgba(0,0,0,.1);
+    padding-top: 20px;
 }
