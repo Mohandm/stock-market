@@ -44,5 +44,46 @@ vsmApp.service('LeaguesService', ['$http','$q','$log', function ($http, $q, $log
         return deferred.promise;
     };
 
+    this.getMyFollowers = function(leagueId){
+        var deferred = $q.defer();
+        //var actionUrl = 'myFollowers?leagueId=';
+        var actionUrl = 'app/data/my_followers.json';
+        $http.post(actionUrl,{})
+            .success(function (json) {
+                deferred.resolve(json);
+            }).error(function(msg, code) {
+                deferred.reject(msg);
+                $log.error(msg, code);
+            });
+        return deferred.promise;
+    };
+
+    this.getYourFollowing = function(leagueId){
+        var deferred = $q.defer();
+        //var actionUrl = 'yourFollowing?leagueId=';
+        var actionUrl = 'app/data/your_following.json';
+        $http.post(actionUrl,{})
+            .success(function (json) {
+                deferred.resolve(json);
+            }).error(function(msg, code) {
+                deferred.reject(msg);
+                $log.error(msg, code);
+            });
+        return deferred.promise;
+    };
+
+    this.getUsersRecentTrades = function(leagueId, userId){
+        var deferred = $q.defer();
+        //var actionUrl = 'myRecentTrades?leagueId=' + leagueId + '&userId='+userId;
+        var actionUrl = 'app/data/my_recent_trades.json';
+        $http.get(actionUrl,{})
+            .success(function (json) {
+                deferred.resolve(json);
+            }).error(function(msg, code) {
+                deferred.reject(msg);
+                $log.error(msg, code);
+            });
+        return deferred.promise;
+    };
 
 }]);
