@@ -80,10 +80,6 @@ public class PortfolioService {
 						stockHoldingFormBean.subtractVolume(orderExecution
 								.getUnitsTraded());
 					}
-					/*
-					 * stockHoldingFormBean.addPricePaid(orderExecution
-					 * .getExecutionPrice());
-					 */
 					StockCurrentQuotes stockCurrentQuotes = stockService
 							.getStockCurrentQuoteByStockId(stockMaster
 									.getStockId());

@@ -55,7 +55,7 @@ public class LeagueDAO extends BaseDAO {
 		}
 	}
 
-	public LeagueUser findLeagueById(long leagueUserId)
+	public LeagueUser findLeagueUserById(long leagueUserId)
 			throws DBRecordNotFoundException {
 		try {
 			Query q = entityManager
