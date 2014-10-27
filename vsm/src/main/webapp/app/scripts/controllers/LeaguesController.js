@@ -111,7 +111,7 @@ vsmApp.controller('LeagueUsersDialogController', ['$scope','$rootScope','$http',
         enableSorting: true,
         enableFiltering: true,
         columnDefs: [
-            { field: 'photo', displayName:'Profile Pic'},
+            /*{ field: 'photo', displayName:'Profile Pic'},*/
             { field: 'name', displayName:'Name'},
             { field: 'ranking', displayName:'Ranking'},
             { field: 'totalValue', displayName:'League Value'},

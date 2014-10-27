@@ -8,11 +8,11 @@
                 <div class="leagues-icon-1 league-1"><i class="fa fa-star fa-fw"></i></div>
                 <div class="leagues-lock-text-1 league-1">Players : <span class="counter">{{leagueList1.playersCount}}</span></div>
                 <div class="leagues-lock-text-1 league-1">
-                    <span ng-if="leagueList1.locked"><i class="fa fa-lock fa-fw"></i>Locked</span>
-                    <span ng-if="!leagueList1.locked"><i class="fa fa-unlock fa-fw"></i>Unlocked</span>
+                    <span ng-if="leagueList1.locked === 'true'"><i class="fa fa-lock fa-fw"></i>Locked</span>
+                    <span ng-if="leagueList1.locked !== 'true'"><i class="fa fa-unlock fa-fw"></i>Unlocked</span>
                 </div>
                 <div class="leagues-lock-text-1">
-                    <button ng-if="leagueList1.locked" type="button" class="btn btn-success league-1" ng-click="unlockLeague1(leagueList1)">How to Unlock</button>
+                    <button ng-if="leagueList1.locked === 'true'" type="button" class="btn btn-success league-1" ng-click="unlockLeague1(leagueList1)">How to Unlock</button>
                     <button type="button" class="btn btn-success league-1" ng-click="listOfUsersLeague(leagueList1.leagueId)">List of Players</button>
                 </div>
             </div>
@@ -27,11 +27,11 @@
                 <div class="leagues-icon-2 league-2"><i class="fa fa-trophy fa-fw"></i></div>
                 <div class="leagues-lock-text-2 league-2">Players : <span class="counter">{{leagueList2.playersCount}}</span></div>
                 <div class="leagues-lock-text-2 league-2">
-                    <span ng-if="leagueList2.locked"><i class="fa fa-lock fa-fw"></i>Locked</span>
-                    <span ng-if="!leagueList2.locked"><i class="fa fa-unlock fa-fw"></i>Unlocked</span>
+                    <span ng-if="leagueList2.locked === 'true'"><i class="fa fa-lock fa-fw"></i>Locked</span>
+                    <span ng-if="leagueList2.locked !== 'true'"><i class="fa fa-unlock fa-fw"></i>Unlocked</span>
                 </div>
                 <div class="leagues-lock-text-2">
-                    <button type="button" ng-if="leagueList2.locked" class="btn btn-success league-2" ng-click="unlockLeague2(leagueList2)">How to Unlock</button>
+                    <button type="button" ng-if="leagueList2.locked === 'true'" class="btn btn-success league-2" ng-click="unlockLeague2(leagueList2)">How to Unlock</button>
                     <button type="button" class="btn btn-success league-2" ng-click="listOfUsersLeague(leagueList2.leagueId)">List of Players</button>
                 </div>
             </div>
@@ -46,11 +46,11 @@
                 <div class="leagues-icon-3 league-3"><i class="fa fa-flag-checkered fa-fw"></i></div>
                 <div class="leagues-lock-text-3 league-3">Players : <span class="counter">{{leagueList3.playersCount}}</span></div>
                 <div class="leagues-lock-text-3 league-3">
-                    <span ng-if="leagueList3.locked"><i class="fa fa-lock fa-fw"></i>Locked</span>
-                    <span ng-if="!leagueList3.locked"><i class="fa fa-unlock fa-fw"></i>Unlocked</span>
+                    <span ng-if="leagueList3.locked === 'true'"><i class="fa fa-lock fa-fw"></i>Locked</span>
+                    <span ng-if="leagueList3.locked !== 'true'"><i class="fa fa-unlock fa-fw"></i>Unlocked</span>
                 </div>
                 <div class="leagues-lock-text-3">
-                    <button type="button" ng-if="leagueList3.locked" class="btn btn-success league-3" ng-click="unlockLeague3(leagueList3)">How to Unlock</button>
+                    <button type="button" ng-if="leagueList3.locked === 'true'" class="btn btn-success league-3" ng-click="unlockLeague3(leagueList3)">How to Unlock</button>
                     <button type="button" class="btn btn-success league-3" ng-click="listOfUsersLeague(leagueList3.leagueId)">List of Players</button>
                 </div>
             </div>
