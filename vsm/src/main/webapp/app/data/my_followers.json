@@ -1,0 +1,14 @@
+[
+    {"userId":"1","name" : "Bipin", "photo" : "...", "status" : "Accepted"},
+    {"userId":"2","name" : "Sam", "photo" : "...", "status" : "Request"},
+    {"userId":"3","name" : "Raja", "photo" : "...", "status" : "Accepted"},
+    {"userId":"4","name" : "Guru", "photo" : "...", "status" : "Accepted"},
+    {"userId":"5","name" : "Deepak", "photo" : "...", "status" : "Request"},
+    {"userId":"6","name" : "Ram", "photo" : "...", "status" : "Request"},
+    {"userId":"7","name" : "Reddy", "photo" : "...", "status" : "Accepted"},
+    {"userId":"8","name" : "John", "photo" : "...", "status" : "Request"},
+    {"userId":"9","name" : "Deepak", "photo" : "...","status" : "Accepted"},
+    {"userId":"10","name" : "Ram", "photo" : "...", "status" : "Accepted"},
+    {"userId":"11","name" : "Reddy", "photo" : "...", "status" : "Request"},
+    {"userId":"12","name" : "John", "photo" : "...", "status" : "Accepted"}
+]

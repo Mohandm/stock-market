@@ -1,0 +1,14 @@
+[
+    {"userId":"1","name" : "Bipin", "photo" : "...", "totalValue" : "1011122.62", "followerCount" : "32", "ranking":"1"},
+    {"userId":"2","name" : "Sam", "photo" : "...", "totalValue" : "1032234.62", "followerCount" : "23", "ranking":"2"},
+    {"userId":"3","name" : "Raja", "photo" : "...", "totalValue" : "12233244.62", "followerCount" : "42", "ranking":"3"},
+    {"userId":"4","name" : "Guru", "photo" : "...", "totalValue" : "2343443.62", "followerCount" : "55", "ranking":"4"},
+    {"userId":"5","name" : "Deepak", "photo" : "...", "totalValue" : "1011122.62", "followerCount" : "12", "ranking":"5"},
+    {"userId":"6","name" : "Ram", "photo" : "...", "totalValue" : "1032234.62", "followerCount" : "3", "ranking":"6"},
+    {"userId":"7","name" : "Reddy", "photo" : "...", "totalValue" : "12233244.62", "followerCount" : "5", "ranking":"7"},
+    {"userId":"8","name" : "John", "photo" : "...", "totalValue" : "2343443.62", "followerCount" : "6", "ranking":"8"},
+    {"userId":"9","name" : "Deepak", "photo" : "...", "totalValue" : "1011122.62", "followerCount" : "12", "ranking":"9"},
+    {"userId":"10","name" : "Ram", "photo" : "...", "totalValue" : "1032234.62", "followerCount" : "3", "ranking":"10"},
+    {"userId":"11","name" : "Reddy", "photo" : "...", "totalValue" : "12233244.62", "followerCount" : "5", "ranking":"11"},
+    {"userId":"12","name" : "John", "photo" : "...", "totalValue" : "2343443.62", "followerCount" : "6", "ranking":"12"}
+]
