@@ -29,7 +29,7 @@ vsmApp.controller('FollowersController', ['$scope', '$rootScope','LeaguesService
             enableSorting: true,
             enableFiltering: true,
             columnDefs: [
-                { field: 'photo', displayName:'Profile Pic'},
+                /*{ field: 'photo', displayName:'Profile Pic'},*/
                 { field: 'name', displayName:'Name'},
                 { field: 'status', displayName:'Status'},
                 {name: 'follow', displayName: '', enableFiltering : false, enableSorting : false,
@@ -43,7 +43,7 @@ vsmApp.controller('FollowersController', ['$scope', '$rootScope','LeaguesService
             enableSorting: true,
             enableFiltering: true,
             columnDefs: [
-                { field: 'photo', displayName:'Profile Pic'},
+                /*{ field: 'photo', displayName:'Profile Pic'},*/
                 { field: 'name', displayName:'Name',
                     cellTemplate:'<a ng-click="getExternalScopes().showRecentTrades(row.entity)" class="anchor">{{row.entity.name}}</a>'},
                 { field: 'ranking', displayName:'Ranking'},
