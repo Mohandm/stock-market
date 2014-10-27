@@ -1,7 +1,9 @@
 package com.misys.stockmarket.services;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -20,11 +22,13 @@ import com.misys.stockmarket.domain.entity.UserMaster;
 import com.misys.stockmarket.enums.LEAGUE_ERR_CODES;
 import com.misys.stockmarket.exception.DAOException;
 import com.misys.stockmarket.exception.DBRecordNotFoundException;
-import com.misys.stockmarket.exception.EmailNotFoundException;
 import com.misys.stockmarket.exception.LeagueException;
-import com.misys.stockmarket.exception.ServiceException;
+import com.misys.stockmarket.exception.service.PortfolioServiceException;
 import com.misys.stockmarket.exception.service.UserServiceException;
+import com.misys.stockmarket.mbeans.LeaguePlayerFormBean;
 import com.misys.stockmarket.mbeans.MyLeagueFormBean;
+import com.misys.stockmarket.mbeans.MyPortfolioFormBean;
+import com.misys.stockmarket.utility.PropertiesUtil;
 
 @Service("leagueService")
 @Repository
@@ -37,6 +41,9 @@ public class LeagueService {
 
 	@Inject
 	private UserService userService;
+
+	@Inject
+	private PortfolioService portfolioService;
 
 	@Transactional(rollbackFor = DAOException.class)
 	public void addUserToLeague(UserMaster user, LeagueMaster league)
@@ -102,7 +109,7 @@ public class LeagueService {
 	public LeagueUser getLeagueUserById(long leagueUserId)
 			throws LeagueException {
 		try {
-			return leagueDAO.findLeagueById(leagueUserId);
+			return leagueDAO.findLeagueUserById(leagueUserId);
 		} catch (DBRecordNotFoundException e) {
 			throw new LeagueException(LEAGUE_ERR_CODES.LEAGUE_USER_NOT_FOUND);
 		}
@@ -159,13 +166,14 @@ public class LeagueService {
 		}
 		return myLeagueFormBeanList;
 	}
-	
+
 	public List<MyLeagueFormBean> getMyLeaguesIncludingGlobal(long userId)
 			throws LeagueException {
 		List<MyLeagueFormBean> myLeagueFormBeanList = new ArrayList<MyLeagueFormBean>();
 		try {
 			UserMaster userMaster = userService.findById(userId);
-			List<LeagueMaster> leagueMasterList = leagueDAO.findAll(LeagueMaster.class);
+			List<LeagueMaster> leagueMasterList = leagueDAO
+					.findAll(LeagueMaster.class);
 			List<LeagueUser> leagueUserList = leagueDAO
 					.findLeagueUserByUserId(userMaster);
 			List<Long> leagueIdList = new ArrayList<Long>();
@@ -199,5 +207,71 @@ public class LeagueService {
 			throw new LeagueException(e);
 		}
 		return myLeagueFormBeanList;
+	}
+
+	public List<LeaguePlayerFormBean> getLeaguePlayers(long leaugeId)
+			throws LeagueException {
+		List<LeaguePlayerFormBean> leaguePlayerFormBeanList = new ArrayList<LeaguePlayerFormBean>();
+		List<LeaguePlayerFormBean> rankList = new ArrayList<LeaguePlayerFormBean>();
+		try {
+			List<LeagueUser> leagueUserList = leagueDAO
+					.findAllLeagueUsers(leaugeId);
+			for (LeagueUser leagueUser : leagueUserList) {
+				LeaguePlayerFormBean leaguePlayerFormBean = new LeaguePlayerFormBean();
+				leaguePlayerFormBean.setLeagueUserId(String.valueOf(leagueUser
+						.getLeagueUserId()));
+				leaguePlayerFormBean.setUserId(String.valueOf(leagueUser
+						.getUserMaster().getUserId()));
+				leaguePlayerFormBean.setName(leagueUser.getUserMaster()
+						.getFirstName());
+				MyPortfolioFormBean myPortfolioFormBean = portfolioService
+						.getMyPortfolio(leaugeId, leagueUser.getUserMaster()
+								.getUserId());
+				BigDecimal totalValue = new BigDecimal(0);
+				if (myPortfolioFormBean.getTotalValue() != null) {
+					totalValue = totalValue.add(new BigDecimal(
+							myPortfolioFormBean.getTotalValue()));
+				}
+				leaguePlayerFormBean.setTotalValue(myPortfolioFormBean
+						.getTotalValue());
+				// TODO:
+				String minimumQualifyingValueStr = PropertiesUtil
+						.getProperty("stage.minimum.qualifying.amount."
+								+ leagueUser.getLeagueMaster().getStage()
+										.toPlainString());
+				BigDecimal minimumQualifyingValue = new BigDecimal(0);
+				if (minimumQualifyingValueStr != null) {
+					minimumQualifyingValue = minimumQualifyingValue
+							.add(new BigDecimal(minimumQualifyingValueStr));
+				}
+				if (totalValue.compareTo(new BigDecimal(0)) > 0
+						&& totalValue.compareTo(minimumQualifyingValue) >= 0) {
+					rankList.add(leaguePlayerFormBean);
+				}
+				leaguePlayerFormBeanList.add(leaguePlayerFormBean);
+			}
+			sortAndRank(rankList);
+		} catch (DAOException e) {
+			LOG.error(e);
+			throw new LeagueException(e);
+		} catch (PortfolioServiceException e) {
+			LOG.error(e);
+			throw new LeagueException(e);
+		}
+		return leaguePlayerFormBeanList;
+	}
+
+	private void sortAndRank(List<LeaguePlayerFormBean> rankList) {
+		Collections.sort(rankList, new Comparator<LeaguePlayerFormBean>() {
+			@Override
+			public int compare(LeaguePlayerFormBean o1, LeaguePlayerFormBean o2) {
+				return new BigDecimal(o1.getTotalValue())
+						.compareTo(new BigDecimal(o2.getTotalValue()));
+			}
+		});
+		int rank = 0;
+		for (LeaguePlayerFormBean leaguePlayerFormBean : rankList) {
+			leaguePlayerFormBean.setRank(String.valueOf(++rank));
+		}
 	}
 }
