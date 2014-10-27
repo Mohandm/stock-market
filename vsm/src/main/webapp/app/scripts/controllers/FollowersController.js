@@ -134,8 +134,10 @@ vsmApp.controller('LeagueUsersRecentTradesDialogController', ['$scope','$rootSco
     };
 
     LeaguesService.getUsersRecentTrades($scope.leagueId, $scope.userId).then(function(data){
+        $('#leagueUsersDialogContainer').hide();
         $scope.getRecentTradesDataGridOptions.data = data.recentTrades;
         setTimeout(function(){
+            $('#leagueUsersDialogContainer').show();
             $('#leagueUsersDialogContainer').resize();
         },1000);
     });

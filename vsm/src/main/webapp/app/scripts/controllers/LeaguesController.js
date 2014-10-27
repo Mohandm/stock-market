@@ -122,8 +122,10 @@ vsmApp.controller('LeagueUsersDialogController', ['$scope','$rootScope','$http',
 
     if($scope.passValuesToDialog.players)
     {
+        $('#leagueUsersDialogContainer').hide();
         $scope.getLeagueUsersDataGridOptions.data = $scope.passValuesToDialog.players;
         setTimeout(function(){
+            $('#leagueUsersDialogContainer').show();
             $('#leagueUsersDialogContainer').resize();
         },1000);
     }
@@ -131,8 +133,10 @@ vsmApp.controller('LeagueUsersDialogController', ['$scope','$rootScope','$http',
     {
         var leaguesUsersPromise = LeaguesService.getLeaguesUsers($scope.passValuesToDialog.leagueId);
         leaguesUsersPromise.then(function(data){
+            $('#leagueUsersDialogContainer').hide();
             $scope.getLeagueUsersDataGridOptions.data = data;
             setTimeout(function(){
+                $('#leagueUsersDialogContainer').show();
                 $('#leagueUsersDialogContainer').resize();
             },1000);
         });
