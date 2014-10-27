@@ -403,6 +403,9 @@ input[type="text"].ui-grid-filter-input{
 .recent-trades-list-grid, .stock-list-grid,.alerts-trades-list-grid{
     height : 600px;
 }
+.dialog-list-grid{
+    height : 600px;
+}
 /* Grids : End */
 
 .breaking-news {
