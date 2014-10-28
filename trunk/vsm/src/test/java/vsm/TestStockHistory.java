@@ -3,6 +3,8 @@ package vsm;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -13,6 +15,8 @@ import com.misys.stockmarket.utility.DateUtils;
 
 public class TestStockHistory {
 
+	private static final Log LOG = LogFactory.getLog(TestStockHistory.class);
+	
 	public static void main(String[] args) {
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
 				"META-INF\\spring\\applicationContext.xml");
@@ -24,12 +28,12 @@ public class TestStockHistory {
 					.listStockHistory("AAPL",
 							DateUtils.getPastMonthFromCurrentDate(6),
 							new Date());
-			System.out.println("HISTORY SIZE:" + stockHistoryList.size());
+			LOG.info("HISTORY SIZE:" + stockHistoryList.size());
 			for (StockHistory stockHistory : stockHistoryList) {
-				System.out.println(stockHistory);
+				LOG.info(stockHistory);
 			}
 		} catch (StockServiceException e) {
-			e.printStackTrace();
+			LOG.error("Error encountered while testing stock history", e);
 		}
 	}
 
