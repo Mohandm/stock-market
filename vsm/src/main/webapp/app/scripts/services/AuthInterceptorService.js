@@ -7,7 +7,7 @@ vsmApp.factory('AuthInterceptorService', function ($rootScope, $q, AUTH_EVENTS, 
       var defaultCsrfTokenHeader = 'X-CSRF-TOKEN';
       var csrfTokenHeaderName = 'X-CSRF-HEADER';
       var xhr = new XMLHttpRequest();
-      xhr.open('head', '/stockmarket', false);
+      xhr.open('head', '/stockmarket/getuserdetails', false);
       xhr.send();
       var csrfTokenHeader = xhr.getResponseHeader(csrfTokenHeaderName);
       this.csrfTokenHeader = csrfTokenHeader ? csrfTokenHeader : defaultCsrfTokenHeader;
