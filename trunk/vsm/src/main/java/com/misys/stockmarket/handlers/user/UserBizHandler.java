@@ -124,7 +124,7 @@ public class UserBizHandler {
 		}
 
 		catch (Exception e) {
-			e.printStackTrace();
+			LOG.error("Error while changing pasword ",e);
 			return new ResponseMessage(ResponseMessage.Type.danger,
 					"Unable to change your password. Please try again!!!");
 		}
