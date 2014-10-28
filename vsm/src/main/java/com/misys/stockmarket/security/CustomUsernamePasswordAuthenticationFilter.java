@@ -5,12 +5,17 @@ import java.io.BufferedReader;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 public class CustomUsernamePasswordAuthenticationFilter extends
 		UsernamePasswordAuthenticationFilter {
+
+	private static final Log LOG = LogFactory
+			.getLog(CustomUsernamePasswordAuthenticationFilter.class);
 
 	@Override
 	protected String obtainUsername(HttpServletRequest request) {
@@ -52,7 +57,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends
 			request.setAttribute(SPRING_SECURITY_FORM_PASSWORD_KEY,
 					loginRequest.getPassword());
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOG.error("Error while transforming login request", e);
 		}
 
 		return super.attemptAuthentication(request, response);
