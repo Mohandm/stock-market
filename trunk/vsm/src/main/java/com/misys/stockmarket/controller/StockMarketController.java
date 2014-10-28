@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.domain.entity.StockCurrentQuotes;
-import com.misys.stockmarket.domain.entity.StockHistory;
-import com.misys.stockmarket.domain.entity.StockMaster;
 import com.misys.stockmarket.domain.entity.UserAlerts;
 import com.misys.stockmarket.enums.STOCK_ERR_CODES;
 import com.misys.stockmarket.exception.ServiceException;
@@ -28,6 +26,9 @@ import com.misys.stockmarket.exception.service.AlertsServiceException;
 import com.misys.stockmarket.exception.service.OrderServiceException;
 import com.misys.stockmarket.exception.service.StockServiceException;
 import com.misys.stockmarket.mbeans.OrderFormBean;
+import com.misys.stockmarket.mbeans.StockCurrentQuotesBean;
+import com.misys.stockmarket.mbeans.StockHistoryBean;
+import com.misys.stockmarket.mbeans.StockMasterBean;
 import com.misys.stockmarket.mbeans.UserAlertsBean;
 import com.misys.stockmarket.mbeans.WatchListFormBean;
 import com.misys.stockmarket.platform.web.ResponseMessage;
@@ -117,9 +118,9 @@ public class StockMarketController {
 	@RequestMapping(value = "/stockList", method = { RequestMethod.GET,
 			RequestMethod.POST })
 	@ResponseBody
-	public List<StockMaster> stockList() {
+	public List<StockMasterBean> stockList() {
 		try {
-			return stockService.listAllActiveStocks();
+			return stockService.listAllActiveStockBeans();
 		} catch (StockServiceException e) {
 			LOG.error(e);
 			// TODO: HANDLE WHEN EXCEPTION
@@ -130,7 +131,7 @@ public class StockMarketController {
 	@RequestMapping(value = "/stockListCurrentQuotes", method = {
 			RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
-	public StockCurrentQuotes stockListCurrentQuotes(
+	public StockCurrentQuotesBean stockListCurrentQuotes(
 			@RequestParam("stockSymbol") String symbol) {
 		try {
 			return stockService.getStockCurrentQuoteByStockSymbol(symbol);
@@ -163,7 +164,7 @@ public class StockMarketController {
 	@RequestMapping(value = "/stockListHistory", method = { RequestMethod.GET,
 			RequestMethod.POST })
 	@ResponseBody
-	public List<StockHistory> stockListHistory(
+	public List<StockHistoryBean> stockListHistory(
 			@RequestParam("stockSymbol") String symbol) {
 		try {
 			return stockService.listStockHistory(symbol);

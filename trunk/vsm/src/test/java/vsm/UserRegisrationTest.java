@@ -17,15 +17,12 @@ public class UserRegisrationTest {
 		RegistrationService registrationService = (RegistrationService) applicationContext
 				.getBean("registrationService");
 
-		try {
-			UserFormBean userFormBean = new UserFormBean();
-			userFormBean.setFirstName("Fname");
-			userFormBean.setEmail("ranju@misys.com");
-			userFormBean.setPassword("password");
-			userFormBean.setConfirmPassword("password");
-			registrationService.registerUser(userFormBean);
-		} catch (BaseException e) {
-		}
+		UserFormBean userFormBean = new UserFormBean();
+		userFormBean.setFirstName("Fname");
+		userFormBean.setEmail("ranju@misys.com");
+		userFormBean.setPassword("password");
+		userFormBean.setConfirmPassword("password");
+		registrationService.registerUser(userFormBean);
 	}
 
 }
