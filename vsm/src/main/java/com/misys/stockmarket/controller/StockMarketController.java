@@ -11,7 +11,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,23 +22,18 @@ import com.misys.stockmarket.domain.entity.StockCurrentQuotes;
 import com.misys.stockmarket.domain.entity.StockHistory;
 import com.misys.stockmarket.domain.entity.StockMaster;
 import com.misys.stockmarket.domain.entity.UserAlerts;
-import com.misys.stockmarket.domain.entity.WatchStock;
 import com.misys.stockmarket.enums.STOCK_ERR_CODES;
 import com.misys.stockmarket.exception.ServiceException;
 import com.misys.stockmarket.exception.service.AlertsServiceException;
 import com.misys.stockmarket.exception.service.OrderServiceException;
 import com.misys.stockmarket.exception.service.StockServiceException;
-import com.misys.stockmarket.handlers.user.UserBizHandler;
 import com.misys.stockmarket.mbeans.OrderFormBean;
 import com.misys.stockmarket.mbeans.UserAlertsBean;
-import com.misys.stockmarket.mbeans.UserFormBean;
 import com.misys.stockmarket.mbeans.WatchListFormBean;
 import com.misys.stockmarket.platform.web.ResponseMessage;
-import com.misys.stockmarket.security.LoginResponse;
 import com.misys.stockmarket.services.AlertsService;
 import com.misys.stockmarket.services.OrderService;
 import com.misys.stockmarket.services.StockService;
-import com.misys.stockmarket.services.UserService;
 
 /**
  * @author Gurudath Reddy
@@ -52,44 +46,13 @@ public class StockMarketController {
 			.getLog(StockMarketController.class);
 
 	@Inject
-	UserBizHandler userBizHandler;
+	private StockService stockService;
 
 	@Inject
-	private UserService userService;
+	private OrderService orderService;
 
 	@Inject
-	StockService stockService;
-
-	@Inject
-	OrderService orderService;
-
-	@Inject
-	AlertsService alertsService;
-
-	@RequestMapping(value = "/registeruser", method = RequestMethod.POST)
-	@ResponseBody
-	public ResponseMessage registerUser(@RequestBody UserFormBean userFormBean) {
-		return userBizHandler.registerUser(userFormBean);
-	}
-
-	@RequestMapping(value = "/activateprofile/{token:.+}", method = {
-			RequestMethod.GET, RequestMethod.POST })
-	@ResponseBody
-	public ResponseMessage activateProfile(@PathVariable("token") String token) {
-		return userBizHandler.activateProfile(token);
-	}
-
-	@RequestMapping(value = "/resetpassword", method = { RequestMethod.POST })
-	@ResponseBody
-	public ResponseMessage resetPassword(@RequestBody UserFormBean userFormBean) {
-		return userBizHandler.resetPassword(userFormBean);
-	}
-
-	@RequestMapping(value = "/changepassword", method = { RequestMethod.POST })
-	@ResponseBody
-	public ResponseMessage changePassword(@RequestBody UserFormBean userFormBean) {
-		return userBizHandler.changePassword(userFormBean);
-	}
+	private AlertsService alertsService;
 
 	@RequestMapping(value = "/buystock", method = { RequestMethod.POST })
 	@ResponseBody
@@ -211,14 +174,6 @@ public class StockMarketController {
 		}
 	}
 
-	@RequestMapping(value = "/getuserdetails", method = { RequestMethod.GET,
-			RequestMethod.POST })
-	@ResponseBody
-	public LoginResponse getUserDetails() {
-			return userService.getLoggedInUserResponse();
-		
-	}
-	
 	@RequestMapping("/")
 	public String index(Model model) {
 		return "index";
