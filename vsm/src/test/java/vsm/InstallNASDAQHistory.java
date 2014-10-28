@@ -52,11 +52,11 @@ public class InstallNASDAQHistory {
 									List.class, QuoteHistoryJSONModel.class));
 			stockService.saveStockHistoryList(quoteHistoryJSONModels);
 		} catch (JsonParseException e) {
-			e.printStackTrace();
+			LOG.error("Error while installing history stock data", e);
 		} catch (JsonMappingException e) {
-			e.printStackTrace();
+			LOG.error("Error while installing history stock data", e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.error("Error while installing history stock data", e);
 		}
 
 	}

@@ -34,7 +34,8 @@ public class InstallNASDAQCurrent {
 		StockService stockService = (StockService) applicationContext
 				.getBean("stockService");
 
-		String responseJSONString = financialService.getStockCurrent(stockService.listAllStockSymbols());
+		String responseJSONString = financialService
+				.getStockCurrent(stockService.listAllStockSymbols());
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			JsonNode rootNode = mapper.readValue(responseJSONString,
@@ -47,11 +48,11 @@ public class InstallNASDAQCurrent {
 									List.class, QuoteCurrentJSONModel.class));
 			stockService.updateStockCurrent(quoteCurrentJSONModels);
 		} catch (JsonParseException e) {
-			e.printStackTrace();
+			LOG.error("Error while installing current stock data", e);
 		} catch (JsonMappingException e) {
-			e.printStackTrace();
+			LOG.error("Error while installing current stock data", e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.error("Error while installing current stock data", e);
 		}
 
 	}
