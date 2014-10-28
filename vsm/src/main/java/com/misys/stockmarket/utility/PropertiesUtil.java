@@ -14,7 +14,7 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
  */
 
 public class PropertiesUtil extends PropertyPlaceholderConfigurer {
-	   private static Map<String, String> propertiesMap;
+	   private static Map<String, String> propertiesMap = new HashMap<String, String>();
 	 
 	@Override
 	   protected void processProperties(ConfigurableListableBeanFactory beanFactory, Properties props)
@@ -22,8 +22,6 @@ public class PropertiesUtil extends PropertyPlaceholderConfigurer {
 		
 		   super.processProperties(beanFactory, props);
 
-		propertiesMap = new HashMap<String, String>();
-		
 		for (Object key : props.keySet()) {
 			String keyStr = key.toString();	
 			propertiesMap.put(keyStr, props.getProperty(keyStr));

@@ -12,6 +12,8 @@ import java.util.List;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.misys.stockmarket.exception.YQLException;
 
@@ -23,6 +25,8 @@ public class YQLUtil {
 
 	public final static String YQL_DATE_FORMAT = "yyyy-MM-dd";
 
+	public static final Log LOG = LogFactory.getLog(YQLUtil.class);
+
 	public static String executeQuery(String request) throws YQLException {
 		StringBuffer responseBuffer = new StringBuffer();
 		try {
@@ -31,7 +35,7 @@ public class YQLUtil {
 			// Send GET request
 			int statusCode = client.executeMethod(method);
 			if (statusCode != HttpStatus.SC_OK) {
-				System.err.println("Method failed: " + method.getStatusLine());
+				LOG.error("Method failed: " + method.getStatusLine());
 			}
 			InputStream rstream = null;
 			// Get the response body
