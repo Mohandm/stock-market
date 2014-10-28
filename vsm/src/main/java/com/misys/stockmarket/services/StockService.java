@@ -2,6 +2,7 @@ package com.misys.stockmarket.services;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +30,9 @@ import com.misys.stockmarket.exception.DBRecordNotFoundException;
 import com.misys.stockmarket.exception.FinancialServiceException;
 import com.misys.stockmarket.exception.ServiceException;
 import com.misys.stockmarket.exception.service.StockServiceException;
+import com.misys.stockmarket.mbeans.StockCurrentQuotesBean;
+import com.misys.stockmarket.mbeans.StockHistoryBean;
+import com.misys.stockmarket.mbeans.StockMasterBean;
 import com.misys.stockmarket.model.json.QuoteCurrentJSONModel;
 import com.misys.stockmarket.model.json.QuoteHistoryJSONModel;
 import com.misys.stockmarket.utility.DateUtils;
@@ -58,6 +62,25 @@ public class StockService {
 		return stockDAO.findAllStockSymbols();
 	}
 
+	public List<StockMasterBean> listAllActiveStockBeans() throws StockServiceException {
+		try {
+			List<StockMaster> stockMasterList = stockDAO.findAllActiveStocks();
+			List<StockMasterBean> stockMasterBeanList = new ArrayList<StockMasterBean>();
+			for (StockMaster stockMaster : stockMasterList) 
+			{
+				StockMasterBean bean = new StockMasterBean();
+				bean.setTikerSymbol(stockMaster.getTikerSymbol());
+				bean.setName(stockMaster.getName());
+				bean.setActive(stockMaster.getActive());
+				stockMasterBeanList.add(bean);
+			}
+			
+			return stockMasterBeanList;
+		} catch (DAOException e) {
+			throw new StockServiceException(e);
+		}
+	}
+	
 	public List<StockMaster> listAllActiveStocks() throws StockServiceException {
 		try {
 			return stockDAO.findAllActiveStocks();
@@ -121,20 +144,48 @@ public class StockService {
 		}
 	}
 
-	public List<StockHistory> listStockHistory(String tickerSymbol)
+	public List<StockHistoryBean> listStockHistory(String tickerSymbol)
 			throws StockServiceException {
 		try {
 			StockMaster stockMaster = stockDAO.findByTickerSymbol(tickerSymbol);
-			return stockDAO.findStockHistoryByStockId(stockMaster.getStockId());
+			List<StockHistory> historyList = stockDAO.findStockHistoryByStockId(stockMaster.getStockId());
+			List<StockHistoryBean> beanList = new ArrayList<StockHistoryBean>();
+			for(StockHistory history : historyList)
+			{
+				StockHistoryBean bean = new StockHistoryBean();
+				bean.setClose(history.getClose());
+				bean.setHigh(history.getHigh());
+				bean.setLow(history.getLow());
+				bean.setOpen(history.getOpen());
+				bean.setStockDate(history.getStockDate());
+				bean.setVolume(history.getVolume());
+				beanList.add(bean);
+			}
+			
+			return beanList;
 		} catch (DAOException e) {
 			throw new StockServiceException(e);
 		}
 	}
 
-	public StockCurrentQuotes getStockCurrentQuoteByStockSymbol(
+	public StockCurrentQuotesBean getStockCurrentQuoteByStockSymbol(
 			String tickerSymbol) throws StockServiceException {
 		try {
-			return stockDAO.findStockCurrentQuoteByTickerSymbol(tickerSymbol);
+			StockCurrentQuotesBean bean = new StockCurrentQuotesBean();
+			StockCurrentQuotes quotes = stockDAO.findStockCurrentQuoteByTickerSymbol(tickerSymbol);
+			bean.setChange(quotes.getChange());
+			bean.setChangeinPercent(quotes.getChangeinPercent());
+			bean.setCurrency(quotes.getCurrency());
+			bean.setDaysRange(quotes.getDaysRange());
+			bean.setLastTradeDate(quotes.getLastTradeDate());
+			bean.setLastTradePriceOnly(quotes.getLastTradePriceOnly());
+			bean.setLastTradeTime(quotes.getLastTradeTime());
+			bean.setOpen(quotes.getOpen());
+			bean.setPreviousClose(quotes.getPreviousClose());
+			bean.setUpdatedTimeStamp(quotes.getUpdatedTimeStamp());
+			bean.setVolume(quotes.getVolume());
+			bean.setYearRange(quotes.getYearRange());
+			return bean;
 		} catch (DBRecordNotFoundException e) {
 			throw new StockServiceException(
 					STOCK_ERR_CODES.CURRENT_DAY_STOCK_NOT_FOUND, e);
