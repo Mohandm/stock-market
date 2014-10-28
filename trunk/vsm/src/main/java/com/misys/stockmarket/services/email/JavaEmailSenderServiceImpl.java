@@ -6,8 +6,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
 
-//@Service("emailSenderService")
+import com.misys.stockmarket.utility.PropertiesUtil;
+
+@Service("emailSenderService")
 public class JavaEmailSenderServiceImpl implements EmailSenderService {
 
 	private static final Log LOG = LogFactory
@@ -19,7 +22,7 @@ public class JavaEmailSenderServiceImpl implements EmailSenderService {
 	public void sendEmail(SimpleMailMessage message) {
 		try {
 			LOG.info("About to send email to " + message.getTo()[0]);
-			message.setFrom("bipin.poudyal@misys.com");
+			message.setFrom(PropertiesUtil.getProperty("email.sender.from"));
 			mailSender.send(message);
 			LOG.info("Email successfully sent");
 		} catch (Exception e) {

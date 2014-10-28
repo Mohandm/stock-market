@@ -3,9 +3,7 @@ package com.misys.stockmarket.services.email;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.stereotype.Service;
 
-@Service("emailSenderService")
 public class DummyEmailSenderImpl implements EmailSenderService {
 
 	private static final Log LOG = LogFactory.getLog(DummyEmailSenderImpl.class);
