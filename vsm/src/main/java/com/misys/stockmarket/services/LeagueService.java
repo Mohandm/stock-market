@@ -25,6 +25,7 @@ import com.misys.stockmarket.exception.DBRecordNotFoundException;
 import com.misys.stockmarket.exception.LeagueException;
 import com.misys.stockmarket.exception.service.PortfolioServiceException;
 import com.misys.stockmarket.exception.service.UserServiceException;
+import com.misys.stockmarket.mbeans.LeaderBoardFormBean;
 import com.misys.stockmarket.mbeans.LeaguePlayerFormBean;
 import com.misys.stockmarket.mbeans.MyLeagueFormBean;
 import com.misys.stockmarket.mbeans.MyPortfolioFormBean;
@@ -64,6 +65,11 @@ public class LeagueService {
 	public void addUserToDefaultLeague(UserMaster user) throws LeagueException {
 		addUserToLeague(user, getDefaultLeague());
 	}
+	
+	@Transactional(rollbackFor = DAOException.class)
+	public void addUserToStarterLeague(UserMaster user) throws LeagueException {
+		addUserToLeague(user, getStarterLeague());
+	}
 
 	@Transactional(rollbackFor = DAOException.class)
 	public void addLeague(LeagueMaster league) throws LeagueException {
@@ -72,6 +78,45 @@ public class LeagueService {
 		} catch (DAOException e) {
 			LOG.error(e);
 			throw new LeagueException(e);
+		}
+	}
+	
+	
+	public List<LeaderBoardFormBean> getLeaderBoard() throws LeagueException {
+		try {
+			List<LeagueMaster> leagueMasterList = leagueDAO
+					.findAllGameLeagues();
+			List<LeaderBoardFormBean> beanList = new ArrayList<LeaderBoardFormBean>();
+			for (LeagueMaster leagueMaster : leagueMasterList) {
+				LeaderBoardFormBean leaderBoardFormBean = new LeaderBoardFormBean();
+				leaderBoardFormBean.setLeagueId(String.valueOf(leagueMaster
+						.getLeagueId()));
+				leaderBoardFormBean.setName(leagueMaster.getName());
+				List<LeagueUser> leagueUser = leagueDAO
+						.findAllLeagueUsers(leagueMaster.getLeagueId());
+				leaderBoardFormBean.setPlayersCount(String.valueOf(leagueUser
+						.size()));
+				leaderBoardFormBean.setStage(String.valueOf(leagueMaster
+						.getStage()));
+				leaderBoardFormBean.setPlayers(getLeaguePlayersBasedOnRanking(leagueMaster.getLeagueId(),10));
+				beanList.add(leaderBoardFormBean);
+			}
+			return beanList;
+		} catch (DBRecordNotFoundException e) {
+			throw new LeagueException(LEAGUE_ERR_CODES.LEAGUE_NOT_FOUND);
+		} catch (DAOException e) {
+			throw new LeagueException(LEAGUE_ERR_CODES.UNKNOWN);
+		}
+	}
+	
+	public LeagueMaster getStarterLeague() throws LeagueException {
+		try {
+			return leagueDAO
+					.findByName(IApplicationConstants.PREMIER_LEAGUE_NAME);
+		} catch (DBRecordNotFoundException e) {
+			throw new LeagueException(LEAGUE_ERR_CODES.LEAGUE_NOT_FOUND);
+		} catch (DAOException e) {
+			throw new LeagueException(LEAGUE_ERR_CODES.UNKNOWN);
 		}
 	}
 
@@ -260,6 +305,25 @@ public class LeagueService {
 		}
 		return leaguePlayerFormBeanList;
 	}
+	
+	public List<LeaguePlayerFormBean> getLeaguePlayersBasedOnRanking(long leaugeId, int count) throws LeagueException {
+		List<LeaguePlayerFormBean> beanList = getLeaguePlayers(leaugeId);
+		
+		Collections.sort(beanList, new Comparator<LeaguePlayerFormBean>() {
+			@Override
+			public int compare(LeaguePlayerFormBean o1, LeaguePlayerFormBean o2) {
+				return new BigDecimal(o1.getRank())
+						.compareTo(new BigDecimal(o2.getRank()));
+			}
+		});
+		
+		if(count > 0 && beanList.size() >= count)
+		{
+			beanList = beanList.subList(0, count);
+		}
+		
+		return beanList;
+	}
 
 	private void sortAndRank(List<LeaguePlayerFormBean> rankList) {
 		Collections.sort(rankList, new Comparator<LeaguePlayerFormBean>() {
@@ -270,6 +334,7 @@ public class LeagueService {
 			}
 		});
 		int rank = 0;
+		Collections.reverse(rankList);
 		for (LeaguePlayerFormBean leaguePlayerFormBean : rankList) {
 			leaguePlayerFormBean.setRank(String.valueOf(++rank));
 		}

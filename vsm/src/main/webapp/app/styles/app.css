@@ -659,3 +659,6 @@ input[type="text"].ui-grid-filter-input{
 .anchor{
     cursor: pointer;
 }
+.help-block{
+    color : orange;
+}

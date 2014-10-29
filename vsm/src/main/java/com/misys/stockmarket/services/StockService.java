@@ -71,6 +71,7 @@ public class StockService {
 				StockMasterBean bean = new StockMasterBean();
 				bean.setTikerSymbol(stockMaster.getTikerSymbol());
 				bean.setName(stockMaster.getName());
+				bean.setStockId(Long.toString(stockMaster.getStockId()));
 				bean.setActive(stockMaster.getActive());
 				stockMasterBeanList.add(bean);
 			}
@@ -106,6 +107,35 @@ public class StockService {
 		}
 	}
 
+	public List<StockCurrentQuotesBean> listAllCurrentStockQuotesBean()
+			throws ServiceException {
+		try {
+			List<StockCurrentQuotesBean> beanList = new ArrayList<StockCurrentQuotesBean>();
+			List<StockCurrentQuotes> stockQuotesList = stockDAO.findAll(StockCurrentQuotes.class);
+			for(StockCurrentQuotes quotes : stockQuotesList)
+			{
+				StockCurrentQuotesBean bean = new StockCurrentQuotesBean();
+				bean.setStockId(Long.toString(quotes.getStockMaster().getStockId()));
+				bean.setChange(quotes.getChange());
+				bean.setChangeinPercent(quotes.getChangeinPercent());
+				bean.setCurrency(quotes.getCurrency());
+				bean.setDaysRange(quotes.getDaysRange());
+				bean.setLastTradeDate(quotes.getLastTradeDate());
+				bean.setLastTradePriceOnly(quotes.getLastTradePriceOnly());
+				bean.setLastTradeTime(quotes.getLastTradeTime());
+				bean.setOpen(quotes.getOpen());
+				bean.setPreviousClose(quotes.getPreviousClose());
+				bean.setUpdatedTimeStamp(quotes.getUpdatedTimeStamp());
+				bean.setVolume(quotes.getVolume());
+				bean.setYearRange(quotes.getYearRange());
+				beanList.add(bean);
+			}
+			return beanList;
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+	}
+	
 	public List<StockCurrentQuotes> listAllCurrentStockQuotes()
 			throws ServiceException {
 		try {

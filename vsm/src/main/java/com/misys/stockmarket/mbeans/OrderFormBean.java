@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class OrderFormBean {
 
 
-	private String intraday;
+	/*private String intraday;*/
 
 	private BigDecimal orderPrice;
 
@@ -38,13 +38,13 @@ public class OrderFormBean {
 		this.leagueUserId = leagueUserId;
 	}
 
-	public String getIntraday() {
+	/*public String getIntraday() {
 		return intraday;
 	}
 
 	public void setIntraday(String intraday) {
 		this.intraday = intraday;
-	}
+	}*/
 
 	public BigDecimal getOrderPrice() {
 		return orderPrice;

@@ -64,7 +64,7 @@ public class LeagueController {
 	public List<LeaguePlayerFormBean> getLeaguePlayers(
 			@RequestParam("leagueId") long leagueId) {
 		try {
-			return leagueService.getLeaguePlayers(leagueId);
+			return leagueService.getLeaguePlayersBasedOnRanking(leagueId, -1);
 		}
 		catch (LeagueException e) {
 			// TODO: HANDLE WHEN EXCEPTION
@@ -77,16 +77,33 @@ public class LeagueController {
 	@ResponseBody
 	public ResponseMessage unlockLeague(
 			@RequestBody LeagueIdFormBean leagueIdFormBean) {
-		//TODO Guru : Add Logic
-		return new ResponseMessage(ResponseMessage.Type.success,"");
+		
+		try {
+			leagueService.addUserToStarterLeague(userService.getLoggedInUser());
+			return new ResponseMessage(ResponseMessage.Type.success,"You have successfully unlocked the Premier League");
+		} catch (LeagueException e) {
+			// TODO: HANDLE WHEN EXCEPTION
+			LOG.error(e);
+			return null;
+		} catch (EmailNotFoundException e) {
+			// TODO: HANDLE WHEN EXCEPTION
+			LOG.error(e);
+			return null;
+		}
 	}
 	
 	@RequestMapping(value = "/leaderBoard", method = { RequestMethod.GET,
 			RequestMethod.POST })
 	@ResponseBody
-	public LeaderBoardFormBean getLeaderBoard() {
-		//TODO Guru : Add Logic
-		return new LeaderBoardFormBean();
+	public List<LeaderBoardFormBean> getLeaderBoard() {
+		
+		try {
+			return leagueService.getLeaderBoard();
+		} catch (LeagueException e) {
+			// TODO: HANDLE WHEN EXCEPTION
+			LOG.error(e);
+			return null;
+		}
 	}
 	
 	@RequestMapping(value = "/followUser", method = { RequestMethod.POST })
@@ -94,6 +111,7 @@ public class LeagueController {
 	public ResponseMessage followPlayer(
 			@RequestBody FollowRequestFormBean followRequestFormBean) {
 		//TODO Guru : Add Logic
+		// Check if user is trying to follow him self
 		return new ResponseMessage(ResponseMessage.Type.success,"");
 	}
 }

@@ -7,6 +7,16 @@ public class StockMasterBean {
 	private String active;
 
 	private String name;
+	
+	private String stockId;
+
+	public String getStockId() {
+		return stockId;
+	}
+
+	public void setStockId(String stockId) {
+		this.stockId = stockId;
+	}
 
 	public String getTikerSymbol() {
 		return tikerSymbol;
