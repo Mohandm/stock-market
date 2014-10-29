@@ -52,7 +52,7 @@ vsmApp.controller('LeaguesController', ['$scope', '$rootScope', 'modals','League
         };
 }]);
 
-vsmApp.controller('LeaguesDialogController', ['$scope','$http','modals', function ($scope, $http, modals) {
+vsmApp.controller('LeaguesDialogController', ['$scope','$http','modals','$location', function ($scope, $http, modals, $location) {
 
     $scope.formmodel = {};
     $scope.formcontrol = {};
@@ -89,8 +89,9 @@ vsmApp.controller('LeaguesDialogController', ['$scope','$http','modals', functio
                 if($scope.formmodel.question1 === "02" && $scope.formmodel.question2 === "03" && $scope.formmodel.question3 === "02")
                 {
                     $scope.wrongAnswer = "Right Answers!";
-                    $http.post(action, $scope.formmodel).success(function (response) {
+                    $http.post(action, {leagueId : $scope.formmodel.leagueId}).success(function (response) {
                         modals.close();
+                        $location.path('/myPortfolio');
                     });
                 }
                 else
@@ -113,7 +114,7 @@ vsmApp.controller('LeagueUsersDialogController', ['$scope','$rootScope','$http',
         columnDefs: [
             /*{ field: 'photo', displayName:'Profile Pic'},*/
             { field: 'name', displayName:'Name'},
-            { field: 'ranking', displayName:'Ranking'},
+            { field: 'rank', displayName:'Ranking'},
             { field: 'totalValue', displayName:'League Value'},
             { field: 'followerCount', displayName:'Followers'},
             {name: 'follow', displayName: '', enableFiltering : false, enableSorting : false, cellTemplate: '<button id="followBtn" type="button" class="btn-small" ng-show="getExternalScopes().isAuthenticated()" ng-click="getExternalScopes().follow(row.entity)" >Follow</button> '}

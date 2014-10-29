@@ -183,9 +183,9 @@ public class StockMarketController {
 	@RequestMapping(value = "/stockListAllCurrentQuotes", method = {
 			RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
-	public List<StockCurrentQuotes> stockListAllCurrentQuotes() {
+	public List<StockCurrentQuotesBean> stockListAllCurrentQuotes() {
 		try {
-			return stockService.listAllCurrentStockQuotes();
+			return stockService.listAllCurrentStockQuotesBean();
 		} catch (ServiceException e) {
 			LOG.error(e);
 			// TODO: HANDLE WHEN EXCEPTION

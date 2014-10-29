@@ -61,7 +61,7 @@
 					 	
 					 	<field-wrapper label="Price" type="text" name="orderPrice" required="isNotMarket()" formmodel="formmodel" formcontrol="formcontrol" ng-show="isNotMarket()" validations='[{"validator":"isNumber","event":"isNumber","errorMessage":"It should be a number", "scopeValue":"symbol"}]'></field-wrapper>
 					 	
-					 	<div class="form-group" ng-show="isNotMarket()">
+					 	<!--<div class="form-group" ng-show="isNotMarket()">
 							<div class="col-sm-4 control-label">
 							 	<label>*Intraday:</label>
 							</div> 
@@ -74,7 +74,7 @@
 									<span class="help-block" ng-show = "mainForm.intraday.$error.required">The field is required</span>
 								</div>
 							</div>
-						</div>
+						</div>-->
 					</form>
 				</div>
 			</div>

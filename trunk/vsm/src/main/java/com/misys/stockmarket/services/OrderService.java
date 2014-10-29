@@ -59,7 +59,7 @@ public class OrderService {
 		// Process order
 		try {
 			OrderMaster orderMaster = new OrderMaster();
-			orderMaster.setIntraday(orderFormBean.getIntraday());
+			/*orderMaster.setIntraday(orderFormBean.getIntraday());*/
 			orderMaster.setOrderPrice(orderFormBean.getOrderPrice());
 			orderMaster.setPriceType(orderFormBean.getPriceType());
 			orderMaster.setType(orderFormBean.getType());
