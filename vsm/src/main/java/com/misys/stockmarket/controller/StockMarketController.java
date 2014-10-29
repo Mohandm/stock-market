@@ -30,6 +30,7 @@ import com.misys.stockmarket.mbeans.StockCurrentQuotesBean;
 import com.misys.stockmarket.mbeans.StockHistoryBean;
 import com.misys.stockmarket.mbeans.StockMasterBean;
 import com.misys.stockmarket.mbeans.UserAlertsBean;
+import com.misys.stockmarket.mbeans.UserNotificationsFormBean;
 import com.misys.stockmarket.mbeans.WatchListFormBean;
 import com.misys.stockmarket.platform.web.ResponseMessage;
 import com.misys.stockmarket.services.AlertsService;
@@ -114,6 +115,37 @@ public class StockMarketController {
 			return null;
 		}
 	}
+	
+	@RequestMapping(value = "/userNotifications", method = { RequestMethod.GET,
+			RequestMethod.POST })
+	@ResponseBody
+	public UserNotificationsFormBean userNotifications() {
+		try {
+				//TODO Guru : Restrict to 5 records and also introduct Alert Type to show 2 types of Alerts
+				UserNotificationsFormBean bean = new UserNotificationsFormBean();
+				List<UserAlerts> alerts = alertsService.listAllAlerts();
+				List<UserAlertsBean> userAlertsBeans = new ArrayList<UserAlertsBean>();
+				for(Iterator<UserAlerts> iterator = alerts
+						.iterator(); iterator.hasNext();)
+				{
+					UserAlerts userAlerts = (UserAlerts) iterator.next();
+					UserAlertsBean userAlertsBean = new UserAlertsBean();
+					userAlertsBean.setMessage(userAlerts.getMessage());
+					userAlertsBean.setNotifiedDate(userAlerts.getNotifiedDate().toString());
+					userAlertsBeans.add(userAlertsBean);
+				}
+				Collections.reverse(userAlertsBeans);
+				bean.setAlertsList(userAlertsBeans);
+				return bean;
+		} catch (AlertsServiceException e) {
+			LOG.error(e);
+			// TODO: HANDLE WHEN EXCEPTION
+			return null;
+		}
+	}
+	
+	
+	
 
 	@RequestMapping(value = "/stockList", method = { RequestMethod.GET,
 			RequestMethod.POST })
