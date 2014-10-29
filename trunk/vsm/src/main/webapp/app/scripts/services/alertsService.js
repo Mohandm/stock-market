@@ -15,4 +15,17 @@ vsmApp.service('AlertsService', ['$http','$q','$log', function ($http, $q, $log)
         return deferred.promise;
     };
 
+    this.getUserNotifications = function(){
+        var deferred = $q.defer(),
+            actionUrl = 'userNotifications/';
+        $http.get(actionUrl,{})
+            .success(function (quotesJSON) {
+                deferred.resolve(quotesJSON);
+            }).error(function(msg, code) {
+                deferred.reject(msg);
+                $log.error(msg, code);
+            });
+        return deferred.promise;
+    };
+
 }]);

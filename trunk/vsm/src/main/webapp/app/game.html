@@ -49,7 +49,7 @@
                             <i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-messages">
-                            <li ng-repeat="alert in alertsList | limitTo:5">
+                            <li ng-repeat="alert in notificationsList | limitTo:5">
                                 <a>
                                     <div>
                                         <i class="fa fa-group fa-fw"></i> {{alert.message}}

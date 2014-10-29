@@ -117,9 +117,10 @@
         };
 
         $rootScope.onPageLoad = function(){
-            var alertsListPromise = AlertsService.getAlertsList();
+            var alertsListPromise = AlertsService.getUserNotifications();
             alertsListPromise.then(function(data){
-                $rootScope.alertsList = data;
+                $rootScope.alertsList = data.alertsList;
+                $rootScope.notificationsList = data.notificationsList;
             });
         };
 
