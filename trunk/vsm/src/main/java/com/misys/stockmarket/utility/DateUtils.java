@@ -17,7 +17,7 @@ public class DateUtils {
 
 	public static final long DAYS_IN_WEEK = 7;
 
-	public static final String DISPLAY_DATE_TIME_FORMAT = "MM/dd/yyyy, HH:mm aa";
+	public static final String DISPLAY_DATE_TIME_FORMAT = "MM/dd/yyyy, hh:mm aa";
 
 	/**
 	 * Returns a Timestamp object standing for the given String date interpreted
