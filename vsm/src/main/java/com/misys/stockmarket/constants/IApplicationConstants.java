@@ -70,5 +70,5 @@ public class IApplicationConstants {
 			.valueOf(100000);
 
 	public static final BigDecimal DEFAULT_LEAGUE_QUALIFYING_AMOUNT = BigDecimal
-			.valueOf(750000);
+			.valueOf(75000);
 }
