@@ -44,7 +44,18 @@ public class UserAlerts implements BaseEntity, Serializable {
 	@Column(name = "NOTIFIED_DATE")
 	private Date notifiedDate;
 	
+	@Column(name = "ALERT_TYPE", length = 2)
+	private String alertType;
+	
 	public UserAlerts() {
+	}
+
+	public String getAlertType() {
+		return alertType;
+	}
+
+	public void setAlertType(String alertType) {
+		this.alertType = alertType;
 	}
 
 	public static long getSerialversionuid() {
@@ -53,7 +64,7 @@ public class UserAlerts implements BaseEntity, Serializable {
 	
 	@Override
 	public String toString() {
-		return "WatchStock [userAlertsId="+ userAlertsId +", message=" + message + ", notifiedDate=" + notifiedDate + "]";
+		return "WatchStock [userAlertsId="+ userAlertsId +", message=" + message + ", notifiedDate=" + notifiedDate + ", alertType="+ alertType +"]";
 	}
 
 	public long getUserAlertsId() {

@@ -65,7 +65,17 @@ public class IApplicationConstants {
 	public static final String WATCH_STOCK_STATUS_PENDING = "P";
 
 	public static final String WATCH_STOCK_STATUS_COMPLETED = "C";
+	
+	public static final String FOLLOWER_STATUS_PENDING = "P";
 
+	public static final String FOLLOWER_STATUS_ACCEPTED = "A";
+	
+	public static final String FOLLOWER_STATUS_REJECTED = "R";
+	
+	public static final String ALERT_TYPE_WATCH_LIST = "W";
+	
+	public static final String ALERT_TYPE_NOTIFICATIONS = "N";
+	
 	public static final BigDecimal DEFAULT_LEAGUE_START_AMOUNT = BigDecimal
 			.valueOf(100000);
 
