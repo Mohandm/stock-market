@@ -8,6 +8,16 @@ public class StockCurrentQuotesBean {
 	
 	private String daysRange;
 	
+	private String stockId;
+	
+	public String getStockId() {
+		return stockId;
+	}
+
+	public void setStockId(String stockId) {
+		this.stockId = stockId;
+	}
+
 	public String getCurrency() {
 		return currency;
 	}

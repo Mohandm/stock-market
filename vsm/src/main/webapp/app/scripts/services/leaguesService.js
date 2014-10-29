@@ -4,8 +4,8 @@ vsmApp.service('LeaguesService', ['$http','$q','$log', function ($http, $q, $log
 
     this.getGameLeagues = function(){
         var deferred = $q.defer();
-        //var actionUrl = 'gameLeaguesList/';
-        var actionUrl = 'app/data/my_leagues.json';
+        var actionUrl = 'gameLeaguesList/';
+        //var actionUrl = 'app/data/my_leagues.json';
         $http.post(actionUrl,{})
             .success(function (json) {
                 deferred.resolve(json);
@@ -18,9 +18,9 @@ vsmApp.service('LeaguesService', ['$http','$q','$log', function ($http, $q, $log
 
     this.getLeaguesUsers = function(leagueId){
         var deferred = $q.defer();
-        //var actionUrl = 'leaguesUsersList?leagueId=';
-        var actionUrl = 'app/data/league_users.json';
-        $http.post(actionUrl,{})
+        var actionUrl = 'leaguesUsersList?leagueId=';
+        //var actionUrl = 'app/data/league_users.json';
+        $http.post(actionUrl+leagueId,{})
             .success(function (json) {
                 deferred.resolve(json);
             }).error(function(msg, code) {
@@ -60,7 +60,7 @@ vsmApp.service('LeaguesService', ['$http','$q','$log', function ($http, $q, $log
 
     this.getYourFollowing = function(leagueId){
         var deferred = $q.defer();
-        //var actionUrl = 'yourFollowing?leagueId=';
+        //var actionUrl = 'myFollowing?leagueId=';
         var actionUrl = 'app/data/your_following.json';
         $http.post(actionUrl,{})
             .success(function (json) {
@@ -74,7 +74,7 @@ vsmApp.service('LeaguesService', ['$http','$q','$log', function ($http, $q, $log
 
     this.getUsersRecentTrades = function(leagueId, userId){
         var deferred = $q.defer();
-        //var actionUrl = 'myRecentTrades?leagueId=' + leagueId + '&userId='+userId;
+        //var actionUrl = 'playersRecentTrades?leagueId=' + leagueId + '&userId='+userId;
         var actionUrl = 'app/data/my_recent_trades.json';
         $http.get(actionUrl,{})
             .success(function (json) {

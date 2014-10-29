@@ -153,6 +153,7 @@ public class StockService {
 			for(StockHistory history : historyList)
 			{
 				StockHistoryBean bean = new StockHistoryBean();
+				bean.setStockId(Long.toString(history.getStockMaster().getStockId()));
 				bean.setClose(history.getClose());
 				bean.setHigh(history.getHigh());
 				bean.setLow(history.getLow());
@@ -173,6 +174,7 @@ public class StockService {
 		try {
 			StockCurrentQuotesBean bean = new StockCurrentQuotesBean();
 			StockCurrentQuotes quotes = stockDAO.findStockCurrentQuoteByTickerSymbol(tickerSymbol);
+			bean.setStockId(Long.toString(quotes.getStockMaster().getStockId()));
 			bean.setChange(quotes.getChange());
 			bean.setChangeinPercent(quotes.getChangeinPercent());
 			bean.setCurrency(quotes.getCurrency());

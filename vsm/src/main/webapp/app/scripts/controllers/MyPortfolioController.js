@@ -48,7 +48,7 @@ vsmApp.controller('MyPortfolioController', ['$scope', '$rootScope', '$log', 'Sto
         allCurrentQuotesPromise.then(function(data){
             var quotes = {}
             $(data).each(function(index,item){
-                quotes[item.stockMaster.stockId] = item;
+                quotes[item.stockId] = item;
             });
 
             var stockListData = [];
