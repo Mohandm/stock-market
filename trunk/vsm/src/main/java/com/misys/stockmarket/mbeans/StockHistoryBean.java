@@ -5,6 +5,16 @@ import java.util.Date;
 
 public class StockHistoryBean {
 	
+	private String stockId;
+	
+	public String getStockId() {
+		return stockId;
+	}
+
+	public void setStockId(String stockId) {
+		this.stockId = stockId;
+	}
+
 	public Date getStockDate() {
 		return stockDate;
 	}

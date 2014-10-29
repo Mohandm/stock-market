@@ -54,14 +54,27 @@ vsmApp.controller('FollowersController', ['$scope', '$rootScope','LeaguesService
         };
 
         $scope.reloadMyFollowersGrids = function(){
-            LeaguesService.getMyFollowers($scope.myLeagueSelected.leagueId).then(function(data){
-                $scope.getLeagueUsersFollowersDataGridOptions.data = data;
-            });
+            //TODO Guru :  Work on this
+            if($scope.myLeagueSelected)
+            {
+                LeaguesService.getMyFollowers($scope.myLeagueSelected.leagueId).then(function(data){
+                    $scope.getLeagueUsersFollowersDataGridOptions.data = data;
+                });
+            }
+            else
+            {
+                LeaguesService.getMyFollowers('01').then(function(data){
+                    $scope.getLeagueUsersFollowersDataGridOptions.data = data;
+                });
+            }
+
         };
         $scope.reloadYourFollowingGrids = function(){
-           LeaguesService.getYourFollowing($scope.allLeagueSelected.leagueId).then(function(data){
-                $scope.getLeagueUsersFollowingDataGridOptions.data = data;
-            });
+            if($scope.allLeagueSelected) {
+                LeaguesService.getYourFollowing($scope.allLeagueSelected.leagueId).then(function (data) {
+                    $scope.getLeagueUsersFollowingDataGridOptions.data = data;
+                });
+            }
         };
 
         $scope.checkFollowerStatus = function(item, btn){
@@ -90,19 +103,31 @@ vsmApp.controller('FollowersController', ['$scope', '$rootScope','LeaguesService
         };
 
         $scope.accept = function(item){
-          console.debug("Accept");
+            console.debug("Accept");
+            $http.post('acceptFollowRequest',{"userId" : item.userId, "leagueId" : $scope.myLeagueSelected.leagueId}).success(function (response) {
+                //Do Nothing
+            });
         };
 
         $scope.reject = function(item){
             console.debug("Reject");
+            $http.post('rejectFollowRequest',{"userId" : item.userId, "leagueId" : $scope.myLeagueSelected.leagueId}).success(function (response) {
+                //Do Nothing
+            });
         };
 
         $scope.disallow = function(item){
             console.debug("Disallow");
+            $http.post('disallowFollowRequest',{"userId" : item.userId, "leagueId" : $scope.myLeagueSelected.leagueId}).success(function (response) {
+                //Do Nothing
+            });
         };
 
         $scope.stopFollowing = function(item){
             console.debug("StopFollowing");
+            $http.post('stopFollowingRequest',{"userId" : item.userId, "leagueId" : $scope.allLeagueSelected.leagueId}).success(function (response) {
+                //Do Nothing
+            });
         };
 
         $scope.showRecentTrades = function(item){
@@ -128,8 +153,7 @@ vsmApp.controller('LeagueUsersRecentTradesDialogController', ['$scope','$rootSco
             { field: 'dateTime', displayName:'Date'},
             { field: 'tikerSymbol', displayName:'Symbol'},
             { field: 'quantity', displayName:'Volume'},
-            { field: 'orderType', displayName:'Order Type'},
-            { field: 'status', displayName:'Status'}
+            { field: 'orderType', displayName:'Order Type'}
         ]
     };
 

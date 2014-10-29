@@ -144,8 +144,7 @@ vsmApp.controller('LeagueUsersDialogController', ['$scope','$rootScope','$http',
 
 
     $scope.follow = function(item){
-        var actionUrl = 'followUser?UserId=';
-        $http.post(actionUrl+item.userId,{}).success(function (response) {
+        $http.post('followUser',{"userId" : item.userId, "leagueId" : $scope.passValuesToDialog.leagueId}).success(function (response) {
             modals.close();
         });
     };
