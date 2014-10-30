@@ -1,8 +1,11 @@
 package com.misys.stockmarket.security;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 public class LoginResponse {
 
-	private String email;
+	@JsonSerialize(using = JsonHtmlXssSerializer.class)
+    private String email;
 
 	public String getEmail() {
 		return email;
