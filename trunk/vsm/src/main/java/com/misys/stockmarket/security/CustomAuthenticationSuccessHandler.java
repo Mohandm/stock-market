@@ -26,6 +26,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 				ObjectMapper mapper = new ObjectMapper();
 				LoginResponse loginResponse = new LoginResponse();
 	           loginResponse.setEmail(authentication.getName());
+	           response.setContentType("application/json;charset=UTF-8");
 	           response.getWriter().print(mapper.writeValueAsString(loginResponse));
 	           response.getWriter().flush();
 	    }
