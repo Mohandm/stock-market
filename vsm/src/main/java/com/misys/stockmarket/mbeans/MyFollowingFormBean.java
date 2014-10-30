@@ -1,7 +1,7 @@
 package com.misys.stockmarket.mbeans;
 
 public class MyFollowingFormBean {
-	private String userId;
+	private long userId;
 	
 	private String name;
 	
@@ -11,11 +11,11 @@ public class MyFollowingFormBean {
 	
 	private String ranking;
 
-	public String getUserId() {
+	public long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 

@@ -1,7 +1,7 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.controller('FollowersController', ['$scope', '$rootScope','LeaguesService','modals',
-    function ($scope, $rootScope, LeaguesService, modals) {
+vsmApp.controller('FollowersController', ['$scope', '$rootScope','LeaguesService','modals','$http',
+    function ($scope, $rootScope, LeaguesService, modals, $http) {
 
         $scope.$scope = $scope;
 
@@ -44,11 +44,8 @@ vsmApp.controller('FollowersController', ['$scope', '$rootScope','LeaguesService
             enableFiltering: true,
             columnDefs: [
                 /*{ field: 'photo', displayName:'Profile Pic'},*/
-                { field: 'name', displayName:'Name',
-                    cellTemplate:'<a ng-click="getExternalScopes().showRecentTrades(row.entity)" class="anchor">{{row.entity.name}}</a>'},
-                { field: 'ranking', displayName:'Ranking'},
-                { field: 'totalValue', displayName:'League Value'},
-                { field: 'followerCount', displayName:'Followers'},
+                { field: 'name', displayName:'Name'},
+                {name: 'recentTrades', displayName: '', enableFiltering : false, enableSorting : false, cellTemplate: '<button id="followBtn" type="button" class="btn-small" ng-click="getExternalScopes().showRecentTrades(row.entity)" >Recent Trades</button> '},
                 {name: 'follow', displayName: '', enableFiltering : false, enableSorting : false, cellTemplate: '<button id="followBtn" type="button" class="btn-small" ng-click="getExternalScopes().stopFollowing(row.entity)" >Stop Following</button> '}
             ]
         };
@@ -61,13 +58,6 @@ vsmApp.controller('FollowersController', ['$scope', '$rootScope','LeaguesService
                     $scope.getLeagueUsersFollowersDataGridOptions.data = data;
                 });
             }
-            else
-            {
-                LeaguesService.getMyFollowers('01').then(function(data){
-                    $scope.getLeagueUsersFollowersDataGridOptions.data = data;
-                });
-            }
-
         };
         $scope.reloadYourFollowingGrids = function(){
             if($scope.allLeagueSelected) {
@@ -91,7 +81,7 @@ vsmApp.controller('FollowersController', ['$scope', '$rootScope','LeaguesService
             }
             if(btn === 2)
             {
-                if(item.status === "Request")
+                if(item.status === "Pending")
                 {
                     return true;
                 }
@@ -159,7 +149,7 @@ vsmApp.controller('LeagueUsersRecentTradesDialogController', ['$scope','$rootSco
 
     LeaguesService.getUsersRecentTrades($scope.leagueId, $scope.userId).then(function(data){
         $('#leagueUsersDialogContainer').hide();
-        $scope.getRecentTradesDataGridOptions.data = data.recentTrades;
+        $scope.getRecentTradesDataGridOptions.data = data;
         setTimeout(function(){
             $('#leagueUsersDialogContainer').show();
             $('#leagueUsersDialogContainer').resize();

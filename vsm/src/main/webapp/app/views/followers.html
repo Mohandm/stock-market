@@ -27,7 +27,6 @@
                         <div class="field-wrapper"><label>Select League:</label><select type="text" ng-change="reloadYourFollowingGrids()" ng-model="allLeagueSelected" ng-options="league as league.name for league in allLeagues  | filter:{league:$viewValue}" class="form-control singleSelect"/></div>
                     </div>
                 </div>
-                <label class="pull-left">Click on the Player Name to see their Recent Trades</label>
                 <div ui-grid="getLeagueUsersFollowingDataGridOptions" class="alerts-trades-list-grid" external-scopes="$scope"></div>
             </div>
         </div>

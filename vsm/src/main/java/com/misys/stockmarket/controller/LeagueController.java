@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.domain.entity.LeagueMaster;
 import com.misys.stockmarket.domain.entity.UserMaster;
 import com.misys.stockmarket.exception.EmailNotFoundException;
@@ -25,6 +26,7 @@ import com.misys.stockmarket.mbeans.LeagueIdFormBean;
 import com.misys.stockmarket.mbeans.LeaguePlayerFormBean;
 import com.misys.stockmarket.mbeans.MyLeagueFormBean;
 import com.misys.stockmarket.platform.web.ResponseMessage;
+import com.misys.stockmarket.services.AlertsService;
 import com.misys.stockmarket.services.LeagueService;
 import com.misys.stockmarket.services.UserService;
 
@@ -43,6 +45,9 @@ public class LeagueController {
 	
 	@Inject
 	UserService userService;
+	
+	@Inject
+	AlertsService alertService;
 	
 	@RequestMapping(value = "/gameLeaguesList", method = { RequestMethod.GET,
 			RequestMethod.POST })
@@ -87,11 +92,11 @@ public class LeagueController {
 		} catch (LeagueException e) {
 			// TODO: HANDLE WHEN EXCEPTION
 			LOG.error(e);
-			return null;
+			return new ResponseMessage(ResponseMessage.Type.error,"There was a technical error while processing your order. Please try again");
 		} catch (EmailNotFoundException e) {
 			// TODO: HANDLE WHEN EXCEPTION
 			LOG.error(e);
-			return null;
+			return new ResponseMessage(ResponseMessage.Type.error,"There was a technical error while processing your order. Please try again");
 		}
 	}
 	
@@ -126,6 +131,8 @@ public class LeagueController {
 				if(!leagueService.checkFollowRecordExists(userMaster, playerMaster, leagueMaster))
 				{
 					leagueService.followPlayer(userMaster, playerMaster, leagueMaster);
+					String message = "You have got a follow request from " + userMaster.getFirstName() + ". Please Accept or Reject the request in Followers Screen!"; 
+					alertService.saveUserAlerts(playerMaster, message, IApplicationConstants.ALERT_TYPE_NOTIFICATIONS);
 					return new ResponseMessage(ResponseMessage.Type.success,"Follow request sent to the Player. You can follow him after he accepts your request!");
 				}
 				else
@@ -137,19 +144,19 @@ public class LeagueController {
 		} catch (EmailNotFoundException e) {
 			// TODO: HANDLE WHEN EXCEPTION
 			LOG.error(e);
-			return null;
+			return new ResponseMessage(ResponseMessage.Type.error,"There was a technical error while processing your order. Please try again");
 		} catch (UserServiceException e) {
 			// TODO: HANDLE WHEN EXCEPTION
 			LOG.error(e);
-			return null;
+			return new ResponseMessage(ResponseMessage.Type.error,"There was a technical error while processing your order. Please try again");
 		} catch (NumberFormatException e) {
 			// TODO: HANDLE WHEN EXCEPTION
 			LOG.error(e);
-			return null;
+			return new ResponseMessage(ResponseMessage.Type.error,"There was a technical error while processing your order. Please try again");
 		} catch (LeagueException e) {
 			// TODO: HANDLE WHEN EXCEPTION
 			LOG.error(e);
-			return null;
+			return new ResponseMessage(ResponseMessage.Type.error,"There was a technical error while processing your order. Please try again");
 		}
 	}
 }
