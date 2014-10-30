@@ -12,6 +12,11 @@
 		<custom-filter ref="customUsernamePasswordAuthenticationFilter" position="FORM_LOGIN_FILTER "/>
 		<custom-filter ref="csrfTokenGeneratorFilter" position="LAST "/>
 		<logout delete-cookies="JSESSIONID"  />
+		<headers>
+			<content-type-options/>
+			<frame-options/>
+			<xss-protection />
+		</headers>
 		<csrf/>
 	</http>
 
