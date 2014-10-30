@@ -10,6 +10,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.domain.entity.FollowerMaster;
 import com.misys.stockmarket.domain.entity.LeagueMaster;
 import com.misys.stockmarket.domain.entity.LeagueUser;
@@ -83,6 +84,21 @@ public class LeagueDAO extends BaseDAO {
 			throw new DBRecordNotFoundException(e);
 		}
 	}
+	
+	public FollowerMaster findFollowerMaster(long userId, long playerId, long leagueId, String status)
+			throws DBRecordNotFoundException {
+		try {
+			Query q = entityManager
+					.createQuery("select e from FollowerMaster e where e.leagueMaster.leagueId = ?1 and e.followerUserMaster.userId = ?2 and e.playerUserId = ?3 and e.status = ?4");
+			q.setParameter(1, leagueId);
+			q.setParameter(2, userId);
+			q.setParameter(3, playerId);
+			q.setParameter(4, status);
+			return (FollowerMaster) q.getSingleResult();
+		} catch (EmptyResultDataAccessException e) {
+			throw new DBRecordNotFoundException(e);
+		}
+	}
 
 	public LeagueUser findLeagueUserById(long leagueUserId)
 			throws DBRecordNotFoundException {
@@ -112,6 +128,33 @@ public class LeagueDAO extends BaseDAO {
 			throw new DAOException(e);
 		}
 	}
+	
+	public List<FollowerMaster> findMyFollowers(long playerId, long leagueId) throws DAOException {
+		try {
+			Query q = entityManager.createQuery("select distinct e from FollowerMaster e where e.leagueMaster.leagueId = ?1 and e.playerUserId = ?2 and (e.status = ?3 or e.status = ?4)");
+			q.setParameter(1, leagueId);
+			q.setParameter(2, playerId);
+			q.setParameter(3, IApplicationConstants.FOLLOWER_STATUS_PENDING);
+			q.setParameter(4, IApplicationConstants.FOLLOWER_STATUS_ACCEPTED);
+			return q.getResultList();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+	}
+	
+	public List<FollowerMaster> findYourFollowing(long userId, long leagueId) throws DAOException {
+		try {
+			Query q = entityManager.createQuery("select distinct e from FollowerMaster e where e.leagueMaster.leagueId = ?1 and e.followerUserMaster.userId = ?2 and e.status = ?3");
+			q.setParameter(1, leagueId);
+			q.setParameter(2, userId);
+			q.setParameter(3, IApplicationConstants.FOLLOWER_STATUS_ACCEPTED);
+			return q.getResultList();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+	}
+	
+	
 
 	public List<LeagueUser> findAllLeagueUsers(long leagueId)
 			throws DAOException {

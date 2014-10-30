@@ -1,17 +1,18 @@
 package com.misys.stockmarket.mbeans;
 
 public class MyFollowersFormBean {
-	private String userId;
+	private long userId;
 	
 	private String status;
 	
 	private String name;
 
-	public String getUserId() {
+
+	public long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 

@@ -662,3 +662,7 @@ input[type="text"].ui-grid-filter-input{
 .help-block{
     color : orange;
 }
+
+.topRightNavigation .text-muted{
+    color : orange;
+}

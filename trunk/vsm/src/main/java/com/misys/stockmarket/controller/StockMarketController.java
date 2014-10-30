@@ -121,10 +121,10 @@ public class StockMarketController {
 	@ResponseBody
 	public UserNotificationsFormBean userNotifications() {
 		try {
-				//TODO Guru : Restrict to 5 records and also introduct Alert Type to show 2 types of Alerts
 				UserNotificationsFormBean bean = new UserNotificationsFormBean();
 				List<UserAlerts> alerts = alertsService.listAllAlerts();
 				List<UserAlertsBean> userAlertsBeans = new ArrayList<UserAlertsBean>();
+				List<UserAlertsBean> userNotificationBeans = new ArrayList<UserAlertsBean>();
 				for(Iterator<UserAlerts> iterator = alerts
 						.iterator(); iterator.hasNext();)
 				{
@@ -132,10 +132,30 @@ public class StockMarketController {
 					UserAlertsBean userAlertsBean = new UserAlertsBean();
 					userAlertsBean.setMessage(userAlerts.getMessage());
 					userAlertsBean.setNotifiedDate(userAlerts.getNotifiedDate().toString());
-					userAlertsBeans.add(userAlertsBean);
+					if(IApplicationConstants.ALERT_TYPE_WATCH_LIST.equalsIgnoreCase(userAlerts.getAlertType()))
+					{
+						userAlertsBeans.add(userAlertsBean);
+					}
+					else
+					{
+						userNotificationBeans.add(userAlertsBean);
+					}
+					
 				}
 				Collections.reverse(userAlertsBeans);
+				Collections.reverse(userNotificationBeans);
+				if(userAlertsBeans.size() >= 5)
+				{
+					userAlertsBeans = userAlertsBeans.subList(0, 5);
+				}
+				
+				if(userNotificationBeans.size() >= 5)
+				{
+					userNotificationBeans = userNotificationBeans.subList(0, 5);
+				}
+				
 				bean.setAlertsList(userAlertsBeans);
+				bean.setNotificationsList(userNotificationBeans);
 				return bean;
 		} catch (AlertsServiceException e) {
 			LOG.error(e);

@@ -82,7 +82,7 @@ public class AlertsService {
 
 	public List<UserAlerts> listAllAlerts() throws AlertsServiceException {
 		try {
-			return alertsDAO.findAllAlerts(userService.getLoggedInUser());
+			return alertsDAO.findAllOrderedAlerts(userService.getLoggedInUser());
 		} catch (EmailNotFoundException e) {
 			LOG.error(e);
 			throw new AlertsServiceException(e);
@@ -155,12 +155,7 @@ public class AlertsService {
 					UserMaster user = userService.findById(watchStock
 							.getUserMaster().getUserId());
 
-					// Store User Alert
-					UserAlerts userAlerts = new UserAlerts();
-					userAlerts.setUserMaster(user);
-					userAlerts.setMessage(mailContent.toString());
-					userAlerts.setNotifiedDate(new Date());
-					alertsDAO.persist(userAlerts);
+					saveUserAlerts(user, mailContent.toString(), IApplicationConstants.ALERT_TYPE_WATCH_LIST);
 
 					// Update Watch Stock to Completed
 					watchStock
@@ -193,6 +188,22 @@ public class AlertsService {
 		} else {
 			// Don't Trigger
 			return -1;
+		}
+	}
+	
+	@Transactional(rollbackFor = DAOException.class)
+	public void saveUserAlerts(UserMaster user, String message, String alertType)
+	{
+		// Store User Alert
+		UserAlerts userAlerts = new UserAlerts();
+		userAlerts.setUserMaster(user);
+		userAlerts.setMessage(message);
+		userAlerts.setNotifiedDate(new Date());
+		userAlerts.setAlertType(alertType);
+		try {
+			alertsDAO.persist(userAlerts);
+		} catch (DAOException e) {
+			LOG.error(e);
 		}
 	}
 

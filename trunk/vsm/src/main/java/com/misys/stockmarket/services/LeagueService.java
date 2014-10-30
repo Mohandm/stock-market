@@ -19,17 +19,24 @@ import com.misys.stockmarket.dao.LeagueDAO;
 import com.misys.stockmarket.domain.entity.FollowerMaster;
 import com.misys.stockmarket.domain.entity.LeagueMaster;
 import com.misys.stockmarket.domain.entity.LeagueUser;
+import com.misys.stockmarket.domain.entity.OrderMaster;
 import com.misys.stockmarket.domain.entity.UserMaster;
 import com.misys.stockmarket.enums.LEAGUE_ERR_CODES;
 import com.misys.stockmarket.exception.DAOException;
 import com.misys.stockmarket.exception.DBRecordNotFoundException;
 import com.misys.stockmarket.exception.LeagueException;
+import com.misys.stockmarket.exception.service.OrderServiceException;
 import com.misys.stockmarket.exception.service.PortfolioServiceException;
 import com.misys.stockmarket.exception.service.UserServiceException;
 import com.misys.stockmarket.mbeans.LeaderBoardFormBean;
 import com.misys.stockmarket.mbeans.LeaguePlayerFormBean;
+import com.misys.stockmarket.mbeans.MyFollowersFormBean;
+import com.misys.stockmarket.mbeans.MyFollowingFormBean;
 import com.misys.stockmarket.mbeans.MyLeagueFormBean;
 import com.misys.stockmarket.mbeans.MyPortfolioFormBean;
+import com.misys.stockmarket.mbeans.OrderHistoryFormBean;
+import com.misys.stockmarket.mbeans.PlayersRecentTradesFormBean;
+import com.misys.stockmarket.utility.DateUtils;
 import com.misys.stockmarket.utility.PropertiesUtil;
 
 @Service("leagueService")
@@ -46,6 +53,9 @@ public class LeagueService {
 
 	@Inject
 	private PortfolioService portfolioService;
+	
+	@Inject
+	private OrderService orderService;
 
 	@Transactional(rollbackFor = DAOException.class)
 	public void addUserToLeague(UserMaster user, LeagueMaster league)
@@ -78,10 +88,31 @@ public class LeagueService {
 		}
 	}
 	
+	@Transactional(rollbackFor = DAOException.class)
+	public void followerStatuschange(UserMaster user, UserMaster playerMaster, LeagueMaster league, String oldStatus, String newStatus)
+			throws LeagueException {
+		try {
+			FollowerMaster followMaster = leagueDAO.findFollowerMaster(user.getUserId(),playerMaster.getUserId(),league.getLeagueId(),oldStatus);
+			followMaster.setStatus(newStatus);
+			leagueDAO.update(followMaster);
+		} catch (DAOException e) {
+			LOG.error(e);
+			throw new LeagueException(e);
+		}
+	}
 	
 	public boolean checkFollowRecordExists(UserMaster user, UserMaster playerMaster, LeagueMaster league) throws LeagueException {
 		try {
 			 leagueDAO.findFollowerMaster(user.getUserId(),playerMaster.getUserId(),league.getLeagueId(),IApplicationConstants.FOLLOWER_STATUS_ACCEPTED, IApplicationConstants.FOLLOWER_STATUS_PENDING);
+			 return true;
+		} catch (DBRecordNotFoundException e) {
+			return false;
+		} 
+	}
+	
+	public boolean checkFollowerAccess(UserMaster user, UserMaster playerMaster, LeagueMaster league) throws LeagueException {
+		try {
+			 leagueDAO.findFollowerMaster(user.getUserId(),playerMaster.getUserId(),league.getLeagueId(), IApplicationConstants.FOLLOWER_STATUS_ACCEPTED);
 			 return true;
 		} catch (DBRecordNotFoundException e) {
 			return false;
@@ -188,6 +219,16 @@ public class LeagueService {
 			throw new LeagueException(LEAGUE_ERR_CODES.LEAGUE_USER_NOT_FOUND);
 		}
 	}
+	
+	public boolean getLeagueUserAccessCheck(long leagueId, long userId)
+			throws LeagueException {
+		try {
+			leagueDAO.findLeagueUser(leagueId, userId);
+			return true;
+		} catch (DBRecordNotFoundException e) {
+			return false;
+		}
+	}
 
 	public LeagueUser getLeagueUserById(long leagueUserId)
 			throws LeagueException {
@@ -249,7 +290,93 @@ public class LeagueService {
 		}
 		return myLeagueFormBeanList;
 	}
-
+	
+	public List<MyFollowersFormBean> getMyFollowers(UserMaster player, LeagueMaster league) throws LeagueException
+	{
+		List<MyFollowersFormBean> myFollowerFormBeanList = new ArrayList<MyFollowersFormBean>();
+		try {
+			List<FollowerMaster> followMasterList = leagueDAO.findMyFollowers(player.getUserId(),league.getLeagueId());
+			
+			for (FollowerMaster followerMaster : followMasterList) {
+				MyFollowersFormBean myFollowersFormBean = new MyFollowersFormBean();
+				myFollowersFormBean.setName(followerMaster.getFollowerUserMaster().getFirstName());
+				if(IApplicationConstants.FOLLOWER_STATUS_PENDING.equalsIgnoreCase(followerMaster.getStatus()))
+				{
+					myFollowersFormBean.setStatus("Pending");
+				}
+				else
+				{
+					myFollowersFormBean.setStatus("Accepted");
+				}
+				
+				myFollowersFormBean.setUserId(followerMaster.getFollowerUserMaster().getUserId());
+				myFollowerFormBeanList.add(myFollowersFormBean);
+			}
+		} catch (DAOException e) {
+			LOG.error(e);
+			throw new LeagueException(e);
+		}
+		return myFollowerFormBeanList;
+	}
+	
+	public List<MyFollowingFormBean> getMyFollowing(UserMaster user, LeagueMaster league) throws LeagueException
+	{
+		List<MyFollowingFormBean> myFollowingFormBeanList = new ArrayList<MyFollowingFormBean>();
+		try {
+			List<FollowerMaster> followMasterList = leagueDAO.findYourFollowing(user.getUserId(),league.getLeagueId());
+			
+			for (FollowerMaster followerMaster : followMasterList) {
+				MyFollowingFormBean myFollowingFormBean = new MyFollowingFormBean();
+				UserMaster userMaster = userService.findById(followerMaster.getPlayerUserId());
+				myFollowingFormBean.setName(userMaster.getFirstName());
+				myFollowingFormBean.setUserId(followerMaster.getPlayerUserId());
+				myFollowingFormBeanList.add(myFollowingFormBean);
+			}
+		} catch (DAOException e) {
+			LOG.error(e);
+			throw new LeagueException(e);
+		}
+		catch (UserServiceException e) {
+			LOG.error(e);
+			throw new LeagueException(e);
+		}
+		return myFollowingFormBeanList;
+	}
+	
+	public List<PlayersRecentTradesFormBean> getPlayersRecentTrades(LeagueMaster league, UserMaster player) throws LeagueException
+	{
+		List<PlayersRecentTradesFormBean> recentTradesBeanList = new ArrayList<PlayersRecentTradesFormBean>();
+		try {
+			LeagueUser leagueUser = getLeagueUser(league.getLeagueId(),player.getUserId());
+			List<OrderMaster> allOrdersList = orderService.getAllOrders(leagueUser.getLeagueUserId());
+			for (OrderMaster orderMaster : allOrdersList) {
+				PlayersRecentTradesFormBean orderHistoryFormBean = new PlayersRecentTradesFormBean();
+				orderHistoryFormBean
+						.setDateTime(DateUtils
+								.getFormattedDateTimeString(orderMaster
+										.getOrderDate()));
+				orderHistoryFormBean.setTikerSymbol(orderMaster
+						.getStockMaster().getTikerSymbol());
+				// TODO: Change later to II8n
+				if (IApplicationConstants.BUY_TYPE
+						.equals(orderMaster.getType())) {
+					orderHistoryFormBean.setOrderType("Buy");
+				} else {
+					orderHistoryFormBean.setOrderType("Sell");
+				}
+				orderHistoryFormBean.setQuantity(orderMaster.getVolume().toPlainString());
+				recentTradesBeanList.add(orderHistoryFormBean);
+			}
+		} catch (OrderServiceException e) {
+			LOG.error(e);
+			throw new LeagueException(e);
+		} catch (LeagueException e) {
+			LOG.error(e);
+			throw new LeagueException(e);
+		}
+		return recentTradesBeanList;
+	}
+	
 	public List<MyLeagueFormBean> getMyLeaguesIncludingGlobal(long userId)
 			throws LeagueException {
 		List<MyLeagueFormBean> myLeagueFormBeanList = new ArrayList<MyLeagueFormBean>();
