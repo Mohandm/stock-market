@@ -3,14 +3,15 @@ package com.misys.stockmarket.mbeans;
 public class FollowRequestFormBean {
 	private String userId;
 	
-	private String leagurId;
+	private String leagueId;
 
-	public String getLeagurId() {
-		return leagurId;
+	
+	public String getLeagueId() {
+		return leagueId;
 	}
 
-	public void setLeagurId(String leagurId) {
-		this.leagurId = leagurId;
+	public void setLeagueId(String leagueId) {
+		this.leagueId = leagueId;
 	}
 
 	public String getUserId() {

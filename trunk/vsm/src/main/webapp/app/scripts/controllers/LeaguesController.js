@@ -117,7 +117,7 @@ vsmApp.controller('LeagueUsersDialogController', ['$scope','$rootScope','$http',
             { field: 'rank', displayName:'Ranking'},
             { field: 'totalValue', displayName:'League Value'},
             { field: 'followerCount', displayName:'Followers'},
-            {name: 'follow', displayName: '', enableFiltering : false, enableSorting : false, cellTemplate: '<button id="followBtn" type="button" class="btn-small" ng-show="getExternalScopes().isAuthenticated()" ng-click="getExternalScopes().follow(row.entity)" >Follow</button> '}
+            {name: 'follow', displayName: '', enableFiltering : false, enableSorting : false, cellTemplate: '<button id="followBtn" type="button" class="btn-small" ng-show="getExternalScopes().isAuthenticated" ng-click="getExternalScopes().follow(row.entity)" >Follow</button> '}
         ]
     };
 
