@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.dao.LeagueDAO;
+import com.misys.stockmarket.domain.entity.FollowerMaster;
 import com.misys.stockmarket.domain.entity.LeagueMaster;
 import com.misys.stockmarket.domain.entity.LeagueUser;
 import com.misys.stockmarket.domain.entity.UserMaster;
@@ -59,6 +60,32 @@ public class LeagueService {
 			LOG.error(e);
 			throw new LeagueException(e);
 		}
+	}
+	
+	@Transactional(rollbackFor = DAOException.class)
+	public void followPlayer(UserMaster user, UserMaster playerMaster, LeagueMaster league)
+			throws LeagueException {
+		try {
+			FollowerMaster followMaster = new FollowerMaster();
+			followMaster.setFollowerUserMaster(user);
+			followMaster.setLeagueMaster(league);
+			followMaster.setPlayerUserId(playerMaster.getUserId());
+			followMaster.setStatus(IApplicationConstants.FOLLOWER_STATUS_PENDING);
+			leagueDAO.persist(followMaster);
+		} catch (DAOException e) {
+			LOG.error(e);
+			throw new LeagueException(e);
+		}
+	}
+	
+	
+	public boolean checkFollowRecordExists(UserMaster user, UserMaster playerMaster, LeagueMaster league) throws LeagueException {
+		try {
+			 leagueDAO.findFollowerMaster(user.getUserId(),playerMaster.getUserId(),league.getLeagueId(),IApplicationConstants.FOLLOWER_STATUS_ACCEPTED, IApplicationConstants.FOLLOWER_STATUS_PENDING);
+			 return true;
+		} catch (DBRecordNotFoundException e) {
+			return false;
+		} 
 	}
 
 	@Transactional(rollbackFor = DAOException.class)
@@ -135,6 +162,17 @@ public class LeagueService {
 			throws LeagueException {
 		try {
 			return leagueDAO.findByName(leagueName);
+		} catch (DBRecordNotFoundException e) {
+			throw new LeagueException(LEAGUE_ERR_CODES.LEAGUE_NOT_FOUND);
+		} catch (DAOException e) {
+			throw new LeagueException(LEAGUE_ERR_CODES.UNKNOWN);
+		}
+	}
+	
+	public LeagueMaster getLeagueById(long id)
+			throws LeagueException {
+		try {
+			return leagueDAO.findById(id);
 		} catch (DBRecordNotFoundException e) {
 			throw new LeagueException(LEAGUE_ERR_CODES.LEAGUE_NOT_FOUND);
 		} catch (DAOException e) {

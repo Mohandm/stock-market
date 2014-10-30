@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.misys.stockmarket.domain.entity.LeagueMaster;
+import com.misys.stockmarket.domain.entity.UserMaster;
 import com.misys.stockmarket.exception.EmailNotFoundException;
 import com.misys.stockmarket.exception.LeagueException;
 import com.misys.stockmarket.exception.ServiceException;
+import com.misys.stockmarket.exception.service.UserServiceException;
 import com.misys.stockmarket.mbeans.FollowRequestFormBean;
 import com.misys.stockmarket.mbeans.LeaderBoardFormBean;
 import com.misys.stockmarket.mbeans.LeagueIdFormBean;
@@ -110,8 +113,43 @@ public class LeagueController {
 	@ResponseBody
 	public ResponseMessage followPlayer(
 			@RequestBody FollowRequestFormBean followRequestFormBean) {
-		//TODO Guru : Add Logic
-		// Check if user is trying to follow him self
-		return new ResponseMessage(ResponseMessage.Type.success,"");
+		try {
+			UserMaster userMaster = userService.getLoggedInUser();
+			UserMaster playerMaster = userService.findById(Long.valueOf(followRequestFormBean.getUserId()).longValue());
+			if(userMaster.getUserId() == playerMaster.getUserId())
+			{
+				return new ResponseMessage(ResponseMessage.Type.error,"You can't follow yourself");
+			}
+			else
+			{
+				LeagueMaster leagueMaster = leagueService.getLeagueById(Long.valueOf(followRequestFormBean.getLeagueId()).longValue());
+				if(!leagueService.checkFollowRecordExists(userMaster, playerMaster, leagueMaster))
+				{
+					leagueService.followPlayer(userMaster, playerMaster, leagueMaster);
+					return new ResponseMessage(ResponseMessage.Type.success,"Follow request sent to the Player. You can follow him after he accepts your request!");
+				}
+				else
+				{
+					return new ResponseMessage(ResponseMessage.Type.warn,"You are already following this Player or Request is Pending Acceptance!");
+				}
+				
+			}
+		} catch (EmailNotFoundException e) {
+			// TODO: HANDLE WHEN EXCEPTION
+			LOG.error(e);
+			return null;
+		} catch (UserServiceException e) {
+			// TODO: HANDLE WHEN EXCEPTION
+			LOG.error(e);
+			return null;
+		} catch (NumberFormatException e) {
+			// TODO: HANDLE WHEN EXCEPTION
+			LOG.error(e);
+			return null;
+		} catch (LeagueException e) {
+			// TODO: HANDLE WHEN EXCEPTION
+			LOG.error(e);
+			return null;
+		}
 	}
 }
