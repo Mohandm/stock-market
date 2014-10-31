@@ -27,12 +27,12 @@ vsmApp.controller('LeaderBoardController', ['$scope', '$rootScope', 'modals','Le
                     $scope.league3 = item;
                 }
             });
-            setTimeout(function() {
+            /*setTimeout(function() {
                 $('.counter').counterUp({
                     delay: 2,
                     time: 1000
                 });
-            },500);
+            },500);*/
         });
 
         $scope.listOfUsersLeague = function(league){
