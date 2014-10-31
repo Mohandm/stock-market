@@ -62,10 +62,160 @@ vsmApp.service('TourService', ['$http','$rootScope', function ($http, $rootScope
         }
     ];
 
+    var leaderBoard = [
+        {
+            element: "#leagueLeaderBoard",
+            title: "Leader Board",
+            content: "This is a Ranking Board which lists the Leagues and their corresponding Top 10 Ranked players. " +
+                "You can follow these players to get insights of what they are trading to be successful.",
+            placement: "top"
+        },
+        {
+            element: "#premierLeagueLeaderBoard",
+            title: "Premier League",
+            content: "This is the starter league. Play this league and become a champion and you can unlock the next league to play with the " +
+                "Champions.",
+            placement: "bottom"
+        },
+        {
+            element: "#championsLeagueLeaderBoard",
+            title: "Champions League",
+            content: "This is the mid league. Play this league and become a champion and you can unlock the next league to play with the " +
+                "Legends.",
+            placement: "bottom"
+        },
+        {
+            element: "#legendLeagueLeaderBoard",
+            title: "Legends League",
+            content: "This is the Ultimate league for the Legends of Stock Market.",
+            placement: "bottom"
+        },
+        {
+            element: "#viewChampionsLeagueLeaderBoard",
+            title: "Champions of League",
+            content: "Click here and view Champions corresponding Leagues.",
+            placement: "top"
+        }
+    ];
+
+    var leagues = [
+        {
+            element: "#leagueLeaguesBoard",
+            title: "Leagues",
+            content: "Unlock Leagues and view the Players under every League and start following them.",
+            placement: "top"
+        },
+        {
+            element: "#premierLeagueLeaguesBoard",
+            title: "Premier League",
+            content: "This is the starter league. Play this league and become a champion and you can unlock the next league to play with the " +
+                "Champions.",
+            placement: "bottom"
+        },
+        {
+            element: "#championsLeagueLeaguesBoard",
+            title: "Champions League",
+            content: "This is the mid league. Play this league and become a champion and you can unlock the next league to play with the " +
+                "Legends.",
+            placement: "bottom"
+        },
+        {
+            element: "#legendLeagueLeaguesBoard",
+            title: "Legends League",
+            content: "This is the Ultimate league for the Legends of Stock Market.",
+            placement: "bottom"
+        },
+        {
+            element: "#unlockLeagueLeaguesBoard",
+            title: "Unlock Leagues",
+            content: "Click here and learn how to unlock a League.",
+            placement: "top"
+        },
+        {
+            element: "#viewListUsersLeagueLeaguesBoard",
+            title: "Players of League",
+            content: "Click here and view Players corresponding Leagues.",
+            placement: "top"
+        }
+    ];
+
+    var myPortfolio = [
+        {
+            element: "#selectLeagueMyPortfolio",
+            title: "Select Portfolio (League)",
+            content: "Select a portfolio for a league and start trading and increase your Portfolio Value and essentially the Total League Value",
+            placement: "bottom"
+        },
+        {
+            element: "#portfolioSummaryMyPortfolio",
+            title: "Summary of Portfolio",
+            content: "Here you can see your Portfolio Value and Remaining Cash Balance. Sum of which is the Total Value",
+            placement: "top"
+        },
+        {
+            element: "#stockHoldingsMyPortfolio",
+            title: "Stock Holdings",
+            content: "List of all your current Stocks that are in your Portfolio. You can sell them " +
+                "by clicking on the 'sell' button for a corresponding stocks",
+            placement: "top"
+        },
+        {
+            element: "#stockListsMyPortfolio",
+            title: "Current Stock Lists",
+            content: "List of all the current stocks available to be bought. Click on 'buy' to make a trade.",
+            placement: "top"
+        },
+        {
+            element: "#recentTradesMyPortfolio",
+            title: "Recent Trades",
+            content: "Your recent trades are listed here according to the date.",
+            placement: "top"
+        }
+    ];
+
+    var watchList = [
+        {
+            element: "#watchListGrid",
+            title: "Watch List",
+            content: "Select a stock and start watching the stock for price changes by setting a Higher Limit and Lower Limit. " +
+                "When the limit has been reached, you will be notified with a email and also a user notification in the top menu, .",
+            placement: "top"
+        }
+    ];
+
+    var alerts = [
+        {
+            element: "#alertsGrid",
+            title: "Alerts",
+            content: "List of all your alerts",
+            placement: "top"
+        }
+    ];
+
+    var followers = [
+        {
+            element: "#yourFollowersGrid",
+            title: "Your Followers",
+            content: "This is the list of Players who are following you or whose Follow requests are pending Acceptance or Rejection.",
+            placement: "top"
+        },
+        {
+            element: "#yourFollowingGrid",
+            title: "Players you are following",
+            content: "This is the list of Players whom you are following. You can see the Recent Trades of the corresponding Player by clicking on the 'Recent Trades' button.",
+            placement: "top"
+        }
+    ];
 
     var tourOptions = {
         'dashboard' : dashboard,
-        'chart' : chart
+        'chart' : chart,
+        'leaderBoard' : leaderBoard,
+        'leagues' : leagues,
+        'myPortfolio' : myPortfolio,
+        'watchList' : watchList,
+        'alerts' : alerts,
+        'followers' : followers
     };
 
     var currentPage = 'dashboard';

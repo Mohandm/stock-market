@@ -1,12 +1,13 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.controller('LeaguesController', ['$scope', '$rootScope', 'modals','LeaguesService',
-    function ($scope, $rootScope, modals, LeaguesService) {
+vsmApp.controller('LeaguesController', ['$scope', '$rootScope', 'modals','LeaguesService','TourService',
+    function ($scope, $rootScope, modals, LeaguesService, TourService) {
 
         $scope.$scope = $scope;
 
         //Add this to all page controllers
         $rootScope.onPageLoad();
+        TourService.setupTour('leagues');
 
         $scope.leagueList1 = {};
         $scope.leagueList2 = {};

@@ -1,7 +1,7 @@
-<div class="row blockContainer leagues-dashboard">
+<div class="row blockContainer leagues-dashboard" id="leagueLeaguesBoard">
     <div class="col-md-4">
         <div class="panel panel-default leagues-panel">
-            <div class="panel-heading">
+            <div class="panel-heading" id="premierLeagueLeaguesBoard">
                 <h3 class="panel-title league-1">{{leagueList1.name}} - <i class="fa fa-star-o fa-fw"></i></h3>
             </div>
             <div class="panel-body">
@@ -13,14 +13,14 @@
                 </div>
                 <div class="leagues-lock-text-1">
                     <button ng-if="leagueList1.locked === 'true'" type="button" class="btn btn-success league-1" ng-click="unlockLeague1(leagueList1)">How to Unlock</button>
-                    <button type="button" class="btn btn-success league-1" ng-click="listOfUsersLeague(leagueList1.leagueId)">List of Players</button>
+                    <button type="button" class="btn btn-success league-1" id="viewListUsersLeagueLeaguesBoard" ng-click="listOfUsersLeague(leagueList1.leagueId)">List of Players</button>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-4">
         <div class="panel panel-default leagues-panel">
-            <div class="panel-heading">
+            <div class="panel-heading" id="championsLeagueLeaguesBoard">
                 <h3 class="panel-title league-2">{{leagueList2.name}} - <i class="fa fa-star-o fa-fw"></i><i class="fa fa-star-o fa-fw"></i></h3>
             </div>
             <div class="panel-body">
@@ -39,7 +39,7 @@
     </div>
     <div class="col-md-4">
         <div class="panel panel-default leagues-panel">
-            <div class="panel-heading">
+            <div class="panel-heading" id="legendLeagueLeaguesBoard">
                 <h3 class="panel-title league-3">{{leagueList3.name}} - <i class="fa fa-star-o fa-fw"></i><i class="fa fa-star-o fa-fw"></i><i class="fa fa-star-o fa-fw"></i></h3>
             </div>
             <div class="panel-body">
@@ -50,7 +50,7 @@
                     <span ng-if="leagueList3.locked !== 'true'"><i class="fa fa-unlock fa-fw"></i>Unlocked</span>
                 </div>
                 <div class="leagues-lock-text-3">
-                    <button type="button" ng-if="leagueList3.locked === 'true'" class="btn btn-success league-3" ng-click="unlockLeague3(leagueList3)">How to Unlock</button>
+                    <button type="button" ng-if="leagueList3.locked === 'true'" id="unlockLeagueLeaguesBoard" class="btn btn-success league-3" ng-click="unlockLeague3(leagueList3)">How to Unlock</button>
                     <button type="button" class="btn btn-success league-3" ng-click="listOfUsersLeague(leagueList3.leagueId)">List of Players</button>
                 </div>
             </div>

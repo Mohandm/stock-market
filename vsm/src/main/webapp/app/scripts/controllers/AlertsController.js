@@ -1,12 +1,13 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.controller('AlertsController', ['$scope', '$rootScope', 'modals','AlertsService',
-    function ($scope, $rootScope, modals, AlertsService) {
+vsmApp.controller('AlertsController', ['$scope', '$rootScope', 'modals','AlertsService','TourService',
+    function ($scope, $rootScope, modals, AlertsService, TourService) {
 
         $scope.$scope = $scope;
 
         //Add this to all page controllers
         $rootScope.onPageLoad();
+        TourService.setupTour('alerts');
 
         $scope.getAlertsDataGridOptions = {
             enableSorting: true,

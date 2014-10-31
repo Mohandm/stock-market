@@ -1,12 +1,13 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.controller('WatchListController', ['$scope', '$rootScope', 'StockQuotesService','modals','AlertsService',
-    function ($scope, $rootScope, StockQuotesService, modals, AlertsService) {
+vsmApp.controller('WatchListController', ['$scope', '$rootScope', 'StockQuotesService','modals','AlertsService','TourService',
+    function ($scope, $rootScope, StockQuotesService, modals, AlertsService, TourService) {
 
     $scope.$scope = $scope;
 
     //Add this to all page controllers
     $rootScope.onPageLoad();
+    TourService.setupTour('watchList');
 
     $scope.stockListGridOptions = {
         enableSorting: true,
