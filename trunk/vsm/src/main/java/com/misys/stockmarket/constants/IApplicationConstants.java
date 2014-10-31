@@ -12,6 +12,8 @@ public class IApplicationConstants {
 
 	public static final String USER_DEACTIVATED = "D";
 
+	public static final String USER_EMAIL_SENT = "S";
+
 	public static final String USER_PASSWORD_EXPIRED = "E";
 
 	public static final String STOCK_ACTIVE = "A";
@@ -55,27 +57,27 @@ public class IApplicationConstants {
 	public static final String LEAGUE_STATUS_COMPLETED = "C";
 
 	public static final String DEFAULT_LEAGUE_NAME = "Global";
-	
+
 	public static final String PREMIER_LEAGUE_NAME = "Premier";
-	
+
 	public static final String CHAMPIONS_LEAGUE_NAME = "Champions";
-	
+
 	public static final String LEGENDS_LEAGUE_NAME = "Legends";
 
 	public static final String WATCH_STOCK_STATUS_PENDING = "P";
 
 	public static final String WATCH_STOCK_STATUS_COMPLETED = "C";
-	
+
 	public static final String FOLLOWER_STATUS_PENDING = "P";
 
 	public static final String FOLLOWER_STATUS_ACCEPTED = "A";
-	
+
 	public static final String FOLLOWER_STATUS_REJECTED = "R";
-	
+
 	public static final String ALERT_TYPE_WATCH_LIST = "W";
-	
+
 	public static final String ALERT_TYPE_NOTIFICATIONS = "N";
-	
+
 	public static final BigDecimal DEFAULT_LEAGUE_START_AMOUNT = BigDecimal
 			.valueOf(100000);
 

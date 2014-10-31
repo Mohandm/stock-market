@@ -70,11 +70,6 @@ public class RegistrationService {
 
 			leagueService.addUserToDefaultLeague(userMaster);
 
-			// SEND ACTIVATION ACCOUNT EMAIL NOTIFICATION
-			SimpleMailMessage message = EmailFormatter
-					.generateActivationMessage(userMaster);
-
-			emailSender.sendEmail(message);
 			return new ResponseMessage(
 					ResponseMessage.Type.success,
 					"You have been successfully registered. A verification link has been sent to your email. Please verify it to continue playing the game");
