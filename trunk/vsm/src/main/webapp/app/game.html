@@ -34,7 +34,7 @@
         <script src="https://oss.maxcdn.com/libs/respond.website/js/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body ng-app="vsmApp">
+    <body ng-app="vsmApp" class="appBody">
         <!--[if lt IE 7]>
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -95,6 +95,27 @@
                         <!-- /.dropdown-alerts -->
                     </li>
                     <!-- /.dropdown -->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-paint-brush fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-theme">
+                            <h4>Select Theme</h4>
+                            <li>
+                                <a ng-click="setTheme('orange')">Orange</a>
+                            </li>
+                            <li>
+                                <a ng-click="setTheme('purple')">Purple</a>
+                            </li>
+                            <li>
+                                <a ng-click="setTheme('wooden')">Wooden</a>
+                            </li>
+                            <li>
+                                <a ng-click="setTheme('blue')">Blue</a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-user -->
+                    </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>

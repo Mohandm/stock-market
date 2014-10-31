@@ -43,7 +43,7 @@
 							</div> 
 						 	<div class="col-sm-8"  ng-class="{'has-error': (mainForm.priceType.$dirty || formcontrol.submitted) && mainForm.priceType.$invalid}">
 							 	<select type="text" ng-required="true" name="priceType"
-								ng-options="priceType.type as priceType.name for priceType in priceTypeMappings" class="form-control" ng-model="formmodel.priceType">
+								ng-options="priceType.type as priceType.name for priceType in priceTypeMappingsSell" class="form-control" ng-model="formmodel.priceType">
 								</select>
 								<div ng-show="mainForm.priceType.$dirty || formcontrol.submitted">
 									<span class="help-block" ng-show = "mainForm.priceType.$error.required">The field is required</span>
