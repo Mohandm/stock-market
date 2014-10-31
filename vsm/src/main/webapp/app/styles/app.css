@@ -666,3 +666,9 @@ input[type="text"].ui-grid-filter-input{
 .topRightNavigation .text-muted{
     color : orange;
 }
+.dropdown-theme h4{
+    padding : 0 0 0 10px;
+}
+.topRightNavigation .navbar-top-links .dropdown-theme li{
+    display:block;
+}

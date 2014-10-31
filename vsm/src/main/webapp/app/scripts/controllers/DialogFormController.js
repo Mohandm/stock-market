@@ -13,10 +13,15 @@ vsmApp.controller('DialogFormController', ['$scope','$http','modals', 'StockQuot
         $scope.formmodel.stockHoldingVolume = $scope.passValuesToDialog.volume;
     },1000);
 
-   $scope.priceTypeMappings = [
+   $scope.priceTypeMappingsSell = [
         {"name":"Market", "type":"01"},
         {"name":"Limit", "type":"02"},
         {"name":"StopLoss", "type":"03"}
+    ];
+
+    $scope.priceTypeMappings = [
+        {"name":"Market", "type":"01"},
+        {"name":"Limit", "type":"02"}
     ];
 
     $scope.intraDayOptions = [

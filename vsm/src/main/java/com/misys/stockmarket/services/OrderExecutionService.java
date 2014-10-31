@@ -167,8 +167,13 @@ public class OrderExecutionService {
 			}
 		} else if (IApplicationConstants.ORDER_PRICE_TYPE_STOPLOSS
 				.equals(orderMaster.getPriceType())) {
-			// TODO:PENDING
-			isEligible = false;
+			if (IApplicationConstants.SELL_TYPE
+					.equals(orderMaster.getType())) {
+				if (stockCurrentQuotes.getLastTradePriceOnly().compareTo(
+						orderMaster.getOrderPrice()) <= 0) {
+					isEligible = true;
+				}
+			}
 		}
 		return isEligible;
 	}

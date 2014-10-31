@@ -137,6 +137,30 @@
             $rootScope.tour.start(true);
         };
 
+        $rootScope.setTheme = function(theme){
+            var url;
+            if(theme === 'wooden')
+            {
+                url = 'url(app/images/background2.jpg)';
+            }
+            else if(theme === 'purple')
+            {
+                url = 'url(app/images/background1.jpg)';
+            }
+            else if(theme === 'blue')
+            {
+                url = 'url(app/images/background3.jpg)';
+            }
+            else{
+                url = 'url(app/images/background.jpg)';
+            }
+            $('.appBody').css('background',url);
+            $('.appBody').css('background-size','100% 100%');
+            $('.appBody').css('background-attachment','fixed');
+
+        };
+
+
         var setLogoutMessage = function ($timeout) {
             message = {
                 text: "You have been successfully logged out.",
