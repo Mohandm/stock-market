@@ -5,8 +5,13 @@ vsmApp.controller('MyPortfolioController', ['$scope', '$rootScope', '$log', 'Sto
 
     $scope.$scope = $scope;
 
+    var floatingShareOptions = {
+        title : ' Misys - Stock Market League',
+        description : '(A Game to Enthrall and Engage you on Stock Markets).',
+        url : 'http://www.misys.com/'
+    };
     //Add this to all page controllers
-    $rootScope.onPageLoad();
+    $rootScope.onPageLoad(floatingShareOptions);
 
     StockQuotesService.getMyLeagues().then(function(data){
         var arrayLeagues = [];
@@ -103,11 +108,5 @@ vsmApp.controller('MyPortfolioController', ['$scope', '$rootScope', '$log', 'Sto
         ]
     };
 
-    $("body").floatingShare({
-        place: "top-right",
-        buttons: ["facebook","twitter","linkedin"],
-        title : ' Misys - Stock Market League',
-        description : '(A Game to Enthrall and Engage you on Stock Markets!).',
-        url : 'http://www.misys.com/'
-    });
+
 }]);
