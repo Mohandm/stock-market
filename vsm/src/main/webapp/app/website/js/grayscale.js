@@ -54,7 +54,10 @@ $(document).ready(function() {
 
     $("body").floatingShare({
         place: "top-right",
-        buttons: ["facebook","twitter","linkedin"]
+        buttons: ["facebook","twitter","linkedin"],
+        title : ' Misys - Stock Market League',
+        description : '(A Game to Enthrall and Engage you on Stock Markets!).',
+        url : 'http://www.misys.com/'
     });
 
     /*$('#about').waypoint(function() {
