@@ -1,12 +1,13 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.controller('FollowersController', ['$scope', '$rootScope','LeaguesService','modals','$http',
-    function ($scope, $rootScope, LeaguesService, modals, $http) {
+vsmApp.controller('FollowersController', ['$scope', '$rootScope','LeaguesService','modals','$http','TourService',
+    function ($scope, $rootScope, LeaguesService, modals, $http, TourService) {
 
         $scope.$scope = $scope;
 
         //Add this to all page controllers
         $rootScope.onPageLoad();
+        TourService.setupTour('followers');
 
         LeaguesService.getGameLeagues().then(function(data){
             var arrayMyLeagues = [];

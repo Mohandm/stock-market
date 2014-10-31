@@ -1,7 +1,7 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.controller('MyPortfolioController', ['$scope', '$rootScope', '$log', 'StockQuotesService','modals',
-    function ($scope, $rootScope, $log, StockQuotesService, modals) {
+vsmApp.controller('MyPortfolioController', ['$scope', '$rootScope', '$log', 'StockQuotesService','modals','TourService',
+    function ($scope, $rootScope, $log, StockQuotesService, modals, TourService) {
 
     $scope.$scope = $scope;
 
@@ -12,6 +12,7 @@ vsmApp.controller('MyPortfolioController', ['$scope', '$rootScope', '$log', 'Sto
     };
     //Add this to all page controllers
     $rootScope.onPageLoad(floatingShareOptions);
+    TourService.setupTour('myPortfolio');
 
     StockQuotesService.getMyLeagues().then(function(data){
         var arrayLeagues = [];
