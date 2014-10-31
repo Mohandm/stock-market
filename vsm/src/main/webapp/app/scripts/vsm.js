@@ -116,11 +116,37 @@
             return AuthService.isAuthenticated();
         };
 
-        $rootScope.onPageLoad = function(){
+        $rootScope.onPageLoad = function(floatingShareOptions){
             var alertsListPromise = AlertsService.getUserNotifications();
             alertsListPromise.then(function(data){
                 $rootScope.alertsList = data.alertsList;
                 $rootScope.notificationsList = data.notificationsList;
+            });
+
+            var title = ' Misys - Stock Market League'
+                ,desc = '(A Game to Enthrall and Engage you on Stock Markets!).'
+                , url = 'http://www.misys.com/';
+            if(floatingShareOptions)
+            {
+                if(floatingShareOptions.title)
+                {
+                    title = floatingShareOptions.title;
+                }
+                if(floatingShareOptions.description)
+                {
+                    desc = floatingShareOptions.description;
+                }
+                if(floatingShareOptions.url)
+                {
+                    url = floatingShareOptions.url;
+                }
+            }
+            $("body").floatingShare({
+                place: "top-right",
+                buttons: ["facebook","twitter","linkedin"],
+                title : title,
+                description : desc,
+                url : url
             });
         };
 
