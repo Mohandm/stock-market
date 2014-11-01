@@ -1,5 +1,6 @@
 package com.misys.stockmarket.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -18,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.misys.stockmarket.constants.IApplicationConstants;
+import com.misys.stockmarket.domain.entity.LeagueMaster;
 import com.misys.stockmarket.domain.entity.StockCurrentQuotes;
 import com.misys.stockmarket.domain.entity.UserAlerts;
 import com.misys.stockmarket.enums.STOCK_ERR_CODES;
+import com.misys.stockmarket.exception.LeagueException;
 import com.misys.stockmarket.exception.ServiceException;
 import com.misys.stockmarket.exception.service.AlertsServiceException;
 import com.misys.stockmarket.exception.service.OrderServiceException;
@@ -34,6 +37,7 @@ import com.misys.stockmarket.mbeans.UserNotificationsFormBean;
 import com.misys.stockmarket.mbeans.WatchListFormBean;
 import com.misys.stockmarket.platform.web.ResponseMessage;
 import com.misys.stockmarket.services.AlertsService;
+import com.misys.stockmarket.services.LeagueService;
 import com.misys.stockmarket.services.OrderService;
 import com.misys.stockmarket.services.StockService;
 
@@ -52,6 +56,9 @@ public class StockMarketController {
 
 	@Inject
 	private OrderService orderService;
+	
+	@Inject
+	private LeagueService leagueService;
 
 	@Inject
 	private AlertsService alertsService;
@@ -61,12 +68,35 @@ public class StockMarketController {
 	public ResponseMessage buyStock(@RequestBody OrderFormBean orderFormBean) {
 		orderFormBean.setType(IApplicationConstants.BUY_TYPE);
 		try {
+			LeagueMaster league = leagueService.getLeagueById(orderFormBean.getLeagueUserId());
+			if(league.getStage().compareTo(new BigDecimal(2)) == 0)
+			{
+				if(IApplicationConstants.ORDER_PRICE_TYPE_STOPLOSS.equals(orderFormBean
+						.getPriceType()))
+				{
+					return new ResponseMessage(ResponseMessage.Type.error,
+							"Stop Loss orders are not allowed for this league");
+				}
+			}
+			if(league.getStage().compareTo(new BigDecimal(3)) == 0)
+			{
+				if(IApplicationConstants.ORDER_PRICE_TYPE_STOPLOSS.equals(orderFormBean
+						.getPriceType()) || IApplicationConstants.ORDER_PRICE_TYPE_LIMIT.equals(orderFormBean
+								.getPriceType()))
+				{
+					return new ResponseMessage(ResponseMessage.Type.error,
+							"Stop Loss and Limit orders are not allowed for this league");
+				}
+			}
 			orderService.saveNewOrder(orderFormBean);
 			return new ResponseMessage(ResponseMessage.Type.success,
 					"Your order has been placed.");
 		} catch (OrderServiceException e) {
 			return new ResponseMessage(ResponseMessage.Type.danger,
 					"There was a technical error while processing your order. Please try again");
+		} catch (LeagueException e) {
+			return new ResponseMessage(ResponseMessage.Type.danger,
+				"There was a technical error while processing your order. Please try again");
 		}
 	}
 
