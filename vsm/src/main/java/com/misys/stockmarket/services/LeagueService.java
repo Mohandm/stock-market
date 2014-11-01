@@ -56,6 +56,83 @@ public class LeagueService {
 	
 	@Inject
 	private OrderService orderService;
+	
+	@Transactional(rollbackFor = DAOException.class)
+	public void unlockUsers()
+			throws LeagueException {
+		try {
+			List<LeagueMaster> leagues = new ArrayList<LeagueMaster>();
+			leagues.add(getLeagueByName(IApplicationConstants.PREMIER_LEAGUE_NAME));
+			leagues.add(getLeagueByName(IApplicationConstants.CHAMPIONS_LEAGUE_NAME));
+			for(LeagueMaster league : leagues)
+			{
+				List<LeagueUser> leagueUserList = leagueDAO.findAllLeagueUsers(league.getLeagueId());
+				for (LeagueUser leagueUser : leagueUserList) {
+					if(IApplicationConstants.PREMIER_LEAGUE_NAME.equalsIgnoreCase(league.getName()))
+					{
+						if(checkLeagueUser(leagueUser.getUserMaster(), getLeagueByName(IApplicationConstants.CHAMPIONS_LEAGUE_NAME)))
+						{
+							break;
+						}
+					}
+					else
+					{
+						if(checkLeagueUser(leagueUser.getUserMaster(), getLeagueByName(IApplicationConstants.LEGENDS_LEAGUE_NAME)))
+						{
+							break;
+						}
+					}
+					MyPortfolioFormBean myPortfolioFormBean = portfolioService
+							.getMyPortfolio(league.getLeagueId(), leagueUser.getUserMaster()
+									.getUserId());
+					
+					BigDecimal totalValue = new BigDecimal(0);
+					if (myPortfolioFormBean.getTotalValue() != null) {
+						totalValue = totalValue.add(new BigDecimal(
+								myPortfolioFormBean.getTotalValue()));
+					}
+					
+					BigDecimal stage = league.getStage().add(new BigDecimal(1));
+					String minimumQualifyingValueStr = PropertiesUtil
+							.getProperty("stage.minimum.qualifying.amount."
+									+ stage.toPlainString());
+					BigDecimal minimumQualifyingValue = new BigDecimal(0);
+					if (minimumQualifyingValueStr != null) {
+						minimumQualifyingValue = minimumQualifyingValue
+								.add(new BigDecimal(minimumQualifyingValueStr));
+					}
+					if (totalValue.compareTo(new BigDecimal(0)) > 0
+							&& totalValue.compareTo(minimumQualifyingValue) >= 0) {
+						if(IApplicationConstants.PREMIER_LEAGUE_NAME.equalsIgnoreCase(league.getName()))
+						{
+							addUserToLeague(leagueUser.getUserMaster(), getLeagueByName(IApplicationConstants.CHAMPIONS_LEAGUE_NAME));
+						}
+						else
+						{
+							addUserToLeague(leagueUser.getUserMaster(), getLeagueByName(IApplicationConstants.LEGENDS_LEAGUE_NAME));
+						}
+					}
+				}
+			}
+		} catch (DAOException e) {
+			LOG.error(e);
+			throw new LeagueException(e);
+		} catch (PortfolioServiceException e) {
+			LOG.error(e);
+			throw new LeagueException(e);
+		}
+	}
+	
+	public boolean checkLeagueUser(UserMaster user, LeagueMaster league)
+			throws LeagueException {
+		try {
+			leagueDAO.findLeagueUser(league.getLeagueId(), user.getUserId());
+			return true;
+		} catch (DBRecordNotFoundException e) {
+			return false;
+		}
+	}
+	
 
 	@Transactional(rollbackFor = DAOException.class)
 	public void addUserToLeague(UserMaster user, LeagueMaster league)
@@ -446,7 +523,7 @@ public class LeagueService {
 						.getTotalValue());
 				// TODO:
 				String minimumQualifyingValueStr = PropertiesUtil
-						.getProperty("stage.minimum.qualifying.amount."
+						.getProperty("stage.minimum.ranking.amount."
 								+ leagueUser.getLeagueMaster().getStage()
 										.toPlainString());
 				BigDecimal minimumQualifyingValue = new BigDecimal(0);
@@ -477,8 +554,23 @@ public class LeagueService {
 		Collections.sort(beanList, new Comparator<LeaguePlayerFormBean>() {
 			@Override
 			public int compare(LeaguePlayerFormBean o1, LeaguePlayerFormBean o2) {
-				return new BigDecimal(o1.getRank())
-						.compareTo(new BigDecimal(o2.getRank()));
+				if(o1.getRank() != null && o2.getRank() != null)
+				{
+					return new BigDecimal(o1.getRank())
+					.compareTo(new BigDecimal(o2.getRank()));
+				}
+				else if(o2.getRank() == null)
+				{
+					return 1;
+				}
+				else if(o1.getRank() == null)
+				{
+					return -1;
+				}
+				else
+				{
+					return 0;
+				}
 			}
 		});
 		

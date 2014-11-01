@@ -41,12 +41,12 @@ public class ScheduledTaskUpdateStockCurrentQuotes {
 		try {
 			stockService.updateStockCurrentQuotes(stockList);
 			LOG.info("SCHEDULED TASK: UPDATE STOCK CURRENT QUOTES ENDED");
-			LOG.info("SCHEDULED TASK: TRIGGER WATCH ALERTS STARTED");
-			alertsService.triggerWatchStockAlerts();
-			LOG.info("SCHEDULED TASK: TRIGGER WATCH ALERTS ENDED");
 			LOG.info("SCHEDULED TASK: EXECUTE ORDERS STARTED");
 			orderExecutionService.executeOrders();
 			LOG.info("SCHEDULED TASK: EXECUTE ORDERS ENDED");
+			LOG.info("SCHEDULED TASK: TRIGGER WATCH ALERTS STARTED");
+			alertsService.triggerWatchStockAlerts();
+			LOG.info("SCHEDULED TASK: TRIGGER WATCH ALERTS ENDED");
 		} catch (FinancialServiceException e) {
 			LOG.error(
 					"Technical Error while updating stock current quotes for stock: ",
