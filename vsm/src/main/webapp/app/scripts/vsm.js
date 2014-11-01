@@ -181,7 +181,9 @@
                 url = 'url(app/images/background.jpg)';
             }
             $('.appBody').css('background',url);
+            //$('.modal-content').css('background',url);
             $('.appBody').css('background-size','100% 100%');
+            //$('.modal-content').css('background-size','100% 100%');
             $('.appBody').css('background-attachment','fixed');
 
         };
@@ -198,6 +200,10 @@
         $rootScope.$on(AUTH_EVENTS.logoutSuccess, setLogoutMessage);
 
         $rootScope.$on('$routeChangeStart', function(event, currRoute, prevRoute){
+            if($rootScope.tour)
+            {
+                $rootScope.tour.end();
+            }
             // Sync the session with the server side and show login modal dialog if required
             AuthService.syncSession().then(function () {
                 // If user is not logged in and the route needs login show the modal dialog

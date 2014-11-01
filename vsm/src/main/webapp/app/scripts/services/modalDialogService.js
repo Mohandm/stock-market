@@ -22,10 +22,18 @@ vsmApp.service('DialogService', function($compile, $http, $rootScope, $templateC
 
 	        $('body').append($compile(template)(childScope));
 	        $('#dialogModal').modal();
-	 
-	        $('#dialogModal').on('hidden.bs.modal', function (e) {
-	            childScope.$destroy();
-	            $('#dialogModal').remove();
+
+
+            $('#dialogModal').on('shown.bs.modal', function (e) {
+                var background = $('.appBody').css('background');
+                var size = $('.appBody').css('background-size');
+                $('.modal-content').css('background',background);
+                $('.modal-content').css('background-size',size);
+            });
+
+            $('#dialogModal').on('hidden.bs.modal', function (e) {
+                childScope.$destroy();
+                $('#dialogModal').remove();
 	        }); 
     	});
     };    
