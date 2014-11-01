@@ -67,11 +67,13 @@ vsmApp.controller('MyPortfolioController', ['$scope', '$rootScope', '$log', 'Sto
 
     $scope.buy = function(item){
         item.leagueUserId = $scope.leagueSelected.leagueId;
+        item.leagueStage = $scope.leagueSelected.stage;
         modals.showForm('Buy Stocks','buystock', item, "modal-lg");
     };
 
     $scope.sell = function(item){
         item.leagueUserId = $scope.leagueSelected.leagueId;
+        item.leagueStage = $scope.leagueSelected.stage;
         modals.showForm('Sell Stocks','sellstock', item, "modal-lg");
     };
 

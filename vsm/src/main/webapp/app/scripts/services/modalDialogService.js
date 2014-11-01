@@ -85,15 +85,19 @@ vsmApp.service('modals', function(DialogService,$http,$timeout) {
        });
     };
 
-    this.showForm = function(title, form, passValuesToDialog , modalSize) {
-            
+    this.showForm = function(title, form, passValuesToDialog , modalSize, closeButton) {
+        if(closeButton === undefined || closeButton === null)
+        {
+            closeButton = true;
+        }
         var openForm = function() {
             DialogService.open({            
                 title: title,
                 showForm: true,
                 formURL:'app/views/'+form+'.html',
                 passValuesToDialog:passValuesToDialog,
-                modalSize:modalSize
+                modalSize:modalSize,
+                showButtonClose : closeButton
             });
         }
         DialogService.close();

@@ -6,7 +6,7 @@ vsmApp.directive('loginDialog', function ($location,AUTH_EVENTS,modals) {
     link: function (scope) {
       var showDialog = function () {
         if($location.path() != '/form/login') {
-         modals.showForm('Login','dialoglogin', {}, "modal-lg");
+         modals.showForm('Login','dialoglogin', {}, "modal-lg", false);
         }
       };
   
