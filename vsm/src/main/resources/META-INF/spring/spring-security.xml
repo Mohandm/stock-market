@@ -18,6 +18,7 @@
 			<xss-protection />
 		</headers>
 		<csrf/>
+		<!-- <session-management session-fixation-protection="newSession"/> -->
 	</http>
 
 	<authentication-manager alias="authenticationManager">
@@ -36,8 +37,8 @@
 	<beans:bean id="customAuthenticationEntryPoint" class="com.misys.stockmarket.security.CustomAuthenticationEntryPoint"/>
 	<beans:bean id="csrfTokenGeneratorFilter" class="com.misys.stockmarket.security.CsrfTokenGeneratorFilter"/>
 	<beans:bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl"/>
-	<beans:bean id="sessionControlStrategy" class="org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy">
-	    <beans:constructor-arg ref="sessionRegistry"/>
+	<beans:bean id="sessionControlStrategy" class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy">
+	    <!-- <beans:constructor-arg ref="sessionRegistry"/> -->
 	    <!-- Uncomment below to enable unique session per user -->
 	    <!-- <beans:property name="maximumSessions" value="1"/> -->
 	</beans:bean>
