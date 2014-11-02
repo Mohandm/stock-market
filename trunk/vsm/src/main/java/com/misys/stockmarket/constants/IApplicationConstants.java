@@ -77,6 +77,10 @@ public class IApplicationConstants {
 	public static final String ALERT_TYPE_WATCH_LIST = "W";
 
 	public static final String ALERT_TYPE_NOTIFICATIONS = "N";
+	
+	public static final String GENDER_MALE = "M";
+
+	public static final String GENDER_FEMALE = "F";
 
 	public static final BigDecimal DEFAULT_LEAGUE_START_AMOUNT = BigDecimal
 			.valueOf(100000);
