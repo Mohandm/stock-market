@@ -672,3 +672,15 @@ input[type="text"].ui-grid-filter-input{
 .topRightNavigation .navbar-top-links .dropdown-theme li{
     display:block;
 }
+.fileinput .thumbnail{
+    background: rgba(0,0,0,0.35);
+}
+.fileinput .thumbnail img{
+    width : 100%;
+    height : 100%;
+}
+.fileinput .btn-default {
+    color: white;
+    background-color: rgba(0,0,0,0.3);
+    border-color: white;
+}
