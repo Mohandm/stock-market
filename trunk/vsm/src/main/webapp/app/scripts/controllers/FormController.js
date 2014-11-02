@@ -16,9 +16,6 @@ angular.module('vsmApp')
 
     $scope.formmodel.gender = 'M';
 
-    $('.fileinput').on('change.bs.fileinput', function(e){
-        console.debug(this.files);
-    });
     $('.fileinput').on('clear.bs.fileinput', function (e) {
         $scope.genderChange();
     });
@@ -80,13 +77,16 @@ angular.module('vsmApp')
                 }
                 else {
                     $http.post(action, $scope.formmodel).success(function (response) {
-                        $scope.upload = $upload.upload({
-                            url: 'registerUserProfilePic',
-                            data: {userId: response.id},
-                            file: $scope.profilePic
-                        }).success(function(data, status, headers, config) {
-                            console.log(data);
-                        });
+                        if(response.id)
+                        {
+                            $scope.upload = $upload.upload({
+                                url: 'registerUserProfilePic',
+                                data: {userId: response.id},
+                                file: $scope.profilePic
+                            }).success(function(data, status, headers, config) {
+                                console.log(data);
+                            });
+                        }
                         modals.close();
                         $location.path('/');
                     });
