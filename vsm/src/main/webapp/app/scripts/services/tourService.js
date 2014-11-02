@@ -94,7 +94,7 @@ vsmApp.service('TourService', ['$http','$rootScope', function ($http, $rootScope
             element: "#viewChampionsLeagueLeaderBoard",
             title: "Champions of League",
             content: "Click here and view Champions corresponding Leagues.",
-            placement: "top"
+            placement: "bottom"
         }
     ];
 
