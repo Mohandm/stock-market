@@ -38,5 +38,6 @@ public class ScheduledTaskUnlockLeague {
 					"Technical Error while unlocking users for Leagues: ",
 					e);
 		}
+		LOG.info("SCHEDULED TASK: UNLOCK LEAGUES FOR USERS COMPLETED");
 	}
 }
