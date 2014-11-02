@@ -1,12 +1,14 @@
 package com.misys.stockmarket.domain.entity;
 
 import java.io.Serializable;
+import java.sql.Blob;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -42,6 +44,29 @@ public class UserMaster implements BaseEntity, Serializable {
 
 	@Column(length = 2)
 	private String verified;
+	
+	@Column(length = 1)
+	private String gender;
+	
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public Blob getProfilePicture() {
+		return profilePicture;
+	}
+
+	public void setProfilePicture(Blob profilePicture) {
+		this.profilePicture = profilePicture;
+	}
+
+	@Column(name="PROFILE_PICTURE")
+	@Lob
+	private Blob profilePicture;
 
 	// bi-directional many-to-one association to OrderMaster
 	/*

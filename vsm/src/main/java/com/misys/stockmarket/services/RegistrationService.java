@@ -62,6 +62,7 @@ public class RegistrationService {
 			userMaster.setFirstName(userFormBean.getFirstName());
 			userMaster.setLastName(userFormBean.getLastName());
 			userMaster.setEmail(userFormBean.getEmail());
+			userMaster.setGender(userFormBean.getGender());
 			userMaster.setPassword(passwordEncoder.encode(userFormBean
 					.getPassword()));
 			userMaster.setVerified(IApplicationConstants.EMAIL_VERIFIED_NO);
@@ -72,7 +73,8 @@ public class RegistrationService {
 
 			return new ResponseMessage(
 					ResponseMessage.Type.success,
-					"You have been successfully registered. A verification link has been sent to your email. Please verify it to continue playing the game");
+					"You have been successfully registered. A verification link has been sent to your email. "
+					+ "Please verify it to continue playing the game", Long.toString(userMaster.getUserId()));
 		} catch (UserProfileValidationException e) {
 			LOG.error("There was a validation error while registering", e);
 			return new ResponseMessage(ResponseMessage.Type.danger,

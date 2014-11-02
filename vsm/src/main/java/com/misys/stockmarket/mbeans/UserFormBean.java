@@ -19,6 +19,16 @@ public class UserFormBean {
 	private String confirmPassword;
 
 	private String verified;
+	
+	private String gender;
+	
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 
 	public Long getUserId() {
 		return userId;

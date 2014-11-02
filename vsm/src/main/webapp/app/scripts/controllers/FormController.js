@@ -1,13 +1,49 @@
 'use strict';
  
 angular.module('vsmApp')
-  .controller('FormController',['$scope', '$location','$http','$routeParams', 'FormLoader','modals', function ($scope, $location, $http, $routeParams, FormLoader,modals)
+  .controller('FormController',['$scope', '$location','$http','$routeParams', 'FormLoader','modals','$upload',
+        function ($scope, $location, $http, $routeParams, FormLoader, modals, $upload)
   { 
        
     $scope.formmodel = {};
     $scope.formcontrol = {};
+    $scope.profilePic;
+
+    $scope.genderMappings = [
+        {"name":"Male", "type":"M"},
+        {"name":"Female", "type":"F"}
+    ];
+
+    $scope.formmodel.gender = 'M';
+
+    $('.fileinput').on('change.bs.fileinput', function(e){
+        console.debug(this.files);
+    });
+    $('.fileinput').on('clear.bs.fileinput', function (e) {
+        $scope.genderChange();
+    });
+    $scope.genderChange = function(){
+        var img;
+        if($scope.formmodel.gender === 'M')
+        {
+            img = $('<img />',{ src: 'app/images/male.jpg', alt:'male'})
+            $('.fileinput .thumbnail').html(img);
+            $('.fileinput').removeClass('fileinput-new').addClass('fileinput-exists');
+        }
+        else if($scope.formmodel.gender === 'F')
+        {
+            img = $('<img />',{ src: 'app/images/female.jpg', alt:'male'})
+            $('.fileinput .thumbnail').html(img);
+            $('.fileinput').removeClass('fileinput-new').addClass('fileinput-exists');
+        }
+    };
+    $scope.genderChange();
+
+    $scope.onFileSelect = function($files) {
+        $scope.profilePic = $files[0];
+    };
     
-     $scope.confirm = function(action){
+    $scope.confirm = function(action){
      		
  	    	var confirmMessage;
             switch(action) {
@@ -44,8 +80,15 @@ angular.module('vsmApp')
                 }
                 else {
                     $http.post(action, $scope.formmodel).success(function (response) {
+                        $scope.upload = $upload.upload({
+                            url: 'registerUserProfilePic',
+                            data: {userId: response.id},
+                            file: $scope.profilePic
+                        }).success(function(data, status, headers, config) {
+                            console.log(data);
+                        });
                         modals.close();
-                            $location.path('/'); 
+                        $location.path('/');
                     });
                 }
             }

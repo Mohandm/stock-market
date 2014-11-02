@@ -10,7 +10,7 @@
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch','ui.bootstrap','ui.grid','easypiechart','nvd3ChartDirectives']);
+    'ngTouch','ui.bootstrap','ui.grid','easypiechart','nvd3ChartDirectives','angularFileUpload']);
 
     vsmApp.config(function ($routeProvider, $httpProvider) {
         //configure the rounting of ng-view
