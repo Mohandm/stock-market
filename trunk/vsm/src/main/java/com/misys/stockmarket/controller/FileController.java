@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.misys.stockmarket.constants.IApplicationConstants; 
+import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.domain.entity.UserMaster;
 import com.misys.stockmarket.exception.service.UserServiceException;
-import com.misys.stockmarket.services.UserService; 
+import com.misys.stockmarket.services.UserService;
 
 /**
  * @author Gurudath Reddy
@@ -31,87 +31,83 @@ import com.misys.stockmarket.services.UserService;
 @Controller
 public class FileController {
 
-	private static final Log LOG = LogFactory
-			.getLog(FileController.class);
-	
+	private static final Log LOG = LogFactory.getLog(FileController.class);
+
 	@Inject
 	UserService userService;
-	
+
 	@Inject
 	ServletContext servletContext;
-	
-	@RequestMapping(value = "/registerUserProfilePic", method = RequestMethod.POST ) 
+
+	@RequestMapping(value = "/registerUserProfilePic", method = RequestMethod.POST)
 	@ResponseBody
-    public String handleFormUpload(@RequestParam("userId") String userId,
-        @RequestParam("file") MultipartFile file) {
+	public String handleFormUpload(@RequestParam("userId") String userId,
+			@RequestParam("file") MultipartFile file) {
 		try {
-			if (!file.isEmpty() && !userId.isEmpty()) 
-			{
+			if (!file.isEmpty() && !userId.isEmpty()) {
 				byte[] bytes = file.getBytes();
 				UserMaster user = userService.findById(new Long(userId));
 				Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
 				user.setProfilePicture(blob);
 				userService.updateUser(user);
-				
+
 				return "Success";
 			} else {
 				return "Failure";
 			}
 		} catch (IOException e) {
+			LOG.error(e);
+			return "Failure";
+		} catch (UserServiceException e) {
+			LOG.error(e);
+			return "Failure";
+		} catch (SQLException e) {
+			LOG.error(e);
 			return "Failure";
 		}
-		catch (UserServiceException e) {
-			return "Failure";
-		}
-		catch (SQLException e) {
-			return "Failure";
-		}
-    }
-	
-	@RequestMapping(value = "/profilePic", method =  { RequestMethod.GET,
-			RequestMethod.POST }) 
+	}
+
+	@RequestMapping(value = "/profilePic", method = { RequestMethod.GET,
+			RequestMethod.POST })
 	@ResponseBody
-    public void  profilePic(@RequestParam("userId") String userId, HttpServletResponse response) {
+	public void profilePic(@RequestParam("userId") String userId,
+			HttpServletResponse response) {
 		UserMaster user;
 		try {
 			user = userService.findById(new Long(userId));
 			Blob blob = user.getProfilePicture();
-			if(blob != null)
-			{
-				byte[] buff = blob.getBytes(1,(int)blob.length());
+			if (blob != null) {
+				byte[] buff = blob.getBytes(1, (int) blob.length());
 				response.setContentType("image/png");
-			    response.getOutputStream().write(buff);
-			}
-			else
-			{
+				response.getOutputStream().write(buff);
+			} else {
 				File imgPath;
-				if(IApplicationConstants.GENDER_MALE.equalsIgnoreCase(user.getGender()))
-				{
-					imgPath = new File(servletContext.getRealPath("/app/images/male.jpg"));
+				if (IApplicationConstants.GENDER_MALE.equalsIgnoreCase(user
+						.getGender())) {
+					imgPath = new File(
+							servletContext.getRealPath("/app/images/male.jpg"));
+				} else {
+					imgPath = new File(
+							servletContext
+									.getRealPath("/app/images/female.jpg"));
 				}
-				else
-				{
-					imgPath = new File(servletContext.getRealPath("/app/images/female.jpg"));
-				}
-				
+
 				FileInputStream fis = new FileInputStream(imgPath);
 				byte[] b = new byte[(int) imgPath.length()];
 				fis.read(b);
-				
+
 				response.setContentType("image/jpg");
-			    response.getOutputStream().write(b);
+				response.getOutputStream().write(b);
 			}
-			
+
 		} catch (UserServiceException e) {
 			LOG.error(e);
 		} catch (NumberFormatException e) {
 			LOG.error(e);
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
+			LOG.error(e);
+		} catch (IOException e) {
 			LOG.error(e);
 		}
-		catch (IOException e) {
-			LOG.error(e);
-		}
-    }
+	}
 }
