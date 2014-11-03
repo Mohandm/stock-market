@@ -92,14 +92,18 @@ public class FileController {
 				return "Failure";
 			}
 		} catch (IOException e) {
+			LOG.error(e);
 			return "Failure";
 		}
 		catch (EmailNotFoundException e) {
+			LOG.error(e);
 			return "Failure";
 		}
 		catch (SQLException e) {
+			LOG.error(e);
 			return "Failure";
 		}catch (UserServiceException e) {
+			LOG.error(e);
 			return "Failure";
 		}
     }
