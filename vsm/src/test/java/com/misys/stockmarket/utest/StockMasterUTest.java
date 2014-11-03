@@ -24,6 +24,7 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.util.Assert;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
+import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
 import com.misys.stockmarket.domain.entity.StockMaster;
@@ -83,7 +84,7 @@ public class StockMasterUTest {
 	 */
 	@Test
 	@DatabaseSetup("stockMasterSetup.xml")
-	@DatabaseTearDown("stockMasterTearDown.xml")
+	@DatabaseTearDown(value = "stockMasterTearDown.xml", type = DatabaseOperation.DELETE_ALL)
 	public final void testListAllActiveStocks() throws StockServiceException {
 		List<StockMaster> stockMasterList = stockService.listAllActiveStocks();
 		Assert.notNull(stockMasterList);
@@ -96,7 +97,7 @@ public class StockMasterUTest {
 	 */
 	@Test
 	@DatabaseSetup("stockMasterSetup.xml")
-	@DatabaseTearDown("stockMasterTearDown.xml")
+	@DatabaseTearDown(value = "stockMasterTearDown.xml", type = DatabaseOperation.DELETE_ALL)
 	public final void testListAllInActiveStocks() throws StockServiceException {
 		List<StockMaster> stockMasterList = stockService
 				.listAllInActiveStocks();
@@ -113,8 +114,8 @@ public class StockMasterUTest {
 	 */
 	@Test
 	@DatabaseSetup({ "stockMasterSetup.xml", "StockCurrentQuotesSetup.xml" })
-	@DatabaseTearDown({ "StockCurrentQuotesSetup.xml",
-			"stockMasterTearDown.xml" })
+	@DatabaseTearDown(value = { "StockCurrentQuotesSetup.xml",
+			"stockMasterTearDown.xml" }, type = DatabaseOperation.DELETE_ALL)
 	public final void testGetStockCurrentQuoteByStockSymbol()
 			throws StockServiceException {
 		StockCurrentQuotesBean stockCurrentQuotesBean = stockService

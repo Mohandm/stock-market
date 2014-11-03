@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<USER_MASTER USER_ID="1" FIRST_NAME="Sam" LAST_NAME="Sundar"
+		EMAIL="sam.sundar@gmail.com" PASSWORD="$2a$10$D2CshAeS5.8QTgiSsoCdnORRmXUelOdd9Pxj3lxYrEnjgu/nzo.f2"
+		VERIFIED="Y" GENDER="M" ACTIVE="A" />
+</dataset>
+
