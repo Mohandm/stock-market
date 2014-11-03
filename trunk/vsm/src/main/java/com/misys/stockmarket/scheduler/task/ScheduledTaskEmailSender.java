@@ -32,7 +32,7 @@ public class ScheduledTaskEmailSender {
 	@Inject
 	private EmailSenderService emailSender;
 
-	@Scheduled(fixedRate = 30000)
+	@Scheduled(fixedRateString = "${scheduler.task.EmailSender.frequency}")
 	public void sendUserActivationEmailNotification() {
 		String email = null;
 		try {

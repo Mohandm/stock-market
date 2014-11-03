@@ -33,7 +33,7 @@ public class ScheduledTaskUpdateStockHistory {
 	 * Currently hard coded to 10 mins interval TODO: Need to externalize this
 	 * configuratoin
 	 */
-	@Scheduled(fixedRate = 600000)
+	@Scheduled(fixedRateString = "${scheduler.task.UpdateStockHistory.frequency}")
 	public void updateStockHistory() {
 		LOG.info("SCHEDULED TASK: UPDATE STOCK HISTORY STARTED");
 		try {
