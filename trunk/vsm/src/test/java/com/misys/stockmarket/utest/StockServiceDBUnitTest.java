@@ -42,7 +42,7 @@ import com.misys.stockmarket.services.StockService;
 		DirtiesContextTestExecutionListener.class,
 		TransactionalTestExecutionListener.class,
 		DbUnitTestExecutionListener.class })
-public class StockMasterUTest {
+public class StockServiceDBUnitTest {
 
 	@Inject
 	private StockService stockService;
