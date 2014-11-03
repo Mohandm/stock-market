@@ -1,7 +1,5 @@
 package com.misys.stockmarket.scheduler.task;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import org.apache.commons.logging.Log;
@@ -10,7 +8,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.misys.stockmarket.exception.FinancialServiceException;
 import com.misys.stockmarket.exception.LeagueException;
 import com.misys.stockmarket.services.LeagueService;
 
@@ -28,7 +25,7 @@ public class ScheduledTaskUnlockLeague {
 	 * Currently hard coded to 10 mins interval TODO: Need to externalize this
 	 * configuratoin
 	 */
-	@Scheduled(fixedRate = 600000)
+	@Scheduled(fixedRateString = "${scheduler.task.UnlockLeague.frequency}")
 	public void unlockLeaguesForUsers() {
 		LOG.info("SCHEDULED TASK: UNLOCK LEAGUES FOR USERS STARTED");
 		try {
