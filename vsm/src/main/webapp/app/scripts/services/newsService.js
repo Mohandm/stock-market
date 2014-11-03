@@ -3,6 +3,7 @@ var vsmApp = angular.module('vsmApp');
 vsmApp.service('NewsService', ['$http', function ($http) {
 
     this.newsUrl = 'http://articlefeeds.nasdaq.com/nasdaq/symbols?symbol=';
+    //this.newsUrl = 'http://finance.yahoo.com/rss/headline?s=';
 
     this.reloadNews = function(ticker){
         if(ticker === null)

@@ -59,6 +59,7 @@ vsmApp.controller('MyPortfolioController', ['$scope', '$rootScope', '$log', 'Sto
 
             var stockListData = [];
             $($scope.stockLists).each(function(index,item){
+                console.debug(item.stockId);
                 stockListData.push({tikerSymbol : item.tikerSymbol, name : item.name, lastTradePrice : quotes[item.stockId].lastTradePriceOnly});
             });
             $scope.stockListGridOptions.data = stockListData;
