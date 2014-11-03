@@ -235,33 +235,14 @@ public class StockService {
 		Map<String, StockMaster> stockMasterByTickerMap = new HashMap<String, StockMaster>();
 		for (QuoteHistoryJSONModel quoteHistoryJSONModel : quoteHistoryJSONModelList) {
 			StockHistory stockHistory = new StockHistory();
-			if(quoteHistoryJSONModel.Close != null)
-			{
-				stockHistory.setClose(new BigDecimal(quoteHistoryJSONModel.Close));
-			}
-			if(quoteHistoryJSONModel.High != null)
-			{
-				stockHistory.setHigh(new BigDecimal(quoteHistoryJSONModel.High));
-			}
-			if(quoteHistoryJSONModel.Low != null)
-			{
-				stockHistory.setLow(new BigDecimal(quoteHistoryJSONModel.Low));
-			}
-			if(quoteHistoryJSONModel.Open != null)
-			{
-				stockHistory.setOpen(new BigDecimal(quoteHistoryJSONModel.Open));
-			}
-			if(quoteHistoryJSONModel.Date != null)
-			{
-				stockHistory.setStockDate(DateUtils.stringDateToDate(
-						quoteHistoryJSONModel.Date, YQLUtil.YQL_DATE_FORMAT));
-			}
-			
-			if(quoteHistoryJSONModel.Volume != null)
-			{
-				stockHistory.setVolume(new BigDecimal(quoteHistoryJSONModel.Volume));
-			}
-			
+			stockHistory.setClose(new BigDecimal(quoteHistoryJSONModel.Close));
+			stockHistory.setHigh(new BigDecimal(quoteHistoryJSONModel.High));
+			stockHistory.setLow(new BigDecimal(quoteHistoryJSONModel.Low));
+			stockHistory.setOpen(new BigDecimal(quoteHistoryJSONModel.Open));
+			stockHistory.setStockDate(DateUtils.stringDateToDate(
+					quoteHistoryJSONModel.Date, YQLUtil.YQL_DATE_FORMAT));
+			stockHistory
+					.setVolume(new BigDecimal(quoteHistoryJSONModel.Volume));
 			if (stockMasterByTickerMap
 					.containsKey(quoteHistoryJSONModel.Symbol)) {
 				StockMaster stockMaster = stockMasterByTickerMap
@@ -316,26 +297,14 @@ public class StockService {
 			stockCurrent.setCurrency(quoteCurrentJSONModel.Currency);
 			stockCurrent.setDaysRange(quoteCurrentJSONModel.DaysRange);
 			stockCurrent.setLastTradeDate(quoteCurrentJSONModel.LastTradeDate);
-			if(quoteCurrentJSONModel.LastTradePriceOnly != null)
-			{
-				stockCurrent.setLastTradePriceOnly(new BigDecimal(
-						quoteCurrentJSONModel.LastTradePriceOnly));
-			}
-			if(quoteCurrentJSONModel.Open != null)
-			{
-				stockCurrent.setOpen(new BigDecimal(quoteCurrentJSONModel.Open));
-			}
+			stockCurrent.setLastTradePriceOnly(new BigDecimal(
+					quoteCurrentJSONModel.LastTradePriceOnly));
 			stockCurrent.setLastTradeTime(quoteCurrentJSONModel.LastTradeTime);
-			if(quoteCurrentJSONModel.PreviousClose != null)
-			{
-				stockCurrent.setPreviousClose(new BigDecimal(
-						quoteCurrentJSONModel.PreviousClose));
-			}
-			if(quoteCurrentJSONModel.Volume != null)
-			{
-				stockCurrent.setVolume(new BigDecimal(quoteCurrentJSONModel.Volume));
-			}
-			
+			stockCurrent.setOpen(new BigDecimal(quoteCurrentJSONModel.Open));
+			stockCurrent.setPreviousClose(new BigDecimal(
+					quoteCurrentJSONModel.PreviousClose));
+			stockCurrent
+					.setVolume(new BigDecimal(quoteCurrentJSONModel.Volume));
 			stockCurrent.setYearRange(quoteCurrentJSONModel.YearRange);
 			stockCurrent.setUpdatedTimeStamp(date);
 
@@ -436,7 +405,7 @@ public class StockService {
 						JsonNode.class);
 				JsonNode quoteArray = rootNode.findValue("quote");
 				List<QuoteHistoryJSONModel> quoteHistoryJSONModels;
-				if (quoteArray != null && !quoteArray.isArray()) {
+				if (!quoteArray.isArray()) {
 					String quoteString = quoteArray.toString();
 					ObjectMapper mapperTemp = new ObjectMapper();
 					JsonNode actualObj = mapperTemp.readTree("[" + quoteString
