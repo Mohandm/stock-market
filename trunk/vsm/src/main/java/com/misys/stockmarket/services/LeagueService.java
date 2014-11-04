@@ -233,7 +233,7 @@ public class LeagueService {
 						.size()));
 				leaderBoardFormBean.setStage(String.valueOf(leagueMaster
 						.getStage()));
-				leaderBoardFormBean.setPlayers(getLeaguePlayersBasedOnRanking(leagueMaster.getLeagueId(),10));
+				leaderBoardFormBean.setPlayers(getLeaguePlayersBasedOnRanking(leagueMaster.getLeagueId(),12));
 				beanList.add(leaderBoardFormBean);
 			}
 			return beanList;

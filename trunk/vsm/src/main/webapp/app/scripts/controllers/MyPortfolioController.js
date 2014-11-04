@@ -32,12 +32,12 @@ vsmApp.controller('MyPortfolioController', ['$scope', '$rootScope', '$log', 'Sto
         StockQuotesService.getMyPortfolio($scope.leagueSelected.leagueId).then(function(data){
             $scope.myPortfolio  = data;
             $scope.getStockHoldingsDataGridOptions.data = data.stockHoldings;
-            setTimeout(function() {
+            /*setTimeout(function() {
                 $('.counter').counterUp({
                     delay: 10,
                     time: 1000
                 });
-            },1000);
+            },1000);*/
         });
         StockQuotesService.getMyRecentTrades($scope.leagueSelected.leagueId).then(function(data){
             $scope.myRecentTrades  = data;
