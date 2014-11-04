@@ -43,6 +43,19 @@ vsmApp.controller('DialogFormController', ['$scope','$http','modals', 'StockQuot
         ];
         $scope.formmodel.priceType = '01';
     }
+    else
+    {
+        $scope.priceTypeMappingsSell = [
+            {"name":"Market", "type":"01"},
+            {"name":"Limit", "type":"02"},
+            {"name":"StopLoss", "type":"03"}
+        ];
+        $scope.priceTypeMappings = [
+            {"name":"Market", "type":"01"},
+            {"name":"Limit", "type":"02"}
+        ];
+        $scope.formmodel.priceType = '01';
+    }
 
     setTimeout(function(){
         $scope.formmodel.symbol = $scope.passValuesToDialog.tikerSymbol;

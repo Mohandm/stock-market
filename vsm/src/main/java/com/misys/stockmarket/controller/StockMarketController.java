@@ -105,12 +105,35 @@ public class StockMarketController {
 	public ResponseMessage sellStock(@RequestBody OrderFormBean orderFormBean) {
 		orderFormBean.setType(IApplicationConstants.SELL_TYPE);
 		try {
+			LeagueMaster league = leagueService.getLeagueById(orderFormBean.getLeagueUserId());
+			if(league.getStage().compareTo(new BigDecimal(2)) == 0)
+			{
+				if(IApplicationConstants.ORDER_PRICE_TYPE_STOPLOSS.equals(orderFormBean
+						.getPriceType()))
+				{
+					return new ResponseMessage(ResponseMessage.Type.error,
+							"Stop Loss orders are not allowed for this league");
+				}
+			}
+			if(league.getStage().compareTo(new BigDecimal(3)) == 0)
+			{
+				if(IApplicationConstants.ORDER_PRICE_TYPE_STOPLOSS.equals(orderFormBean
+						.getPriceType()) || IApplicationConstants.ORDER_PRICE_TYPE_LIMIT.equals(orderFormBean
+								.getPriceType()))
+				{
+					return new ResponseMessage(ResponseMessage.Type.error,
+							"Stop Loss and Limit orders are not allowed for this league");
+				}
+			}
 			orderService.saveNewOrder(orderFormBean);
 			return new ResponseMessage(ResponseMessage.Type.success,
 					"Your order has been placed.");
 		} catch (OrderServiceException e) {
 			return new ResponseMessage(ResponseMessage.Type.danger,
 					"There was a technical error while processing your order. Please try again");
+		} catch (LeagueException e) {
+			return new ResponseMessage(ResponseMessage.Type.danger,
+				"There was a technical error while processing your order. Please try again");
 		}
 	}
 
