@@ -1,13 +1,13 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.controller('DialogFormController', ['$scope','$http','modals', 'StockQuotesService', function ($scope, $http, modals, StockQuotesService) {
+vsmApp.controller('DialogFormController', ['$scope','$http','modals', 'StockQuotesService','$timeout', function ($scope, $http, modals, StockQuotesService, $timeout) {
 	
     $scope.formmodel = {};
     $scope.formcontrol = {};
     $scope.formmodel.symbol = '';
     $scope.formmodel.stockHoldingVolume = '';
     $scope.leagueStage = $scope.passValuesToDialog.leagueStage;
-
+    $scope.$parentScope = $scope.passValuesToDialog.$parentScope;
     if($scope.leagueStage === "1")
     {
         $scope.priceTypeMappingsSell = [
@@ -80,6 +80,12 @@ vsmApp.controller('DialogFormController', ['$scope','$http','modals', 'StockQuot
             else {
                 $http.post(action, $scope.formmodel).success(function (response) {
                     modals.close();
+                    $timeout(function(){
+                        StockQuotesService.getMyRecentTrades($scope.formmodel.leagueUserId).then(function(data){
+                            $scope.$parentScope.myRecentTrades  = data;
+                            $scope.$parentScope.getRecentTradesDataGridOptions.data = data.recentTrades;
+                        });
+                    }, 2000);
                 });
             }
         }

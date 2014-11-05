@@ -1,7 +1,7 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.controller('FollowersController', ['$scope', '$rootScope','LeaguesService','modals','$http','TourService',
-    function ($scope, $rootScope, LeaguesService, modals, $http, TourService) {
+vsmApp.controller('FollowersController', ['$scope', '$rootScope','LeaguesService','modals','$http','TourService','$timeout',
+    function ($scope, $rootScope, LeaguesService, modals, $http, TourService, $timeout) {
 
         $scope.$scope = $scope;
 
@@ -96,28 +96,37 @@ vsmApp.controller('FollowersController', ['$scope', '$rootScope','LeaguesService
         $scope.accept = function(item){
             console.debug("Accept");
             $http.post('acceptFollowRequest',{"userId" : item.userId, "leagueId" : $scope.myLeagueSelected.leagueId}).success(function (response) {
-                //Do Nothing
+                $timeout(function(){
+                    $scope.reloadMyFollowersGrids();
+                }, 2000);
+
             });
         };
 
         $scope.reject = function(item){
             console.debug("Reject");
             $http.post('rejectFollowRequest',{"userId" : item.userId, "leagueId" : $scope.myLeagueSelected.leagueId}).success(function (response) {
-                //Do Nothing
+                $timeout(function(){
+                    $scope.reloadMyFollowersGrids();
+                }, 2000);
             });
         };
 
         $scope.disallow = function(item){
             console.debug("Disallow");
             $http.post('disallowFollowRequest',{"userId" : item.userId, "leagueId" : $scope.myLeagueSelected.leagueId}).success(function (response) {
-                //Do Nothing
+                $timeout(function(){
+                    $scope.reloadMyFollowersGrids();
+                }, 2000);
             });
         };
 
         $scope.stopFollowing = function(item){
             console.debug("StopFollowing");
             $http.post('stopFollowingRequest',{"userId" : item.userId, "leagueId" : $scope.allLeagueSelected.leagueId}).success(function (response) {
-                //Do Nothing
+                $timeout(function(){
+                    $scope.reloadYourFollowingGrids();
+                }, 2000);
             });
         };
 
