@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "LEAGUE_USER")
 @SequenceGenerator(name = "SEQ_LEAGUE_USER")
-public class LeagueUser implements BaseEntity, Serializable {
+public class LeagueUser extends AuditableEntity implements BaseEntity, Serializable {
 
 	private static final long serialVersionUID = 1L;
 

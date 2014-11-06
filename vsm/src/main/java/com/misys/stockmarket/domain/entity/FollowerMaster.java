@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "FOLLOWER_MASTER")
 @SequenceGenerator(name = "SEQ_FOLLOWER_MASTER")
-public class FollowerMaster implements BaseEntity, Serializable {
+public class FollowerMaster extends AuditableEntity implements BaseEntity, Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id

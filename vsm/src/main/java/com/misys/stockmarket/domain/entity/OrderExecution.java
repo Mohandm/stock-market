@@ -23,7 +23,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "ORDER_EXECUTION")
 @SequenceGenerator(name = "SEQ_ORDER_EXECUTION")
-public class OrderExecution implements BaseEntity, Serializable {
+public class OrderExecution extends AuditableEntity  implements BaseEntity, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id

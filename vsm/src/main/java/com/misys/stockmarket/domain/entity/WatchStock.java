@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "WATCH_STOCK")
 @SequenceGenerator(name = "SEQ_WATCH_STOCK")
-public class WatchStock implements BaseEntity, Serializable {
+public class WatchStock extends AuditableEntity implements BaseEntity, Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id

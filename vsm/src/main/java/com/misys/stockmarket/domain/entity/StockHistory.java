@@ -25,7 +25,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "STOCK_HISTORY", uniqueConstraints = { @UniqueConstraint(columnNames = {
 		"STOCK_ID", "STOCK_DATE" }) })
 @SequenceGenerator(name = "SEQ_STOCK_HISTORY")
-public class StockHistory implements BaseEntity, Serializable {
+public class StockHistory extends AuditableEntity implements BaseEntity, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id

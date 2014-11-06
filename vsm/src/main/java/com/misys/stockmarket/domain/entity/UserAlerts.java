@@ -23,7 +23,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "USER_ALERTS")
 @SequenceGenerator(name = "SEQ_USER_ALERTS")
-public class UserAlerts implements BaseEntity, Serializable {
+public class UserAlerts extends AuditableEntity implements BaseEntity, Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
