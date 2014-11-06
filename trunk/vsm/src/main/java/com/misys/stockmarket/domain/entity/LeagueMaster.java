@@ -27,7 +27,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "LEAGUE_MASTER", uniqueConstraints = { @UniqueConstraint(columnNames = { "NAME" }) })
 @SequenceGenerator(name = "SEQ_LEAGUE_MASTER")
-public class LeagueMaster implements BaseEntity, Serializable {
+public class LeagueMaster extends AuditableEntity implements BaseEntity, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
