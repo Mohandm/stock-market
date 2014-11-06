@@ -30,10 +30,6 @@ public class ScheduledTaskUpdateStockCurrentQuotes {
 	@Inject
 	private AlertsService alertsService;
 
-	/**
-	 * Currently hard coded to 10 mins interval TODO: Need to externalize this
-	 * configuratoin
-	 */
 	@Scheduled(fixedRateString = "${scheduler.task.updateStockCurrentQuotes.frequency}")
 	public void updateStockCurrentQuotes() {
 		LOG.info("SCHEDULED TASK: UPDATE STOCK CURRENT QUOTES STARTED");

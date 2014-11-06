@@ -29,10 +29,6 @@ public class ScheduledTaskUpdateStockHistory {
 	@Inject
 	private StockService stockService;
 
-	/**
-	 * Currently hard coded to 10 mins interval TODO: Need to externalize this
-	 * configuratoin
-	 */
 	@Scheduled(fixedRateString = "${scheduler.task.UpdateStockHistory.frequency}")
 	public void updateStockHistory() {
 		LOG.info("SCHEDULED TASK: UPDATE STOCK HISTORY STARTED");

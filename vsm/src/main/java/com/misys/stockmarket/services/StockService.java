@@ -300,7 +300,12 @@ public class StockService {
 			stockCurrent.setLastTradePriceOnly(new BigDecimal(
 					quoteCurrentJSONModel.LastTradePriceOnly));
 			stockCurrent.setLastTradeTime(quoteCurrentJSONModel.LastTradeTime);
-			stockCurrent.setOpen(new BigDecimal(quoteCurrentJSONModel.Open));
+			/* For some companies Open price is null : This check has no side effects*/
+			if(quoteCurrentJSONModel.Open != null)
+			{
+				stockCurrent.setOpen(new BigDecimal(quoteCurrentJSONModel.Open));
+			}
+			
 			stockCurrent.setPreviousClose(new BigDecimal(
 					quoteCurrentJSONModel.PreviousClose));
 			stockCurrent
