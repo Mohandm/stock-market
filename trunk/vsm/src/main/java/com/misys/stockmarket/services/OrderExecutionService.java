@@ -2,7 +2,9 @@ package com.misys.stockmarket.services;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -24,6 +26,8 @@ import com.misys.stockmarket.domain.entity.StockMaster;
 import com.misys.stockmarket.exception.BaseException;
 import com.misys.stockmarket.exception.DAOException;
 import com.misys.stockmarket.exception.LeagueException;
+import com.misys.stockmarket.mbeans.MyPortfolioFormBean;
+import com.misys.stockmarket.mbeans.StockHoldingFormBean;
 
 @Service("orderExecutionService")
 @Repository
@@ -46,7 +50,10 @@ public class OrderExecutionService {
 
 	@Inject
 	private LeagueService leagueService;
-
+	
+	@Inject
+	private PortfolioService portfolioService;
+	
 	public void executeOrders() {
 		List<OrderMaster> pendingOrderList;
 		try {
@@ -78,6 +85,17 @@ public class OrderExecutionService {
 				LeagueUser leagueUser = leagueService
 						.getLeagueUserById(orderMaster.getLeagueUser()
 								.getLeagueUserId());
+				MyPortfolioFormBean portfolioBean = portfolioService.getMyPortfolio(leagueUser.getLeagueMaster().getLeagueId(), 
+						leagueUser.getUserMaster().getUserId());
+				
+				List<StockHoldingFormBean> stockHoldings = portfolioBean.getStockHoldings();
+				
+				Map<String, StockHoldingFormBean> stockHoldingBySymbolMap = new HashMap<String, StockHoldingFormBean>();
+				
+				for(StockHoldingFormBean stockHolding : stockHoldings)
+				{
+					stockHoldingBySymbolMap.put(stockHolding.getTikerSymbol(), stockHolding);
+				}
 				if (IApplicationConstants.BUY_TYPE
 						.equals(orderMaster.getType())) {
 					if (leagueUser.getRemainingAmount().compareTo(
@@ -100,19 +118,29 @@ public class OrderExecutionService {
 								.setStatus(IApplicationConstants.ORDER_STATUS_INSUFFICIENT_FUNDS);
 					}
 				} else {
-					// ADD TO LEAGUE AMOUNT
-					leagueUser.setRemainingAmount(leagueUser
-							.getRemainingAmount().add(executionPrice));
-					leagueDAO.update(leagueUser);
-					// Create order execution entry
-					OrderExecution orderExecution = new OrderExecution();
-					orderExecution.setOrderMaster(orderMaster);
-					orderExecution.setUnitsTraded(volume);
-					orderExecution.setExecutionPrice(executionPrice);
-					orderExecution.setExecutionDate(new Date());
-					orderDAO.persist(orderExecution);
-					orderMaster
-							.setStatus(IApplicationConstants.ORDER_STATUS_COMPLETED);
+					StockHoldingFormBean stockBean = stockHoldingBySymbolMap.get(orderMaster.getStockMaster().getTikerSymbol());
+					if(stockBean != null && 
+							(new BigDecimal(stockBean.getVolume()).compareTo(orderMaster.getVolume()) >= 0))
+					{
+						// ADD TO LEAGUE AMOUNT
+						leagueUser.setRemainingAmount(leagueUser
+								.getRemainingAmount().add(executionPrice));
+						leagueDAO.update(leagueUser);
+						// Create order execution entry
+						OrderExecution orderExecution = new OrderExecution();
+						orderExecution.setOrderMaster(orderMaster);
+						orderExecution.setUnitsTraded(volume);
+						orderExecution.setExecutionPrice(executionPrice);
+						orderExecution.setExecutionDate(new Date());
+						orderDAO.persist(orderExecution);
+						orderMaster
+								.setStatus(IApplicationConstants.ORDER_STATUS_COMPLETED);
+					}
+					else {
+						orderMaster
+								.setStatus(IApplicationConstants.ORDER_STATUS_INSUFFICIENT_VOLUME);
+					}
+					
 				}
 				LOG.info("Completed executing the order "
 						+ orderMaster.getOrderId());

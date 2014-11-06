@@ -21,10 +21,6 @@ public class ScheduledTaskUnlockLeague {
 	@Inject
 	LeagueService leagueService;
 	
-	/**
-	 * Currently hard coded to 10 mins interval TODO: Need to externalize this
-	 * configuratoin
-	 */
 	@Scheduled(fixedRateString = "${scheduler.task.UnlockLeague.frequency}")
 	public void unlockLeaguesForUsers() {
 		LOG.info("SCHEDULED TASK: UNLOCK LEAGUES FOR USERS STARTED");

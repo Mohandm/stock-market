@@ -39,6 +39,8 @@ public class IApplicationConstants {
 	public static final String ORDER_STATUS_COMPLETED = "C";
 
 	public static final String ORDER_STATUS_INSUFFICIENT_FUNDS = "I";
+	
+	public static final String ORDER_STATUS_INSUFFICIENT_VOLUME = "I";
 
 	public static final String LEAGUE_DURATION_DAILY = "D";
 

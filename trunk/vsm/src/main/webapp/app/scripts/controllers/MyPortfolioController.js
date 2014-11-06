@@ -76,6 +76,7 @@ vsmApp.controller('MyPortfolioController', ['$scope', '$rootScope', '$log', 'Sto
     $scope.sell = function(item){
         item.leagueUserId = $scope.leagueSelected.leagueId;
         item.leagueStage = $scope.leagueSelected.stage;
+        item.$parentScope = $scope;
         modals.showForm('Sell Stocks','sellstock', item, "modal-lg");
     };
 
