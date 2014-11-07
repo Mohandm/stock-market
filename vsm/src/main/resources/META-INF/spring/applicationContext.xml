@@ -76,7 +76,11 @@
     	<property name="location" value="file:#{systemProperties['appdatapath']}/application.properties"/>
 	</bean>
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-	    <property name="username" value="misysstockmarketleague@gmail.com" />
+	    <!-- Too Enable Misys Mail comment Gmail and uncomment below lines-->
+        <property name="host" value="10.80.52.222" />
+        <property name="port" value="25" /> 
+        
+	    <!-- <property name="username" value="misysstockmarketleague@gmail.com" />
 	    <property name="password" value="hackathon" />
 	    <property name="javaMailProperties">
 		    <props>
@@ -87,11 +91,7 @@
 		        <prop key="mail.smtp.auth">true</prop>
 		        <prop key="mail.smtp.starttls.enable">true</prop>
 		    </props>
-	    </property>
-        
-        <!-- Too Enable Misys Mail comment Gmail and uncomment below lines
-        <property name="host" value="10.80.52.222" />
-        <property name="port" value="25" /> -->
+	    </property> -->
     </bean>
     
     <bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
