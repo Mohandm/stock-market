@@ -7,18 +7,19 @@
 		<ng-form name="innerform">
 			<div ng-switch on="type">
 				<div ng-switch-when="email">
-					<input type="email" ng-model="formmodel[name]" ng-required="required" class="form-control email-field" name="field"/>
+					<input type="email" ng-model="formmodel[name]" ng-required="required" ng-maxlength="35" class="form-control email-field" name="field"/>
 				</div>
 				<div ng-switch-when="password">
-					<input type="password" ng-model="formmodel[name]" ng-required="required" class="form-control password-field" name="field"/>
+					<input type="password" ng-model="formmodel[name]" ng-required="required" ng-maxlength="60" class="form-control password-field" name="field"/>
 				</div>
 				<div ng-switch-default>
-					<input type="text" ng-model="formmodel[name]" ng-required="required" class="form-control" name="field"
+					<input type="text" ng-model="formmodel[name]" ng-required="required" ng-maxlength="35" class="form-control" name="field"
 					validate validations={{validations}}>
 			    </div>
 			</div>
 			<div ng-show="innerform.field.$dirty || formcontrol.submitted">
 				<span class="help-block" ng-show = "innerform.field.$error.required">The field is required</span>
+                <span class="help-block" ng-show="innerform.field.$error.maxlength">Too long!</span>
 				<span class="help-block" ng-show = "innerform.field.$error.email">The email is not valid</span>
 				<span  class="help-block" ng-hide = "innerform.field.$error.required" ng-repeat="validation in validations track by $index">
 					<span ng-show = "innerform.field.$error.{{validation.event}}">{{validation.errorMessage}}</span>
