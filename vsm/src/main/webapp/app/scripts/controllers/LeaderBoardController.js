@@ -37,7 +37,7 @@ vsmApp.controller('LeaderBoardController', ['$scope', '$rootScope', 'modals','Le
         });
 
         $scope.listOfUsersLeague = function(league){
-            var dialogTitle = league.name +'- Top 10 Champions';
+            var dialogTitle = league.name +'- Top 12 Champions';
             modals.showForm(dialogTitle,'leagueUsersDialog', league, "modal-lg");
         };
 
