@@ -179,6 +179,10 @@
             {
                 url = 'url(app/images/background3.jpg)';
             }
+            else if(theme === 'lumen')
+            {
+                url = 'url(app/images/background4.jpg)';
+            }
             else{
                 url = 'url(app/images/background.jpg)';
             }
