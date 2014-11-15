@@ -1,0 +1,61 @@
+<div class="row blockContainer formContainer">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Sign Up</h3>
+            </div>
+            <div class="panel-body">
+                 <form class="form-horizontal" name="mainForm" role="form" novalidate ng-controller="FormController">
+                    <field-wrapper label="Email Address" type="email" name="email" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
+                    <field-wrapper label="Password" type="password" name="password" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
+                    <field-wrapper label="Confirm Password" type="password" name="confirmPassword" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
+                    <field-wrapper label="First Name" type="text" name="firstName" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
+                    <field-wrapper label="Last Name" type="text" name="lastName" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
+                    <div class="form-group">
+                         <div class="col-sm-4 control-label">
+                             <label>*Gender:</label>
+                         </div>
+                         <div class="col-sm-8"  ng-class="{'has-error': (mainForm.gender.$dirty || formcontrol.submitted) && mainForm.gender.$invalid}">
+                             <select type="text" ng-required="true" name="gender" ng-change="genderChange()"
+                                     ng-options="gender.type as gender.name for gender in genderMappings" class="form-control" ng-model="formmodel.gender">
+                             </select>
+                             <div ng-show="mainForm.gender.$dirty || formcontrol.submitted">
+                                 <span class="help-block" ng-show = "mainForm.gender.$error.required">The field is required</span>
+                             </div>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                         <div class="col-sm-4 control-label">
+                             <label>*Profile Pic:</label>
+                         </div>
+                         <div class="col-sm-8">
+                             <div class="fileinput fileinput-exists" data-provides="fileinput">
+                                 <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 150px; height: 150px;">
+
+                                 </div>
+                                 <div>
+                                     <span class="btn btn-default btn-file">
+                                        <span class="fileinput-new">Select image</span>
+                                        <span class="fileinput-exists">Change</span>
+                                        <input type="file" ng-file-select="onFileSelect($files)" accept="image/*">
+                                     </span>
+                                     <!--<a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>-->
+                                 </div>
+                             </div>
+                             <div>Upload size should not exceed 100Kb</div>
+                         </div>
+                     </div>
+                     <div class="form-group">
+                        <div class="col-sm-6"></div>
+                        <div class="col-sm-6">
+                            <div>
+                                <button type="button" class="btn btn-success" ng-click="confirm('registeruser')">Register</button>
+                                <button type="button" class="btn btn-warning" ng-click="confirm('cancel')">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                 </form>
+		    </div>
+		</div>
+	</div>
+</div>

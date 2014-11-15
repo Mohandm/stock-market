@@ -1,0 +1,136 @@
+<div class="row stock-quote-summary-panel blockContainer" ng-show="ndxTickerQuote" id="stock-quote-summary-panel-id">
+    <div class="col-md-12">
+        <div class="panel panel-default" >
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h3 class="panel-title ">NASDAQ-100 (^NDX)</h3>
+                        <div>
+                            <span class="lastTradePrice">{{ndxTickerQuote.lastTradePriceOnly}}</span>
+                            <span class="positiveChange" ng-class="{ negativeChange: ndxTickerQuote.change.indexOf('-') > -1}">
+                                <span>{{ndxTickerQuote.change}}</span>
+                                (<span>{{ndxTickerQuote.changeinPercent}}</span>)
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-md-offset-4">
+                        <div id="news-feed-ticker"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row quote-statistics-container blockContainer" ng-show="currentTickerQuote.lastTradePriceOnly">
+    <div class="row blockContainer">
+        <div class="col-md-4 col-md-offset-8 pull-right">
+            <div class="field-wrapper" id="select-symbol-dashboard-id"><label>Select Symbol:</label><select type="text" ng-change="reloadTicker()" ng-model="tickerNewsSelected" ng-options="stockList as (stockList.name+' - '+ stockList.tikerSymbol) for stockList in stockLists  | filter:{tikerSymbol:$viewValue}" class="form-control singleSelect"/></div>
+        </div>
+    </div>
+    <div class="row blockContainer" id="current-quote-data-dashboard-id">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default" >
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h3 class="panel-title ">{{tickerNewsSelected.name}} ({{tickerNewsSelected.tikerSymbol}})</h3>
+                                    <div>
+                                        <span class="lastTradePrice">{{currentTickerQuote.lastTradePriceOnly}}</span>
+                                        <span class="positiveChange" ng-class="{ negativeChange: currentTickerQuote.change.indexOf('-') > -1}">
+                                            <span>{{currentTickerQuote.change}}</span>
+                                            (<span>{{currentTickerQuote.changeinPercent}}</span>)
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-md-3 col-sm-6">
+                                <div class="field-wrapper"><label>Last Trade Time:</label><span>{{currentTickerQuote.lastTradeTime}}</span></div>
+                                <div class="field-wrapper"><label>Last Trade Date:</label><span>{{currentTickerQuote.lastTradeDate}}</span></div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="field-wrapper"><label>Net Change:</label><span>{{currentTickerQuote.change}}</span></div>
+                                <div class="field-wrapper"><label>Percentage Change:</label><span>{{currentTickerQuote.changeinPercent}}</span></div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="field-wrapper"><label>Days Range:</label><span>{{currentTickerQuote.daysRange}}</span></div>
+                                <div class="field-wrapper"><label>Year Range:</label><span>{{currentTickerQuote.yearRange}}</span></div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="field-wrapper"><label>Prev Close:</label><span>{{currentTickerQuote.previousClose}}</span></div>
+                                <div class="field-wrapper"><label>Open:</label><span>{{currentTickerQuote.open}}</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row blockContainer" >
+        <div class="col-md-3 col-sm-6 col-xs-10 col-xs-offset-2">
+	        <div class="tile quote-statistics">
+	            <div id="stats-line" class="pull-left chart-widget"></div>
+	            <div>
+	                <h2 class="h2">{{currentTickerQuote.lastTradePriceOnly}}</h2>
+	                <small class="small">Last Trade Price</small>
+	            </div>
+	        </div>
+	    </div>
+	    <div class="col-md-3 col-sm-6 col-xs-10 col-xs-offset-2" id="charts-dashboard-id">
+	        <div class="tile quote-statistics">
+	            <div id="stats-line-2" class="pull-left chart-widget"></div>
+	            <div>
+	                <h2 class="h2">{{currentTickerQuote.change}}</h2>
+	                <small class="small">Net Change</small>
+	            </div>
+	        </div>
+	    </div>
+	    <div class="col-md-3 col-sm-6 col-xs-10 col-xs-offset-2">
+	        <div class="tile quote-statistics">
+	            <div id="stats-line-3" class="pull-left chart-widget"></div>
+	            <div>
+	                <h2 class="h2">{{currentTickerQuote.daysRange}}</h2>
+	                <small class="small">Days Range</small>
+	            </div>
+	        </div>
+	    </div>
+	    <div class="col-md-3 col-sm-6 col-xs-10 col-xs-offset-2">
+	        <div class="tile quote-statistics-pie">
+	            <div easypiechart options="options" percent="currentTickerQuote.changeinPercent" class="pull-left chart-widget">
+	                <span class="percent" ng-bind="percent"></span>
+	            </div>
+	            <div>
+	                <small class="small">Percentage <br/>Change</small>
+	            </div>
+	        </div>
+	
+	    </div>
+    </div>
+</div>
+<div class="row blockContainer" ng-show="currentTickerQuote.lastTradePriceOnly">
+    <div class="col-md-6" id="historical-data-dashboard-id">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Historical Data</h3>
+            </div>
+            <div class="panel-body">
+               <!-- <div ui-grid="stockListDashboardGridOptions" class="dashboard-stock-list-grid" external-scopes="$scope"></div>-->
+                <div ui-grid="getHistoryDataGridOptions" class="historical-stock-list-grid"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6" id="news-dashboard-id">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+              <h3 class="panel-title">NASDAQ-100 News</h3>
+          </div>
+          <div class="panel-body">
+              <h3  ng-bind="tickerNewsSelected.name" class="companyTickerName"/>
+              <div id="news-feed"></div>
+          </div>
+        </div>
+    </div>
+</div>

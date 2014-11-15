@@ -1,0 +1,169 @@
+/*!
+ * Floating Share Plugin CSS v1.0.0
+ * http://www.burakozdemir.co.uk
+ * Copyright 2014 Burak Özdemir - <mail@burakozdemir.co.uk>
+ * Released under the MIT license
+ */
+
+*{
+	box-sizing: border-box;
+}
+.styleSwitcher {
+    background:rgba(0,0,0,0.25);
+    position:fixed;
+    top:30%;
+    right:-77px;
+    z-index:9999;
+    width: 75px;
+    border-radius: 0px 0px 0px 4px;
+}
+.switcher.dark{
+    background:#555;
+}
+.styleSwitcher ul li{
+    display: block;
+    padding: 5px;
+}
+.styleSwitcher ul {
+    display:block;
+    padding:10px;
+    margin:0
+}
+/*.styleSwitcher ul li a {
+    display:block;
+    text-indent:-3000px;
+    overflow:hidden;
+    border:1px solid #555;
+    width:20px;
+    height:20px;
+    margin:0 5px 5px 0;
+}*/
+.styleSwitcher h1 {
+    padding:0 0 0 10px;
+    font-size:14px;
+    text-transform:uppercase;
+    border:none;
+    text-align:right;
+    margin: 15px 15px 0px 0px;
+    color: white;
+}
+.styleSwitcher h1:after {
+    content:none;
+}
+.styleSwitcher #showHideSwitcher{
+    outline:none;
+    width:50px;
+    height:50px;
+    position:absolute;
+    left:-50px;
+    top:0;
+    font-size:24px;
+    text-align:center;
+    line-height:50px;
+    color:white;
+    border-radius: 8px 0px 0px 8px;
+    background: rgba(0,0,0,0.25);
+}
+#floatingShare ul a{
+    position: relative;
+    width:42px;
+    height: 42px;
+    display:list-item;
+    list-style-type: none;
+    text-align: center;
+}
+#floatingShare ul a, #floatingShare ul a:focus, #floatingShare ul a:hover {
+    color: #fff;
+}
+#floatingShare ul a, #floatingShare ul a:visited, #floatingShare ul a:focus, #floatingShare ul a:active, #floatingShare ul a:hover {
+    outline: 0 none !important;
+}
+/*
+#floatingShare{
+    position: relative;
+    text-align: center;
+}
+
+*/
+
+/* icon sizes */
+#floatingShare i{
+    line-height: inherit;
+    font-size: 24px;
+    text-align: center;
+}
+
+/*#floatingShare .top-left{
+    position: fixed;
+    top: 30%;
+    left:0;
+}
+
+#floatingShare .top-right{
+    position: fixed;
+    top: 30%;
+    right:0;
+}*/
+
+/* facebook */
+
+#floatingShare .feysbuk{
+    background-color: #3b5998;
+    border-radius: 8px;
+}
+
+/* twitter */
+
+#floatingShare .tivitir{
+    background-color: #00aced;
+    border-radius: 8px;
+}
+
+/* google plus */
+
+#floatingShare .gogil{
+    background-color: #dd4b39;
+    border-radius: 8px;
+}
+
+/* linkedin */
+
+#floatingShare .linktin{
+    background-color: #007bb6;
+    border-radius: 8px;
+}
+
+/* envelope */
+
+#floatingShare .meyil{
+    background-color: #726C6C;
+    border-radius: 8px;
+}
+
+/* pinterest */
+
+#floatingShare .pinter{
+    background-color: #c92228;
+    border-radius: 8px;
+}
+
+/* stumble upon */
+
+#floatingShare .stambul{
+    background-color: #eb4924;
+    border-radius: 8px;
+}
+
+#floatingShare .shareCount{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    color: #dddddd;
+    font-size:  10px;
+}
+
+#floatingShare .mtop5{
+    margin-top: 5px;
+}

@@ -1,0 +1,41 @@
+{
+    "menus" :
+        [
+            {"name" : "Home", "url" : "#"},
+            {"name" : "Page Designer", "url" : "#pageDesigner"},
+            {"name" : "Form Designer", "url" : "#formDesigner"},
+            {"name" : "Layout Designer", "url" : "#layoutDesigner", "isBranched" : true, "className" : "dropdown-submenu", "sub" :
+                [
+                    {"name" : "Test1", "url" : "#"},
+                    {"name" : "Test2", "url" : "#"},
+                    {"divider" : "divider"},
+                    {"name" : "Test3", "url" : "#", "isBranched" : true , "className" : "dropdown-submenu", "sub" :
+                        [
+                            {"name" : "Test11", "url" : "#"},
+                            {"divider" : "divider"},
+                            {"name" : "Test21", "url" : "#"},
+                            {"divider" : "divider"},
+                            {"name" : "Test31", "url" : "#", "isBranched" : true ,"className" : "dropdown-submenu", "sub" :
+                                [
+                                    {"name" : "Test12", "url" : "#", "isBranched" : true , "className" : "dropdown-submenu", "sub" :
+                                        [
+                                            {"name" : "Test13", "url" : "#"},
+                                            {"divider" : "divider"},
+                                            {"name" : "Test23", "url" : "#formDesigner"},
+                                            {"divider" : "divider"},
+                                            {"name" : "Test33", "url" : "#"}
+                                        ]
+                                    },
+                                    {"name" : "Test22", "url" : "#"},
+                                    {"divider" : "divider"},
+                                    {"name" : "Test32", "url" : "#"}
+                                ]
+                            },
+                            {"name" : "Test41", "url" : "#formDesigner"},
+                            {"name" : "Test51", "url" : "#"}
+                        ]
+                    }
+                ]
+            }
+        ]
+}

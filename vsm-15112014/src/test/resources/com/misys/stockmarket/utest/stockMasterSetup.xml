@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<STOCK_MASTER STOCK_ID="1" NAME="Apple Inc." TIKER_SYMBOL="AAPL"
+		ACTIVE="A" />
+	<STOCK_MASTER STOCK_ID="2" NAME="Yahoo! Inc."
+		TIKER_SYMBOL="YHOO" ACTIVE="A" />
+	<STOCK_MASTER STOCK_ID="3" NAME="NASDAQ 100" TIKER_SYMBOL="^NDX"
+		ACTIVE="I" />
+</dataset>
+

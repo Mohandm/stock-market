@@ -1,0 +1,24 @@
+{
+    "recentTrades" : [
+        {"tikerSymbol" : "AAPL", "dateTime" : "15/10/2014", "quantity" : "101.62", "orderType" : "buy"},
+        {"tikerSymbol" : "AAPL", "dateTime" : "16/10/2014", "quantity" : "101.62", "orderType" : "sell"},
+        {"tikerSymbol" : "AAPL", "dateTime" : "14/10/2014", "quantity" : "101.62", "orderType" : "buy"},
+        {"tikerSymbol" : "AAPL", "dateTime" : "13/10/2014", "quantity" : "101.62", "orderType" : "buy"},
+        {"tikerSymbol" : "AAPL", "dateTime" : "12/10/2014", "quantity" : "101.62", "orderType" : "buy"},
+        {"tikerSymbol" : "AAPL", "dateTime" : "11/10/2014", "quantity" : "101.62", "orderType" : "buy"},
+        {"tikerSymbol" : "AAPL", "dateTime" : "01/10/2014", "quantity" : "101.62", "orderType" : "buy"},
+        {"tikerSymbol" : "AAPL", "dateTime" : "05/10/2014", "quantity" : "101.62", "orderType" : "buy"},
+        {"tikerSymbol" : "AAPL", "dateTime" : "14/10/2014", "quantity" : "101.62", "orderType" : "sell"},
+        {"tikerSymbol" : "AAPL", "dateTime" : "12/10/2014", "quantity" : "101.62", "orderType" : "buy"},
+        {"tikerSymbol" : "AAPL", "dateTime" : "15/10/2014", "quantity" : "101.62", "orderType" : "buy"},
+        {"tikerSymbol" : "AAPL", "dateTime" : "16/10/2014", "quantity" : "101.62", "orderType" : "sell"},
+        {"tikerSymbol" : "AAPL", "dateTime" : "14/10/2014", "quantity" : "101.62", "orderType" : "buy"},
+        {"tikerSymbol" : "AAPL", "dateTime" : "13/10/2014", "quantity" : "101.62", "orderType" : "buy"},
+        {"tikerSymbol" : "AAPL", "dateTime" : "12/10/2014", "quantity" : "101.62", "orderType" : "buy"},
+        {"tikerSymbol" : "AAPL", "dateTime" : "11/10/2014", "quantity" : "101.62", "orderType" : "buy"},
+        {"tikerSymbol" : "AAPL", "dateTime" : "01/10/2014", "quantity" : "101.62", "orderType" : "buy"},
+        {"tikerSymbol" : "AAPL", "dateTime" : "05/10/2014", "quantity" : "101.62", "orderType" : "buy"},
+        {"tikerSymbol" : "AAPL", "dateTime" : "14/10/2014", "quantity" : "101.62", "orderType" : "sell"},
+        {"tikerSymbol" : "AAPL", "dateTime" : "12/10/2014", "quantity" : "101.62", "orderType" : "buy"}
+    ]
+}

@@ -1,0 +1,87 @@
+<div ng-controller="DialogFormController">
+	<div class="row">
+			<div class="col-sm-12 page-content">
+				<!-- Page Content Panel -->
+				<div class="panel">
+			    <div class="panel-body">
+					 <form class="form-horizontal" name="mainForm" role="form" novalidate>
+					 	<!--<div class="form-group">
+							<div class="col-sm-4 control-label">
+							 	<label>*Stock Symbol:</label>
+							</div> 
+						 	<div class="col-sm-8" ng-class="{'has-error': (mainForm.symbol.$dirty || formcontrol.submitted) && mainForm.symbol.$invalid}">
+						 		<select type="text" ng-required="true" name="symbol"	
+								ng-options="stockList.tikerSymbol as (stockList.name+' - '+ stockList.tikerSymbol) for stockList in stockLists" class="form-control" ng-model="formmodel.symbol">
+								</select>
+								<div ng-show="mainForm.symbol.$dirty || formcontrol.submitted">
+									<span class="help-block" ng-show = "mainForm.symbol.$error.required">The field is required</span>
+								</div>
+							</div>
+						</div>-->
+                         <div class="form-group">
+                             <div class="col-sm-4 control-label">
+                                 <label>Stock Symbol:</label>
+                             </div>
+                             <div class="col-sm-8 control-value">
+                                 <label>{{passValuesToDialog.tikerSymbol}}</label>
+                             </div>
+                         </div>
+                         <div class="form-group">
+                             <div class="col-sm-4 control-label">
+                                 <label>Company:</label>
+                             </div>
+                             <div class="col-sm-8 control-value">
+                                 <label>{{passValuesToDialog.name}}</label>
+                             </div>
+                         </div>
+                         <div class="form-group">
+                             <div class="col-sm-4 control-label">
+                                 <label>Current Price:</label>
+                             </div>
+                             <div class="col-sm-8 control-value">
+                                 <label>{{passValuesToDialog.lastTradePrice}}</label>
+                             </div>
+                         </div>
+					 	
+					 	<field-wrapper label="Volume" type="text" name="volume" required="true" formmodel="formmodel" 	formcontrol="formcontrol" validations='[{"validator":"isNumber","event":"isNumber","errorMessage":"It should be a number", "scopeValue":"symbol"}]'></field-wrapper>
+						
+						<div class="form-group">
+							<div class="col-sm-4 control-label">
+							 	<label>*Price Type:</label>
+							</div> 
+						 	<div class="col-sm-8"  ng-class="{'has-error': (mainForm.priceType.$dirty || formcontrol.submitted) && mainForm.priceType.$invalid}">
+							 	<select type="text" ng-required="true" name="priceType"
+								ng-options="priceType.type as priceType.name for priceType in priceTypeMappings" class="form-control" ng-model="formmodel.priceType">
+								</select>
+								<div ng-show="mainForm.priceType.$dirty || formcontrol.submitted">
+									<span class="help-block" ng-show = "mainForm.priceType.$error.required">The field is required</span>
+								</div>
+							</div>
+						</div>
+					 	
+					 	<field-wrapper label="Price" type="text" name="orderPrice" required="isNotMarket()" formmodel="formmodel" formcontrol="formcontrol" ng-show="isNotMarket()" validations='[{"validator":"isNumber","event":"isNumber","errorMessage":"It should be a number", "scopeValue":"symbol"}]'></field-wrapper>
+					 	
+					 	<!--<div class="form-group" ng-show="isNotMarket()">
+							<div class="col-sm-4 control-label">
+							 	<label>*Intraday:</label>
+							</div> 
+						 	<div class="col-sm-8"  ng-class="{'has-error': (mainForm.intraday.$dirty || formcontrol.submitted) && mainForm.intraday.$invalid}">
+					       		<select type="text" ng-required="isNotMarket()" name="intraday"
+								ng-options="option.value as option.title for option in intraDayOptions" 
+								class="form-control" ng-model="formmodel.intraday" >
+								</select>
+								<div ng-show="mainForm.intraday.$dirty || formcontrol.submitted">
+									<span class="help-block" ng-show = "mainForm.intraday.$error.required">The field is required</span>
+								</div>
+							</div>
+						</div>-->
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-success" ng-click="perform('buystock')">Buy</button>
+		<button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+	</div>
+</div>

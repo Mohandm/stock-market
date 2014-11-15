@@ -1,0 +1,23 @@
+<div class="row blockContainer">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Login</h3>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal" name="mainForm" role="form" ng-controller="LoginController"
+                      novalidate>
+                    <span class="help-block" ng-show="formcontrol.haserror">Invalid credentials. Please try again.</span>
+                    <field-wrapper label="Email Address" type="email" name="email" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
+                    <field-wrapper label="Password" type="password" name="password" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
+                    <div class="form-group">
+                        <div class="col-sm-6"></div>
+                        <div class="col-sm-6">
+                           <button type="button" id="login-button-id" class="btn btn-success" ng-click="login()">Login</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+	</div>
+</div>

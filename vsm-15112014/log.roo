@@ -1,0 +1,10 @@
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-09-22 19:03:14
+project --topLevelPackage com.misys.stockmarket
+jpa setup --database MSSQL --provider HIBERNATE 
+web mvc setup
+web mvc json all
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-09-23 09:41:03
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log closed at 2014-09-23 09:41:23
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-09-23 11:23:10
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-09-23 11:23:43
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2014-09-23 11:24:36
