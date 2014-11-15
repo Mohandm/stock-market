@@ -12,9 +12,12 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.misys.stockmarket.constants.IApplicationConstants;
+import com.misys.stockmarket.domain.entity.UserInvitation;
 import com.misys.stockmarket.domain.entity.UserMaster;
 import com.misys.stockmarket.exception.EmailSenderServiceException;
+import com.misys.stockmarket.exception.service.InvitationServiceException;
 import com.misys.stockmarket.exception.service.UserServiceException;
+import com.misys.stockmarket.services.InvitationService;
 import com.misys.stockmarket.services.UserService;
 import com.misys.stockmarket.services.email.EmailSenderService;
 import com.misys.stockmarket.utility.EmailFormatter;
@@ -28,6 +31,9 @@ public class ScheduledTaskEmailSender {
 
 	@Inject
 	private UserService userService;
+
+	@Inject
+	private InvitationService invitationService;
 
 	@Inject
 	private EmailSenderService emailSender;
@@ -52,6 +58,35 @@ public class ScheduledTaskEmailSender {
 				userService.updateUser(userMaster);
 			}
 		} catch (UserServiceException e) {
+			LOG.error(
+					"Encountered Error while sending User Verfication Email Notification to email address: "
+							+ email, e);
+		} catch (EmailSenderServiceException e) {
+			LOG.error(
+					"Encountered Error while sending User Verfication Email Notification to email address: "
+							+ email, e);
+		}
+	}
+
+	@Scheduled(fixedRateString = "${scheduler.task.EmailSender.frequency}")
+	public void sendUserInvitationEmailNotification() {
+		String email = null;
+		try {
+			List<UserInvitation> userInvitationList = invitationService
+					.findAllPendingUserInvitationEmailNotifications();
+			for (UserInvitation userInvitation : userInvitationList) {
+				// SEND INVITATION EMAIL
+				email = userInvitation.getEmail();
+				LOG.info("Sending Invitation to Email Address: " + email);
+				SimpleMailMessage message = EmailFormatter
+						.generateInvitationMessage(userInvitation);
+				emailSender.sendEmail(message);
+				LOG.info("Invitation has been sent to email address: " + email);
+				userInvitation
+						.setAccepted(IApplicationConstants.USER_EMAIL_SENT);
+				invitationService.update(userInvitation);
+			}
+		} catch (InvitationServiceException e) {
 			LOG.error(
 					"Encountered Error while sending User Verfication Email Notification to email address: "
 							+ email, e);

@@ -148,6 +148,9 @@
                             <li ng-show="isAuthenticated()">
                                 <a href="#form/userprofile"><i class="fa fa-user fa-fw"></i> User Profile</a>
                             </li>
+                            <li ng-controller="LoginController" ng-show="isAuthenticated()">
+                                <a ng-click="inviteUser()"><i class="fa fa-sign-out fa-fw"></i> Invite Friends</a>
+                            </li>
                             <li>
                                 <a ng-click="startTour()"><i class="fa fa-binoculars fa-fw"></i> Tour</a>
                             </li>

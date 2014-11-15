@@ -89,4 +89,9 @@ public class IApplicationConstants {
 
 	public static final BigDecimal DEFAULT_LEAGUE_QUALIFYING_AMOUNT = BigDecimal
 			.valueOf(75000);
+
+	public static final String INVITATION_ACCEPTED_YES = "Y";
+
+	public static final String INVITATION_ACCEPTED_NO = "N";
+
 }
