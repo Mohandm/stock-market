@@ -39,7 +39,7 @@ public class IApplicationConstants {
 	public static final String ORDER_STATUS_COMPLETED = "C";
 
 	public static final String ORDER_STATUS_INSUFFICIENT_FUNDS = "I";
-	
+
 	public static final String ORDER_STATUS_INSUFFICIENT_VOLUME = "I";
 
 	public static final String LEAGUE_DURATION_DAILY = "D";
@@ -79,7 +79,7 @@ public class IApplicationConstants {
 	public static final String ALERT_TYPE_WATCH_LIST = "W";
 
 	public static final String ALERT_TYPE_NOTIFICATIONS = "N";
-	
+
 	public static final String GENDER_MALE = "M";
 
 	public static final String GENDER_FEMALE = "F";
@@ -94,4 +94,7 @@ public class IApplicationConstants {
 
 	public static final String INVITATION_ACCEPTED_NO = "N";
 
+	public static final String REWARD_TYPE_ACHIEVEMENT = "A";
+
+	public static final String REWARD_TYPE_REFERAL = "R";
 }
