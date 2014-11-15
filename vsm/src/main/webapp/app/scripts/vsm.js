@@ -169,23 +169,33 @@
             var url;
             if(theme === 'wooden')
             {
-                url = 'url(app/images/background2.jpg)';
+                url = 'url(app/images/wooden.jpg)';
             }
-            else if(theme === 'purple')
+            else if(theme === 'capital')
             {
-                url = 'url(app/images/background1.jpg)';
+                url = 'url(app/images/capital.jpg)';
             }
-            else if(theme === 'blue')
+            else if(theme === 'risk')
             {
-                url = 'url(app/images/background3.jpg)';
+                url = 'url(app/images/risk.jpg)';
+            }
+            else if(theme === 'investment')
+            {
+                url = 'url(app/images/investment.jpg)';
             }
             else if(theme === 'lumen')
             {
-                url = 'url(app/images/background4.jpg)';
+                url = 'url(app/images/lumen.jpg)';
             }
-            else{
-                url = 'url(app/images/background.jpg)';
+            else if(theme === 'misys')
+            {
+                url = 'url(app/images/misys.jpg)';
             }
+            else
+            {
+                url = 'url(app/images/banking.jpg)';
+            }
+
             $('.appBody').css('background',url);
             //$('.modal-content').css('background',url);
             $('.appBody').css('background-size','100% 100%');
