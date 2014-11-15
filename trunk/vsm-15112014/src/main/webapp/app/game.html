@@ -1,0 +1,331 @@
+<!doctype html>
+<html class="no-js">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>Misys - Stock Market League</title>
+        <meta name="description" content="A Game to Enthrall and Engage you on Stock Markets!">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!-- build:css(.) styles/vendor.css -->
+        <!-- bower:css -->
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="app/scripts/thirdparty/ui-grid/ui-grid-unstable.min.css"/>
+        <link rel="stylesheet" href="app/scripts/thirdparty/news-ticker/jquery.breakingNews.css"/>
+        <link rel="stylesheet" href="app/scripts/thirdparty/charts/nv.d3.min.css"/>
+        <link rel="stylesheet" href="app/scripts/thirdparty/tour/bootstrap-tour.min.css"/>
+        <link rel="stylesheet" href="app/scripts/thirdparty/file-upload-bootstrap/jasny-bootstrap.min.css"/>
+
+        <!-- endbower -->
+        <!-- endbuild -->
+
+        <!-- Custom Fonts -->
+        <link href="app/styles/font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="app/styles/simple-sidebar.css">
+        <link rel="stylesheet" href="app/scripts/thirdparty/social-share/floating-share.css">
+        
+		<!-- build:css(.tmp) styles/app.css -->
+        <link rel="stylesheet" href="app/styles/transitions.css">
+        <link rel="stylesheet" href="app/styles/app.css">
+        <!-- endbuild -->
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.website/js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body ng-app="vsmApp" class="appBody">
+        <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div class="topNavigation">
+            <a href="#menu-toggle" id="menu-toggle" class="pull-left custom-icon" ><i class="fa fa-bars fa-2x"></i></a>
+            <a class="logo pull-left" href="../stockmarket"><img src="app/images/misys_logo_white.png" alt="Misys - Stock Market League"/></a>
+            <div class="topRightNavigation">
+                <ul class="nav navbar-top-links navbar-right">
+                    <li class="dropdown" ng-show="isAuthenticated()">
+                        <a class="dropdown-toggle" data-toggle="dropdown" >
+                            <i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-messages">
+                            <li ng-repeat="alert in notificationsList | limitTo:5">
+                                <a href="#/followers">
+                                    <div>
+                                        <i class="fa fa-group fa-fw"></i> {{alert.message}}
+                                        <span class="pull-right text-muted small">{{alert.notifiedDate}}</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+
+                            <li>
+                                <a class="text-center" href="#/alerts">
+                                    <strong>See All Requests</strong>
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-follow-requests -->
+                    </li>
+                    <!-- /.dropdown -->
+                    <li class="dropdown" ng-show="isAuthenticated()">
+                        <a class="dropdown-toggle" data-toggle="dropdown" >
+                            <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-messages">
+
+                                <li ng-repeat="alert in alertsList | limitTo:5">
+                                    <a href="#/alerts">
+                                        <div>
+                                            <i class="fa fa-envelope fa-fw"></i> {{alert.message}}
+                                            <span class="pull-right text-muted small">{{alert.notifiedDate}}</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+
+                            <li>
+                                <a class="text-center" href="#/alerts">
+                                    <strong>See All Alerts</strong>
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-alerts -->
+                    </li>
+                    <!-- /.dropdown -->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-paint-brush fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-theme">
+                            <h4>Select Theme</h4>
+                            <li>
+                                <a ng-click="setTheme('orange')">Orange</a>
+                            </li>
+                            <li>
+                                <a ng-click="setTheme('purple')">Purple</a>
+                            </li>
+                            <li>
+                                <a ng-click="setTheme('wooden')">Wooden</a>
+                            </li>
+                            <li>
+                                <a ng-click="setTheme('blue')">Blue</a>
+                            </li>
+                            <li>
+                                <a ng-click="setTheme('lumen')">Lumen</a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-user -->
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li ng-show="!isAuthenticated()">
+                                <a href="#form/registration"><i class="fa fa-user fa-fw"></i> Register</a>
+                            </li>
+                            <li ng-show="!isAuthenticated()">
+                                <a href="#form/resetpassword"><i class="fa fa-user fa-fw"></i> Forgot Password</a>
+                            </li>
+                            <li ng-show="!isAuthenticated()">
+                                <a href="#form/login"><i class="fa fa-user fa-fw"></i> Login</a>
+                            </li>
+                            <li ng-show="isAuthenticated()">
+                                <a href="#form/changepassword"><i class="fa fa-gear fa-fw"></i> Change Password</a>
+                            </li>
+                            <li ng-show="isAuthenticated()">
+                                <a href="#form/userprofile"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                            </li>
+                            <li>
+                                <a ng-click="startTour()"><i class="fa fa-binoculars fa-fw"></i> Tour</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li ng-controller="LoginController" ng-show="isAuthenticated()">
+                                <a ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-user -->
+                    </li>
+                    <!-- /.dropdown -->
+                </ul>
+               <!-- <div id="time" class="pull-right">
+                    <span id="hours"></span>
+                    :
+                    <span id="min"></span>
+                    :
+                    <span id="sec"></span>
+                </div>-->
+            </div>
+        </div>
+        <div id="wrapper" class="toggled">
+
+            <!-- Sidebar -->
+            <div id="sidebar-wrapper">
+                <ul class="nav navbar-top-links">
+                    <li>
+                        <a href="../stockmarket" class="nav-a-side-bar">
+                            <i class="fa fa-home fa-fw"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="game" class="nav-a-side-bar">
+                            <i class="fa fa-th-large fa-fw"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#/charts" class="nav-a-side-bar">
+                            <i class="fa fa-line-chart fa-fw"></i>
+                            Stock Comparison
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#/leaderBoard" class="nav-a-side-bar">
+                            <i class="fa fa-trophy fa-fw"></i>
+                            Leader Board
+                        </a>
+                    </li>
+                    <li ng-show="isAuthenticated()">
+                        <a href="#/leagues" class="nav-a-side-bar">
+                            <i class="fa fa-flag-checkered fa-fw"></i>
+                            Leagues
+                        </a>
+                    </li>
+
+                    <li ng-show="isAuthenticated()">
+                        <a href="#/myPortfolio" class="nav-a-side-bar">
+                            <i class="fa fa-usd fa-fw"></i>
+                            My Portfolio
+                        </a>
+                    </li>
+                    <li ng-show="isAuthenticated()">
+                        <a href="#/watchList" class="nav-a-side-bar">
+                            <i class="fa fa-bullhorn fa-fw"></i>
+                            Watch List
+                        </a>
+                    </li>
+                    <li ng-show="isAuthenticated()">
+                        <a href="#/followers" class="nav-a-side-bar">
+                            <i class="fa fa-group fa-fw"></i>
+                            Followers
+                        </a>
+                    </li>
+                    <li ng-show="isAuthenticated()">
+                        <a href="#/alerts" class="nav-a-side-bar">
+                            <i class="fa fa-bell fa-fw"></i>
+                            Alerts
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /#sidebar-wrapper -->
+        </div>
+        <!-- Add your site or application content here -->
+        <div class="page-container">
+            <div ng-show="message().show">
+                <alert type="message().type" close="message().show=false">{{message().text}}</alert>
+            </div>
+            <div login-dialog ng-view="" ng-class="{animateTransition: animateTransition }"></div>
+        </div>
+        <!--<div id="footer">
+            <div class="container">
+                <p class="text-muted"><i class="fa fa-copyright"></i> Misys 2014 </p>
+            </div>
+        </div>-->
+
+        <!-- build:js(.) scripts/oldieshim.js -->
+        <!--[if lt IE 9]>
+        <script src="bower_components/es5-shim/es5-shim.js"></script>
+        <script src="bower_components/json3/lib/json3.min.js"></script>
+        <![endif]-->
+        <!-- endbuild -->
+
+        <!-- build:js(.) scripts/vendor.js -->
+        <!-- bower:js -->
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="app/scripts/thirdparty/file-upload-bootstrap/angular-file-upload-shim.min.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/json3/lib/json3.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="bower_components/angular-resource/angular-resource.js"></script>
+        <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+        <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.js"></script>
+        <script src="bower_components/angular-touch/angular-touch.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+        <script src="app/scripts/thirdparty/ui-bootstrap-tpls-0.10.0.js"></script>
+        <script src="app/scripts/thirdparty/ui-grid/ui-grid-unstable.min.js"></script>
+        <script src="app/scripts/thirdparty/feeds.min.js"></script>
+        <script src="app/scripts/thirdparty/charts/jquery.sparkline.min.js"></script>
+        <script src="app/scripts/thirdparty/news-ticker/jquery.breakingNews.js"></script>
+        <script src="app/scripts/thirdparty/charts/angular.easypiechart.min.js"></script>
+        <script src="app/scripts/thirdparty/jquery.easing.min.js"></script>
+        <script src="app/scripts/thirdparty/social-share/jquery.floating-share.js"></script>
+        <script src="app/scripts/thirdparty/charts/d3.min.js"></script>
+        <script src="app/scripts/thirdparty/charts/nv.d3.min.js"></script>
+        <script src="app/scripts/thirdparty/charts/angularjs-nvd3-directives.min.js"></script>
+        <script src="app/scripts/thirdparty/tour/bootstrap-tour.min.js"></script>
+        <script src="app/scripts/thirdparty/counter/jquery.counterup.min.js"></script>
+        <script src="app/scripts/thirdparty/counter/waypoints.min.js"></script>
+        <script src="app/scripts/thirdparty/file-upload-bootstrap/jasny-bootstrap.min.js"></script>
+        <script src="app/scripts/thirdparty/file-upload-bootstrap/angular-file-upload.min.js"></script>
+        <!-- endbower -->
+        <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <!-- main app -->
+        <script src="app/scripts/vsm.js"></script>
+        <script src="app/scripts/common.js"></script>
+        
+        <!-- constants -->
+        <script src="app/scripts/constants/AuthEvents.js"></script>
+        
+        <!-- controllers -->
+        <script src="app/scripts/controllers/DashboardController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/FormController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/FormSelectorController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/ActionController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/MyPortfolioController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/ChartsController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/TradesController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/DialogFormController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/WatchListController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/LoginController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/FollowersController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/LeaderBoardController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/LeaguesController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/AlertsController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/UserProfileController.js"></script>
+
+
+        <!-- directives -->
+        <script type="text/javascript" src="app/scripts/directives/dropdown-menu.js"></script>
+        <script type="text/javascript" src="app/scripts/directives/top-navigation-bar.js"></script>
+        <script type="text/javascript" src="app/scripts/directives/validation.js"></script>
+        <script type="text/javascript" src="app/scripts/directives/field-wrapper.js"></script>
+        <script type="text/javascript" src="app/scripts/directives/login-dialog.js"></script>
+
+        <!-- services -->
+        <script type="text/javascript" src="app/scripts/services/formLoaderService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/modalDialogService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/validatorService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/newsService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/dashboardService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/stockQuotesService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/chartService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/alertsService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/AuthInterceptorService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/AuthService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/tourService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/leaguesService.js"></script>
+        <!-- endbuild -->
+    </body>
+</html>

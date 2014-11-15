@@ -1,0 +1,695 @@
+/* Space out content a bit */
+body {
+  background: url(../images/background.jpg);
+  background-size: 100% 100%;
+  background-attachment: fixed;
+}
+
+body > .page-container {
+    padding: 80px 20px 30px 60px;
+}
+
+@media (max-width: 780px)
+{
+    body > .page-container {
+    	padding: 120px 10px 50px 10px;
+	}
+}
+
+a{
+    color : white;
+}
+
+a:hover, a:focus{
+    color : orange;
+    text-decoration: none;
+}
+h1,.h1, h3, .h3, h2, .h2{
+    color : white;
+}
+label{
+    margin-right : 5px;
+    color : white;
+}
+button{
+    background: rgba(0,0,0,0.35);
+    border: 1px solid white;
+}
+
+@media (min-width: 768px) {
+    .col-xs-offset-2{
+        margin-left:0px;
+    }
+}
+
+/*Original Bootstrap's CSS depends on empty href attributes to style cursors for several components (pagination, tabs etc.).
+But in AngularJS adding empty href attributes to link tags will cause unwanted route changes.
+This is why we need to remove empty href attributes from directive templates and as a result styling is not applied correctly.
+The remedy is simple, just add the following styling to your application:*/
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+#footer > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+code {
+    font-size: 80%;
+}
+
+.container .text-muted {
+    margin: 20px 0;
+}
+
+
+/* Sticky footer styles : Start */
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+}
+#footer .text-muted {
+    color: #2c717f;
+}
+/* Sticky footer styles : End */
+
+/* Common Style Classes : Start */
+.custom-border {
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+#time{
+    color : white;
+    font-size : 20px;
+    padding : 10px;
+}
+.form-control{
+    display:inline-block;
+    margin-bottom: 5px;
+    background-color : rgba(0,0,0,0.2);
+    color : white;
+}
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control{
+   background-color : rgba(0,0,0,0.4);
+    color : white;
+}
+.control-label{
+    text-align: right;
+    padding-top: 6px;
+}
+.control-value{
+    padding-top: 7px;
+}
+
+select > option {
+    background: white;
+    color: black;
+}
+
+@media (max-width: 780px) {
+    .control-label{
+        text-align: left;
+    }
+}
+.formContainer{
+    margin-top:100px;
+}
+/* Common Style Classes : End */
+
+
+/*Top Header Styles : Start*/
+.top-header-left-container{
+    height : 60px;
+}
+#menu-toggle{
+    padding : 15px 15px 10px 15px;
+    background-color: rgba(0,0,0,0.5);
+    height : 60px;
+    text-align: center;
+    float: left;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.logo{
+    background: rgba(0, 0, 0, 0.85);
+    width: 220px;
+    height: 60px;
+    padding-left : 60px;
+    text-align: center;
+}
+@media (max-width: 780px)
+{
+    .logo {
+        width: 100%;
+        margin: 0;
+        padding-left : 0px;
+    }
+}
+.logo img{
+    width : 150px;
+}
+.messages-icon , .notification-icon{
+    padding : 15px 15px 15px 25px;
+}
+.topRightNavigation .navbar-top-links li {
+    display: inline-block;
+}
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus{
+    background: rgba(0, 0, 0, 0.85);
+    color : orange;
+}
+.nav > li > a:hover, .nav > li > a:focus{
+    background: rgba(0, 0, 0, 0.85);
+    color : orange;
+}
+.topNavigation{
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+.navbar-top-links{
+    background: rgba(0, 0, 0, 0.85);
+}
+@media (max-width: 780px)
+{
+    .navbar-top-links{
+        background: none;
+    }
+    .navbar-top-links > li{
+        background: rgba(0, 0, 0, 0.85);
+    }
+    .topRightNavigation, .nav > li > a{
+        font-size:15px;
+    }
+}
+
+.topRightNavigation{
+    font-size:20px;
+    padding : 8px 0px 0px;
+    margin-right: 5px;
+    text-align: center;
+}
+.navbar-top-links .dropdown-user {
+    right: 0;
+    left: auto;
+}
+.navbar-top-links .dropdown-messages{
+    width: 310px;
+    min-width: 0;
+}
+.navbar-top-links .dropdown-menu li a div {
+    white-space: normal;
+}
+/*Top Header Styles : End*/
+
+/* Font Awesome Styles : Start */
+.fa{
+    color:white;
+}
+.custom-icon{
+    text-align: center;
+}
+/* Font Awesome Styles : End */
+
+/* Modals and DrapDowns : Start */
+.dropdown li:hover, .dropdown li:focus{
+    background: rgba(0,0,0,0.75);
+    color : orange;
+}
+.dropdown li {
+    padding: 5px 0px;
+}
+.dropdown-menu{
+    background: rgba(0, 0, 0, 0.85);
+    color : white;
+    border: 0;
+    margin: 0;
+    font-size: 12px;
+}
+.dropdown-menu > li > a{
+    color:white;
+}
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus{
+    background: rgba(0, 0, 0, 0.75);
+    color : orange;
+}
+@media (max-width: 780px)
+{
+    .modal-dialog {
+        width: auto;
+        margin: 20px;
+    }
+}
+.modal-header, .modal-body{
+    color:white;
+}
+.modal-content{
+  background: url(../images/background.jpg);
+  background-size: 100% 100%;
+  border-radius : 8px;
+  border : 3px solid white;
+}
+/* Modals and DrapDowns : End */
+/* Side bar : Start */
+#sidebar-wrapper{
+    top : 60px;
+    background: none;
+    left: 0px;
+    width:220px;
+    margin-left: 0px;
+}
+#wrapper.toggled #sidebar-wrapper {
+    left:-220px;
+    width:220px;
+}
+#sidebar-wrapper,#sidebar-wrapper .nav > li > a > i{
+    font-size:20px;
+}
+#sidebar-wrapper .nav > li a.nav-a-side-bar{
+    display: block;
+}
+#sidebar-wrapper,#sidebar-wrapper .nav li {
+    font-size:15px;
+}
+#sidebar-wrapper .nav > li a.nav-a-side-bar i{
+    margin-right: 10px;
+}
+/* Side bar : End */
+
+/* Panels : Start */
+.panel{
+    background: rgba(0,0,0,.23);
+    color: white;
+}
+.panel-default{
+    border-color: rgba(0,0,0,.3);
+    color: white;
+}
+.panel-default > .panel-heading{
+    background: rgba(0,0,0,.5);
+    color: white;
+}
+.panel-default > .panel-body{
+    color: white;
+}
+.panel-body {
+    padding : 20px 20px 20px 30px;
+}
+@media (max-width: 768px)
+{
+    .panel-body {
+        padding : 20px;
+    }
+}
+.stock-quote-summary-panel .panel-heading{
+    border-radius: 8px;
+    border: 2px solid white;
+}
+.stock-quote-summary-panel .panel-default{
+    border-radius: 8px;
+}
+.panelContainer{
+    padding : 20px;
+    background: rgba(0,0,0,0.25);
+    margin : 10px;
+    border-radius: 4px;
+    border:1px solid white;
+}
+/* Panels : End */
+
+/* RSS Feeds : Start */
+.feedEkList li{
+    margin: 5px;
+    background: rgba(0,0,0,0.3);
+    padding: 5px;
+}
+.feedEkList li .itemTitle{
+    margin : 5px;
+}
+.feedEkList.list-unstyled{
+    list-style: disc;
+}
+/* RSS Feeds : End */
+
+/* Grids : Start */
+.ui-grid{
+    color: white;
+    width : auto;
+    border: none;
+}
+.ui-grid-top-panel{
+    background : rgba(0,0,0,.5);
+}
+.ui-grid-row:nth-child(even) .ui-grid-cell{
+    background : rgba(0,0,0,.2);
+}
+.ui-grid-row:nth-child(odd) .ui-grid-cell{
+    background : rgba(0,0,0,.3);
+}
+.ui-grid-row:hover .ui-grid-cell{
+    background : rgba(0,0,0,.4);
+}
+.ui-grid-menu .ui-grid-menu-inner{
+    background : rgba(0,0,0,.85);
+}
+.ui-grid-row .ui-grid-cell{
+    height: 50px !important;
+    text-align: center;
+    padding : 10px;
+}
+.dashboard-stock-list-grid{
+    height :630px;
+}
+.ui-grid-menu .ui-grid-menu-inner ul li.ui-grid-menu-item-active{
+    background : rgba(0,0,0,.85);
+    color : orange;
+}
+.ui-grid-native-scrollbar{
+    overflow: auto;
+}
+.ui-grid-native-scrollbar .contents{
+    height : 0px;
+}
+.ui-grid-native-scrollbar.horizontal{
+    width : 0px;
+}
+input[type="text"].ui-grid-filter-input{
+    background-color : rgba(0,0,0,0.2);
+    color : white;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+.historical-stock-list-grid,.stock-holdings-list-grid,
+.recent-trades-list-grid, .stock-list-grid,.alerts-trades-list-grid{
+    height : 600px;
+}
+.dialog-list-grid{
+    height : 700px;
+}
+/* Grids : End */
+
+.breaking-news {
+    background: rgba(0, 0, 0, .35);
+}
+.positiveChange{
+    color : green;
+}
+.negativeChange{
+    color : red;
+}
+.lastTradePrice{
+    font-size: 18px;
+    margin : 10px 5px 10px 10px;
+}
+.stock-quote-summary-panel h3{
+    font-size: 25px;
+}
+
+/* Charts : Start */
+.quote-statistics,.quote-statistics-pie {
+    padding: 5px 0px;
+    height: 160px;
+    overflow: hidden;
+}
+.quote-statistics h2 {
+    margin: 2px 0 1px 0;
+    line-height: 29px;
+    font-size: 25px;
+    left: 5px;
+    top: 10px;
+    position: absolute;
+    line-height: 100%;
+}
+.quote-statistics small{
+    top: 40px;
+    left: 5px;
+    position: absolute;
+}
+.quote-statistics-pie small{
+    top: 15px;
+    left: 5px;
+    position: absolute;
+}
+.quote-statistics small, .quote-statistics-pie small{
+    font-size: 11px;
+    text-transform: uppercase;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    float: left;
+    margin-bottom: 2px;
+}
+.quote-statistics,.quote-statistics-pie{
+    color : white;
+    position: relative;
+    max-width: 250px;
+}
+.blockContainer{
+	margin-right : 0px;
+}
+.quote-statistics .chart-widget,.quote-statistics-pie .chart-widget{
+    background: rgba(0,0,0,0.35);
+}
+.quote-statistics-container{
+    padding : 10px 20px;
+}
+.jqstooltip{
+    height : auto !important;
+    width : auto !important;
+}
+.quote-statistics-pie .chart-widget{
+    width:250px;
+    height:150px;
+    padding: 0px 55px;
+}
+.quote-statistics-pie .chart-widget span{
+    font-size: 30px;
+    position: absolute;
+	text-align: center;
+	width: 60%;
+	margin-top: 56px;
+}
+.chartToolTipHeader{
+    color: white;
+    border-bottom: 1px solid white;
+    margin: 0px 0 15px 0px;
+    text-align: center;
+    background: rgba(0,0,0,0.45);
+}
+.chartToolTipContent{
+    color : white;
+}
+.nvtooltip{
+    background : rgba(0,0,0,0.65);
+    padding : 0px;
+}
+.nvd3 .nv-axis line{
+    stroke: rgba(0,0,0,.1);
+}
+.nv-axis text{
+   fill: white;
+}
+.nv-axis .nv-axisMaxMin text{
+    fill: white;
+}
+.nvd3 .nv-axis path {
+    fill: none;
+    stroke: white;
+    stroke-opacity: .75;
+    shape-rendering: crispEdges;
+}
+.nv-controlsWrap .nv-legend .nv-series .nv-legend-symbol{
+    fill:white !important;
+    stroke:white !important;
+}
+.nv-legend .nv-series .nv-legend-text{
+    fill: white;
+}
+/* Charts : End */
+/* Share buttons : Start */
+.fb-share-button{
+    top: 0px;
+    position: absolute;
+    right: 0px;
+}
+.in-share-button{
+    top: 0px;
+    position: absolute;
+    left : 0px;
+}
+.in-share-button img{
+    width : 88px;
+    height : 28px;
+}
+/* Share buttons : End */
+.popover{
+    background : rgba(0,0,0,.85);
+    color:white;
+}
+.popover-title{
+    background : rgba(0,0,0,.55);
+    color:white;
+}
+.popover .btn{
+    background : rgba(0,0,0,.65);
+    color:white;
+}
+.popover.top > .arrow:after{
+    border-top-color : rgba(0,0,0,.65);
+}
+.popover.bottom > .arrow:after{
+    border-bottom-color : rgba(0,0,0,.65);
+}
+.has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline{
+    color : red;
+}
+
+.my-portfolio-container{
+    font-size : 20px;
+}
+
+.alert-success {
+    color: white;
+    background-color: rgba(0,204,0,0.35);
+    border-color: white;
+    border: 2px solid white;
+}
+
+.alert-info {
+    color: white;
+    background-color: rgba(102, 178, 255, 0.35);
+    border-color: white;
+    border: 2px solid white;
+}
+
+.alert-warning, .alert-warn{
+    color: white;
+    background-color: rgba(255, 153, 0, 0.35);
+    border-color: white;
+    border: 2px solid white;
+}
+
+.alert-danger, .alert-error {
+    color: white;
+    background-color: rgba(255, 51, 51, 0.35);
+    border-color: white;
+    border: 2px solid white;
+}
+.leagues-icon-1,.leagues-icon-2,.leagues-icon-3{
+    font-size : 200px;
+    text-align: center;
+}
+.league-1, .league-1 .fa,.league-1:hover{
+    color : rgba(255,128,0,1);
+}
+
+.league-2,.league-2 .fa,.league-2:hover{
+    color : rgba(51,153,255,1);
+}
+
+.league-3,.league-3 .fa,.league-3:hover{
+    color : rgba(255,0,0,1);
+}
+.leagues-lock-text-1,.leagues-lock-text-2,.leagues-lock-text-3{
+    text-align: center;
+    font-size: 30px;
+}
+
+.leagues-dashboard .btn-success,.leader-board  .btn-success{
+    background-color: rgba(0,0,0,.5);
+    border-color: white;
+}
+
+.leagues-dashboard .btn-success:hover,.leader-board  .btn-success:hover{
+    background-color: rgba(0,0,0,.75);
+    border-color: white;
+}
+.modal-body .leagues-icon-1,.modal-body .leagues-icon-2,.modal-body .leagues-icon-3{
+    font-size : 150px;
+}
+.modal-body  .league-rules{
+    font-size : 15px;
+}
+.wrongAnswer{
+    color : red;
+}
+.leader-board{
+    margin-bottom : 20px;
+}
+.leader-board-panel-container{
+    background: rgba(0,0,0,.1);
+    padding-top: 20px;
+    margin-bottom : 10px;
+}
+
+@media (min-width: 1000px)
+{
+    .leagues-panel{
+        min-width:300px;
+    }
+}
+
+@media (min-width: 1300px)
+{
+    .leagues-panel{
+        min-width:400px;
+    }
+}
+
+.anchor{
+    cursor: pointer;
+}
+.help-block{
+    color : orange;
+}
+
+.topRightNavigation .text-muted{
+    color : orange;
+}
+.dropdown-theme h4{
+    padding : 0 0 0 10px;
+}
+.topRightNavigation .navbar-top-links .dropdown-theme li{
+    display:block;
+}
+.fileinput .thumbnail{
+    background: rgba(0,0,0,0.35);
+}
+.fileinput .thumbnail img{
+    width : 100%;
+    height : 100%;
+}
+.fileinput .btn-default {
+    color: white;
+    background-color: rgba(0,0,0,0.3);
+    border-color: white;
+}
+.profilePic{
+    width : 150px;
+    height : 150px;
+}
+.panel-profile-pic .panel-body{
+    padding : 10px 10px 10px 10px;
+    text-align: center;
+}

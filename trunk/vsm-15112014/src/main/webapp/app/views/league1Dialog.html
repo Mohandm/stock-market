@@ -1,0 +1,91 @@
+<div ng-controller="LeaguesDialogController">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title league-1">{{league.name}} - <i class="fa fa-star-o fa-fw"></i></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="leagues-icon-1 league-1"><i class="fa fa-star fa-fw"></i></div>
+                    <div class="leagues-lock-text-1 league-1">Players : <span class="counter">{{league.playersCount}}</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title ">Qualification Criteria</h3>
+                </div>
+                <div class="panel-body">
+                    <p class=" league-rules">
+                        Answer the below multi-choice questions and you will be <i class="fa fa-unlock fa-fw"></i>unlocked to play in this League.
+                    </p>
+                    <p class="">Tip : Go through our quick tutorial on Stock Markets and you can answer these questions easily.
+                        Tutorial will take less than 15 mins to read.</p>
+                    <p class=" league-rules">
+                        <h4 class=" league-rules">Rules:</h4>
+                        <ul class=" league-rules">
+                            <li class=" league-rules">You will be given a initial Cash Amount of <i class="fa fa-usd fa-fw"></i>100,000.</li>
+                            <li class=" league-rules">Play fast and make more value, to become a Premier League Champion.</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 page-content">
+            <!-- Page Content Panel -->
+            <div class="panel">
+                <div class="panel-body">
+                    <form class="form-horizontal" name="mainForm" role="form" novalidate>
+                        <div class="form-group">
+                            <div class="col-sm-4 control-label">
+                                <label>*What is a share ?</label>
+                            </div>
+                            <div class="col-sm-8" ng-class="{'has-error': (mainForm.question1.$dirty || formcontrol.submitted) && mainForm.question1.$invalid}">
+                                <select type="text" ng-required="true" name="question1"
+                                        ng-options="question1.type as question1.name for question1 in question1Mappings" class="form-control" ng-model="formmodel.question1">
+                                </select>
+                                <div ng-show="mainForm.question1.$dirty || formcontrol.submitted">
+                                    <span class="help-block" ng-show = "mainForm.question1.$error.required">The field is required</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4 control-label">
+                                <label>*Who is a Shareholder ?</label>
+                            </div>
+                            <div class="col-sm-8" ng-class="{'has-error': (mainForm.question2.$dirty || formcontrol.submitted) && mainForm.question2.$invalid}">
+                                <select type="text" ng-required="true" name="question2"
+                                        ng-options="question2.type as question2.name for question2 in question2Mappings" class="form-control" ng-model="formmodel.question2">
+                                </select>
+                                <div ng-show="mainForm.question2.$dirty || formcontrol.submitted">
+                                    <span class="help-block" ng-show = "mainForm.question2.$error.required">The field is required</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4 control-label">
+                                <label>*Which is a safer order ?</label>
+                            </div>
+                            <div class="col-sm-8" ng-class="{'has-error': (mainForm.question3.$dirty || formcontrol.submitted) && mainForm.question3.$invalid}">
+                                <select type="text" ng-required="true" name="question3"
+                                        ng-options="question3.type as question3.name for question3 in question3Mappings" class="form-control" ng-model="formmodel.question3">
+                                </select>
+                                <div ng-show="mainForm.question3.$dirty || formcontrol.submitted">
+                                    <span class="help-block" ng-show = "mainForm.question3.$error.required">The field is required</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wrongAnswer pull-right" ng-show="wrongAnswer">{{wrongAnswer}}</div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" ng-click="perform('unlockLeague')">Unlock</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+    </div>
+</div>

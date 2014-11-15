@@ -1,0 +1,31 @@
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+       <div class="navbar-header">
+         <!-- Logo -->
+         <a href="../stockmarket" class="navbar-brand"><img src="app/images/misys_logo_white.png" alt="Misys - Stock Market League"/></a>
+           <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+           </button>
+       </div>
+       <div class="navbar-collapse collapse" id="navbar-main"> 
+	        <ul class="nav navbar-nav">
+                <!-- Iterate the Menus JSON-->
+			 	<li ng-repeat="menu in menus">
+                    <!--If its not branched, then just add a menu with link -->
+			 		<a ng-if="!menu.isBranched" href="{{menu.url}}" >
+			 			{{menu.name}}
+                   	</a>
+                    <!--If its branched, then create sub levels-->
+                   	<a ng-if="menu.isBranched" class="{{menu.sub && 'dropdown-toggle' || ''}}" data-toggle="{{menu.sub && 'dropdown' || ''}}">
+                  	 	{{menu.name}}<b ng-show="menu.sub" class="caret"></b>
+                   	</a>
+                    <!--Build the sub menu-->
+                    <dropdownmenu ng-if="menu.isBranched" currentmenu="menu"></dropdownmenu>
+				</li>
+			</ul>
+	   </div><!--/.nav-collapse -->
+  </div>
+</div>
+

@@ -1,0 +1,64 @@
+<div class="row blockContainer">
+    <div class="col-md-12">
+        <div class="panel panel-default" >
+            <div class="panel-heading">
+                <h3 class="panel-title">Comparison Charts</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row blockContainer" id="charts-symbols-id">
+                    <div class="col-md-3">
+                        <div class="field-wrapper"><label>First Symbol:</label><select type="text" ng-change="reloadComparisonChart(tickerSelectedFirst,1)" ng-model="tickerSelectedFirst" ng-options="stockList as (stockList.name+' - '+ stockList.tikerSymbol) for stockList in stockLists  | filter:{tikerSymbol:$viewValue}" class="form-control singleSelect"/></div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="field-wrapper"><label>Second Symbol:</label><select type="text" ng-change="reloadComparisonChart(tickerSelectedSecond,2)" ng-model="tickerSelectedSecond" ng-options="stockList as (stockList.name+' - '+ stockList.tikerSymbol) for stockList in stockLists  | filter:{tikerSymbol:$viewValue}" class="form-control singleSelect"/></div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="field-wrapper"><label>Third Symbol:</label><select type="text" ng-change="reloadComparisonChart(tickerSelectedThird,3)" ng-model="tickerSelectedThird" ng-options="stockList as (stockList.name+' - '+ stockList.tikerSymbol) for stockList in stockLists  | filter:{tikerSymbol:$viewValue}" class="form-control singleSelect"/></div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="field-wrapper"><label>Fourth Symbol:</label><select type="text" ng-change="reloadComparisonChart(tickerSelectedFourth,4)" ng-model="tickerSelectedFourth" ng-options="stockList as (stockList.name+' - '+ stockList.tikerSymbol) for stockList in stockLists  | filter:{tikerSymbol:$viewValue}" class="form-control singleSelect"/></div>
+                    </div>
+                </div>
+                <div class="panel-heading">
+                    <h4>Daily Percentage Changes are taken into consideration for comparisons</h4>
+                </div>
+                <!---->
+                <div id="charts-multi-bar-id">
+                    <nvd3-multi-bar-chart
+                            data="historicalChartData"
+                            id="historicalChartDataId"
+                            width="550"
+                            height="350"
+                            xAxisTickFormat="xAxisDateTickFormatFunction()"
+                            showXAxis="true"
+                            showYAxis="true"
+                            tooltips="true"
+                            interactive="true"
+                            showControls="true"
+                            showLegend="true"
+                            reduceXTicks="true"
+                            toolTipContent="lineCharttoolTipContentFunction()">
+                        <svg></svg>
+                    </nvd3-multi-bar-chart>
+                </div>
+                <div id="charts-stacked-area-id">
+                    <nvd3-stacked-area-chart
+                            data="historicalChartData"
+                            id="historicalChartDataId1"
+                            showXAxis="true"
+                            showYAxis="true"
+                            xAxisTickFormat="xAxisDateTickFormatFunction()"
+                            width="550"
+                            height="350"
+                            showControls="true"
+                            interactive="true"
+                            tooltips="true"
+                            showLegend="true"
+                            toolTipContent="lineCharttoolTipContentFunction()">
+                        <svg></svg>
+                    </nvd3-stacked-area-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
