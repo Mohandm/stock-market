@@ -158,6 +158,6 @@ public class RegistrationService {
 		}
 		return new ResponseMessage(
 				ResponseMessage.Type.success,
-				"The new password has been sent to your registered email. Please log into the application using it.");
+				"Your password has been successfully changed.");
 	}
 }

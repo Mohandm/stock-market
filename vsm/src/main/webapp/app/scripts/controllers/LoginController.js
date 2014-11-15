@@ -1,5 +1,5 @@
 angular.module('vsmApp')
-  .controller('LoginController', function ($scope, $rootScope, $location, AUTH_EVENTS, AuthService, modals) {
+  .controller('LoginController', function ($scope, $rootScope, $location, AUTH_EVENTS, AuthService, modals, $http) {
     $scope.formmodel = {};
     $scope.formcontrol = {};
   
@@ -33,4 +33,19 @@ angular.module('vsmApp')
     $scope.formcontrol.haserror = true;
   }
   $rootScope.$on(AUTH_EVENTS.notAuthenticated, setError);
+
+  $scope.inviteUser = function() {
+        modals.showForm('Invite Friends','inviteuser', {}, "modal-lg");
+     };
+
+  $scope.perform = function(action){
+      if ($scope.mainForm.$invalid) {
+        $scope.formcontrol.submitted = true;
+      }
+      else {
+        $http.post(action, $scope.formmodel).success(function (response) {
+          modals.close();
+        });
+      }
+    };
 });

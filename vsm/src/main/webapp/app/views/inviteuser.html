@@ -1,0 +1,18 @@
+<div ng-controller="LoginController">
+    <div class="row">
+            <div class="col-sm-12 page-content">
+                <!-- Page Content Panel -->
+                <div class="panel">
+                <div class="panel-body">
+                     <form class="form-horizontal" name="mainForm" role="form" novalidate>
+                        <field-wrapper label="Email Address" type="email" name="email" required="true" formmodel="formmodel" formcontrol="formcontrol"></field-wrapper>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" ng-click="perform('inviteuser')">Invite</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+    </div>
+</div>
