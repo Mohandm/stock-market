@@ -1,508 +1,339 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html class="no-js">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>Misys - Stock Market League</title>
+        <meta name="description" content="A Game to Enthrall and Engage you on Stock Markets!">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!-- build:css(.) styles/vendor.css -->
+        <!-- bower:css -->
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="app/scripts/thirdparty/ui-grid/ui-grid-unstable.min.css"/>
+        <link rel="stylesheet" href="app/scripts/thirdparty/news-ticker/jquery.breakingNews.css"/>
+        <link rel="stylesheet" href="app/scripts/thirdparty/charts/nv.d3.min.css"/>
+        <link rel="stylesheet" href="app/scripts/thirdparty/tour/bootstrap-tour.min.css"/>
+        <link rel="stylesheet" href="app/scripts/thirdparty/file-upload-bootstrap/jasny-bootstrap.min.css"/>
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="A Game to Enthrall and Engage you on Stock Markets!">
-    <meta name="author" content="">
+        <!-- endbower -->
+        <!-- endbuild -->
 
-    <title>Misys - Stock Market League</title>
+        <!-- Custom Fonts -->
+        <link href="app/styles/font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="app/styles/simple-sidebar.css">
+        <link rel="stylesheet" href="app/scripts/thirdparty/social-share/floating-share.css">
+        
+		<!-- build:css(.tmp) styles/app.css -->
+        <link rel="stylesheet" href="app/styles/transitions.css">
+        <link rel="stylesheet" href="app/styles/app.css">
+        <!-- endbuild -->
 
-    <!-- Bootstrap Core CSS -->
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link href="app/website/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="app/website/css/flexslider.css" />
-
-    <link rel="stylesheet" href="app/website/css/jquery-ui.css">
-    <link rel="stylesheet" href="app/website/js/social-share/floating-share.css">
-
-    <!-- Custom CSS -->
-    <link href="app/website/css/grayscale.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="app/website/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+        <script src="https://oss.maxcdn.com/libs/respond.website/js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body ng-app="vsmApp" class="appBody">
+        <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
 
-</head>
+        <div class="topNavigation">
+            <a href="#menu-toggle" id="menu-toggle" class="pull-left custom-icon" ><i class="fa fa-bars fa-2x"></i></a>
+            <a class="logo pull-left" href="../stockmarket"><img src="app/images/misys_logo_white.png" alt="Misys - Stock Market League"/></a>
+            <div class="topRightNavigation">
+                <ul class="nav navbar-top-links navbar-right">
+                    <li class="dropdown" ng-show="isAuthenticated()">
+                        <a class="dropdown-toggle" data-toggle="dropdown" >
+                            <i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-messages">
+                            <li ng-repeat="alert in notificationsList | limitTo:5">
+                                <a href="#/followers">
+                                    <div>
+                                        <i class="fa fa-group fa-fw"></i> {{alert.message}}
+                                        <span class="pull-right text-muted small">{{alert.notifiedDate}}</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
 
-<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+                            <li>
+                                <a class="text-center" href="#/alerts">
+                                    <strong>See All Requests</strong>
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-follow-requests -->
+                    </li>
+                    <!-- /.dropdown -->
+                    <li class="dropdown" ng-show="isAuthenticated()">
+                        <a class="dropdown-toggle" data-toggle="dropdown" >
+                            <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-messages">
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
-                    <i class="fa fa-bars"></i>
-                </button>
-                <a class="navbar-brand page-scroll" href="#page-top">
-                    <img src="app/website/img/misys_logo_white.png" alt="Misys - Stock Market League"/>
-                </a>
+                                <li ng-repeat="alert in alertsList | limitTo:5">
+                                    <a href="#/alerts">
+                                        <div>
+                                            <i class="fa fa-envelope fa-fw"></i> {{alert.message}}
+                                            <span class="pull-right text-muted small">{{alert.notifiedDate}}</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+
+                            <li>
+                                <a class="text-center" href="#/alerts">
+                                    <strong>See All Alerts</strong>
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-alerts -->
+                    </li>
+                    <!-- /.dropdown -->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-paint-brush fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-theme">
+                            <h4>Select Theme</h4>
+                            <li>
+                                <a ng-click="setTheme('misys')">Misys</a>
+                            </li>
+                            <li>
+                                <a ng-click="setTheme('banking')">Banking</a>
+                            </li>
+                            <li>
+                                <a ng-click="setTheme('risk')">Risk</a>
+                            </li>
+                            <li>
+                                <a ng-click="setTheme('capital')">Capital</a>
+                            </li>
+                            <li>
+                                <a ng-click="setTheme('investment')">Investment</a>
+                            </li>
+                            <!--<li>
+                                <a ng-click="setTheme('lumen')">Lumen</a>
+                            </li>
+                            <li>
+                                <a ng-click="setTheme('wooden')">Wooden</a>
+                            </li>-->
+                        </ul>
+                        <!-- /.dropdown-user -->
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li ng-show="!isAuthenticated()">
+                                <a href="#form/registration"><i class="fa fa-user fa-fw"></i> Register</a>
+                            </li>
+                            <li ng-show="!isAuthenticated()">
+                                <a href="#form/resetpassword"><i class="fa fa-user fa-fw"></i> Forgot Password</a>
+                            </li>
+                            <li ng-show="!isAuthenticated()">
+                                <a href="#form/login"><i class="fa fa-user fa-fw"></i> Login</a>
+                            </li>
+                            <li ng-show="isAuthenticated()">
+                                <a href="#form/changepassword"><i class="fa fa-gear fa-fw"></i> Change Password</a>
+                            </li>
+                            <li ng-show="isAuthenticated()">
+                                <a href="#form/userprofile"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                            </li>
+                            <li>
+                                <a ng-click="startTour()"><i class="fa fa-binoculars fa-fw"></i> Tour</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li ng-controller="LoginController" ng-show="isAuthenticated()">
+                                <a ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-user -->
+                    </li>
+                    <!-- /.dropdown -->
+                </ul>
+               <!-- <div id="time" class="pull-right">
+                    <span id="hours"></span>
+                    :
+                    <span id="min"></span>
+                    :
+                    <span id="sec"></span>
+                </div>-->
             </div>
+        </div>
+        <div id="wrapper" class="toggled">
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
-                <ul class="nav navbar-nav">
-                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+            <!-- Sidebar -->
+            <div id="sidebar-wrapper">
+                <ul class="nav navbar-top-links">
                     <li>
-                        <a class="page-scroll" href="#page-top">Home</a>
+                        <a href="../stockmarket" class="nav-a-side-bar">
+                            <i class="fa fa-home fa-fw"></i>
+                            Home
+                        </a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#about" id="aboutMenu">About</a>
+                        <a href="game" class="nav-a-side-bar">
+                            <i class="fa fa-th-large fa-fw"></i>
+                            Dashboard
+                        </a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="game">Play Game</a>
+                        <a href="#/charts" class="nav-a-side-bar">
+                            <i class="fa fa-line-chart fa-fw"></i>
+                            Stock Comparison
+                        </a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#tutorials">Tutorials</a>
+                        <a href="#/leaderBoard" class="nav-a-side-bar">
+                            <i class="fa fa-trophy fa-fw"></i>
+                            Leader Board
+                        </a>
                     </li>
-                    <li>
-                        <a class="page-scroll" href="#contactSlice">Contact</a>
+                    <li ng-show="isAuthenticated()">
+                        <a href="#/leagues" class="nav-a-side-bar">
+                            <i class="fa fa-flag-checkered fa-fw"></i>
+                            Leagues
+                        </a>
                     </li>
-                    <li>
-                        <a class="page-scroll" href="game#/form/login">Login / Sign Up</a>
+
+                    <li ng-show="isAuthenticated()">
+                        <a href="#/myPortfolio" class="nav-a-side-bar">
+                            <i class="fa fa-usd fa-fw"></i>
+                            My Portfolio
+                        </a>
+                    </li>
+                    <li ng-show="isAuthenticated()">
+                        <a href="#/watchList" class="nav-a-side-bar">
+                            <i class="fa fa-bullhorn fa-fw"></i>
+                            Watch List
+                        </a>
+                    </li>
+                    <li ng-show="isAuthenticated()">
+                        <a href="#/followers" class="nav-a-side-bar">
+                            <i class="fa fa-group fa-fw"></i>
+                            Followers
+                        </a>
+                    </li>
+                    <li ng-show="isAuthenticated()">
+                        <a href="#/alerts" class="nav-a-side-bar">
+                            <i class="fa fa-bell fa-fw"></i>
+                            Alerts
+                        </a>
                     </li>
                 </ul>
             </div>
-            <!-- /.navbar-collapse -->
+            <!-- /#sidebar-wrapper -->
         </div>
-        <!-- /.container -->
-    </nav>
-
-    <!-- Intro Header -->
-    <header class="intro">
-        <div class="intro-body">
+        <!-- Add your site or application content here -->
+        <div class="page-container">
+            <div ng-show="message().show">
+                <alert type="message().type" close="message().show=false">
+                    <span ng-bind="message().text"></span>
+                </alert>
+            </div>
+            <div login-dialog ng-view="" ng-class="{animateTransition: animateTransition }"></div>
+        </div>
+        <!--<div id="footer">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2 class="brand-heading">Stock Market League</h2>
-                        <p class="intro-text">
-                            <div class="flexslider" id="flexHome">
-                                <ul class="slides">
-                                    <li>
-                                        <h1>A Game to enthrall and engage you on Stock Markets!</h1>
-                                    </li>
-                                    <li>
-                                        <h1>Simulating real companies and real stock market conditions!</h1>
-                                    </li>
-                                    <li>
-                                        <h1>Compete against each other in leagues!</h1>
-                                    </li>
-                                </ul>
-                            </div>
-                        </p>
-                        <a href="#about" class="btn btn-circle page-scroll">
-                            <i class="fa fa-angle-double-down animated"></i>
-                        </a>
-                    </div>
-                </div>
+                <p class="text-muted"><i class="fa fa-copyright"></i> Misys 2014 </p>
             </div>
-        </div>
-    </header>
+        </div>-->
 
-    <!-- About Section -->
-    <div id="about">
-        <div id="paralaxSlice3" data-stellar-background-ratio="0.5" style="margin-top:100px; margin-bottom: 30px;">
-            <div class="maskParent">
-                <div class="paralaxMask"></div>
-                <div class="paralaxText container">
-                    <h1>About us</h1>
-                </div>
-            </div>
-        </div>
-        <div class="container text-center">
-            <div class="row">
-                <div class="col-md-5 col-sm-6" id="aboutContentLeft"> <span><img src="app/website/img/services.png" alt="services" class="img-responsive"></span> </div>
-                <div class="col-md-1"></div>
-                <div class="col-md-6 col-sm-6" id="aboutContentRight">
-                    <h3>Misys Stock Market League</h3>
+        <!-- build:js(.) scripts/oldieshim.js -->
+        <!--[if lt IE 9]>
+        <script src="bower_components/es5-shim/es5-shim.js"></script>
+        <script src="bower_components/json3/lib/json3.min.js"></script>
+        <![endif]-->
+        <!-- endbuild -->
 
-                    <p>The power of hands-on learning is indisputable. But when it comes to investing your money in the stock market, making a beginner's mistake can cost you more than just your self-esteem. We will help you make it easy to practice with virtual money and give you insight into the World of Stock Markets.</p>
-                    <p>For additional help choosing stocks, we have an impressive resource library that spans beginner, intermediate and advanced levels.</p>
-                    <p>Play the game by joining into Leagues or creating your own Leagues. Invite your friends and share your scores over social networks.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+        <!-- build:js(.) scripts/vendor.js -->
+        <!-- bower:js -->
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="app/scripts/thirdparty/file-upload-bootstrap/angular-file-upload-shim.min.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/json3/lib/json3.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="bower_components/angular-resource/angular-resource.js"></script>
+        <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+        <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.js"></script>
+        <script src="bower_components/angular-touch/angular-touch.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+        <script src="app/scripts/thirdparty/ui-bootstrap-tpls-0.10.0.js"></script>
+        <script src="app/scripts/thirdparty/ui-grid/ui-grid-unstable.min.js"></script>
+        <script src="app/scripts/thirdparty/feeds.min.js"></script>
+        <script src="app/scripts/thirdparty/charts/jquery.sparkline.min.js"></script>
+        <script src="app/scripts/thirdparty/news-ticker/jquery.breakingNews.js"></script>
+        <script src="app/scripts/thirdparty/charts/angular.easypiechart.min.js"></script>
+        <script src="app/scripts/thirdparty/jquery.easing.min.js"></script>
+        <script src="app/scripts/thirdparty/social-share/jquery.floating-share.js"></script>
+        <script src="app/scripts/thirdparty/charts/d3.min.js"></script>
+        <script src="app/scripts/thirdparty/charts/nv.d3.min.js"></script>
+        <script src="app/scripts/thirdparty/charts/angularjs-nvd3-directives.min.js"></script>
+        <script src="app/scripts/thirdparty/tour/bootstrap-tour.min.js"></script>
+        <script src="app/scripts/thirdparty/counter/jquery.counterup.min.js"></script>
+        <script src="app/scripts/thirdparty/counter/waypoints.min.js"></script>
+        <script src="app/scripts/thirdparty/file-upload-bootstrap/jasny-bootstrap.min.js"></script>
+        <script src="app/scripts/thirdparty/file-upload-bootstrap/angular-file-upload.min.js"></script>
+        <!-- endbower -->
+        <!-- endbuild -->
 
-    <!-- Tutorials -->
-    <div id="tutorials">
-        <div id="paralaxSlice5" data-stellar-background-ratio="0.5" style="margin-top:100px;">
-            <div class="maskParent">
-                <div class="paralaxMask"></div>
-                <div class="paralaxText container">
-                    <h1>Library and Tutorials</h1>
-                </div>
-            </div>
-        </div>
-        <section class="slice">
-            <div class="container clearfix">
-                <div id="portfolio">
-                    <div class="row">
-                        <div class="col-md-4 col-sm-6 portfolio-item">
-                        <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal">
-                            <div class="portfolio-hover">
-                                <div class="portfolio-hover-content">
-                                    <i class="fa fa-plus fa-3x"></i>
-                                </div>
-                            </div>
-                            <img src="app/website/img/portfolio/stocks.jpg" class="img-responsive" alt="">
-                        </a>
-
-                    </div>
-                        <div class="col-md-4 col-sm-6 portfolio-item">
-                            <a href="#portfolioModal2" class="portfolio-link" data-toggle="modal">
-                                <div class="portfolio-hover">
-                                    <div class="portfolio-hover-content">
-                                        <i class="fa fa-plus fa-3x"></i>
-                                    </div>
-                                </div>
-                                <img src="app/website/img/portfolio/types.jpg" class="img-responsive" alt="">
-                            </a>
-
-                        </div>
-                        <div class="col-md-4 col-sm-6 portfolio-item">
-                            <a href="#portfolioModal3" class="portfolio-link" data-toggle="modal">
-                                <div class="portfolio-hover">
-                                    <div class="portfolio-hover-content">
-                                        <i class="fa fa-plus fa-3x"></i>
-                                    </div>
-                                </div>
-                                <img src="app/website/img/portfolio/holder.jpg" class="img-responsive" alt="">
-                            </a>
-
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4 col-sm-6 portfolio-item">
-                            <a href="#portfolioModal4" class="portfolio-link" data-toggle="modal">
-                                <div class="portfolio-hover">
-                                    <div class="portfolio-hover-content">
-                                        <i class="fa fa-plus fa-3x"></i>
-                                    </div>
-                                </div>
-                                <img src="app/website/img/portfolio/trade.jpg" class="img-responsive" alt="">
-                            </a>
-
-                        </div>
-                        <div class="col-md-4 col-sm-6 portfolio-item">
-                            <a href="#portfolioModal5" class="portfolio-link" data-toggle="modal">
-                                <div class="portfolio-hover">
-                                    <div class="portfolio-hover-content">
-                                        <i class="fa fa-plus fa-3x"></i>
-                                    </div>
-                                </div>
-                                <img src="app/website/img/portfolio/market.jpg" class="img-responsive" alt="">
-                            </a>
-
-                        </div>
-                        <div class="col-md-4 col-sm-6 portfolio-item">
-                            <a href="#portfolioModal6" class="portfolio-link" data-toggle="modal">
-                                <div class="portfolio-hover">
-                                    <div class="portfolio-hover-content">
-                                        <i class="fa fa-plus fa-3x"></i>
-                                    </div>
-                                </div>
-                                <img src="app/website/img/portfolio/exchange.jpg" class="img-responsive" alt="">
-                            </a>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <!-- main app -->
+        <script src="app/scripts/vsm.js"></script>
+        <script src="app/scripts/common.js"></script>
+        
+        <!-- constants -->
+        <script src="app/scripts/constants/AuthEvents.js"></script>
+        
+        <!-- controllers -->
+        <script src="app/scripts/controllers/DashboardController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/FormController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/FormSelectorController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/ActionController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/MyPortfolioController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/ChartsController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/TradesController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/DialogFormController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/WatchListController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/LoginController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/FollowersController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/LeaderBoardController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/LeaguesController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/AlertsController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/UserProfileController.js"></script>
 
 
-    <div id="contactSlice">
-        <div id="paralaxSlice4" data-stellar-background-ratio="0.5" style="margin-top:100px;">
-            <div class="maskParent">
-                <div class="paralaxMask"></div>
-                <div class="paralaxText container">
-                    <h1>Keep in touch with us</h1>
-                </div>
-            </div>
-        </div>
-        <section class="slice">
-            <div class="container clearfix">
-                <div class="row">
-                    <div class="col-sm-4 col-sm-offset-4 text-center">
-                        <div class="footerWidget">
-                            <img src="app/website/img/contact.png" alt="services" class="img-contact-misys">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4 col-sm-offset-4 text-center">
-                        <div class="footerWidget">
-                            <address>
-                                <p> <i class="icon-location"></i>&nbsp;Eagle Ridge,<br> Embassy Golf Links Business Park,<br> Off Intermediate Ring Road,<br> Bangalore - 560 071 <br>
-                                    <i class="icon-phone"></i>&nbsp; +91 80 4040 4040 <br>
-                                    <i class="icon-mail-alt"></i>&nbsp;www.misys.com</a>
-                                </p>
-                            </address>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 col-sm-offset-4 text-center">
-                        <!-- Linkedin Share Start -->
-                        <!--<a class="in-share-button" href="http://www.linkedin.com/shareArticle?mini=true&url=http://www.misys.com&title=Misys Stock Market League&summary=Misys Stock Market League - A Game to learn the Stock Market World.&source=Misys Stock Market League" rel="nofollow"  target="_blank" onclick="NewWindow(this.href,'template_window','550','400','yes','center');return false" onfocus="this.blur()"> <img src="app/images/linkedin-share.png" title="Share on LinkedIn" alt="Share on LinkedIn" width="100" height="100" border="0" /> </a>-->
-                        <!-- Linkedin Share End -->
-                        <!-- Facebook Share Start -->
-                        <!--<a class="fb-share-button" title="Share Misys Stock Market League on Facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://www.misys.com" target="_blank"><img class="aligncenter wp-image-934 size-full" src="app/images/facebook-share.png" alt="btn-facebook-share-smallest" width="88" height="28"></a>-->
-                        <!-- Facebook Share End -->
-                        <!-- Twitter Share Start -->
-                       <!-- <a href="https://twitter.com/share" class="twitter-share-button" data-text="Misys Stock Market League - A Game to learn the Stock Market World." data-size="large" data-hashtags="misys">Tweet</a>
-                        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>-->
-                        <!-- Twitter Share End -->
-                    </div>
-                </div>
-            </div>
-         </section>
-     </div>
+        <!-- directives -->
+        <script type="text/javascript" src="app/scripts/directives/dropdown-menu.js"></script>
+        <script type="text/javascript" src="app/scripts/directives/top-navigation-bar.js"></script>
+        <script type="text/javascript" src="app/scripts/directives/validation.js"></script>
+        <script type="text/javascript" src="app/scripts/directives/field-wrapper.js"></script>
+        <script type="text/javascript" src="app/scripts/directives/login-dialog.js"></script>
 
-    <!-- Map Section -->
-    <!--<div id="misysMap">
-        <div>
-            <div class="row">
-                <div class="col-md-12">
-                    <iframe class="mapGoogle" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3888.366000875275!2d77.643811!3d12.948416!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae140d159a84e5%3A0x6b322a8addf22a97!2sMisys+Software+Solutions+India+Pvt.+Ltd.!5e0!3m2!1sen!2sin!4v1411014305616" width="100%" height="300" frameborder="0" style="border:0"></iframe>
-                </div>
-            </div>
-        </div>
-    </div>-->
-
-    <!-- Footer -->
-    <footer>
-        <div class="container text-center">
-            <p>Copyright &copy; Misys 2014</p>
-        </div>
-    </footer>
-
-    <!-- Portfolio Modals -->
-    <!-- Use the modals below to showcase details about your portfolio projects! -->
-
-    <!-- Portfolio Modal 1 -->
-    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <!-- Project Details Go Here -->
-                            <h2>Stocks and Shares</h2>
-                            <!--<p class="item-intro text-muted">Introduction</p>-->
-                            <p>The stock (also capital stock) of a corporation constitutes the equity stake of its owners. It represents the residual assets of the company that would be due to stockholders after discharge of all senior claims such as secured and unsecured debt. Stockholders' equity cannot be withdrawn from the company in a way that is intended to be detrimental to the company's creditors.</p>
-                            <p>The stock of a corporation is partitioned into shares, the total of which are stated at the time of business formation. Additional shares may subsequently be authorized by the existing shareholders and issued by the company. In some jurisdictions, each share of stock has a certain declared par value, which is a nominal accounting value used to represent the equity on the balance sheet of the corporation. In other jurisdictions, however, shares of stock may be issued without associated par value.</p>
-                            <p>Shares represent a fraction of ownership in a business. A business may declare different types (classes) of shares, each having distinctive ownership rules, privileges, or share values. Ownership of shares may be documented by issuance of a stock certificate. A stock certificate is a legal document that specifies the amount of shares owned by the shareholder, and other specifics of the shares, such as the par value, if any, or the class of the shares.</p>
-
-                            <ul class="list-inline">
-                                <li>Source: wikipedia</li>
-                            </ul>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Tutorial</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Portfolio Modal 2 -->
-    <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <!-- Project Details Go Here -->
-                            <h2>Types of Stocks</h2>
-                            <!--<p class="item-intro text-muted">Introduction</p>-->
-                            <p>Stock typically takes the form of shares of either common stock or preferred stock. As a unit of ownership, common stock typically carries voting rights that can be exercised in corporate decisions. Preferred stock differs from common stock in that it typically does not carry voting rights but is legally entitled to receive a certain level of dividend payments before any dividends can be issued to other shareholders.[3][4][page needed] Convertible preferred stock is preferred stock that includes an option for the holder to convert the preferred shares into a fixed number of common shares, usually any time after a predetermined date. Shares of such stock are called "convertible preferred shares" (or "convertible preference shares" in the UK).</p>
-                            <p>New equity issue may have specific legal clauses attached that differentiate them from previous issues of the issuer. Some shares of common stock may be issued without the typical voting rights, for instance, or some shares may have special rights unique to them and issued only to certain parties. Often, new issues that have not been registered with a securities governing body may be restricted from resale for certain periods of time.</p>
-                            <p>Preferred stock may be hybrid by having the qualities of bonds of fixed returns and common stock voting rights. They also have preference in the payment of dividends over common stock and also have been given preference at the time of liquidation over common stock. They have other features of accumulation in dividend. In addition, preferred stock usually comes with a letter designation at the end of the security; for example, Berkshire-Hathaway Class "B" shares sell under stock ticker BRK.B, whereas Class "A" shares of ORION DHC, Inc will sell under ticker OODHA until the company drops the "A" creating ticker OODH for its "Common" shares only designation. This extra letter does not mean that any exclusive rights exist for the shareholders but it does let investors know that the shares are considered for such, however, these rights or privileges may change based on the decisions made by the underlying company.</p>
-
-                            <h2>Stock derivatives</h2>
-                            <!--<p class="item-intro text-muted">Introduction</p>-->
-                            <p>A stock derivative is any financial instrument which has a value that is dependent on the price of the underlying stock. Futures and options are the main types of derivatives on stocks. The underlying security may be a stock index or an individual firm's stock, e.g. single-stock futures.</p>
-                            <p>Stock futures are contracts where the buyer is long, i.e., takes on the obligation to buy on the contract maturity date, and the seller is short, i.e., takes on the obligation to sell. Stock index futures are generally not delivered in the usual manner, but by cash settlement.</p>
-                            <p>A stock option is a class of option. Specifically, a call option is the right (not obligation) to buy stock in the future at a fixed price and a put option is the right (not obligation) to sell stock in the future at a fixed price. Thus, the value of a stock option changes in reaction to the underlying stock of which it is a derivative. The most popular method of valuing stock options is the Black Scholes model.[6] Apart from call options granted to employees, most stock options are transferable.</p>
-
-                            <ul class="list-inline">
-                                <li>Source: wikipedia</li>
-                            </ul>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Tutorial</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Portfolio Modal 3 -->
-    <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Shareholder</h2>
-                            <!--<p class="item-intro text-muted">Introduction</p>-->
-                            <p>A shareholder (or stockholder) is an individual or company (including a corporation) that legally owns one or more shares of stock in a joint stock company. Both private and public traded companies have shareholders. Companies listed at the stock market are expected to strive to enhance shareholder value.</p>
-                            <p>Shareholders are granted special privileges depending on the class of stock, including the right to vote on matters such as elections to the board of directors, the right to share in distributions of the company's income, the right to purchase new shares issued by the company, and the right to a company's assets during a liquidation of the company. However, shareholder's rights to a company's assets are subordinate to the rights of the company's creditors.</p>
-                            <p>Shareholders are considered by some to be a partial subset of stakeholders, which may include anyone who has a direct or indirect equity interest in the business entity or someone with even a non-pecuniary interest in a non-profit organization. Thus it might be common to call volunteer contributors to an association stakeholders, even though they are not shareholders.</p>
-                            <p>Although directors and officers of a company are bound by fiduciary duties to act in the best interest of the shareholders, the shareholders themselves normally do not have such duties towards each other.</p>
-                            <p>However, in a few unusual cases, some courts have been willing to imply such a duty between shareholders. For example, in California, USA, majority shareholders of closely held corporations have a duty to not destroy the value of the shares held by minority shareholders.</p>
-                            <p>The largest shareholders (in terms of percentages of companies owned) are often mutual funds, and, especially, passively managed exchange-traded funds.</p>
-                            <ul class="list-inline">
-                                <li>Source: wikipedia</li>
-                            </ul>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Tutorial</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Portfolio Modal 4 -->
-    <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Trading</h2>
-                            <p class="item-intro text-muted">Buy and Sell</p>
-                            <p>In general, the shares of a company may be transferred from shareholders to other parties by sale or other mechanisms, unless prohibited. Most jurisdictions have established laws and regulations governing such transfers, particularly if the issuer is a publicly traded entity.</p>
-                            <p>The desire of stockholders to trade their shares has led to the establishment of stock exchanges, organizations which provide marketplaces for trading shares and other derivatives and financial products. Today, stock traders are usually represented by a stockbroker who buys and sells shares of a wide range of companies on such exchanges. A company may list its shares on an exchange by meeting and maintaining the listing requirements of a particular stock exchange. In the United States, through the intermarket trading system, stocks listed on one exchange can often also be traded on other participating exchanges, including electronic communication networks (ECNs), such as Archipelago or Instinet.</p>
-                            <h3>Buy</h3>
-                            <p>There are various methods of buying and financing stocks, the most common being through a stockbroker. Brokerage firms, whether they are a full-service or discount broker, arrange the transfer of stock from a seller to a buyer. Most trades are actually done through brokers listed with a stock exchange.</p>
-                            <p>There are many different brokerage firms from which to choose, such as full service brokers or discount brokers. The full service brokers usually charge more per trade, but give investment advice or more personal service; the discount brokers offer little or no investment advice but charge less for trades. Another type of broker would be a bank or credit union that may have a deal set up with either a full-service or discount broker.</p>
-                            <p>There are other ways of buying stock besides through a broker. One way is directly from the company itself. If at least one share is owned, most companies will allow the purchase of shares directly from the company through their investor relations departments. However, the initial share of stock in the company will have to be obtained through a regular stock broker. Another way to buy stock in companies is through Direct Public Offerings which are usually sold by the company itself. A direct public offering is an initial public offering in which the stock is purchased directly from the company, usually without the aid of brokers.</p>
-                            <h3>Sell</h3>
-                            <p>Selling stock is procedurally similar to buying stock. Generally, the investor wants to buy low and sell high, if not in that order (short selling); although a number of reasons may induce an investor to sell at a loss, e.g., to avoid further loss.</p>
-                            <p>As with buying a stock, there is a transaction fee for the broker's efforts in arranging the transfer of stock from a seller to a buyer. This fee can be high or low depending on which type of brokerage, full service or discount, handles the transaction.</p>
-                            <p>After the transaction has been made, the seller is then entitled to all of the money. An important part of selling is keeping track of the earnings. Importantly, on selling the stock, in jurisdictions that have them, capital gains taxes will have to be paid on the additional proceeds, if any, that are in excess of the cost basis.</p>
-                            <ul class="list-inline">
-                                <li>Source: wikipedia</li>
-                            </ul>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Tutorial</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Portfolio Modal 5 -->
-    <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Stock Market</h2>
-                            <!--<p class="item-intro text-muted">Buy and Sell</p>-->
-                            <p>A stock market or equity market is the aggregation of buyers and sellers (a loose network of economic transactions, not a physical facility or discrete entity) of stocks (also called shares); these may include securities listed on a stock exchange as well as those only traded privately.</p>
-                            <p>Stocks can be categorised in various ways. One common way is by the country where the company is domiciled. For example, Nestlé and Novartis are domiciled in Switzerland, so they may be considered as part of the Swiss stock market, although their stock may also be traded at exchanges in other countries.</p>
-                            <ul class="list-inline">
-                                <li>Source: wikipedia</li>
-                            </ul>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Tutorial</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Portfolio Modal 6 -->
-    <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Stock Exchange</h2>
-                            <!--<p class="item-intro text-muted">Buy and Sell</p>-->
-                            <p>A stock exchange is a place to trade stocks. Companies may want to get their stock listed on a stock exchange. Other stocks may be traded "over the counter", that is, through a dealer. A large company will usually have its stock listed on many exchanges across the world.</p>
-                            <p>Exchanges may also cover other types of security such as fixed interest securities or indeed derivatives.</p>
-                            <ul class="list-inline">
-                                <li>Source: wikipedia</li>
-                            </ul>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Tutorial</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- jQuery Version 1.11.0 -->
-    <script src="app/website/js/jquery-1.11.0.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="app/website/js/bootstrap.min.js"></script>
-
-    <!-- Plugin JavaScript -->
-    <script src="app/website/js/jquery.easing.min.js"></script>
-
-    <script src="app/website/js/jquery-ui.js"></script>
-
-    <script src="app/website/js/waypoints.min.js"></script>
-
-    <script src="app/website/js/social-share/jquery.floating-share.js"></script>
-
-    <!-- Flexslider -->
-    <script type="text/javascript" src="app/website/js/flexslider/jquery.flexslider-min.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="app/website/js/grayscale.js"></script>
-
-</body>
-
+        <!-- services -->
+        <script type="text/javascript" src="app/scripts/services/formLoaderService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/modalDialogService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/validatorService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/newsService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/dashboardService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/stockQuotesService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/chartService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/alertsService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/AuthInterceptorService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/AuthService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/tourService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/leaguesService.js"></script>
+        <!-- endbuild -->
+    </body>
 </html>

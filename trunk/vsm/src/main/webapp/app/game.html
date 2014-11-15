@@ -105,20 +105,26 @@
                         <ul class="dropdown-menu dropdown-theme">
                             <h4>Select Theme</h4>
                             <li>
-                                <a ng-click="setTheme('orange')">Orange</a>
+                                <a ng-click="setTheme('misys')">Misys</a>
                             </li>
                             <li>
-                                <a ng-click="setTheme('purple')">Purple</a>
+                                <a ng-click="setTheme('banking')">Banking</a>
+                            </li>
+                            <li>
+                                <a ng-click="setTheme('risk')">Risk</a>
+                            </li>
+                            <li>
+                                <a ng-click="setTheme('capital')">Capital</a>
+                            </li>
+                            <li>
+                                <a ng-click="setTheme('investment')">Investment</a>
+                            </li>
+                            <!--<li>
+                                <a ng-click="setTheme('lumen')">Lumen</a>
                             </li>
                             <li>
                                 <a ng-click="setTheme('wooden')">Wooden</a>
-                            </li>
-                            <li>
-                                <a ng-click="setTheme('blue')">Blue</a>
-                            </li>
-                            <li>
-                                <a ng-click="setTheme('lumen')">Lumen</a>
-                            </li>
+                            </li>-->
                         </ul>
                         <!-- /.dropdown-user -->
                     </li>
@@ -230,7 +236,9 @@
         <!-- Add your site or application content here -->
         <div class="page-container">
             <div ng-show="message().show">
-                <alert type="message().type" close="message().show=false">{{message().text}}</alert>
+                <alert type="message().type" close="message().show=false">
+                    <span ng-bind="message().text"></span>
+                </alert>
             </div>
             <div login-dialog ng-view="" ng-class="{animateTransition: animateTransition }"></div>
         </div>
