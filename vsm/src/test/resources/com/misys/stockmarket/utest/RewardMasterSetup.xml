@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<REWARD_MASTER REWARD_ID="1" REWARD_TYPE="A" REWARD_VALUE="200" />
+	<REWARD_MASTER REWARD_ID="2" REWARD_TYPE="R" REWARD_VALUE="100" />
+</dataset>
+
