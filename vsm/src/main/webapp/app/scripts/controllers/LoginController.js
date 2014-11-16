@@ -13,10 +13,10 @@ angular.module('vsmApp')
         $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
         if(angular.isDefined($scope.closeDialog)){
           modals.close();
-          $location.path('/');
+          $location.path('/myDashboard');
         }
         else {
-          $location.path('/'); 
+          $location.path('/myDashboard');
         }
       })
     }

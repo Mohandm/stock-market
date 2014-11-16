@@ -31,12 +31,12 @@
            controller: 'LeaderBoardController',
            needsTransition : true
        })
-       .when('/leagues', {
+       /*.when('/leagues', {
            templateUrl: 'app/views/leagues.html',
            controller: 'LeaguesController',
            needsLogin : true,
            needsTransition : true
-       })
+       })*/
        .when('/followers', {
            templateUrl: 'app/views/followers.html',
            controller: 'FollowersController',
@@ -59,6 +59,12 @@
            controller: 'WatchListController',
            needsLogin : true
        })
+       .when('/myDashboard', {
+           templateUrl: 'app/views/myDashboard.html',
+           controller: 'MyDashboardController',
+           needsLogin : true,
+           needsTransition : true
+       })
        .when('/form/:formName', {
             templateUrl: 'app/views/form.html',
             controller: 'FormSelectorController'
@@ -68,7 +74,8 @@
             controller: 'ActionController'
         })
         .when('/tutorials', {
-           templateUrl: 'app/views/tutorial.html'
+           templateUrl: 'app/views/tutorial.html',
+           needsTransition : true
         })
         .otherwise({
             redirectTo: '/'
