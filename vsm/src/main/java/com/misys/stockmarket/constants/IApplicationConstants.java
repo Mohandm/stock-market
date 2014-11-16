@@ -97,4 +97,16 @@ public class IApplicationConstants {
 	public static final String REWARD_TYPE_ACHIEVEMENT = "A";
 
 	public static final String REWARD_TYPE_REFERAL = "R";
+
+	public static final BigDecimal ACHIEVEMENT_MAX_LEVELS = BigDecimal
+			.valueOf(5);
+
+	public static final String ACHIEVEMENT_EVALUTED_YES = "Y";
+
+	public static final String ACHIEVEMENT_EVALUTED_NO = "N";
+	
+	public static final String ACHIEVEMENT_PUBLISHED_YES = "Y";
+
+	public static final String ACHIEVEMENT_PUBLISHED_NO = "N";
+	
 }
