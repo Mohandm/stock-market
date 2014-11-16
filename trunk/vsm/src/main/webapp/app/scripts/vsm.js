@@ -74,8 +74,7 @@
             controller: 'ActionController'
         })
         .when('/tutorials', {
-           templateUrl: 'app/views/tutorial.html',
-           needsTransition : true
+           templateUrl: 'app/views/tutorial.html'
         })
         .otherwise({
             redirectTo: '/'
