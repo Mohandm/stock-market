@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="app/scripts/thirdparty/charts/nv.d3.min.css"/>
         <link rel="stylesheet" href="app/scripts/thirdparty/tour/bootstrap-tour.min.css"/>
         <link rel="stylesheet" href="app/scripts/thirdparty/file-upload-bootstrap/jasny-bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="app/website/css/flexslider.css" />
 
         <!-- endbower -->
         <!-- endbuild -->
@@ -148,6 +149,9 @@
                             <li ng-show="isAuthenticated()">
                                 <a href="#form/userprofile"><i class="fa fa-user fa-fw"></i> User Profile</a>
                             </li>
+                            <li ng-controller="LoginController" ng-show="isAuthenticated()">
+                                <a ng-click="inviteUser()"><i class="fa fa-sign-out fa-fw"></i> Invite Friends</a>
+                            </li>
                             <li>
                                 <a ng-click="startTour()"><i class="fa fa-binoculars fa-fw"></i> Tour</a>
                             </li>
@@ -178,12 +182,6 @@
                         <a href="../stockmarket" class="nav-a-side-bar">
                             <i class="fa fa-home fa-fw"></i>
                             Home
-                        </a>
-                    </li>
-                    <li>
-                        <a href="game" class="nav-a-side-bar">
-                            <i class="fa fa-th-large fa-fw"></i>
-                            Dashboard
                         </a>
                     </li>
                     <li>
@@ -227,6 +225,12 @@
                         <a href="#/alerts" class="nav-a-side-bar">
                             <i class="fa fa-bell fa-fw"></i>
                             Alerts
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#/tutorials" class="nav-a-side-bar">
+                            <i class="fa fa-book fa-fw"></i>
+                            Tutorials
                         </a>
                     </li>
                 </ul>
@@ -285,6 +289,7 @@
         <script src="app/scripts/thirdparty/counter/waypoints.min.js"></script>
         <script src="app/scripts/thirdparty/file-upload-bootstrap/jasny-bootstrap.min.js"></script>
         <script src="app/scripts/thirdparty/file-upload-bootstrap/angular-file-upload.min.js"></script>
+        <script type="text/javascript" src="app/website/js/flexslider/jquery.flexslider-min.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 

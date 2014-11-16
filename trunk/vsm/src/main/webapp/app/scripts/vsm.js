@@ -67,6 +67,9 @@
             templateUrl: 'app/views/result.html',
             controller: 'ActionController'
         })
+        .when('/tutorials', {
+           templateUrl: 'app/views/tutorial.html'
+        })
         .otherwise({
             redirectTo: '/'
         });
@@ -150,6 +153,18 @@
                 description : desc,
                 url : url
             });
+
+            if($('#flexHome').length){
+
+                $('#flexHome').flexslider({
+                    animation: "slide",
+                    controlNav:true,
+                    directionNav:false,
+                    touch: true,
+                    direction: "vertical",
+                    slideshowSpeed : 3000
+                });
+            }
         };
 
         $rootScope.startTour = function(){

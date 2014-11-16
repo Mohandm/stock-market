@@ -284,9 +284,4 @@ public class StockMarketController {
 	public String index(Model model) {
 		return "index";
 	}
-
-	@RequestMapping("/game")
-	public String app(Model model) {
-		return "game";
-	}
 }
