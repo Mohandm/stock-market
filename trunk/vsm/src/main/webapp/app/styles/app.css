@@ -909,4 +909,19 @@ input[type="text"].ui-grid-filter-input{
     }
 }
 
+.headerPage{
+    text-align: center;
+    margin: 20px 0px;
+    background: rgba(0,0,0,0.35);
+    padding: 5px 0px;
+    border-radius: 8px;
+    border: 2px solid white;
+}
+.headerPage span{
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
 

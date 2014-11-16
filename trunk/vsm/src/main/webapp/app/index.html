@@ -184,6 +184,12 @@
                             Home
                         </a>
                     </li>
+                    <li ng-show="isAuthenticated()">
+                        <a href="#/myDashboard" class="nav-a-side-bar">
+                            <i class="fa fa-th-large fa-fw"></i>
+                            My Dashboard
+                        </a>
+                    </li>
                     <li>
                         <a href="#/charts" class="nav-a-side-bar">
                             <i class="fa fa-line-chart fa-fw"></i>
@@ -196,13 +202,12 @@
                             Leader Board
                         </a>
                     </li>
-                    <li ng-show="isAuthenticated()">
+                    <!--<li ng-show="isAuthenticated()">
                         <a href="#/leagues" class="nav-a-side-bar">
                             <i class="fa fa-flag-checkered fa-fw"></i>
                             Leagues
                         </a>
-                    </li>
-
+                    </li>-->
                     <li ng-show="isAuthenticated()">
                         <a href="#/myPortfolio" class="nav-a-side-bar">
                             <i class="fa fa-usd fa-fw"></i>
@@ -314,7 +319,7 @@
         <script type="text/javascript" src="app/scripts/controllers/LoginController.js"></script>
         <script type="text/javascript" src="app/scripts/controllers/FollowersController.js"></script>
         <script type="text/javascript" src="app/scripts/controllers/LeaderBoardController.js"></script>
-        <script type="text/javascript" src="app/scripts/controllers/LeaguesController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/MyDashboardController.js"></script>
         <script type="text/javascript" src="app/scripts/controllers/AlertsController.js"></script>
         <script type="text/javascript" src="app/scripts/controllers/UserProfileController.js"></script>
 
