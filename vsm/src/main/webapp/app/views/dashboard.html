@@ -1,3 +1,37 @@
+<div ng-show="!isAuthenticated()">
+    <div class="panel panel-default panel-intropage">
+        <div class="panel-heading">
+            <h2>Welcome to Misys Stock Market League</h2>
+            <div class="flexslider" id="flexHome">
+                <ul class="slides">
+                    <li>
+                        <h1>A Game to enthrall and engage you on Stock Markets!</h1>
+                    </li>
+                    <li>
+                        <h1>Simulating real companies and real stock market conditions!</h1>
+                    </li>
+                    <li>
+                        <h1>Compete against each other in leagues!</h1>
+                    </li>
+                </ul>
+            </div>
+            <div class="loginButtons">
+                <button type="button" class="btn-lg" ng-click="" >
+                    <a href="#/form/login">
+                        Login
+                        <i class="fa fa-sign-in fa-fw"></i>
+                    </a>
+                </button>
+                <button type="button" class="btn-lg" ng-click="" >
+                    <a href="#/form/registration">
+                        Sign Up
+                        <i class="fa fa-pencil-square-o fa-fw"></i>
+                    </a>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row stock-quote-summary-panel blockContainer" ng-show="ndxTickerQuote" id="stock-quote-summary-panel-id">
     <div class="col-md-12">
         <div class="panel panel-default" >
