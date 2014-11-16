@@ -17,7 +17,7 @@ import com.misys.stockmarket.domain.entity.UserMaster;
 import com.misys.stockmarket.exception.DAOException;
 import com.misys.stockmarket.exception.DBRecordNotFoundException;
 
-public class AcheivementsService {
+public class AchievementsService {
 
 	@Inject
 	private static AchievementsDAO achievementsDAO;
@@ -47,9 +47,9 @@ public class AcheivementsService {
 					.compareTo(nextLevel) != 0) {
 				userAchievements.setNextLevel(nextLevel.add(BigDecimal
 						.valueOf(1)));
-				userAchievements
-						.setPublished(IApplicationConstants.ACHIEVEMENT_PUBLISHED_NO);
 			}
+			userAchievements
+						.setPublished(IApplicationConstants.ACHIEVEMENT_PUBLISHED_NO);
 		}
 		
 		// Set as evaluated an the current quantity
