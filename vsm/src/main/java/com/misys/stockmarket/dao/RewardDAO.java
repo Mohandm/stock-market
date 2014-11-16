@@ -30,7 +30,7 @@ public class RewardDAO extends BaseDAO {
 	public RewardMaster findRewardById(long id)throws DAOException {
 		try {
 			Query q = entityManager
-					.createQuery("select e from RewardMaster e where e.rewardType = ? ");
+					.createQuery("select e from RewardMaster e where e.rewardId = ? ");
 			q.setParameter(1, id);
 			return (RewardMaster) q.getSingleResult();
 		} catch (EmptyResultDataAccessException e) {
