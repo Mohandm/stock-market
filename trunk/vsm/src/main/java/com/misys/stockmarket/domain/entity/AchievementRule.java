@@ -25,13 +25,13 @@ public class AchievementRule implements BaseEntity, Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ_ACHIEVEMENT_RULE")
-	@Column(name = "ACHIEVEMENT_ID", unique = true, nullable = false)
-	private Long achievementId;
+	@Column(name = "ACHIEVEMENT_RULE_ID", unique = true, nullable = false)
+	private Long achievementRuleId;
 
 	@Column(name = "QUANTITY")
 	private BigDecimal quantity;
 
-	@Column(name = "LEVEL")
+	@Column(name = "ACHIEVEMENT_LEVEL")
 	private BigDecimal level;
 
 	// TODO: Use max size 
@@ -42,14 +42,6 @@ public class AchievementRule implements BaseEntity, Serializable {
 	@ManyToOne
 	@JoinColumn(name = "TYPE_ID")
 	private AchievementType achievementType;
-
-	public Long getAchievementId() {
-		return achievementId;
-	}
-
-	public void setAchievementId(Long achievementId) {
-		this.achievementId = achievementId;
-	}
 
 	public BigDecimal getQuantity() {
 		return quantity;
@@ -81,6 +73,14 @@ public class AchievementRule implements BaseEntity, Serializable {
 
 	public void setAchievementType(AchievementType achievementType) {
 		this.achievementType = achievementType;
+	}
+
+	public Long getAchievementRuleId() {
+		return achievementRuleId;
+	}
+
+	public void setAchievementRuleId(Long achievementRuleId) {
+		this.achievementRuleId = achievementRuleId;
 	}
 
 }
