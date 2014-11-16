@@ -166,8 +166,9 @@ public class PortfolioService {
 						.equals(orderMaster.getPriceType())) {
 					orderHistoryFormBean.setPriceType("Stop Loss");
 				}
-				orderHistoryFormBean.setQuantity(orderMaster.getVolume()
-						.toPlainString());
+				
+				orderHistoryFormBean.setQuantity(Long.toString(orderMaster.getVolume()
+						.longValue()));
 				if (IApplicationConstants.ORDER_STATUS_COMPLETED
 						.equals(orderMaster.getStatus())) {
 					orderHistoryFormBean.setStatus("Completed");
