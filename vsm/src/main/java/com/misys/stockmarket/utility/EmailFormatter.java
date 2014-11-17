@@ -16,7 +16,7 @@ public class EmailFormatter {
 				.append("Please click on the below link to activate your profile. \n");
 
 		// Encode the email address and send
-		mailContent.append(baseURL).append("/game#/action/activateprofile/")
+		mailContent.append(baseURL).append("#/action/activateprofile/")
 				.append(SecurityUtil.encodeValue(email));
 
 		SimpleMailMessage message = new SimpleMailMessage();
@@ -41,7 +41,7 @@ public class EmailFormatter {
 				.append("Please click on the below link to accept the invitation. \n");
 
 		// Encode the email address and send
-		mailContent.append(baseURL).append("/game#/action/acceptinvitation/")
+		mailContent.append(baseURL).append("#/action/acceptinvitation/")
 				.append(userInvitation.getToken());
 
 		SimpleMailMessage message = new SimpleMailMessage();
