@@ -180,20 +180,8 @@
                 <ul class="nav navbar-top-links">
                     <li>
                         <a href="../stockmarket" class="nav-a-side-bar">
-                            <i class="fa fa-home fa-fw"></i>
-                            Home
-                        </a>
-                    </li>
-                    <li ng-show="isAuthenticated()">
-                        <a href="#/myDashboard" class="nav-a-side-bar">
                             <i class="fa fa-th-large fa-fw"></i>
-                            My Dashboard
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#/charts" class="nav-a-side-bar">
-                            <i class="fa fa-line-chart fa-fw"></i>
-                            Stock Comparison
+                            Dashboard
                         </a>
                     </li>
                     <li>
@@ -202,18 +190,32 @@
                             Hall of Fame
                         </a>
                     </li>
+                    <li ng-show="isAuthenticated()">
+                        <a href="#/myDashboard" class="nav-a-side-bar">
+                            <i class="fa fa-usd fa-fw"></i>
+                            Play Arena
+                        </a>
+                    </li>
+                    <li ng-show="isAuthenticated()">
+                        <a href="#/myPortfolio" class="nav-a-side-bar">
+                            <i class="fa fa-puzzle-piece fa-fw"></i>
+                            Practice Arena
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#/charts" class="nav-a-side-bar">
+                            <i class="fa fa-line-chart fa-fw"></i>
+                            Stock Comparison
+                        </a>
+                    </li>
+
                     <!--<li ng-show="isAuthenticated()">
                         <a href="#/leagues" class="nav-a-side-bar">
                             <i class="fa fa-flag-checkered fa-fw"></i>
                             Leagues
                         </a>
                     </li>-->
-                    <li ng-show="isAuthenticated()">
-                        <a href="#/myPortfolio" class="nav-a-side-bar">
-                            <i class="fa fa-usd fa-fw"></i>
-                            Practise Arena
-                        </a>
-                    </li>
+
                     <li ng-show="isAuthenticated()">
                         <a href="#/watchList" class="nav-a-side-bar">
                             <i class="fa fa-bullhorn fa-fw"></i>
