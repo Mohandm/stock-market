@@ -15,16 +15,14 @@ vsmApp.controller('MyPortfolioController', ['$scope', '$rootScope', '$log', 'Sto
     TourService.setupTour('myPortfolio');
 
     StockQuotesService.getMyLeagues().then(function(data){
-        var arrayLeagues = [];
+
         $(data).each(function(index,item){
-            if(item.locked !== "true")
+            if(item.stage === '0')
             {
-                arrayLeagues.push(item);
+                $scope.leagueSelected = item;
             }
         });
 
-        $scope.myLeagues  = arrayLeagues;
-        $scope.leagueSelected = arrayLeagues[0];
         $scope.reloadMyPortfolio();
     });
 
@@ -32,12 +30,12 @@ vsmApp.controller('MyPortfolioController', ['$scope', '$rootScope', '$log', 'Sto
         StockQuotesService.getMyPortfolio($scope.leagueSelected.leagueId).then(function(data){
             $scope.myPortfolio  = data;
             $scope.getStockHoldingsDataGridOptions.data = data.stockHoldings;
-            /*setTimeout(function() {
+            setTimeout(function() {
                 $('.counter').counterUp({
                     delay: 10,
                     time: 1000
                 });
-            },1000);*/
+            },1000);
         });
         StockQuotesService.getMyRecentTrades($scope.leagueSelected.leagueId).then(function(data){
             $scope.myRecentTrades  = data;
