@@ -35,6 +35,24 @@
                                  <label>{{passValuesToDialog.name}}</label>
                              </div>
                          </div>
+                         <div class="row tradeDialogCharts">
+                             <div class="col-md-4">
+                                 <div class="tile quote-statistics">
+                                     <div id="stats-line" class="pull-left chart-widget"></div>
+                                 </div>
+                             </div>
+                             <div class="col-md-4">
+                                 <div class="tile quote-statistics">
+                                     <div id="stats-line-2" class="pull-left chart-widget"></div>
+                                 </div>
+                             </div>
+                             <div class="col-md-4">
+                                 <div class="tile quote-statistics">
+                                     <div id="stats-line-3" class="pull-left chart-widget"></div>
+                                 </div>
+                             </div>
+                         </div>
+
                          <field-wrapper label="Volume" type="text" name="volume" required="true" formmodel="formmodel" 	formcontrol="formcontrol" validations='[{"validator":"isNumber","event":"isNumber","errorMessage":"It should be a number", "scopeValue":"symbol"},{"validator":"validateSellVolume","event":"validateSellVolume","errorMessage":"You do not have that many stocks for this company", "scopeValue":"stockHoldingVolume"}]'></field-wrapper>
 						
 						<div class="form-group">

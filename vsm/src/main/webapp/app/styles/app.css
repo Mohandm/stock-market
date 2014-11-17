@@ -1,6 +1,7 @@
 /* Space out content a bit */
 body {
-  background: url(../images/banking.jpg);
+  background-image: url(../images/banking.jpg);
+  background-color: sienna;
   background-size: 100% 100%;
   background-attachment: fixed;
 }
@@ -255,7 +256,7 @@ select > option {
     color:white;
 }
 .modal-content{
-  background: url(../images/banking.jpg);
+  background: sienna;
   background-size: 100% 100%;
   border-radius : 8px;
   border : 3px solid white;
@@ -970,4 +971,8 @@ input[type="text"].ui-grid-filter-input{
 .leagues-buttons{
     text-align: center;
     padding:5px;
+}
+
+.tradeDialogCharts{
+    margin: 5px 0px;
 }

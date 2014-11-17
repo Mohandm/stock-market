@@ -1,10 +1,10 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.service('ChartService', ['$http','StockQuotesService', function ($http,StockQuotesService) {
+vsmApp.service('ChartService', ['$http','StockQuotesService', function ($http, StockQuotesService) {
 
-    this.reloadSparklingCharts = function(symbol, historicalData, quoteData){
-        var reducedData1 = StockQuotesService.reducedHistoricalData(historicalData, 50);
-        var reducedData2 = StockQuotesService.reducedHistoricalData(historicalData, 42);
+    this.reloadSparklingCharts = function(symbol, historicalData, countArray){
+        var reducedData1 = StockQuotesService.reducedHistoricalData(historicalData, countArray[0]);
+        var reducedData2 = StockQuotesService.reducedHistoricalData(historicalData, countArray[1]);
         var chartData1 = [];
         var chartData2 = [];
         $(reducedData1).each(function(index, item){
