@@ -601,7 +601,7 @@ input[type="text"].ui-grid-filter-input{
     text-align: center;
 }
 .league-1, .league-1 .fa,.league-1:hover{
-    color : rgba(255,128,0,1);
+    color : orange;
 }
 
 .league-2,.league-2 .fa,.league-2:hover{
@@ -609,11 +609,11 @@ input[type="text"].ui-grid-filter-input{
 }
 
 .league-3,.league-3 .fa,.league-3:hover{
-    color : rgba(255,0,0,1);
+    color : orangered;
 }
 .leagues-lock-text-1,.leagues-lock-text-2,.leagues-lock-text-3{
     text-align: center;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 .leagues-dashboard .btn-success,.leader-board  .btn-success{
@@ -924,4 +924,50 @@ input[type="text"].ui-grid-filter-input{
     color: white;
 }
 
+.nav-tabs.nav-justified > li > a{
+    margin-right: 5px;
+}
 
+.nav-tabs.nav-justified > li > a{
+    background: rgba(0,0,0,.2);
+    color : white;
+    margin-right: 5px;
+    font-size: 20px;
+}
+
+.nav-tabs.nav-justified li.active > a{
+    background: rgba(0,0,0,.5);
+    color : white;
+}
+
+.nav-tabs.nav-justified li.active > a:hover, .nav-tabs > li > a:hover{
+    background: rgba(0,0,0,.65);
+    color : white;
+}
+
+.tab-content{
+    background: rgba(0,0,0,0.1);
+    margin-right: 5px;
+    border-top: 0px;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    border-bottom: 1px solid white;
+    padding: 0px 0px 0px 10px;
+}
+
+.leagues-dashboard{
+    margin-left : 5px;
+}
+
+.panel-custom{
+   padding : 10px;
+}
+.panel-custom .league-panel-text{
+   background: rgba(0,0,0,0.3);
+   border-radius: 8px;
+}
+
+.leagues-buttons{
+    text-align: center;
+    padding:5px;
+}
