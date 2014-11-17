@@ -82,8 +82,26 @@ vsmApp.controller('DialogFormController', ['$scope','$http','modals', 'StockQuot
                     modals.close();
                     $timeout(function(){
                         StockQuotesService.getMyRecentTrades($scope.formmodel.leagueUserId).then(function(data){
-                            $scope.$parentScope.myRecentTrades  = data;
-                            $scope.$parentScope.getRecentTradesDataGridOptions.data = data.recentTrades;
+                            if($scope.leagueStage === "1")
+                            {
+                                $scope.$parentScope.myRecentTrades1  = data;
+                                $scope.$parentScope.getRecentTradesDataGridOptions1.data = data.recentTrades;
+                            }
+                            else if($scope.leagueStage === "2")
+                            {
+                                $scope.$parentScope.myRecentTrades2  = data;
+                                $scope.$parentScope.getRecentTradesDataGridOptions2.data = data.recentTrades;
+                            }
+                            else if($scope.leagueStage === "3")
+                            {
+                                $scope.$parentScope.myRecentTrades3  = data;
+                                $scope.$parentScope.getRecentTradesDataGridOptions3.data = data.recentTrades;
+                            }
+                            else
+                            {
+                                $scope.$parentScope.myRecentTrades  = data;
+                                $scope.$parentScope.getRecentTradesDataGridOptions.data = data.recentTrades;
+                            }
                         });
                     }, 2000);
                 });
