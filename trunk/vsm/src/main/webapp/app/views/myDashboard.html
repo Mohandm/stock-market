@@ -1,62 +1,231 @@
-<div class="headerPage">
+<!--<div class="headerPage">
     <span>My Dashboard</span>
-</div>
+</div>-->
+
 <div class="row blockContainer leagues-dashboard" id="leagueLeaguesBoard">
-    <div class="col-md-4">
-        <div class="panel panel-default leagues-panel">
-            <div class="panel-heading" id="premierLeagueLeaguesBoard">
-                <h3 class="panel-title league-1">{{leagueList1.name}} League - <i class="fa fa-star-o fa-fw"></i></h3>
-            </div>
-            <div class="panel-body">
-                <div class="leagues-icon-1 league-1"><i class="fa fa-star fa-fw"></i></div>
-                <div class="leagues-lock-text-1 league-1">Players : <span class="counter">{{leagueList1.playersCount}}</span></div>
-                <div class="leagues-lock-text-1 league-1">
-                    <span ng-if="leagueList1.locked === 'true'"><i class="fa fa-lock fa-fw"></i>Locked</span>
-                    <span ng-if="leagueList1.locked !== 'true'"><i class="fa fa-unlock fa-fw"></i>Unlocked</span>
-                </div>
-                <div class="leagues-lock-text-1">
-                    <button ng-if="leagueList1.locked === 'true'" type="button" class="btn btn-success league-1" ng-click="unlockLeague1(leagueList1)">How to Unlock</button>
-                    <button type="button" class="btn btn-success league-1" id="viewListUsersLeagueLeaguesBoard" ng-click="listOfUsersLeague(leagueList1.leagueId)">List of Players</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="panel panel-default leagues-panel">
-            <div class="panel-heading" id="championsLeagueLeaguesBoard">
-                <h3 class="panel-title league-2">{{leagueList2.name}} League - <i class="fa fa-star-o fa-fw"></i><i class="fa fa-star-o fa-fw"></i></h3>
-            </div>
-            <div class="panel-body">
-                <div class="leagues-icon-2 league-2"><i class="fa fa-trophy fa-fw"></i></div>
-                <div class="leagues-lock-text-2 league-2">Players : <span class="counter">{{leagueList2.playersCount}}</span></div>
-                <div class="leagues-lock-text-2 league-2">
-                    <span ng-if="leagueList2.locked === 'true'"><i class="fa fa-lock fa-fw"></i>Locked</span>
-                    <span ng-if="leagueList2.locked !== 'true'"><i class="fa fa-unlock fa-fw"></i>Unlocked</span>
-                </div>
-                <div class="leagues-lock-text-2">
-                    <button type="button" ng-if="leagueList2.locked === 'true'" class="btn btn-success league-2" ng-click="unlockLeague2(leagueList2)">How to Unlock</button>
-                    <button type="button" class="btn btn-success league-2" ng-click="listOfUsersLeague(leagueList2.leagueId)">List of Players</button>
+    <tabset justified="true">
+        <tab select="selectLeague(leagueList1)">
+            <tab-heading class="leagues-lock-text-1 league-1">
+                {{leagueList1.name}} League - <i class="fa fa-star fa-fw"></i>
+                <span ng-if="leagueList1.locked === 'true'" class="pull-right"><i class="fa fa-lock fa-fw"></i></span>
+                <span ng-if="leagueList1.locked !== 'true'" class="pull-right"><i class="fa fa-unlock fa-fw"></i></span>
+            </tab-heading>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="leagues-lock-text-1 leagues-buttons">
+                        <button ng-if="leagueList1.locked === 'true'" type="button" class="btn btn-success league-1" ng-click="unlockLeague1(leagueList1)">How to Unlock</button>
+                        <button type="button" class="btn btn-success league-1"><a href="#/leaderBoard" class="league-1">Leader Board</a></button>
+                        <button type="button" class="btn btn-success league-1" id="viewListUsersLeagueLeaguesBoard1" ng-click="listOfUsersLeague(leagueList1.leagueId)">List of Players : <span>{{leagueList1.playersCount}}</span></button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="panel panel-default leagues-panel">
-            <div class="panel-heading" id="legendLeagueLeaguesBoard">
-                <h3 class="panel-title league-3">{{leagueList3.name}} League - <i class="fa fa-star-o fa-fw"></i><i class="fa fa-star-o fa-fw"></i><i class="fa fa-star-o fa-fw"></i></h3>
-            </div>
-            <div class="panel-body">
-                <div class="leagues-icon-3 league-3"><i class="fa fa-flag-checkered fa-fw"></i></div>
-                <div class="leagues-lock-text-3 league-3">Players : <span class="counter">{{leagueList3.playersCount}}</span></div>
-                <div class="leagues-lock-text-3 league-3">
-                    <span ng-if="leagueList3.locked === 'true'"><i class="fa fa-lock fa-fw"></i>Locked</span>
-                    <span ng-if="leagueList3.locked !== 'true'"><i class="fa fa-unlock fa-fw"></i>Unlocked</span>
+
+            <div ng-if="leagueList1.locked !== 'true'" id="portfolioTabContentContainer1">
+                <div class="row stock-quote-summary-panel my-portfolio-container blockContainer">
+                    <div class="col-md-12">
+                        <div class="panel panel-default" >
+                            <div class="panel-heading" id="portfolioSummaryMyPortfolio1">
+                                <!--<h3 class="panel-title">{{leagueSelected.name}}</h3>-->
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="field-wrapper league-1"><label class="league-1">Portfolio Value:</label><span><i class="fa fa-usd fa-fw"/><span class="counter">{{myPortfolio1.portfolioValue}}</span></span></div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="field-wrapper league-1"><label class="league-1">Cash Balance:</label><span><i class="fa fa-usd fa-fw"/><span class="counter">{{myPortfolio1.remainingBalance}}</span></span></div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="field-wrapper league-1"><label class="league-1">Total Value:</label><span><i class="fa fa-usd fa-fw"/><span class="counter">{{myPortfolio1.totalValue}}</span></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="leagues-lock-text-3">
-                    <button type="button" ng-if="leagueList3.locked === 'true'" id="unlockLeagueLeaguesBoard" class="btn btn-success league-3" ng-click="unlockLeague3(leagueList3)">How to Unlock</button>
-                    <button type="button" class="btn btn-success league-3" ng-click="listOfUsersLeague(leagueList3.leagueId)">List of Players</button>
+                <div class="row blockContainer">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" id="stockHoldingsMyPortfolio1">
+                                <h3 class="panel-title">Stock Holdings</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div ui-grid="getStockHoldingsDataGridOptions1" class="stock-holdings-list-grid" external-scopes="$scope"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" id="stockListsMyPortfolio1">
+                                <h3 class="panel-title">Stocks List</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div ui-grid="stockListGridOptions1" class="stock-list-grid" external-scopes="$scope"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row blockContainer">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" id="recentTradesMyPortfolio1">
+                                <h3 class="panel-title">My Recent Trades</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div ui-grid="getRecentTradesDataGridOptions1" class="recent-trades-list-grid"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </tab>
+        <tab select="selectLeague(leagueList2)">
+            <tab-heading class="leagues-lock-text-2 league-2">
+                {{leagueList2.name}} League - <i class="fa fa-trophy fa-fw"></i>
+                <span ng-if="leagueList2.locked === 'true'" class="pull-right"><i class="fa fa-lock fa-fw"></i></span>
+                <span ng-if="leagueList2.locked !== 'true'" class="pull-right"><i class="fa fa-unlock fa-fw"></i></span>
+            </tab-heading>
+            <div class="row">
+                <div class="col-md-offset-4 col-md-4">
+                    <div class="leagues-lock-text-2 leagues-buttons">
+                        <button ng-if="leagueList2.locked === 'true'" type="button" class="btn btn-success league-2" ng-click="unlockLeague2(leagueList2)">How to Unlock</button>
+                        <button type="button" class="btn btn-success league-2"><a href="#/leaderBoard" class="league-2">Leader Board</a></button>
+                        <button type="button" class="btn btn-success league-2" id="viewListUsersLeagueLeaguesBoard2" ng-click="listOfUsersLeague(leagueList2.leagueId)">List of Players : <span>{{leagueList2.playersCount}}</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="leagueList2.locked !== 'true'" id="portfolioTabContentContainer2">
+                <div class="row stock-quote-summary-panel my-portfolio-container blockContainer">
+                    <div class="col-md-12">
+                        <div class="panel panel-default" >
+                            <div class="panel-heading" id="portfolioSummaryMyPortfolio2">
+                                <!--<h3 class="panel-title">{{leagueSelected.name}}</h3>-->
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="field-wrapper league-2"><label class="league-2">Portfolio Value:</label><span><i class="fa fa-usd fa-fw"/><span class="counter">{{myPortfolio2.portfolioValue}}</span></span></div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="field-wrapper league-2"><label class="league-2">Cash Balance:</label><span><i class="fa fa-usd fa-fw"/><span class="counter">{{myPortfolio2.remainingBalance}}</span></span></div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="field-wrapper league-2"><label class="league-2">Total Value:</label><span><i class="fa fa-usd fa-fw"/><span class="counter">{{myPortfolio2.totalValue}}</span></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row blockContainer">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" id="stockHoldingsMyPortfolio2">
+                                <h3 class="panel-title">Stock Holdings</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div ui-grid="getStockHoldingsDataGridOptions2" class="stock-holdings-list-grid" external-scopes="$scope"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" id="stockListsMyPortfolio2">
+                                <h3 class="panel-title">Stocks List</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div ui-grid="stockListGridOptions2" class="stock-list-grid" external-scopes="$scope"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row blockContainer">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" id="recentTradesMyPortfolio2">
+                                <h3 class="panel-title">My Recent Trades</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div ui-grid="getRecentTradesDataGridOptions2" class="recent-trades-list-grid"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </tab>
+        <tab select="selectLeague(leagueList3)">
+            <tab-heading class="leagues-lock-text-3 league-3">
+                {{leagueList3.name}} League - <i class="fa fa-flag-checkered fa-fw"></i>
+                <span ng-if="leagueList3.locked === 'true'" class="pull-right"><i class="fa fa-lock fa-fw"></i></span>
+                <span ng-if="leagueList3.locked !== 'true'" class="pull-right"><i class="fa fa-unlock fa-fw"></i></span>
+            </tab-heading>
+            <div class="row">
+                <div class="col-md-offset-8 col-md-4">
+                    <div class="leagues-lock-text-3 leagues-buttons">
+                        <button ng-if="leagueList3.locked === 'true'" type="button" class="btn btn-success league-3" ng-click="unlockLeague3(leagueList3)">How to Unlock</button>
+                        <button type="button" class="btn btn-success league-3"><a href="#/leaderBoard" class="league-3">Leader Board</a></button>
+                        <button type="button" class="btn btn-success league-3" id="viewListUsersLeagueLeaguesBoard3" ng-click="listOfUsersLeague(leagueList3.leagueId)">List of Players : <span>{{leagueList3.playersCount}}</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="leagueList3.locked !== 'true'" id="portfolioTabContentContainer3">
+                <div class="row stock-quote-summary-panel my-portfolio-container blockContainer">
+                    <div class="col-md-12">
+                        <div class="panel panel-default" >
+                            <div class="panel-heading" id="portfolioSummaryMyPortfolio3">
+                                <!--<h3 class="panel-title">{{leagueSelected.name}}</h3>-->
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="field-wrapper league-3"><label class="league-3">Portfolio Value:</label><span><i class="fa fa-usd fa-fw"/><span class="counter">{{myPortfolio3.portfolioValue}}</span></span></div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="field-wrapper league-3"><label class="league-3">Cash Balance:</label><span><i class="fa fa-usd fa-fw"/><span class="counter">{{myPortfolio3.remainingBalance}}</span></span></div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="field-wrapper league-3"><label class="league-3">Total Value:</label><span><i class="fa fa-usd fa-fw"/><span class="counter">{{myPortfolio3.totalValue}}</span></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row blockContainer">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" id="stockHoldingsMyPortfolio3">
+                                <h3 class="panel-title">Stock Holdings</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div ui-grid="getStockHoldingsDataGridOptions3" class="stock-holdings-list-grid" external-scopes="$scope"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" id="stockListsMyPortfolio3">
+                                <h3 class="panel-title">Stocks List</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div ui-grid="stockListGridOptions3" class="stock-list-grid" external-scopes="$scope"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row blockContainer">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" id="recentTradesMyPortfolio3">
+                                <h3 class="panel-title">My Recent Trades</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div ui-grid="getRecentTradesDataGridOptions3" class="recent-trades-list-grid"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </tab>
+    </tabset>
 </div>
