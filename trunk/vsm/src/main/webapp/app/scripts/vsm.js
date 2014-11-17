@@ -187,7 +187,7 @@
         };
 
         $rootScope.setTheme = function(theme){
-            var url;
+            var url,color;
             if(theme === 'wooden')
             {
                 url = 'url(app/images/wooden.jpg)';
@@ -195,29 +195,36 @@
             else if(theme === 'capital')
             {
                 url = 'url(app/images/capital.jpg)';
+                color = 'mediumaquamarine';
             }
             else if(theme === 'risk')
             {
                 url = 'url(app/images/risk.jpg)';
+                color = 'indianred';
             }
             else if(theme === 'investment')
             {
                 url = 'url(app/images/investment.jpg)';
+                color = 'dodgerblue';
             }
             else if(theme === 'lumen')
             {
                 url = 'url(app/images/lumen.jpg)';
+                color = 'grey';
             }
             else if(theme === 'misys')
             {
                 url = 'url(app/images/misys.jpg)';
+                color = 'indigo';
             }
             else
             {
                 url = 'url(app/images/banking.jpg)';
+                color = 'sienna';
             }
 
-            $('.appBody').css('background',url);
+            $('.appBody').css('background-color',color);
+            $('.appBody').css('background-image',url);
             //$('.modal-content').css('background',url);
             $('.appBody').css('background-size','100% 100%');
             //$('.modal-content').css('background-size','100% 100%');

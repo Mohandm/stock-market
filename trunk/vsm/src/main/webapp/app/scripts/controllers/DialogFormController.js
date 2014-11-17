@@ -1,6 +1,7 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.controller('DialogFormController', ['$scope','$http','modals', 'StockQuotesService','$timeout', function ($scope, $http, modals, StockQuotesService, $timeout) {
+vsmApp.controller('DialogFormController', ['$scope','$http','modals', 'StockQuotesService','$timeout','ChartService',
+    function ($scope, $http, modals, StockQuotesService, $timeout, ChartService) {
 	
     $scope.formmodel = {};
     $scope.formcontrol = {};
@@ -115,5 +116,9 @@ vsmApp.controller('DialogFormController', ['$scope','$http','modals', 'StockQuot
         }
         return false;
     };
+
+    StockQuotesService.getHistoricalStockLists($scope.passValuesToDialog.tikerSymbol).then(function(historicalData){
+        ChartService.reloadSparklingCharts($scope.passValuesToDialog.tikerSymbol, historicalData, [33,40]);
+    });
 
 }]);
