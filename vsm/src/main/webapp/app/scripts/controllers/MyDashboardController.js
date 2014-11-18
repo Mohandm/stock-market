@@ -245,12 +245,10 @@ vsmApp.controller('MyDashboardController', ['$scope', '$rootScope', 'modals','Le
 
 }]);
 
-vsmApp.controller('LeaguesDialogController', ['$scope','$http','modals','$location', function ($scope, $http, modals, $location) {
+vsmApp.controller('LeaguesDialogController', ['$scope','$http','modals','$location','$route', function ($scope, $http, modals, $location, $route) {
 
     $scope.formmodel = {};
     $scope.formcontrol = {};
-    $scope.formmodel.leagueId = $scope.passValuesToDialog.league.leagueId;
-    $scope.league = $scope.passValuesToDialog.league;
 
     $scope.question1Mappings = [
         {"name":"The Stock of a Corporation is a Share", "type":"01"},
@@ -282,10 +280,10 @@ vsmApp.controller('LeaguesDialogController', ['$scope','$http','modals','$locati
                 if($scope.formmodel.question1 === "02" && $scope.formmodel.question2 === "03" && $scope.formmodel.question3 === "02")
                 {
                     $scope.wrongAnswer = "Right Answers!";
-                    $http.post(action, {leagueId : $scope.formmodel.leagueId}).success(function (response) {
+                    $http.post(action, {leagueId : $scope.leagueSelected.leagueId}).success(function (response) {
                         modals.close();
-                        $location.path('/myPortfolio');
-                    });
+                        $route.reload();
+					});
                 }
                 else
                 {

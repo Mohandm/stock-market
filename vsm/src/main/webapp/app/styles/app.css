@@ -617,12 +617,12 @@ input[type="text"].ui-grid-filter-input{
     font-size: 20px;
 }
 
-.leagues-dashboard .btn-success,.leader-board  .btn-success{
+.leagues-dashboard .leagues-buttons .btn-success,.leader-board  .btn-success{
     background-color: rgba(0,0,0,.5);
     border-color: white;
 }
 
-.leagues-dashboard .btn-success:hover,.leader-board  .btn-success:hover{
+.leagues-dashboard .leagues-buttons .btn-success:hover,.leader-board  .btn-success:hover{
     background-color: rgba(0,0,0,.75);
     border-color: white;
 }
@@ -953,7 +953,7 @@ input[type="text"].ui-grid-filter-input{
     border-left: 1px solid white;
     border-right: 1px solid white;
     border-bottom: 1px solid white;
-    padding: 0px 0px 0px 10px;
+    padding: 0px 5px 0px 10px;
 }
 
 .leagues-dashboard{
