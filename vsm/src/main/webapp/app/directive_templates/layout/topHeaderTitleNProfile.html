@@ -1,0 +1,28 @@
+<div class="row blockContainer headerPage">
+    <div class="row">
+        <div class="col-md-3 section-title">
+            <span class="title-page">
+                <span ng-bind="title"/>
+            </span>
+            <div class="section-title-description">
+                <span ng-bind="titledescription"/>
+            </div>
+        </div>
+        <div class="col-md-3 col-md-offset-6 section-profile" ng-show="authenticated">
+            <img ng-src="/stockmarket/userProfilePic">
+            <div class="pull-right">
+                <span class="title-page">
+                    <span ng-bind="username"></span>
+                </span>
+                <div id="time">
+                    <span id="hours"></span>
+                    :
+                    <span id="min"></span>
+                    :
+                    <span id="sec"></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

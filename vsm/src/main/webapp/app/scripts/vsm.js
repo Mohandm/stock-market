@@ -57,7 +57,8 @@
        .when('/watchList', {
            templateUrl: 'app/views/watchList.html',
            controller: 'WatchListController',
-           needsLogin : true
+           needsLogin : true,
+           needsTransition : true
        })
        .when('/myDashboard', {
            templateUrl: 'app/views/myDashboard.html',
@@ -132,6 +133,12 @@
             alertsListPromise.then(function(data){
                 $rootScope.alertsList = data.alertsList;
                 $rootScope.notificationsList = data.notificationsList;
+            });
+
+            $http.get('getUser/',{}).success(function (json) {
+                $rootScope.loggedInUserName = json.firstName + ' ' +json.lastName;
+            }).error(function(msg, code) {
+                $log.error(msg, code);
             });
 
             var title = ' Misys - Stock Market League'

@@ -89,8 +89,8 @@ body {
 }
 #time{
     color : white;
-    font-size : 20px;
-    padding : 10px;
+    font-size: 15px;
+    padding: 8px;
 }
 .form-control{
     display:inline-block;
@@ -911,18 +911,35 @@ input[type="text"].ui-grid-filter-input{
 }
 
 .headerPage{
-    text-align: center;
-    margin: 20px 0px;
-    background: rgba(0,0,0,0.35);
-    padding: 5px 0px;
-    border-radius: 8px;
-    border: 2px solid white;
+    margin-bottom: 10px;
 }
-.headerPage span{
+.headerPage .title-page{
+    text-align: center;
+    background: rgba(0,0,0,0.35);
+    padding: 8px 0px;
+}
+.headerPage .title-page span{
     padding: 10px 20px;
     font-size: 20px;
     font-weight: bold;
     color: white;
+}
+.headerPage .section-title, .headerPage .section-profile{
+    background: rgba(0,0,0,0.4);
+    padding:0px;
+    height: 60px;
+    margin-bottom: 10px;
+}
+.headerPage img{
+    width:60px;
+    height: 60px;
+}
+.headerPage .section-profile .pull-right{
+    text-align: right;
+}
+.headerPage .section-title-description{
+    color: white;
+    padding: 8px;
 }
 
 .nav-tabs.nav-justified > li > a{
