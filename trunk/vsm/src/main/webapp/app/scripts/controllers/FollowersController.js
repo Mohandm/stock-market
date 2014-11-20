@@ -95,7 +95,9 @@ vsmApp.controller('FollowersController', ['$scope', '$rootScope','LeaguesService
 
         $scope.accept = function(item){
             console.debug("Accept");
-            $http.post('acceptFollowRequest',{"userId" : item.userId, "leagueId" : $scope.myLeagueSelected.leagueId}).success(function (response) {
+            var actionUrl = 'acceptFollowRequest';
+            actionUrl = $rootScope.getFinalURL(actionUrl);
+            $http.post(actionUrl,{"userId" : item.userId, "leagueId" : $scope.myLeagueSelected.leagueId}).success(function (response) {
                 $timeout(function(){
                     $scope.reloadMyFollowersGrids();
                 }, 2000);
@@ -105,7 +107,9 @@ vsmApp.controller('FollowersController', ['$scope', '$rootScope','LeaguesService
 
         $scope.reject = function(item){
             console.debug("Reject");
-            $http.post('rejectFollowRequest',{"userId" : item.userId, "leagueId" : $scope.myLeagueSelected.leagueId}).success(function (response) {
+            var actionUrl = 'rejectFollowRequest';
+            actionUrl = $rootScope.getFinalURL(actionUrl);
+            $http.post(actionUrl,{"userId" : item.userId, "leagueId" : $scope.myLeagueSelected.leagueId}).success(function (response) {
                 $timeout(function(){
                     $scope.reloadMyFollowersGrids();
                 }, 2000);
@@ -114,7 +118,9 @@ vsmApp.controller('FollowersController', ['$scope', '$rootScope','LeaguesService
 
         $scope.disallow = function(item){
             console.debug("Disallow");
-            $http.post('disallowFollowRequest',{"userId" : item.userId, "leagueId" : $scope.myLeagueSelected.leagueId}).success(function (response) {
+            var actionUrl = 'disallowFollowRequest';
+            actionUrl = $rootScope.getFinalURL(actionUrl);
+            $http.post(actionUrl,{"userId" : item.userId, "leagueId" : $scope.myLeagueSelected.leagueId}).success(function (response) {
                 $timeout(function(){
                     $scope.reloadMyFollowersGrids();
                 }, 2000);
@@ -123,7 +129,9 @@ vsmApp.controller('FollowersController', ['$scope', '$rootScope','LeaguesService
 
         $scope.stopFollowing = function(item){
             console.debug("StopFollowing");
-            $http.post('stopFollowingRequest',{"userId" : item.userId, "leagueId" : $scope.allLeagueSelected.leagueId}).success(function (response) {
+            var actionUrl = 'stopFollowingRequest';
+            actionUrl = $rootScope.getFinalURL(actionUrl);
+            $http.post(actionUrl,{"userId" : item.userId, "leagueId" : $scope.allLeagueSelected.leagueId}).success(function (response) {
                 $timeout(function(){
                     $scope.reloadYourFollowingGrids();
                 }, 2000);

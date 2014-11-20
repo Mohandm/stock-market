@@ -14,25 +14,30 @@ angular.module('vsmApp')
 });
 
 angular.module('vsmApp')
-  .factory('AuthService', function ($http, Session) {
+  .factory('AuthService', function ($http, Session, $rootScope) {
   var authService = {};
  
   authService.login = function (credentials) {
-    return $http.post('j_spring_security_check', credentials)
+    var actionUrl = 'j_spring_security_check';
+    actionUrl = $rootScope.getFinalURL(actionUrl);
+    return $http.post(actionUrl, credentials)
       .then(function (res) {
         Session.create(res.data.email);
       });
   };
 
   authService.logout = function () {
-    return $http.post('j_spring_security_logout', {})
+    var actionUrl = 'j_spring_security_logout';
+    actionUrl = $rootScope.getFinalURL(actionUrl);
+    return $http.post(actionUrl, {})
       .then(function (res) {   
         Session.destroy();
       });
   };
 
   authService.syncSession = function () {
-    return $http.get('getuserdetails', {})
+    var actionUrl = $rootScope.getFinalURL('getuserdetails');
+    return $http.get(actionUrl, {})
       .then(function (res) {
         if (angular.isDefined(res.data.email)) {
           Session.create(res.data.email);

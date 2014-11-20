@@ -43,6 +43,7 @@ angular.module('vsmApp')
         $scope.formcontrol.submitted = true;
       }
       else {
+        action = $rootScope.getFinalURL(action);
         $http.post(action, $scope.formmodel).success(function (response) {
           modals.close();
         });

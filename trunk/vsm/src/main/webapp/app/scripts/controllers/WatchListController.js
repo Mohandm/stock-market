@@ -45,7 +45,7 @@ vsmApp.controller('WatchListController', ['$scope', '$rootScope', 'StockQuotesSe
     };
 }]);
 
-vsmApp.controller('WatchListDialogController', ['$scope','$http','modals', function ($scope, $http, modals) {
+vsmApp.controller('WatchListDialogController', ['$scope','$http','modals','$rootScope', function ($scope, $http, modals, $rootScope) {
 
     $scope.formmodel = {};
     $scope.formcontrol = {};
@@ -62,6 +62,7 @@ vsmApp.controller('WatchListDialogController', ['$scope','$http','modals', funct
                 $scope.formcontrol.submitted = true;
             }
             else {
+                action = $rootScope.getFinalURL(action);
                 $http.post(action, $scope.formmodel).success(function (response) {
                     modals.close();
                 });

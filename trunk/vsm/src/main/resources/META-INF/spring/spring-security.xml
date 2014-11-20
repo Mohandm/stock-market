@@ -9,6 +9,7 @@
    	<http auto-config="false" use-expressions="true" 
 		entry-point-ref="customAuthenticationEntryPoint">
       	<intercept-url pattern="/**" access="permitAll"/>
+      	<custom-filter ref="corsFilter" before="HEADERS_FILTER"/>
 		<custom-filter ref="customUsernamePasswordAuthenticationFilter" position="FORM_LOGIN_FILTER "/>
 		<custom-filter ref="csrfTokenGeneratorFilter" position="LAST "/>
 		<logout delete-cookies="JSESSIONID"  />
@@ -36,6 +37,7 @@
 	<beans:bean id="customAuthenticationSuccessHandler" class="com.misys.stockmarket.security.CustomAuthenticationSuccessHandler"/>
 	<beans:bean id="customAuthenticationEntryPoint" class="com.misys.stockmarket.security.CustomAuthenticationEntryPoint"/>
 	<beans:bean id="csrfTokenGeneratorFilter" class="com.misys.stockmarket.security.CsrfTokenGeneratorFilter"/>
+	<beans:bean id="corsFilter" class="com.misys.stockmarket.security.CORSFilter"/>
 	<beans:bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl"/>
 	<beans:bean id="sessionControlStrategy" class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy">
 	    <!-- <beans:constructor-arg ref="sessionRegistry"/> -->
