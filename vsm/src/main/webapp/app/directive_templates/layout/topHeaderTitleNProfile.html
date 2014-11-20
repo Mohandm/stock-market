@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="col-md-3 col-md-offset-6 section-profile" ng-show="authenticated">
-            <img ng-src="/stockmarket/userProfilePic">
+            <img ng-src="{{$root.getFinalURL('userProfilePic')}}">
             <div class="pull-right">
                 <span class="title-page">
                     <span ng-bind="username"></span>

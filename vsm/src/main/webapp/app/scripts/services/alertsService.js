@@ -1,10 +1,11 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.service('AlertsService', ['$http','$q','$log', function ($http, $q, $log) {
+vsmApp.service('AlertsService', ['$http','$q','$log','$rootScope', function ($http, $q, $log, $rootScope) {
 
     this.getAlertsList = function(){
         var deferred = $q.defer(),
             actionUrl = 'alertList/';
+        actionUrl = $rootScope.getFinalURL(actionUrl);
         $http.get(actionUrl,{})
             .success(function (quotesJSON) {
                 deferred.resolve(quotesJSON);
@@ -18,6 +19,7 @@ vsmApp.service('AlertsService', ['$http','$q','$log', function ($http, $q, $log)
     this.getUserNotifications = function(){
         var deferred = $q.defer(),
             actionUrl = 'userNotifications/';
+        actionUrl = $rootScope.getFinalURL(actionUrl);
         $http.get(actionUrl,{})
             .success(function (quotesJSON) {
                 deferred.resolve(quotesJSON);

@@ -81,6 +81,10 @@
             redirectTo: '/'
         });
 
+        //Allow Cross Domain Requests
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+
         // Configure $http to catch authentication error responses
         $httpProvider.interceptors.push(['$injector',function ($injector) {
             return $injector.get('AuthInterceptorService');
@@ -128,6 +132,14 @@
             return AuthService.isAuthenticated();
         };
 
+        $rootScope.getFinalURL = function(url)
+        {
+            //Change this for Mobile Apps
+            /*var finalUrl = 'http://localhost:9091/stockmarket/';*/
+            var finalUrl = '';
+            return finalUrl+url;
+        };
+
         $rootScope.onPageLoad = function(floatingShareOptions){
             var alertsListPromise = AlertsService.getUserNotifications();
             alertsListPromise.then(function(data){
@@ -135,7 +147,8 @@
                 $rootScope.notificationsList = data.notificationsList;
             });
 
-            $http.get('getUser/',{}).success(function (json) {
+            var actionUrl = $rootScope.getFinalURL('getUser');
+            $http.get(actionUrl,{}).success(function (json) {
                 $rootScope.loggedInUserName = json.firstName + ' ' +json.lastName;
             }).error(function(msg, code) {
                 $log.error(msg, code);

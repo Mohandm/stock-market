@@ -1,7 +1,7 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.controller('DialogFormController', ['$scope','$http','modals', 'StockQuotesService','$timeout','ChartService',
-    function ($scope, $http, modals, StockQuotesService, $timeout, ChartService) {
+vsmApp.controller('DialogFormController', ['$scope','$http','modals', 'StockQuotesService','$timeout','ChartService','$rootScope',
+    function ($scope, $http, modals, StockQuotesService, $timeout, ChartService, $rootScope) {
 	
     $scope.formmodel = {};
     $scope.formcontrol = {};
@@ -79,6 +79,7 @@ vsmApp.controller('DialogFormController', ['$scope','$http','modals', 'StockQuot
                 $scope.formcontrol.submitted = true;
             }
             else {
+                action = $rootScope.getFinalURL(action);
                 $http.post(action, $scope.formmodel).success(function (response) {
                     modals.close();
                     $timeout(function(){

@@ -53,7 +53,7 @@ vsmApp.controller('LeaguesController', ['$scope', '$rootScope', 'modals','League
         };
 }]);
 
-vsmApp.controller('LeaguesDialogController', ['$scope','$http','modals','$location', function ($scope, $http, modals, $location) {
+vsmApp.controller('LeaguesDialogController', ['$scope','$http','modals','$location','$rootScope', function ($scope, $http, modals, $location, $rootScope) {
 
     $scope.formmodel = {};
     $scope.formcontrol = {};
@@ -90,6 +90,7 @@ vsmApp.controller('LeaguesDialogController', ['$scope','$http','modals','$locati
                 if($scope.formmodel.question1 === "02" && $scope.formmodel.question2 === "03" && $scope.formmodel.question3 === "02")
                 {
                     $scope.wrongAnswer = "Right Answers!";
+                    action = $rootScope.getFinalURL(action);
                     $http.post(action, {leagueId : $scope.formmodel.leagueId}).success(function (response) {
                         modals.close();
                         $location.path('/myPortfolio');
@@ -146,7 +147,9 @@ vsmApp.controller('LeagueUsersDialogController', ['$scope','$rootScope','$http',
 
 
     $scope.follow = function(item){
-        $http.post('followUser',{"userId" : item.userId, "leagueId" : $scope.passValuesToDialog.leagueId}).success(function (response) {
+        var actionUrl = 'followUser';
+        actionUrl = $rootScope.getFinalURL(actionUrl);
+        $http.post(actionUrl,{"userId" : item.userId, "leagueId" : $scope.passValuesToDialog.leagueId}).success(function (response) {
             modals.close();
         });
     };

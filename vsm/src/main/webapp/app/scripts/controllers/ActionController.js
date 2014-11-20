@@ -1,6 +1,6 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.controller('ActionController', ['$scope','$http','$routeParams','$location','modals', function ($scope, $http, $routeParams,$location,modals) {
+vsmApp.controller('ActionController', ['$scope','$http','$routeParams','$location','modals','$rootScope', function ($scope, $http, $routeParams,$location,modals, $rootScope) {
 	
    var actionCode, value;
 	if (angular.isDefined($routeParams.actionCode)) {
@@ -8,12 +8,14 @@ vsmApp.controller('ActionController', ['$scope','$http','$routeParams','$locatio
      	
 		if (angular.isDefined($routeParams.value)) {
 		   	value = $routeParams.value;
-		    $http.post(actionCode+"/"+value).success(function (metaResponseBody) {
+            var actionUrl = $rootScope.getFinalURL(actionCode);
+		    $http.post(actionUrl+"/"+value).success(function (metaResponseBody) {
 				$location.path('/'); 
 		   	}); 
 		}
 		else {
-			 $http.post(actionCode).success(function (metaResponseBody) {
+            var actionUrl = $rootScope.getFinalURL(actionCode);
+			 $http.post(actionUrl).success(function (metaResponseBody) {
 				$location.path('/'); 
 		   	}); 
 		}

@@ -1,7 +1,7 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.controller('UserProfileController', ['$scope', '$location','$http','$routeParams', 'FormLoader','modals','$upload',
-    function ($scope, $location, $http, $routeParams, FormLoader, modals, $upload)
+vsmApp.controller('UserProfileController', ['$scope', '$location','$http','$routeParams', 'FormLoader','modals','$upload','$rootScope',
+    function ($scope, $location, $http, $routeParams, FormLoader, modals, $upload, $rootScope)
     {
         $scope.formmodel = {};
         $scope.formcontrol = {};
@@ -38,7 +38,8 @@ vsmApp.controller('UserProfileController', ['$scope', '$location','$http','$rout
             $scope.profilePic = $files[0];
         };
 
-        $http.get('getUser/',{}).success(function (json) {
+        var actionUrl = $rootScope.getFinalURL('getUser');
+        $http.get(actionUrl,{}).success(function (json) {
                 $scope.formmodel = json;
             }).error(function(msg, code) {
               $log.error(msg, code);
@@ -64,11 +65,13 @@ vsmApp.controller('UserProfileController', ['$scope', '$location','$http','$rout
                     modals.close();
                 }
                 else {
+                    action = $rootScope.getFinalURL(action);
                     $http.post(action, $scope.formmodel).success(function (response) {
                         if($scope.profilePic)
                         {
+                            var url = $rootScope.getFinalURL('updateUserProfilePic');
                             $scope.upload = $upload.upload({
-                                url: 'updateUserProfilePic',
+                                url: url,
                                 file: $scope.profilePic
                             }).success(function(data, status, headers, config) {
                                 console.log(data);

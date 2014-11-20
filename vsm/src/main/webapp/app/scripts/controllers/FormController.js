@@ -1,8 +1,8 @@
 'use strict';
  
 angular.module('vsmApp')
-  .controller('FormController',['$scope', '$location','$http','$routeParams', 'FormLoader','modals','$upload',
-        function ($scope, $location, $http, $routeParams, FormLoader, modals, $upload)
+  .controller('FormController',['$scope', '$location','$http','$routeParams', 'FormLoader','modals','$upload','$rootScope',
+        function ($scope, $location, $http, $routeParams, FormLoader, modals, $upload, $rootScope)
   { 
        
     $scope.formmodel = {};
@@ -76,11 +76,13 @@ angular.module('vsmApp')
                     modals.close();
                 }
                 else {
+                    action = $rootScope.getFinalURL(action);
                     $http.post(action, $scope.formmodel).success(function (response) {
                         if(response.id)
                         {
+                            var url = $rootScope.getFinalURL('registerUserProfilePic');
                             $scope.upload = $upload.upload({
-                                url: 'registerUserProfilePic',
+                                url: url,
                                 data: {userId: response.id},
                                 file: $scope.profilePic
                             }).success(function(data, status, headers, config) {

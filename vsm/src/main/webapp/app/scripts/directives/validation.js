@@ -1,6 +1,6 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.directive('validate',['$http','ValidatorService', function($http,ValidatorService) {
+vsmApp.directive('validate',['$http','ValidatorService','$rootScope', function($http,ValidatorService,$rootScope) {
    return {
      restrict: 'A',
      require: 'ngModel',
@@ -23,8 +23,9 @@ vsmApp.directive('validate',['$http','ValidatorService', function($http,Validato
 	        			 else if (value.serverSide)
 	        			 {
 	        				 if (ctrl.$valid && !ctrl.$error[value.event])
-	        		        	{	 
-	        			    		 $http.post(value.validator,formValue).success(function (valid) {
+	        		        	{
+                                    var action = $rootScope.getFinalURL(value.validator);
+	        			    		 $http.post(action,formValue).success(function (valid) {
 			        					 if (valid == "true") {
 			        						 ctrl.$setValidity(value.event, true);
 			        					 }
