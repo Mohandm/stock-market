@@ -82,6 +82,7 @@ public class OrderService {
 			categories.add("buyOrder");
 			categories.add("sellOrder");
 			categories.add("safeOrders");
+			categories.add("marketOrders");
 			achievementFacade.evaluate(leagueUser.getUserMaster(), categories);
 
 		} catch (DBRecordNotFoundException e) {
