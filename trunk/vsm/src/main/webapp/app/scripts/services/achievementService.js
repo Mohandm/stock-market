@@ -1,37 +1,39 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.service('AchievementService', ['$http','$q','$log','modals', function ($http, $q, $log,modals) {
+vsmApp.service('AchievementService', ['$http','$q','$log','$rootScope','$interval','modals', 
+        function ($http, $q, $log,$rootScope,$interval, modals) {
 
-   var unpublishedAchievements = 'false';
+    var unpublishedAchievements = {};
 
-    this.setUnpublishedAchievements = function(){
-        if (angular.equals(unpublishedAchievements, 'false')) {
-            unpublishedAchievements = 'true';
-            modals.showAchievement();
-         }
-    };
-
-    this.resetUnpublishedAchievements = function(){
-        unpublishedAchievements = 'false';
-    };
-
-    this.hasUnpublishedAchievements = function(){
-        return angular.equals(unpublishedAchievements, 'true');
-    };
-
-    this.getUnpublishedAchievements = function(){
-        var deferred = $q.defer(),
-            actionUrl = 'getUnpublishedAchievements/';
+     var pollServer = function () {
+            if (!$rootScope.isAuthenticated()) {
+                return;
+            }
+            unpublishedAchievements = {};
+            var actionUrl = 'getUnpublishedAchievements/';
             actionUrl = $rootScope.getFinalURL(actionUrl);
-        $http.get(actionUrl,{})
-            .success(function (quotesJSON) {
-                deferred.resolve(quotesJSON);
-            }).error(function(msg, code) {
-                deferred.reject(msg);
-                $log.error(msg, code);
+            $http.get(actionUrl).then(function(response){
+                if (response.data.length>0) {
+                    unpublishedAchievements = response.data;
+                    modals.showAchievement();
+                }
             });
-        return deferred.promise;
-    };
+        }
+    
+     var timer=$interval(function(){
+        pollServer();
+      },10000);
+    
+    this.cancelTimer = function () {
+        if(angular.isDefined(timer)) {
+            $interval.cancel(timer);
+            timer=undefined;
+          }
+    }
+
+    this.getUnpublishedAchievementsForUser = function () {
+        return unpublishedAchievements;
+    }
 
     this.getCompletedAchievements = function(){
         var deferred = $q.defer(),

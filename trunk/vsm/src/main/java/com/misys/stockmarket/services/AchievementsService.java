@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.dao.AchievementsDAO;
 import com.misys.stockmarket.domain.entity.AchievementCategory;
 import com.misys.stockmarket.domain.entity.AchievementRule;
@@ -172,17 +173,9 @@ public class AchievementsService {
 	private void markAchievementsAsPublished(
 			List<UserAchievement> userAchievements) throws DAOException {
 		for (UserAchievement userAchievement : userAchievements) {
-			// TODO: Mark as published after some timeout as it is being done immediately at the moment
-			//userAchievement.setPublished(IApplicationConstants.ACHIEVEMENT_PUBLISHED_YES);
+			userAchievement.setPublished(IApplicationConstants.ACHIEVEMENT_PUBLISHED_YES);
 			achievementsDAO.update(userAchievement);
 		}
-	}
-
-	public boolean userHasPendingAchievements() {
-		if (getUnpublishedAchievements().size() > 0) {
-			return true;
-		}
-		return false;
 	}
 
 	@PreAuthorize("hasRole('ROLE_USER')")

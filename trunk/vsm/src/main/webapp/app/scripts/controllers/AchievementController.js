@@ -1,13 +1,11 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.controller('AchievementController', ['$scope', '$rootScope', 'modals','AchievementService','TourService',
-    function ($scope, $rootScope, modals, AchievementService, TourService) {
+vsmApp.controller('AchievementController', ['$scope', '$rootScope', 'modals','AchievementService','TourService','$timeout',
+    function ($scope, $rootScope, modals, AchievementService, TourService,$timeout) {
 
-        var promise = AchievementService.getUnpublishedAchievements();
-        promise.then(function(data){
-            $scope.unpublishedAchievements = data;
-        });
 
+        $scope.unpublishedAchievements = AchievementService.getUnpublishedAchievementsForUser();
+        
         var promise2 = AchievementService.getCompletedAchievements();
         promise2.then(function(data){
             $scope.completedAchievements = data;
@@ -19,7 +17,6 @@ vsmApp.controller('AchievementController', ['$scope', '$rootScope', 'modals','Ac
         });
 
         $scope.closeDialog = function() {
-        	AchievementService.resetUnpublishedAchievements();
         	modals.close();
         }
 
