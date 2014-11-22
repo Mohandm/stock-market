@@ -51,4 +51,18 @@ public class AchievementExecutionDAO extends BaseDAO {
 		}
 	}
 
+	public List<OrderMaster> findAllCompletedRiskOrders(UserMaster userMaster)
+			throws DAOException {
+		try {
+			Query q = entityManager
+					.createQuery("select e from OrderMaster e where e.leagueUser.userMaster = ?1 and e.status = ?2 and e.priceType = ?3 ");
+			q.setParameter(1, userMaster);
+			q.setParameter(2, IApplicationConstants.ORDER_STATUS_COMPLETED);
+			q.setParameter(3, IApplicationConstants.ORDER_PRICE_TYPE_MARKET);
+			return (List<OrderMaster>) q.getResultList();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+	}
+
 }

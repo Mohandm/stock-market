@@ -55,7 +55,21 @@ public class AchievementExecutionService {
 			throws AchievementExecutionServiceException {
 		List<OrderMaster> orderList = new ArrayList<OrderMaster>();
 		try {
-			orderList = achievementExecutionDAO.findAllCompletedSafeOrders(user);
+			orderList = achievementExecutionDAO
+					.findAllCompletedSafeOrders(user);
+		} catch (DAOException e) {
+			LOG.error(e);
+			throw new AchievementExecutionServiceException(e);
+		}
+		return orderList;
+	}
+
+	public List<OrderMaster> findAllCompletedRiskOrders(UserMaster userMaster)
+			throws AchievementExecutionServiceException {
+		List<OrderMaster> orderList = new ArrayList<OrderMaster>();
+		try {
+			orderList = achievementExecutionDAO
+					.findAllCompletedRiskOrders(userMaster);
 		} catch (DAOException e) {
 			LOG.error(e);
 			throw new AchievementExecutionServiceException(e);
