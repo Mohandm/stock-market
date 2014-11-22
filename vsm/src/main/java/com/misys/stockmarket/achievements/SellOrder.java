@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.misys.stockmarket.domain.entity.OrderMaster;
 import com.misys.stockmarket.domain.entity.UserMaster;
-import com.misys.stockmarket.exception.service.OrderServiceException;
+import com.misys.stockmarket.exception.service.AchievementExecutionServiceException;
 import com.misys.stockmarket.services.AchievementExecutionService;
 
 @Service("sellOrder")
@@ -27,7 +27,7 @@ public class SellOrder extends AbstractAchievement implements IAchievement {
 		try {
 			orderList = achievementExecutionService.findAllCompletedSellOrders(userMaster);
 			completed = orderList.size();
-		} catch (OrderServiceException e) {
+		} catch (AchievementExecutionServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -14,7 +14,7 @@ import com.misys.stockmarket.dao.AchievementExecutionDAO;
 import com.misys.stockmarket.domain.entity.OrderMaster;
 import com.misys.stockmarket.domain.entity.UserMaster;
 import com.misys.stockmarket.exception.DAOException;
-import com.misys.stockmarket.exception.service.OrderServiceException;
+import com.misys.stockmarket.exception.service.AchievementExecutionServiceException;
 
 @Service("achievementExecutionService")
 @Repository
@@ -27,26 +27,26 @@ public class AchievementExecutionService {
 	AchievementExecutionDAO achievementExecutionDAO;
 
 	public List<OrderMaster> findAllCompletedBuyOrders(UserMaster user)
-			throws OrderServiceException {
+			throws AchievementExecutionServiceException {
 		List<OrderMaster> orderList = new ArrayList<OrderMaster>();
 		try {
 			orderList = achievementExecutionDAO.findAllCompletedBuyOrders(user);
 		} catch (DAOException e) {
 			LOG.error(e);
-			throw new OrderServiceException(e);
+			throw new AchievementExecutionServiceException(e);
 		}
 		return orderList;
 	}
 
 	public List<OrderMaster> findAllCompletedSellOrders(UserMaster user)
-			throws OrderServiceException {
+			throws AchievementExecutionServiceException {
 		List<OrderMaster> orderList = new ArrayList<OrderMaster>();
 		try {
 			orderList = achievementExecutionDAO
 					.findAllCompletedSellOrders(user);
 		} catch (DAOException e) {
 			LOG.error(e);
-			throw new OrderServiceException(e);
+			throw new AchievementExecutionServiceException(e);
 		}
 		return orderList;
 	}
