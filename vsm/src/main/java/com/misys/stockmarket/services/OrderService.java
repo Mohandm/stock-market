@@ -81,6 +81,7 @@ public class OrderService {
 			List<String> categories = new ArrayList<String>();
 			categories.add("buyOrder");
 			categories.add("sellOrder");
+			categories.add("safeOrders");
 			achievementFacade.evaluate(leagueUser.getUserMaster(), categories);
 
 		} catch (DBRecordNotFoundException e) {

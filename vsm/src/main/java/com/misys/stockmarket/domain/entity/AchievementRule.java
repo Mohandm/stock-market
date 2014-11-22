@@ -30,7 +30,7 @@ public class AchievementRule extends AuditableEntity  implements BaseEntity, Ser
 	@Column(name = "QUANTITY")
 	private Long quantity;
 
-	@Column(name = "LEVEL")
+	@Column(name = "ACHIEVEMENT_LEVEL")
 	private int level;
 
 	@Column(name = "DESCRIPTION", length = 255)
