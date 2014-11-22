@@ -33,8 +33,7 @@ public class AchievementRule extends AuditableEntity  implements BaseEntity, Ser
 	@Column(name = "LEVEL")
 	private int level;
 
-	// TODO: Use max size 
-	@Column(name = "DESCRIPTION", length = 35)
+	@Column(name = "DESCRIPTION", length = 255)
 	private String description;
 	
 	@Column (name="coins")
