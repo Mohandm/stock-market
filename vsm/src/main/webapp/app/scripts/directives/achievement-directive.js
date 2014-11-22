@@ -11,8 +11,6 @@ vsmApp.directive('achievementDirective', function ($http, $compile) {
                 achievement : "="
             },
             controller: function($scope, $http){
-                console.log($scope);
-
                 $scope.getNumber = function() {
                     return new Array($scope.achievement.level);   
                 }
