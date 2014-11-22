@@ -13,9 +13,9 @@ import com.misys.stockmarket.domain.entity.UserMaster;
 import com.misys.stockmarket.exception.service.OrderServiceException;
 import com.misys.stockmarket.services.OrderService;
 
-@Service("buyOrder")
+@Service("sellOrder")
 @Repository
-public class BuyOrder extends AbstractAchievement implements IAchievement {
+public class SellOrder extends AbstractAchievement implements IAchievement {
 
 	@Inject
 	OrderService orderService;
@@ -25,7 +25,7 @@ public class BuyOrder extends AbstractAchievement implements IAchievement {
 		int completed = 0;
 		List<OrderMaster> orderList = new ArrayList<OrderMaster>();
 		try {
-			orderList = orderService.findAllCompletedBuyOrders(userMaster);
+			orderList = orderService.findAllCompletedSellOrders(userMaster);
 			completed = orderList.size();
 		} catch (OrderServiceException e) {
 			// TODO Auto-generated catch block
@@ -33,5 +33,4 @@ public class BuyOrder extends AbstractAchievement implements IAchievement {
 		}
 		return completed;
 	}
-
 }

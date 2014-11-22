@@ -1,25 +1,26 @@
 package com.misys.stockmarket.services;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.misys.stockmarket.achievements.Achievement;
-import com.misys.stockmarket.achievements.BuyOrder;
-import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.dao.AchievementsDAO;
+import com.misys.stockmarket.domain.entity.AchievementCategory;
 import com.misys.stockmarket.domain.entity.AchievementRule;
-import com.misys.stockmarket.domain.entity.AchievementType;
 import com.misys.stockmarket.domain.entity.UserAchievement;
 import com.misys.stockmarket.domain.entity.UserMaster;
 import com.misys.stockmarket.exception.DAOException;
 import com.misys.stockmarket.exception.DBRecordNotFoundException;
+import com.misys.stockmarket.exception.EmailNotFoundException;
 import com.misys.stockmarket.exception.service.AchievementServiceException;
+import com.misys.stockmarket.mbeans.AchievementFormBean;
+import com.misys.stockmarket.utility.DateUtils;
 
 @Service("achievementsService")
 @Repository
@@ -28,138 +29,253 @@ public class AchievementsService {
 	@Inject
 	private AchievementsDAO achievementsDAO;
 
-	public void evaluateAchievement(UserAchievement userAchievements)
+	@Inject
+	private UserService userService;
+
+	@Transactional(rollbackFor = DAOException.class)
+	public void addCategory(AchievementCategory category)
 			throws AchievementServiceException {
 		try {
-			// Get type first
-			AchievementType achievementType = userAchievements
-					.getAchievementType();
-			Achievement achievement = getAchievement(achievementType.getName());
-
-			// Get volume for user
-			UserMaster userMaster = userAchievements.getUserMaster();
-			BigDecimal quantity = achievement.getQuantity(userMaster);
-
-			// Retrieve the rule
-			BigDecimal nextLevel = userAchievements.getNextLevel();
-			// TODO: Review whether the exception needs to be handled or not
-			AchievementRule rule = achievementsDAO.findAchievementRule(
-					achievementType, nextLevel);
-
-			// Evaluate the rule
-			BigDecimal requiredQuantity = rule.getQuantity();
-			if (quantity.compareTo(new BigDecimal(0)) > 0
-					&& quantity.compareTo(requiredQuantity) >= 0) {
-				// Get the next level for this rule and set the publish flag
-				if (IApplicationConstants.ACHIEVEMENT_MAX_LEVELS
-						.compareTo(nextLevel) != 0) {
-					userAchievements.setNextLevel(nextLevel.add(BigDecimal
-							.valueOf(1)));
-				}
-				userAchievements
-						.setPublished(IApplicationConstants.ACHIEVEMENT_PUBLISHED_NO);
-			}
-
-			// Set as evaluated an the current quantity
-			userAchievements.setCurrentQuantity(quantity);
-			userAchievements
-					.setEvaluated(IApplicationConstants.ACHIEVEMENT_EVALUTED_YES);
-			// Update the user achievement in the database
-			achievementsDAO.update(userAchievements);
+			achievementsDAO.persist(category);
 		} catch (DAOException e) {
 			throw new AchievementServiceException(e);
 		}
 	}
 
-	public List<UserAchievement> getPendingAchievementsForEvaluation()
+	@Transactional(rollbackFor = DAOException.class)
+	public void addRule(AchievementRule rule)
 			throws AchievementServiceException {
-		List<UserAchievement> pendingAchievements = new ArrayList<UserAchievement>();
 		try {
-			pendingAchievements = achievementsDAO
-					.findAllAchievementsForEvaluation();
+			achievementsDAO.persist(rule);
 		} catch (DAOException e) {
 			throw new AchievementServiceException(e);
 		}
-		return pendingAchievements;
+	}
+
+	@Transactional(rollbackFor = DAOException.class)
+	public void addUserAchievement(UserAchievement achievement)
+			throws AchievementServiceException {
+		try {
+			achievementsDAO.persist(achievement);
+		} catch (DAOException e) {
+			throw new AchievementServiceException(e);
+		}
+	}
+
+	public AchievementRule getNextRule(String achievementName,
+			UserMaster user) throws AchievementServiceException {
+		AchievementCategory category = getCategory(achievementName);
+		int level = getNextLevel(user, category);
+		return getRule(level, category);
+	}
+
+	private AchievementCategory getCategory(String achievementName)
+			throws AchievementServiceException {
+
+		AchievementCategory category = new AchievementCategory();
+		try {
+			category = achievementsDAO.findAchievementType(achievementName);
+		} catch (DBRecordNotFoundException e) {
+			throw new AchievementServiceException(e);
+		}
+		return category;
+	}
+
+	private AchievementRule getRule(int level, AchievementCategory category)
+			throws AchievementServiceException {
+		AchievementRule rule = new AchievementRule();
+		try {
+			rule = achievementsDAO.findAchievementRule(category, level);
+		} catch (DBRecordNotFoundException e) {
+			throw new AchievementServiceException(e);
+		}
+
+		return rule;
+	}
+
+	private int getNextLevel(UserMaster user, AchievementCategory category)
+			throws AchievementServiceException {
+		List<UserAchievement> userAchievements = new ArrayList<UserAchievement>();
+		try {
+			userAchievements = achievementsDAO.findAllUserAchievements(user,
+					category);
+		} catch (DAOException e) {
+			throw new AchievementServiceException(e);
+		}
+		// TODO: Handle max value for levels 
+		return userAchievements.size() + 1;
 	}
 
 	public List<UserAchievement> getPendingAchievementsForPublishing(
-			UserMaster userMaster) throws AchievementServiceException {
+			UserMaster userMaster) {
 		List<UserAchievement> pendingAchievements = new ArrayList<UserAchievement>();
 		try {
 			pendingAchievements = achievementsDAO
 					.findAllAchievementsForPublishing(userMaster);
 		} catch (DAOException e) {
-			throw new AchievementServiceException(e);
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		// TODO: need to set these achievements back as already published to the
-		// user
 		return pendingAchievements;
 	}
 
-	public List<AchievementRule> getCompletedAchievements(UserMaster userMaster) {
+	public List<UserAchievement> getCompletedAchievements(UserMaster userMaster) {
 		List<UserAchievement> userAchievements = new ArrayList<UserAchievement>();
-		List<AchievementRule> completedAchievements = new ArrayList<AchievementRule>();
 		try {
 			userAchievements = achievementsDAO
-					.findAllUserAchievements(userMaster);
+					.findAllCompletedAchievements(userMaster);
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return userAchievements;
+	}
+
+	public List<UserAchievement> getUnpublishedAchievements(
+			UserMaster userMaster) {
+		List<UserAchievement> userAchievements = new ArrayList<UserAchievement>();
+		try {
+			userAchievements = achievementsDAO
+					.findAllAchievementsForPublishing(userMaster);
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return userAchievements;
+	}
+
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@Transactional(rollbackFor = DAOException.class)
+	public List<AchievementFormBean> getUnpublishedAchievements() {
+		List<AchievementFormBean> achievementList = new ArrayList<AchievementFormBean>();
+
+		UserMaster userMaster = null;
+		try {
+			userMaster = userService.getLoggedInUser();
+		} catch (EmailNotFoundException e) {
+			// TODO Auto-generated catch block - handle exceptions
+			e.printStackTrace();
+		}
+		List<UserAchievement> userAchievements = getPendingAchievementsForPublishing(userMaster);
+		createBeanListFromUserAchievements(achievementList, userAchievements);
+
+		try {
+			markAchievementsAsPublished(userAchievements);
 		} catch (DAOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		for (UserAchievement achievement : userAchievements) {
-			try {
-				completedAchievements.addAll(achievementsDAO
-						.findAllAchievements(achievement.getAchievementType(),
-								achievement.getNextLevel()));
-			} catch (DAOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		return completedAchievements;
+		return achievementList;
 	}
 
-	public void setAchievementForEvaluation(UserMaster userMaster, String name) {
-		AchievementType achievementType = getAchievementType(name);
-		UserAchievement userAchievement = new UserAchievement();
-		try {
-			userAchievement = achievementsDAO.findUserAchievement(userMaster,
-					achievementType);
-		} catch (DBRecordNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		userAchievement
-				.setEvaluated(IApplicationConstants.ACHIEVEMENT_EVALUTED_NO);
-		try {
+	private void markAchievementsAsPublished(
+			List<UserAchievement> userAchievements) throws DAOException {
+		for (UserAchievement userAchievement : userAchievements) {
+			// TODO: Mark as published after some timeout as it is being done immediately at the moment
+			//userAchievement.setPublished(IApplicationConstants.ACHIEVEMENT_PUBLISHED_YES);
 			achievementsDAO.update(userAchievement);
+		}
+	}
+
+	public boolean userHasPendingAchievements() {
+		if (getUnpublishedAchievements().size() > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public List<AchievementFormBean> getCompletedAchievements() {
+		List<AchievementFormBean> achievementList = new ArrayList<AchievementFormBean>();
+
+		UserMaster userMaster = null;
+		try {
+			userMaster = userService.getLoggedInUser();
+		} catch (EmailNotFoundException e) {
+			// TODO Auto-generated catch block - handle exceptions
+			e.printStackTrace();
+		}
+		List<UserAchievement> userAchievements = getCompletedAchievements(userMaster);
+		createBeanListFromUserAchievements(achievementList, userAchievements);
+		return achievementList;
+	}
+
+	private void createBeanListFromUserAchievements(
+			List<AchievementFormBean> achievementList,
+			List<UserAchievement> userAchievements) {
+		AchievementFormBean achForm = null;
+		AchievementRule rule = null;
+		AchievementCategory achievementCategory = null;
+		for (UserAchievement userAchievement : userAchievements) {
+			achForm = new AchievementFormBean();
+			rule = userAchievement.getAchievementRule();
+			achForm.setLevel(rule.getLevel());
+			achForm.setDescription(rule.getDescription());
+			achForm.setCompleted(DateUtils
+					.getFormattedDateTimeString(userAchievement.getCompleted()));
+			achForm.setCoins(rule.getCoins());
+			achievementCategory = rule.getAchievementCategory();
+			achForm.setAlias(achievementCategory.getAlias());
+			achForm.setName(achievementCategory.getName());
+			achievementList.add(achForm);
+		}
+	}
+
+	private void createBeanListFromAchievementRules(
+			List<AchievementFormBean> achievementList,
+			List<AchievementRule> rules) {
+		AchievementFormBean achForm = null;
+		AchievementCategory achievementCategory = null;
+		for (AchievementRule rule : rules) {
+			achForm = new AchievementFormBean();
+			achForm.setLevel(rule.getLevel());
+			achForm.setDescription(rule.getDescription());
+			achForm.setCoins(rule.getCoins());
+			achievementCategory = rule.getAchievementCategory();
+			achForm.setAlias(achievementCategory.getAlias());
+			achForm.setName(achievementCategory.getName());
+			achievementList.add(achForm);
+		}
+	}
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public List<AchievementFormBean> getPendingAchievements() {
+		UserMaster userMaster = null;
+		try {
+			userMaster = userService.getLoggedInUser();
+		} catch (EmailNotFoundException e) {
+			// TODO Auto-generated catch block - handle exceptions
+			e.printStackTrace();
+		}
+
+		List<AchievementFormBean> achievementList = new ArrayList<AchievementFormBean>();
+		List<AchievementRule> pendingList = new ArrayList<AchievementRule>();
+		try {
+			pendingList = getPendingList(userMaster);
+		} catch (AchievementServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		createBeanListFromAchievementRules(achievementList, pendingList);
+		return achievementList;
+	}
+
+	private List<AchievementRule> getPendingList(UserMaster userMaster)
+			throws AchievementServiceException {
+		List<AchievementRule> pendingList = new ArrayList<AchievementRule>();
+		try {
+			List<AchievementCategory> category = achievementsDAO
+					.findAllAchievements();
+			AchievementRule rule = null;
+			for (AchievementCategory achievementCategory : category) {
+				rule = getNextRule(achievementCategory.getName(), userMaster);
+				pendingList.add(rule);
+			}
 		} catch (DAOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new AchievementServiceException(e);
 		}
-	}
-
-	private static Achievement getAchievement(String name) {
-		// TODO Use some mapping to in the class and remove the
-		// hardcoding
-		Achievement achievement = new BuyOrder();
-		return achievement;
-	}
-
-	private AchievementType getAchievementType(String name) {
-		Achievement achievement = getAchievement(name);
-		AchievementType achievementType = new AchievementType();
-		try {
-			achievementType = achievementsDAO.findAchievementType(achievement
-					.getName());
-		} catch (DBRecordNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return achievementType;
+		return pendingList;
 	}
 
 }

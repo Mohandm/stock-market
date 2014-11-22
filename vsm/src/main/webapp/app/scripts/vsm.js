@@ -66,6 +66,12 @@
            needsLogin : true,
            needsTransition : true
        })
+       .when('/myAchievements', {
+           templateUrl: 'app/views/myAchievements.html',
+           controller: 'AchievementController',
+           needsLogin : true,
+           needsTransition : true
+       })
        .when('/form/:formName', {
             templateUrl: 'app/views/form.html',
             controller: 'FormSelectorController'

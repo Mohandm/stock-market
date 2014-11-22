@@ -202,6 +202,12 @@
                             Practice Arena
                         </a>
                     </li>
+                    <li ng-show="isAuthenticated()">
+                        <a href="#/myAchievements" class="nav-a-side-bar">
+                            <i class="fa fa-check-circle fa-fw"></i>
+                            My Achievements
+                        </a>
+                    </li>
                     <li>
                         <a href="#/charts" class="nav-a-side-bar">
                             <i class="fa fa-line-chart fa-fw"></i>
@@ -324,6 +330,7 @@
         <script type="text/javascript" src="app/scripts/controllers/MyDashboardController.js"></script>
         <script type="text/javascript" src="app/scripts/controllers/AlertsController.js"></script>
         <script type="text/javascript" src="app/scripts/controllers/UserProfileController.js"></script>
+        <script type="text/javascript" src="app/scripts/controllers/AchievementController.js"></script>
 
 
         <!-- directives -->
@@ -333,6 +340,7 @@
         <script type="text/javascript" src="app/scripts/directives/field-wrapper.js"></script>
         <script type="text/javascript" src="app/scripts/directives/login-dialog.js"></script>
         <script type="text/javascript" src="app/scripts/directives/topHeaderTitleNProfilePic.js"></script>
+        <script type="text/javascript" src="app/scripts/directives/achievement-directive.js"></script>
 
         <!-- services -->
         <script type="text/javascript" src="app/scripts/services/formLoaderService.js"></script>
@@ -347,6 +355,7 @@
         <script type="text/javascript" src="app/scripts/services/AuthService.js"></script>
         <script type="text/javascript" src="app/scripts/services/tourService.js"></script>
         <script type="text/javascript" src="app/scripts/services/leaguesService.js"></script>
+        <script type="text/javascript" src="app/scripts/services/achievementService.js"></script>
         <!-- endbuild -->
     </body>
 </html>

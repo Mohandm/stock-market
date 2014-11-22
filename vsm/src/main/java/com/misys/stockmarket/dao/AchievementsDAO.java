@@ -1,6 +1,5 @@
 package com.misys.stockmarket.dao;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -10,8 +9,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.misys.stockmarket.constants.IApplicationConstants;
+import com.misys.stockmarket.domain.entity.AchievementCategory;
 import com.misys.stockmarket.domain.entity.AchievementRule;
-import com.misys.stockmarket.domain.entity.AchievementType;
 import com.misys.stockmarket.domain.entity.UserAchievement;
 import com.misys.stockmarket.domain.entity.UserMaster;
 import com.misys.stockmarket.exception.DAOException;
@@ -21,12 +20,12 @@ import com.misys.stockmarket.exception.DBRecordNotFoundException;
 @Repository
 public class AchievementsDAO extends BaseDAO {
 
-	public AchievementRule findAchievementRule(AchievementType type,
-			BigDecimal level) throws DBRecordNotFoundException {
+	public AchievementRule findAchievementRule(AchievementCategory category,
+			int level) throws DBRecordNotFoundException {
 		try {
 			Query q = entityManager
-					.createQuery("select e from AchievementRule e where e.achievementType = ?1 and e.level = ?2 ");
-			q.setParameter(1, type);
+					.createQuery("select e from AchievementRule e where e.achievementCategory = ?1 and e.level = ?2 ");
+			q.setParameter(1, category);
 			q.setParameter(2, level);
 			return (AchievementRule) q.getSingleResult();
 		} catch (EmptyResultDataAccessException e) {
@@ -34,41 +33,61 @@ public class AchievementsDAO extends BaseDAO {
 		}
 	}
 
-	public AchievementType findAchievementType(String name)
+	public AchievementCategory findAchievementType(String name)
 			throws DBRecordNotFoundException {
 
 		try {
 			Query q = entityManager
-					.createQuery("select e from AchievementRule e where e.name = ?1");
+					.createQuery("select e from AchievementCategory e where e.name = ?1");
 			q.setParameter(1, name);
-			return (AchievementType) q.getSingleResult();
+			return (AchievementCategory) q.getSingleResult();
 		} catch (EmptyResultDataAccessException e) {
 			throw new DBRecordNotFoundException(e);
 		}
-
 	}
 
-	public UserAchievement findUserAchievement(UserMaster userMaster, AchievementType achievementType)
-			throws DBRecordNotFoundException {
-
+	public List<AchievementCategory> findAllAchievements() throws DAOException {
 		try {
 			Query q = entityManager
-					.createQuery("select e from UserAchievement e where e.userMaster = ?1 and e.achievementType = ?2");
-			q.setParameter(1, userMaster);
-			q.setParameter(2, achievementType);
-			return (UserAchievement) q.getSingleResult();
-		} catch (EmptyResultDataAccessException e) {
-			throw new DBRecordNotFoundException(e);
+					.createQuery("select e from AchievementCategory e");
+			return q.getResultList();
+		} catch (Exception e) {
+			throw new DAOException(e);
 		}
+	}
 
+	public List<UserAchievement> findAllUserAchievements(UserMaster userMaster,
+			AchievementCategory achievementCategory) throws DAOException {
+		try {
+			Query q = entityManager
+					.createQuery("select e from UserAchievement e where e.userMaster = ?1 and e.achievementRule.achievementCategory = ?2 ");
+			q.setParameter(1, userMaster);
+			q.setParameter(2, achievementCategory);
+			return q.getResultList();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
 	}
 	
-	public List<UserAchievement> findAllAchievementsForEvaluation()
-			throws DAOException {
+	public Long getMaxCompletedLevel(UserMaster userMaster,
+			AchievementCategory achievementCategory) throws DAOException {
 		try {
 			Query q = entityManager
-					.createQuery("select e from UserAchievement e where e.evaluated = ?1");
-			q.setParameter(1, IApplicationConstants.ACHIEVEMENT_EVALUTED_NO);
+					.createQuery("select count(e) from UserAchievement e where e.userMaster = ?1 and e.achievementRule.achievementCategory = ?2 ");
+			q.setParameter(1, userMaster);
+			q.setParameter(2, achievementCategory);
+			return (Long) q.getSingleResult();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+	}
+
+	public List<UserAchievement> findAllCompletedAchievements(
+			UserMaster userMaster) throws DAOException {
+		try {
+			Query q = entityManager
+					.createQuery("select e from UserAchievement e where e.userMaster = ?1 ");
+			q.setParameter(1, userMaster);
 			return q.getResultList();
 		} catch (Exception e) {
 			throw new DAOException(e);
@@ -82,29 +101,6 @@ public class AchievementsDAO extends BaseDAO {
 					.createQuery("select e from UserAchievement e where e.published = ?1 and e.userMaster = ?2");
 			q.setParameter(1, IApplicationConstants.ACHIEVEMENT_PUBLISHED_NO);
 			q.setParameter(2, userMaster);
-			return q.getResultList();
-		} catch (Exception e) {
-			throw new DAOException(e);
-		}
-	}
-	
-	public List<UserAchievement> findAllUserAchievements(UserMaster userMaster) throws DAOException {
-		try {
-			Query q = entityManager
-					.createQuery("select e from UserAchievement e where e.userMaster = ?1");
-			q.setParameter(1, userMaster);
-			return q.getResultList();
-		} catch (Exception e) {
-			throw new DAOException(e);
-		}
-	}
-	
-	public List<AchievementRule> findAllAchievements(AchievementType type, BigDecimal level) throws DAOException {
-		try {
-			Query q = entityManager
-					.createQuery("select e from AchievementRule e where e.achievementType = ?1 and e.level < ?2");
-			q.setParameter(1, type);
-			q.setParameter(2, level);
 			return q.getResultList();
 		} catch (Exception e) {
 			throw new DAOException(e);

@@ -1,7 +1,7 @@
 package com.misys.stockmarket.domain.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the USER_ACHIEVEMENTS database table.
@@ -29,15 +31,9 @@ public class UserAchievement extends AuditableEntity implements BaseEntity,
 	@Column(name = "USER_ACHIEVEMENT_ID", unique = true, nullable = false)
 	private Long userAchievementId;
 
-	@Column(name = "NEXT_LEVEL")
-	private BigDecimal nextLevel;
-
-
-	@Column(name = "CURRENT_QUANTITY")
-	private BigDecimal currentQuantity;
-	
-	@Column(name = "EVALUATED")
-	private String evaluated;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "COMPLETED")
+	private Date completed;
 
 	@Column(name = "PUBLISHED")
 	private String published;
@@ -46,11 +42,11 @@ public class UserAchievement extends AuditableEntity implements BaseEntity,
 	@ManyToOne
 	@JoinColumn(name = "USER_ID")
 	private UserMaster userMaster;
-
-	// bi-directional many-to-one association to AchievementType
+	
+	// bi-directional many-to-one association to AchievementRule
 	@ManyToOne
-	@JoinColumn(name = "TYPE_ID")
-	private AchievementType achievementType;
+	@JoinColumn(name = "RULE_ID")
+	private AchievementRule achievementRule;
 
 	public Long getUserAchievementId() {
 		return userAchievementId;
@@ -60,28 +56,12 @@ public class UserAchievement extends AuditableEntity implements BaseEntity,
 		this.userAchievementId = userAchievementId;
 	}
 
-	public BigDecimal getNextLevel() {
-		return nextLevel;
+	public Date getCompleted() {
+		return completed;
 	}
 
-	public void setNextLevel(BigDecimal userLevel) {
-		this.nextLevel = userLevel;
-	}
-
-	public BigDecimal getCurrentQuantity() {
-		return currentQuantity;
-	}
-
-	public void setCurrentQuantity(BigDecimal currentQuantity) {
-		this.currentQuantity = currentQuantity;
-	}
-
-	public String getEvaluated() {
-		return evaluated;
-	}
-
-	public void setEvaluated(String evaluated) {
-		this.evaluated = evaluated;
+	public void setCompleted(Date completed) {
+		this.completed = completed;
 	}
 
 	public String getPublished() {
@@ -100,11 +80,13 @@ public class UserAchievement extends AuditableEntity implements BaseEntity,
 		this.userMaster = userMaster;
 	}
 
-	public AchievementType getAchievementType() {
-		return achievementType;
+	public AchievementRule getAchievementRule() {
+		return achievementRule;
 	}
 
-	public void setAchievementType(AchievementType achievementType) {
-		this.achievementType = achievementType;
+	public void setAchievementRule(AchievementRule achievementRule) {
+		this.achievementRule = achievementRule;
 	}
+
+	
 }
