@@ -30,6 +30,24 @@ public class OrderMasterDAO extends BaseDAO {
 		criteria.put("status", IApplicationConstants.ORDER_STATUS_COMPLETED);
 		return findByFilter(OrderMaster.class, criteria);
 	}
+	
+	public List<OrderMaster> findAllCompletedBuyOrders(UserMaster userMaster)
+			throws DAOException {
+		Map<String, Object> criteria = new HashMap<String, Object>();
+		criteria.put("leagueUser.userMaster", userMaster);
+		criteria.put("status", IApplicationConstants.ORDER_STATUS_COMPLETED);
+		criteria.put("type", IApplicationConstants.BUY_TYPE);
+		return findByFilter(OrderMaster.class, criteria);
+	}
+
+	public List<OrderMaster> findAllCompletedSellOrders(UserMaster userMaster)
+			throws DAOException {
+		Map<String, Object> criteria = new HashMap<String, Object>();
+		criteria.put("leagueUser.userMaster", userMaster);
+		criteria.put("status", IApplicationConstants.ORDER_STATUS_COMPLETED);
+		criteria.put("type", IApplicationConstants.SELL_TYPE);
+		return findByFilter(OrderMaster.class, criteria);
+	}
 
 	public List<OrderMaster> findAllCompletedOrdersByLeaugeUser(
 			long leagueUserId) throws DAOException {

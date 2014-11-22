@@ -2,7 +2,6 @@ package com.misys.stockmarket.services;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.misys.stockmarket.achievements.AchievementFacade;
 import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.dao.OrderExecutionDAO;
 import com.misys.stockmarket.dao.OrderMasterDAO;
@@ -22,14 +22,12 @@ import com.misys.stockmarket.domain.entity.LeagueUser;
 import com.misys.stockmarket.domain.entity.OrderExecution;
 import com.misys.stockmarket.domain.entity.OrderMaster;
 import com.misys.stockmarket.domain.entity.UserMaster;
-import com.misys.stockmarket.exception.BaseException;
 import com.misys.stockmarket.exception.DAOException;
 import com.misys.stockmarket.exception.DBRecordNotFoundException;
 import com.misys.stockmarket.exception.EmailNotFoundException;
 import com.misys.stockmarket.exception.LeagueException;
 import com.misys.stockmarket.exception.service.OrderServiceException;
 import com.misys.stockmarket.mbeans.OrderFormBean;
-import com.misys.stockmarket.platform.web.ResponseMessage;
 
 @Service("orderService")
 @Repository
@@ -52,6 +50,10 @@ public class OrderService {
 	@Inject
 	private LeagueService leagueService;
 
+
+	@Inject
+	private AchievementFacade achievementFacade;
+
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Transactional(rollbackFor = DAOException.class)
 	public void saveNewOrder(OrderFormBean orderFormBean)
@@ -59,7 +61,7 @@ public class OrderService {
 		// Process order
 		try {
 			OrderMaster orderMaster = new OrderMaster();
-			/*orderMaster.setIntraday(orderFormBean.getIntraday());*/
+			/* orderMaster.setIntraday(orderFormBean.getIntraday()); */
 			orderMaster.setOrderPrice(orderFormBean.getOrderPrice());
 			orderMaster.setPriceType(orderFormBean.getPriceType());
 			orderMaster.setType(orderFormBean.getType());
@@ -75,6 +77,13 @@ public class OrderService {
 					.getUserId());
 			orderMaster.setLeagueUser(leagueUser);
 			orderMasterDAO.persist(orderMaster);
+			
+			// Evalaute achievements
+			List<String> categories = new ArrayList<String>();
+			categories.add("buyOrder");
+			categories.add("sellOrder");
+			achievementFacade.evaluate(leagueUser.getUserMaster(), categories);
+		
 		} catch (DBRecordNotFoundException e) {
 			throw new OrderServiceException(e);
 		} catch (LeagueException e) {
@@ -106,6 +115,30 @@ public class OrderService {
 		}
 		return completedOrders;
 	}
+	
+	public List<OrderMaster> findAllCompletedBuyOrders(UserMaster user)
+			throws OrderServiceException {
+		List<OrderMaster> orderList = new ArrayList<OrderMaster>();
+		try {
+			orderList = orderMasterDAO.findAllCompletedBuyOrders(user);
+		} catch (DAOException e) {
+			LOG.error(e);
+			throw new OrderServiceException(e);
+		}
+		return orderList;
+	}
+
+	public List<OrderMaster> findAllCompletedSellOrders(UserMaster user)
+			throws OrderServiceException {
+		List<OrderMaster> orderList = new ArrayList<OrderMaster>();
+		try {
+			orderList = orderMasterDAO.findAllCompletedSellOrders(user);
+		} catch (DAOException e) {
+			LOG.error(e);
+			throw new OrderServiceException(e);
+		}
+		return orderList;
+	}
 
 	public List<OrderMaster> getAllCompletedPurchaseOrders(long leagueUserId)
 			throws OrderServiceException {
@@ -121,8 +154,7 @@ public class OrderService {
 	public List<OrderMaster> getAllOrders(long leagueUserId)
 			throws OrderServiceException {
 		try {
-			return orderMasterDAO
-					.findAllOrdersByLeaugeUser(leagueUserId);
+			return orderMasterDAO.findAllOrdersByLeaugeUser(leagueUserId);
 		} catch (DAOException e) {
 			LOG.error(e);
 			throw new OrderServiceException(e);

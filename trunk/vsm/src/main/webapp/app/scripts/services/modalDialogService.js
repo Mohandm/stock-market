@@ -101,6 +101,18 @@ vsmApp.service('modals', function(DialogService,$http,$timeout) {
         DialogService.close();
         $timeout(openForm,500);
     };
+
+     this.showAchievement = function() {
+        var showAchievement = function() {
+            DialogService.open({            
+                title: "Achievement Completed",
+                showForm: true,
+                formURL:'app/views/achievement.html'
+            });
+        }
+        DialogService.close();
+        $timeout(showAchievement,500);
+    };
      
     this.close = function()
     {

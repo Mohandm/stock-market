@@ -1,0 +1,9 @@
+<div ng-controller="AchievementController">
+    Congratulations, you have completed the below achievements.
+    <div ng-repeat="achievement in unpublishedAchievements" class="row">
+       <achievement-directive achievement="achievement" class="col-md-12"></achievement-directive> 
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" ng-click="closeDialog()">Close</button>
+    </div>
+</div>
