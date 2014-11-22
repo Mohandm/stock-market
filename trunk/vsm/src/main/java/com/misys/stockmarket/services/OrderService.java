@@ -50,7 +50,6 @@ public class OrderService {
 	@Inject
 	private LeagueService leagueService;
 
-
 	@Inject
 	private AchievementFacade achievementFacade;
 
@@ -77,13 +76,13 @@ public class OrderService {
 					.getUserId());
 			orderMaster.setLeagueUser(leagueUser);
 			orderMasterDAO.persist(orderMaster);
-			
+
 			// Evalaute achievements
 			List<String> categories = new ArrayList<String>();
 			categories.add("buyOrder");
 			categories.add("sellOrder");
 			achievementFacade.evaluate(leagueUser.getUserMaster(), categories);
-		
+
 		} catch (DBRecordNotFoundException e) {
 			throw new OrderServiceException(e);
 		} catch (LeagueException e) {
@@ -114,30 +113,6 @@ public class OrderService {
 			throw new OrderServiceException(e);
 		}
 		return completedOrders;
-	}
-	
-	public List<OrderMaster> findAllCompletedBuyOrders(UserMaster user)
-			throws OrderServiceException {
-		List<OrderMaster> orderList = new ArrayList<OrderMaster>();
-		try {
-			orderList = orderMasterDAO.findAllCompletedBuyOrders(user);
-		} catch (DAOException e) {
-			LOG.error(e);
-			throw new OrderServiceException(e);
-		}
-		return orderList;
-	}
-
-	public List<OrderMaster> findAllCompletedSellOrders(UserMaster user)
-			throws OrderServiceException {
-		List<OrderMaster> orderList = new ArrayList<OrderMaster>();
-		try {
-			orderList = orderMasterDAO.findAllCompletedSellOrders(user);
-		} catch (DAOException e) {
-			LOG.error(e);
-			throw new OrderServiceException(e);
-		}
-		return orderList;
 	}
 
 	public List<OrderMaster> getAllCompletedPurchaseOrders(long leagueUserId)
