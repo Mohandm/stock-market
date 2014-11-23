@@ -10,6 +10,8 @@ public class UserProfileFormBean {
 	
 	private String gender;
 
+	private long coins;
+
 	public String getEmail() {
 		return email;
 	}
@@ -40,5 +42,13 @@ public class UserProfileFormBean {
 
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+
+	public long getCoins() {
+		return coins;
+	}
+
+	public void setCoins(long coins) {
+		this.coins = coins;
 	}
 }

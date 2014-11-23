@@ -104,9 +104,11 @@ public class IApplicationConstants {
 	public static final String ACHIEVEMENT_EVALUTED_YES = "Y";
 
 	public static final String ACHIEVEMENT_EVALUTED_NO = "N";
-	
+
 	public static final String ACHIEVEMENT_PUBLISHED_YES = "Y";
 
 	public static final String ACHIEVEMENT_PUBLISHED_NO = "N";
-	
+
+	// TODO: Make it a configuration preferably
+	public static final long ACHIEVEMENTS_COINS_TO_LEAGUE_AMOUNT_MULTIPLIER = 1;
 }

@@ -1,12 +1,8 @@
 package com.misys.stockmarket.achievements;
 
-import java.util.Date;
-
 import javax.inject.Inject;
 
-import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.domain.entity.AchievementRule;
-import com.misys.stockmarket.domain.entity.UserAchievement;
 import com.misys.stockmarket.domain.entity.UserMaster;
 import com.misys.stockmarket.exception.service.AchievementServiceException;
 import com.misys.stockmarket.services.AchievementsService;
@@ -28,17 +24,12 @@ public abstract class AbstractAchievement {
 		} catch (AchievementServiceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 
 		if (getCompleted(user) >= rule.getQuantity()) {
-			UserAchievement achievement = new UserAchievement();
-			achievement.setUserMaster(user);
-			achievement.setAchievementRule(rule);
-			achievement.setCompleted(new Date());
-			achievement
-					.setPublished(IApplicationConstants.ACHIEVEMENT_PUBLISHED_NO);
 			try {
-				achievementsService.addUserAchievement(achievement);
+				achievementsService.addUserAchievement(user, rule);
 			} catch (AchievementServiceException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -46,7 +37,6 @@ public abstract class AbstractAchievement {
 			}
 			// TODO: Evaluate next rule as well
 			return true;
-
 		}
 		return false;
 	}

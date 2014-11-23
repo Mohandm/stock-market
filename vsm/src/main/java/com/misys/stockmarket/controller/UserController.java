@@ -70,6 +70,12 @@ public class UserController {
 			bean.setFirstName(user.getFirstName());
 			bean.setLastName(user.getLastName());
 			bean.setGender(user.getGender());
+			if (user.getCoins() != null) {
+			bean.setCoins(user.getCoins());
+			}
+			else {
+				bean.setCoins(0);
+			}
 		return bean;
 		} catch (EmailNotFoundException e) {
 			LOG.error(e);

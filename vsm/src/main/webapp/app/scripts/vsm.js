@@ -153,13 +153,6 @@
                 $rootScope.notificationsList = data.notificationsList;
             });
 
-            var actionUrl = $rootScope.getFinalURL('getUser');
-            $http.get(actionUrl,{}).success(function (json) {
-                $rootScope.loggedInUserName = json.firstName + ' ' +json.lastName;
-            }).error(function(msg, code) {
-                $log.error(msg, code);
-            });
-
             var title = ' Misys - Stock Market League'
                 ,desc = '(A Game to Enthrall and Engage you on Stock Markets!).'
                 , url = 'http://www.misys.com/';
