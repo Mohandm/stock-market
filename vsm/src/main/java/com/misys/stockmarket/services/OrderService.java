@@ -50,9 +50,6 @@ public class OrderService {
 	@Inject
 	private LeagueService leagueService;
 
-	@Inject
-	private AchievementFacade achievementFacade;
-
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@Transactional(rollbackFor = DAOException.class)
 	public void saveNewOrder(OrderFormBean orderFormBean)
@@ -76,15 +73,6 @@ public class OrderService {
 					.getUserId());
 			orderMaster.setLeagueUser(leagueUser);
 			orderMasterDAO.persist(orderMaster);
-
-			// Evalaute achievements
-			List<String> categories = new ArrayList<String>();
-			categories.add("buyOrder");
-			categories.add("sellOrder");
-			categories.add("safeOrders");
-			categories.add("marketOrders");
-			achievementFacade.evaluate(leagueUser.getUserMaster(), categories);
-
 		} catch (DBRecordNotFoundException e) {
 			throw new OrderServiceException(e);
 		} catch (LeagueException e) {
