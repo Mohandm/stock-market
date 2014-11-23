@@ -14,7 +14,7 @@ angular.module('vsmApp')
 });
 
 angular.module('vsmApp')
-  .factory('AuthService', function ($http, Session, $rootScope) {
+  .factory('AuthService', function ($http, Session, $rootScope, $q) {
   var authService = {};
  
   authService.login = function (credentials) {
@@ -48,6 +48,19 @@ angular.module('vsmApp')
   authService.isAuthenticated = function () {
     return !!Session.email;
   };
+
+ authService.getUserProfile = function(){
+        var deferred = $q.defer(),
+            actionUrl = $rootScope.getFinalURL('getUser');
+        $http.get(actionUrl,{})
+            .success(function (quotesJSON) {
+                deferred.resolve(quotesJSON);
+            }).error(function(msg, code) {
+                deferred.reject(msg);
+                $log.error(msg, code);
+            });
+        return deferred.promise;
+    };
  
   return authService;
 });

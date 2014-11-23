@@ -1,11 +1,15 @@
 var vsmApp = angular.module('vsmApp');
 
-vsmApp.controller('AchievementController', ['$scope', '$rootScope', 'modals','AchievementService','TourService','$timeout',
-    function ($scope, $rootScope, modals, AchievementService, TourService,$timeout) {
+vsmApp.controller('AchievementController', ['$scope', '$rootScope', 'modals','AchievementService','TourService','$timeout','$http',
+    function ($scope, $rootScope, modals, AchievementService, TourService, $timeout, $http) {
 
-
+        $scope.formmodel = {};
+        $scope.formcontrol = {};
         $scope.unpublishedAchievements = AchievementService.getUnpublishedAchievementsForUser();
         
+        if (angular.isDefined($scope.passValuesToDialog)) {
+            $scope.formmodel.totalCoins = $scope.passValuesToDialog.totalCoins; 
+        }
         var promise2 = AchievementService.getCompletedAchievements();
         promise2.then(function(data){
             $scope.completedAchievements = data;
@@ -18,7 +22,19 @@ vsmApp.controller('AchievementController', ['$scope', '$rootScope', 'modals','Ac
 
         $scope.closeDialog = function() {
         	modals.close();
-        }
+        };
+
+        $scope.perform = function(action){
+          if ($scope.mainForm.$invalid) {
+            $scope.formcontrol.submitted = true;
+          }
+          else {
+            action = $rootScope.getFinalURL(action);
+            $http.post(action, $scope.formmodel).success(function (response) {
+              modals.close();
+            });
+          }
+        };
 
  }]);
 

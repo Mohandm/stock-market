@@ -1,10 +1,14 @@
 package com.misys.stockmarket.services;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -14,13 +18,17 @@ import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.dao.AchievementsDAO;
 import com.misys.stockmarket.domain.entity.AchievementCategory;
 import com.misys.stockmarket.domain.entity.AchievementRule;
+import com.misys.stockmarket.domain.entity.LeagueUser;
 import com.misys.stockmarket.domain.entity.UserAchievement;
 import com.misys.stockmarket.domain.entity.UserMaster;
+import com.misys.stockmarket.exception.BaseException;
 import com.misys.stockmarket.exception.DAOException;
 import com.misys.stockmarket.exception.DBRecordNotFoundException;
 import com.misys.stockmarket.exception.EmailNotFoundException;
 import com.misys.stockmarket.exception.service.AchievementServiceException;
 import com.misys.stockmarket.mbeans.AchievementFormBean;
+import com.misys.stockmarket.mbeans.RedeemCoinsFormBean;
+import com.misys.stockmarket.platform.web.ResponseMessage;
 import com.misys.stockmarket.utility.DateUtils;
 
 @Service("achievementsService")
@@ -32,6 +40,11 @@ public class AchievementsService {
 
 	@Inject
 	private UserService userService;
+
+	@Inject
+	private LeagueService leagueService;
+
+	private static final Log LOG = LogFactory.getLog(AchievementsService.class);
 
 	@Transactional(rollbackFor = DAOException.class)
 	public void addCategory(AchievementCategory category)
@@ -63,8 +76,38 @@ public class AchievementsService {
 		}
 	}
 
-	public AchievementRule getNextRule(String achievementName,
-			UserMaster user) throws AchievementServiceException {
+	@Transactional(rollbackFor = DAOException.class)
+	public void addUserAchievement(UserMaster user, AchievementRule rule)
+			throws AchievementServiceException {
+		UserAchievement achievement = new UserAchievement();
+		achievement.setUserMaster(user);
+		achievement.setAchievementRule(rule);
+		achievement.setCompleted(new Date());
+		achievement
+				.setPublished(IApplicationConstants.ACHIEVEMENT_PUBLISHED_NO);
+		try {
+			achievementsDAO.persist(achievement);
+		} catch (DAOException e) {
+			throw new AchievementServiceException(e);
+		}
+
+		// Update coins in user master
+		Long existingCoins = user.getCoins();
+		Long ruleCoins = rule.getCoins();
+		if (existingCoins != null) {
+			user.setCoins(existingCoins + ruleCoins);
+		} else {
+			user.setCoins(ruleCoins);
+		}
+		try {
+			achievementsDAO.update(user);
+		} catch (DAOException e) {
+			throw new AchievementServiceException(e);
+		}
+	}
+
+	public AchievementRule getNextRule(String achievementName, UserMaster user)
+			throws AchievementServiceException {
 		AchievementCategory category = getCategory(achievementName);
 		int level = getNextLevel(user, category);
 		return getRule(level, category);
@@ -103,7 +146,7 @@ public class AchievementsService {
 		} catch (DAOException e) {
 			throw new AchievementServiceException(e);
 		}
-		// TODO: Handle max value for levels 
+		// TODO: Handle max value for levels
 		return userAchievements.size() + 1;
 	}
 
@@ -173,7 +216,8 @@ public class AchievementsService {
 	private void markAchievementsAsPublished(
 			List<UserAchievement> userAchievements) throws DAOException {
 		for (UserAchievement userAchievement : userAchievements) {
-			userAchievement.setPublished(IApplicationConstants.ACHIEVEMENT_PUBLISHED_YES);
+			userAchievement
+					.setPublished(IApplicationConstants.ACHIEVEMENT_PUBLISHED_YES);
 			achievementsDAO.update(userAchievement);
 		}
 	}
@@ -231,6 +275,7 @@ public class AchievementsService {
 			achievementList.add(achForm);
 		}
 	}
+
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public List<AchievementFormBean> getPendingAchievements() {
 		UserMaster userMaster = null;
@@ -271,4 +316,48 @@ public class AchievementsService {
 		return pendingList;
 	}
 
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@Transactional(rollbackFor = DAOException.class)
+	public ResponseMessage redeemCoins(RedeemCoinsFormBean redeemCoinsFormBean) {
+
+		try {
+			// Get the user
+			UserMaster user = null;
+			user = userService.getLoggedInUser();
+
+			// Check whether there is enough coins with user
+			long redeemedCoins = redeemCoinsFormBean.getCoins();
+			long userCoins = user.getCoins();
+
+			if (redeemedCoins > userCoins) {
+				LOG.error(" User doesnot have sufficient coins");
+				return new ResponseMessage(ResponseMessage.Type.danger,
+						"You donot have sufficient coins.");
+			}
+			// Get the league user
+			LeagueUser leagueUser = null;
+			leagueUser = leagueService.getLeagueUser(
+					redeemCoinsFormBean.getLeagueId(), user.getUserId());
+
+			BigDecimal redeemedAmount = BigDecimal
+					.valueOf(redeemedCoins
+							* IApplicationConstants.ACHIEVEMENTS_COINS_TO_LEAGUE_AMOUNT_MULTIPLIER);
+
+			// Update league user
+			BigDecimal leagueAmount = leagueUser.getRemainingAmount();
+			leagueUser.setRemainingAmount(leagueAmount.add(redeemedAmount));
+			achievementsDAO.update(leagueUser);
+
+			// Update user master
+			user.setCoins(userCoins - redeemedCoins);
+			achievementsDAO.update(user);
+			return new ResponseMessage(ResponseMessage.Type.success,
+					"The coins have been successfully redeemed against the league.");
+
+		} catch (BaseException e) {
+			LOG.error(e);
+			return new ResponseMessage(ResponseMessage.Type.danger,
+					"There was a technical error while redeeming the coins");
+		}
+	}
 }

@@ -1,0 +1,42 @@
+<div ng-controller="AchievementController">
+    <div class="row">
+            <div class="col-sm-12 page-content">
+                <!-- Page Content Panel -->
+                <div class="panel">
+                <div class="panel-body">
+                     <div class="form-group">
+                         <div class="col-sm-4 control-label">
+                             <label>Total Coins:</label>
+                         </div>
+                         <div class="col-sm-8 control-value">
+                             <label>{{passValuesToDialog.totalCoins}}</label>
+                         </div>
+                     </div>
+
+                     <form class="form-horizontal" name="mainForm" role="form" novalidate>
+                       
+                        <field-wrapper label="Coins" type="text" name="coins" required="true" formmodel="formmodel" formcontrol="formcontrol" validations='[{"validator":"validateSellVolume","event":"validateSellVolume","errorMessage":"You do not have that many coins", "scopeValue":"totalCoins"}]'></field-wrapper>
+
+                       <div class="form-group">
+                            <div class="col-sm-4 control-label">
+                                <label>*League:</label>
+                            </div> 
+                            <div class="col-sm-8"  ng-class="{'has-error': (mainForm.leagueId.$dirty || formcontrol.submitted) && mainForm.leagueId.$invalid}">
+                                <select type="text" ng-required="true" name="leagueId"
+                                ng-options="leagues.leagueId as leagues.name for leagues in passValuesToDialog.leagues | filter:{ locked: 'false' }" class="form-control" ng-model="formmodel.leagueId">
+                                </select>
+                                <div ng-show="mainForm.leagueId.$dirty || formcontrol.submitted">
+                                    <span class="help-block" ng-show = "mainForm.leagueId.$error.required">The field is required</span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" ng-click="perform('redeemCoins')">Redeem</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+    </div>
+</div>

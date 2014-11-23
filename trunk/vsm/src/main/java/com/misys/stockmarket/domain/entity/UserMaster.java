@@ -48,6 +48,9 @@ public class UserMaster extends AuditableEntity implements BaseEntity, Serializa
 	@Column(length = 1)
 	private String gender;
 	
+	@Column (name="coins")
+	private Long coins;
+	
 	public String getGender() {
 		return gender;
 	}
@@ -139,6 +142,14 @@ public class UserMaster extends AuditableEntity implements BaseEntity, Serializa
 
 	public void setVerified(String verified) {
 		this.verified = verified;
+	}
+
+	public Long getCoins() {
+		return coins;
+	}
+
+	public void setCoins(Long coins) {
+		this.coins = coins;
 	}
 
 	@Override
