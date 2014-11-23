@@ -107,11 +107,11 @@ public class AchievementExecutionService {
 	}
 	
 
-	public List<OrderMaster> findDistinctCompanyBuyOrder(UserMaster user) throws AchievementExecutionServiceException
+	public int findDistinctCompanyOrders(UserMaster user) throws AchievementExecutionServiceException
 	{
 		try {
 			return achievementExecutionDAO
-					.findDistinctCompanyBuytOrder(user);
+					.findDistinctCompanytOrders(user);
 		} catch (DAOException e) {
 			LOG.error(e);
 			throw new AchievementExecutionServiceException(e);

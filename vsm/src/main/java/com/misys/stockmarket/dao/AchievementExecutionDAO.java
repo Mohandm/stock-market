@@ -67,14 +67,14 @@ public class AchievementExecutionDAO extends BaseDAO {
 		}
 	}
 
-	public List<OrderMaster> findDistinctCompanyBuytOrder(UserMaster user)throws DAOException
+	public int findDistinctCompanytOrders(UserMaster user)throws DAOException
 	{
 		try {
 			Query q = entityManager
-					.createQuery("select DISTINCT e from OrderMaster e where e.leagueUser.userMaster = ?1 and e.status = ?2");
+					.createQuery("select COUNT(DISTINCT(stock_id)) from OrderMaster e where e.leagueUser.userMaster = ?1 and e.status = ?2");
 			q.setParameter(1, user);
 			q.setParameter(2, IApplicationConstants.ORDER_STATUS_COMPLETED);
-			return (List<OrderMaster>)q.getResultList();
+			return (Integer) q.getSingleResult();
 		} catch (Exception e) {
 			throw new DAOException(e);
 		}

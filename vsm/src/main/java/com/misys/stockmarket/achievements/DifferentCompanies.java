@@ -24,15 +24,14 @@ public class DifferentCompanies extends AbstractAchievement implements
 
 	@Override
 	public int getCompleted(UserMaster userMaster) {
-		int distinctOrderCount = 0;
 		try 
 		{
-			distinctOrderCount = achievementExecutionService.findDistinctCompanyBuyOrder(userMaster).size();
+			return achievementExecutionService.findDistinctCompanyOrders(userMaster);
 		} 
 		catch (AchievementExecutionServiceException e) 
 		{
 			LOG.error(e);
 		}
-		return distinctOrderCount;
+		return 0;
 	}
 }
