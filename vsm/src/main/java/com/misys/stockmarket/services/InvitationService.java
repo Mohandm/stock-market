@@ -1,5 +1,6 @@
 package com.misys.stockmarket.services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.misys.stockmarket.achievements.AchievementFacade;
 import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.dao.InvitationDAO;
 import com.misys.stockmarket.domain.entity.UserInvitation;
@@ -36,6 +38,9 @@ public class InvitationService {
 
 	@Inject
 	private UserService userService;
+
+	@Inject
+	private AchievementFacade achievementFacade;
 
 	public void save(UserInvitation userInvitation)
 			throws InvitationServiceException {
@@ -128,6 +133,12 @@ public class InvitationService {
 			invitation
 					.setAccepted(IApplicationConstants.INVITATION_ACCEPTED_YES);
 			update(invitation);
+
+			// Evaluate achievements
+			List<String> categories = new ArrayList<String>();
+			categories.add("invites");
+			achievementFacade.evaluate(invitation.getReferer(), categories);
+
 		} catch (DBRecordNotFoundException e) {
 			// Just log the errors
 			LOG.error("Unable to find the invitation", e);
