@@ -11,7 +11,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.misys.stockmarket.dao.AchievementExecutionDAO;
+import com.misys.stockmarket.domain.entity.FollowerMaster;
 import com.misys.stockmarket.domain.entity.OrderMaster;
+import com.misys.stockmarket.domain.entity.UserInvitation;
 import com.misys.stockmarket.domain.entity.UserMaster;
 import com.misys.stockmarket.exception.DAOException;
 import com.misys.stockmarket.exception.service.AchievementExecutionServiceException;
@@ -76,5 +78,31 @@ public class AchievementExecutionService {
 		}
 		return orderList;
 	}
+	
+	public List<UserInvitation> findAllAcceptedInvites(UserMaster userMaster)
+			throws AchievementExecutionServiceException {
 
+		List<UserInvitation> followerList = new ArrayList<UserInvitation>();
+		try {
+			followerList = achievementExecutionDAO
+					.findAllAcceptedInvites(userMaster);
+		} catch (DAOException e) {
+			LOG.error(e);
+			throw new AchievementExecutionServiceException(e);
+		}
+		return followerList;
+	}
+	public List<FollowerMaster> findAllFollowers(UserMaster userMaster)
+			throws AchievementExecutionServiceException {
+
+		List<FollowerMaster> followerList = new ArrayList<FollowerMaster>();
+		try {
+			followerList = achievementExecutionDAO
+					.findAllFollowers(userMaster);
+		} catch (DAOException e) {
+			LOG.error(e);
+			throw new AchievementExecutionServiceException(e);
+		}
+		return followerList;
+	}
 }

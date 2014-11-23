@@ -10,7 +10,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.misys.stockmarket.constants.IApplicationConstants;
+import com.misys.stockmarket.domain.entity.FollowerMaster;
 import com.misys.stockmarket.domain.entity.OrderMaster;
+import com.misys.stockmarket.domain.entity.UserInvitation;
 import com.misys.stockmarket.domain.entity.UserMaster;
 import com.misys.stockmarket.exception.DAOException;
 
@@ -65,4 +67,28 @@ public class AchievementExecutionDAO extends BaseDAO {
 		}
 	}
 
+	public List<UserInvitation> findAllAcceptedInvites(UserMaster userMaster)
+			throws DAOException {
+		try {
+			Query q = entityManager
+					.createQuery("select e from UserInvitation e where e.referer = ?1 and e.accepted = ?2");
+			q.setParameter(1, userMaster);
+			q.setParameter(2, IApplicationConstants.INVITATION_ACCEPTED_YES);
+			return (List<UserInvitation>) q.getResultList();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+	}
+
+	public List<FollowerMaster> findAllFollowers(UserMaster userMaster)
+			throws DAOException {
+		try {
+			Query q = entityManager
+					.createQuery("select e from FollowerMaster e where e.playerUserId = ?1 ");
+			q.setParameter(1, userMaster.getUserId());
+			return (List<FollowerMaster>) q.getResultList();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+	}
 }

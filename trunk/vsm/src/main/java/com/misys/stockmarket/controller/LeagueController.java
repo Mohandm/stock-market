@@ -1,5 +1,6 @@
 package com.misys.stockmarket.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.misys.stockmarket.achievements.AchievementFacade;
 import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.domain.entity.LeagueMaster;
 import com.misys.stockmarket.domain.entity.UserMaster;
@@ -48,6 +50,10 @@ public class LeagueController {
 	
 	@Inject
 	AlertsService alertService;
+
+	@Inject
+	private AchievementFacade achievementFacade;
+
 	
 	@RequestMapping(value = "/gameLeaguesList", method = { RequestMethod.GET,
 			RequestMethod.POST })
@@ -133,6 +139,10 @@ public class LeagueController {
 					leagueService.followPlayer(userMaster, playerMaster, leagueMaster);
 					String message = "You have got a follow request from " + userMaster.getFirstName() + ". Please Accept or Reject the request in Followers Screen!"; 
 					alertService.saveUserAlerts(playerMaster, message, IApplicationConstants.ALERT_TYPE_NOTIFICATIONS);
+					// Evaluate achievements
+					List<String> categories = new ArrayList<String>();
+					categories.add("followers");
+					achievementFacade.evaluate(playerMaster, categories);
 					return new ResponseMessage(ResponseMessage.Type.success,"Follow request sent to the Player. You can follow him after he accepts your request!");
 				}
 				else
