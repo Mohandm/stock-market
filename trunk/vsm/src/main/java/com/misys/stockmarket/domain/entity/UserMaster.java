@@ -48,7 +48,7 @@ public class UserMaster extends AuditableEntity implements BaseEntity, Serializa
 	@Column(length = 1)
 	private String gender;
 	
-	@Column (name="coins")
+	@Column (name="COINS")
 	private Long coins;
 	
 	public String getGender() {

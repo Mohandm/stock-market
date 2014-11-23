@@ -1,6 +1,7 @@
 package com.misys.stockmarket.services;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.misys.stockmarket.achievements.AchievementFacade;
 import com.misys.stockmarket.constants.IApplicationConstants;
 import com.misys.stockmarket.dao.LeagueDAO;
 import com.misys.stockmarket.dao.OrderExecutionDAO;
@@ -50,10 +52,13 @@ public class OrderExecutionService {
 
 	@Inject
 	private LeagueService leagueService;
-	
+
 	@Inject
 	private PortfolioService portfolioService;
-	
+
+	@Inject
+	private AchievementFacade achievementFacade;
+
 	public void executeOrders() {
 		List<OrderMaster> pendingOrderList;
 		try {
@@ -85,16 +90,19 @@ public class OrderExecutionService {
 				LeagueUser leagueUser = leagueService
 						.getLeagueUserById(orderMaster.getLeagueUser()
 								.getLeagueUserId());
-				MyPortfolioFormBean portfolioBean = portfolioService.getMyPortfolio(leagueUser.getLeagueMaster().getLeagueId(), 
-						leagueUser.getUserMaster().getUserId());
-				
-				List<StockHoldingFormBean> stockHoldings = portfolioBean.getStockHoldings();
-				
+				MyPortfolioFormBean portfolioBean = portfolioService
+						.getMyPortfolio(leagueUser.getLeagueMaster()
+								.getLeagueId(), leagueUser.getUserMaster()
+								.getUserId());
+
+				List<StockHoldingFormBean> stockHoldings = portfolioBean
+						.getStockHoldings();
+
 				Map<String, StockHoldingFormBean> stockHoldingBySymbolMap = new HashMap<String, StockHoldingFormBean>();
-				
-				for(StockHoldingFormBean stockHolding : stockHoldings)
-				{
-					stockHoldingBySymbolMap.put(stockHolding.getTikerSymbol(), stockHolding);
+
+				for (StockHoldingFormBean stockHolding : stockHoldings) {
+					stockHoldingBySymbolMap.put(stockHolding.getTikerSymbol(),
+							stockHolding);
 				}
 				if (IApplicationConstants.BUY_TYPE
 						.equals(orderMaster.getType())) {
@@ -118,10 +126,11 @@ public class OrderExecutionService {
 								.setStatus(IApplicationConstants.ORDER_STATUS_INSUFFICIENT_FUNDS);
 					}
 				} else {
-					StockHoldingFormBean stockBean = stockHoldingBySymbolMap.get(orderMaster.getStockMaster().getTikerSymbol());
-					if(stockBean != null && 
-							(new BigDecimal(stockBean.getVolume()).compareTo(orderMaster.getVolume()) >= 0))
-					{
+					StockHoldingFormBean stockBean = stockHoldingBySymbolMap
+							.get(orderMaster.getStockMaster().getTikerSymbol());
+					if (stockBean != null
+							&& (new BigDecimal(stockBean.getVolume())
+									.compareTo(orderMaster.getVolume()) >= 0)) {
 						// ADD TO LEAGUE AMOUNT
 						leagueUser.setRemainingAmount(leagueUser
 								.getRemainingAmount().add(executionPrice));
@@ -135,17 +144,24 @@ public class OrderExecutionService {
 						orderDAO.persist(orderExecution);
 						orderMaster
 								.setStatus(IApplicationConstants.ORDER_STATUS_COMPLETED);
-					}
-					else {
+					} else {
 						orderMaster
 								.setStatus(IApplicationConstants.ORDER_STATUS_INSUFFICIENT_VOLUME);
 					}
-					
+
 				}
 				LOG.info("Completed executing the order "
 						+ orderMaster.getOrderId());
 				// Update order master entry
 				orderExecutionDAO.update(orderMaster);
+				// Evaluate achievements
+				List<String> categories = new ArrayList<String>();
+				categories.add("buyOrder");
+				categories.add("sellOrder");
+				categories.add("safeOrders");
+				categories.add("marketOrders");
+				achievementFacade.evaluate(leagueUser.getUserMaster(),
+						categories);
 			} catch (LeagueException e) {
 				LOG.error(e);
 			}
@@ -195,8 +211,7 @@ public class OrderExecutionService {
 			}
 		} else if (IApplicationConstants.ORDER_PRICE_TYPE_STOPLOSS
 				.equals(orderMaster.getPriceType())) {
-			if (IApplicationConstants.SELL_TYPE
-					.equals(orderMaster.getType())) {
+			if (IApplicationConstants.SELL_TYPE.equals(orderMaster.getType())) {
 				if (stockCurrentQuotes.getLastTradePriceOnly().compareTo(
 						orderMaster.getOrderPrice()) <= 0) {
 					isEligible = true;
