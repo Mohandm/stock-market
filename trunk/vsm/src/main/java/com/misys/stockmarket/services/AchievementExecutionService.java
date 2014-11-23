@@ -105,4 +105,16 @@ public class AchievementExecutionService {
 		}
 		return followerList;
 	}
+	
+
+	public List<OrderMaster> findDistinctCompanyBuyOrder(UserMaster user) throws AchievementExecutionServiceException
+	{
+		try {
+			return achievementExecutionDAO
+					.findDistinctCompanyBuytOrder(user);
+		} catch (DAOException e) {
+			LOG.error(e);
+			throw new AchievementExecutionServiceException(e);
+		}
+	}
 }

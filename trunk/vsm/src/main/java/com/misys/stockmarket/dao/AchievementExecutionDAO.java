@@ -67,6 +67,18 @@ public class AchievementExecutionDAO extends BaseDAO {
 		}
 	}
 
+	public List<OrderMaster> findDistinctCompanyBuytOrder(UserMaster user)throws DAOException
+	{
+		try {
+			Query q = entityManager
+					.createQuery("select DISTINCT e from OrderMaster e where e.leagueUser.userMaster = ?1 and e.status = ?2");
+			q.setParameter(1, user);
+			q.setParameter(2, IApplicationConstants.ORDER_STATUS_COMPLETED);
+			return (List<OrderMaster>)q.getResultList();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+	}
 	public List<UserInvitation> findAllAcceptedInvites(UserMaster userMaster)
 			throws DAOException {
 		try {
@@ -91,4 +103,5 @@ public class AchievementExecutionDAO extends BaseDAO {
 			throw new DAOException(e);
 		}
 	}
+	
 }
