@@ -40,11 +40,11 @@
                 this.settings.place = this._defaults.place;
 
             // create element, attention : important tag in size
-            var $template = $("<div>", {id: "floatingShare", class:"styleSwitcher", style:"right:-77px;"});
+            var $template = $("<div>", {id: "floatingShare", class:"styleSwitcher"});
             var $a = $("<a>", {id: "showHideSwitcher"});
             var $script = $("<script>", {});
             $script.append('$(document).ready(function() {$("#showHideSwitcher").click(function(e) {if($(".styleSwitcher").css("right") === "-77px"){$(".styleSwitcher").animate({"right":0},300, "easeOutQuart",function() {});}else{$(".styleSwitcher").animate({"right":-77},300, "easeInQuart",function() {});}e.preventDefault();});});');
-            var $icon = $("<i>", {class: "fa fa-share fa-fw"});
+            var $icon = $("<i>", {class: "fa fa-share-alt fa-fw"});
             var $h1 = $("<h1>", {});
             $h1.append('Share')
             $icon.appendTo($a);
