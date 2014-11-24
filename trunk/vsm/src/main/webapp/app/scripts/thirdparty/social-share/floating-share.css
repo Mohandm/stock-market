@@ -11,8 +11,8 @@
 .styleSwitcher {
     background:rgba(0,0,0,0.25);
     position:fixed;
-    top:30%;
-    right:-77px;
+    top:40%;
+    right:0px;
     z-index:9999;
     width: 75px;
     border-radius: 0px 0px 0px 4px;

@@ -149,9 +149,6 @@
                             <li ng-show="isAuthenticated()">
                                 <a href="#form/userprofile"><i class="fa fa-user fa-fw"></i> User Profile</a>
                             </li>
-                            <li ng-controller="LoginController" ng-show="isAuthenticated()">
-                                <a ng-click="inviteUser()"><i class="fa fa-sign-out fa-fw"></i> Invite Friends</a>
-                            </li>
                             <li>
                                 <a ng-click="startTour()"><i class="fa fa-binoculars fa-fw"></i> Tour</a>
                             </li>
@@ -259,6 +256,11 @@
             </div>
             <div login-dialog ng-view="" ng-class="{animateTransition: animateTransition }"></div>
         </div>
+
+        <div ng-controller="LoginController" class="inviteFriends" ng-show="isAuthenticated()">
+            <a class="invite" ng-click="inviteUser()" popover="Invite Friends" popover-trigger="mouseenter" popover-placement="left"><i class="fa fa-send fa-fw"></i></a>
+        </div>
+
         <!--<div id="footer">
             <div class="container">
                 <p class="text-muted"><i class="fa fa-copyright"></i> Misys 2014 </p>
