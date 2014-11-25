@@ -117,4 +117,18 @@ public class AchievementExecutionService {
 			throw new AchievementExecutionServiceException(e);
 		}
 	}
+
+	public int findSingleDayOrders(UserMaster user) throws AchievementExecutionServiceException
+	{
+		
+		try 
+		{
+			return achievementExecutionDAO
+					.findSingleDayOrders(user);
+		} catch (DAOException e) {
+			LOG.error(e);
+			throw new AchievementExecutionServiceException(e);
+		}
+		
+	}
 }

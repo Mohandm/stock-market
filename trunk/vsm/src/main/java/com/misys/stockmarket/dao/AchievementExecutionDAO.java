@@ -71,7 +71,7 @@ public class AchievementExecutionDAO extends BaseDAO {
 	{
 		try {
 			Query q = entityManager
-					.createQuery("select COUNT(DISTINCT(stock_id)) from OrderMaster e where e.leagueUser.userMaster = ?1 and e.status = ?2");
+					.createQuery("select COUNT(DISTINCT OrderMaster.stockMaster.stockId) from OrderMaster e where e.leagueUser.userMaster = ?1 and e.status = ?2");
 			q.setParameter(1, user);
 			q.setParameter(2, IApplicationConstants.ORDER_STATUS_COMPLETED);
 			return (Integer) q.getSingleResult();
@@ -94,11 +94,26 @@ public class AchievementExecutionDAO extends BaseDAO {
 
 	public List<FollowerMaster> findAllFollowers(UserMaster userMaster)
 			throws DAOException {
-		try {
+		try 
+		{
 			Query q = entityManager
 					.createQuery("select e from FollowerMaster e where e.playerUserId = ?1 ");
 			q.setParameter(1, userMaster.getUserId());
 			return (List<FollowerMaster>) q.getResultList();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+	}
+	
+	public int findSingleDayOrders(UserMaster user) throws DAOException
+	{
+		try 
+		{
+			Query q = entityManager
+					.createQuery("select max(count(OrderMaster.OrderId)) from OrderMaster e where e.leagueUser.userMaster = ?1 and e.status = ?2 group by Date(e.orderDate)");
+			q.setParameter(1, user);
+			q.setParameter(2, IApplicationConstants.ORDER_STATUS_COMPLETED);
+			return (Integer) q.getSingleResult();
 		} catch (Exception e) {
 			throw new DAOException(e);
 		}
