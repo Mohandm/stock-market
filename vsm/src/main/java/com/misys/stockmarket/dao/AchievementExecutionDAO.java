@@ -111,10 +111,14 @@ public class AchievementExecutionDAO extends BaseDAO {
 	public int findSingleDayOrders(UserMaster user) throws DAOException {
 		try {
 			Query q = entityManager
-					.createQuery("select max(count(OrderMaster.OrderId)) from OrderMaster e where e.leagueUser.userMaster = ?1 and e.status = ?2 group by Date(e.orderDate)");
+					.createQuery("select max(count(e.orderId)) from OrderMaster e where e.leagueUser.userMaster = ?1 and e.status = ?2 group by to_date(to_char(e.orderDate, 'DD-MON-YY'), 'DD-MON-YYYY')");
 			q.setParameter(1, user);
 			q.setParameter(2, IApplicationConstants.ORDER_STATUS_COMPLETED);
-			return (Integer) q.getSingleResult();
+			Long count = (Long) q.getSingleResult();
+			if (count == null) {
+				count = 0L;
+			}
+			return count.intValue();
 		} catch (Exception e) {
 			throw new DAOException(e);
 		}
