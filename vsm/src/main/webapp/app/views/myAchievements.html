@@ -3,9 +3,7 @@
 <div>
    	<div class="row blockContainer panel panel-default">
 		<div class="panel-heading">
-	        <h3 class="panel-title">Completed Achievements
-	        	<i ng-repeat="i in getNumber() track by $index"class="fa fa-star-o fa-fw"></i>
-	        </h3>
+	        <h3 class="panel-title">Completed Achievements</h3>
 	    </div>
 	    <div class="panel-body">
 	       <div ng-repeat="achievement in completedAchievements" class="col-md-3">
@@ -16,9 +14,7 @@
 
 	<div class="row blockContainer panel panel-default">
 		<div class="panel-heading">
-	        <h3 class="panel-title">Pending Achievements
-	        	<i ng-repeat="i in getNumber() track by $index"class="fa fa-star-o fa-fw"></i>
-	        </h3>
+	        <h3 class="panel-title">Pending Achievements</h3>
 	    </div>
 	    <div class="panel-body">
 	       <div ng-repeat="achievement in pendingAchievements" class="col-md-3">

@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.misys.stockmarket.domain.entity.UserMaster;
 import com.misys.stockmarket.exception.EmailNotFoundException;
 import com.misys.stockmarket.mbeans.UserFormBean;
+import com.misys.stockmarket.mbeans.UserHomeBean;
 import com.misys.stockmarket.mbeans.UserProfileFormBean;
 import com.misys.stockmarket.platform.web.ResponseMessage;
 import com.misys.stockmarket.security.LoginResponse;
+import com.misys.stockmarket.services.HomeService;
 import com.misys.stockmarket.services.RegistrationService;
 import com.misys.stockmarket.services.UserService;
 
@@ -28,6 +30,9 @@ public class UserController {
 	
 	@Inject
 	private UserService userService;
+	
+	@Inject
+	private HomeService homeService;
 	
 	@Inject
 	private RegistrationService registrationService;
@@ -90,4 +95,10 @@ public class UserController {
 			return userService.getLoggedInUserResponse();
 	}
 
+	@RequestMapping(value = "/getusersnapshot", method = { RequestMethod.GET,
+			RequestMethod.POST, RequestMethod.HEAD })
+	@ResponseBody
+	public UserHomeBean getUserSnapshot() {
+			return homeService.getUserSnapshot();
+	}
 }

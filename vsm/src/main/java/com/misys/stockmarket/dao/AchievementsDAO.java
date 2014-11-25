@@ -56,6 +56,16 @@ public class AchievementsDAO extends BaseDAO {
 		}
 	}
 
+	public List<AchievementRule> findAllAchievementRule() throws DAOException {
+		try {
+			Query q = entityManager
+					.createQuery("select e from AchievementRule e");
+			return q.getResultList();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+	}
+
 	public List<UserAchievement> findAllUserAchievements(UserMaster userMaster,
 			AchievementCategory achievementCategory) throws DAOException {
 		try {

@@ -72,6 +72,12 @@
            needsLogin : true,
            needsTransition : true
        })
+       .when('/userHome', {
+           templateUrl: 'app/views/userHome.html',
+           controller: 'HomeController',
+           needsLogin : true,
+           needsTransition : true
+       })
        .when('/form/:formName', {
             templateUrl: 'app/views/form.html',
             controller: 'FormSelectorController'
