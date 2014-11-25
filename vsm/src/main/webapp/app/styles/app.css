@@ -965,7 +965,7 @@ input[type="text"].ui-grid-filter-input{
 }
 
 .nav-tabs.nav-justified li.active > a{
-    background: rgba(0,0,0,.5);
+    background: rgba(0,0,0,.70);
     color : white;
 }
 
@@ -1033,4 +1033,15 @@ input[type="text"].ui-grid-filter-input{
     color: white;
     border-radius: 8px 0px 0px 8px;
     background: rgba(0,0,0,0.25);
+}
+
+.hint{
+    padding: 0px 15px;
+    font-size: 12px;
+}
+
+.modal-header .close{
+    color: white;
+    font-size: 30px;
+    opacity: 1;
 }

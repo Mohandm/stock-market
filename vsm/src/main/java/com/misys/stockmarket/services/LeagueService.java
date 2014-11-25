@@ -396,6 +396,18 @@ public class LeagueService {
 		return myFollowerFormBeanList;
 	}
 	
+	public Long getMyFollowersCount(UserMaster player, LeagueMaster league) throws LeagueException
+	{
+		Long followersCount = new Long(0);
+		try {
+			followersCount = leagueDAO.getMyFollowersCount(player.getUserId(),league.getLeagueId());
+		} catch (DAOException e) {
+			LOG.error(e);
+			throw new LeagueException(e);
+		}
+		return followersCount;
+	}
+	
 	public List<MyFollowingFormBean> getMyFollowing(UserMaster user, LeagueMaster league) throws LeagueException
 	{
 		List<MyFollowingFormBean> myFollowingFormBeanList = new ArrayList<MyFollowingFormBean>();
@@ -511,6 +523,7 @@ public class LeagueService {
 						.getUserMaster().getUserId()));
 				leaguePlayerFormBean.setName(leagueUser.getUserMaster()
 						.getFirstName());
+				leaguePlayerFormBean.setFollowerCount(getMyFollowersCount(leagueUser.getUserMaster(),leagueUser.getLeagueMaster()).toString());
 				MyPortfolioFormBean myPortfolioFormBean = portfolioService
 						.getMyPortfolio(leaugeId, leagueUser.getUserMaster()
 								.getUserId());

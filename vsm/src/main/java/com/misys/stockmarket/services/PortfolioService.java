@@ -1,6 +1,7 @@
 package com.misys.stockmarket.services;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -110,15 +111,16 @@ public class PortfolioService {
 				}
 			}
 			MyPortfolioFormBean myPortfolioFormBean = new MyPortfolioFormBean();
+			portfolioValue = portfolioValue.setScale(2, RoundingMode.CEILING);
 			myPortfolioFormBean.setPortfolioValue(portfolioValue
 					.toPlainString());
 			// CALCULATE REMAINING CASH BALANCE
 			BigDecimal remainingAmount = leagueUser.getRemainingAmount();
+			remainingAmount = remainingAmount.setScale(2, RoundingMode.CEILING);
 			myPortfolioFormBean.setRemainingBalance(remainingAmount
 					.toPlainString());
 			myPortfolioFormBean.setTotalValue(remainingAmount.add(
-					new BigDecimal(myPortfolioFormBean.getPortfolioValue()))
-					.toPlainString());
+					new BigDecimal(myPortfolioFormBean.getPortfolioValue())).setScale(2, RoundingMode.CEILING).toPlainString());
 			myPortfolioFormBean.getStockHoldings().addAll(
 					stockHoldingFormBeanFinalList);
 			return myPortfolioFormBean;
