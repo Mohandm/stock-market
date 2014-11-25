@@ -142,6 +142,18 @@ public class LeagueDAO extends BaseDAO {
 		}
 	}
 	
+	public Long getMyFollowersCount(long playerId, long leagueId) throws DAOException {
+		try {
+			Query q = entityManager.createQuery("select distinct count(e) from FollowerMaster e where e.leagueMaster.leagueId = ?1 and e.playerUserId = ?2 and e.status = ?3");
+			q.setParameter(1, leagueId);
+			q.setParameter(2, playerId);
+			q.setParameter(3, IApplicationConstants.FOLLOWER_STATUS_ACCEPTED);
+			return (Long) q.getSingleResult();
+		} catch (Exception e) {
+			throw new DAOException(e);
+		}
+	}
+	
 	public List<FollowerMaster> findYourFollowing(long userId, long leagueId) throws DAOException {
 		try {
 			Query q = entityManager.createQuery("select distinct e from FollowerMaster e where e.leagueMaster.leagueId = ?1 and e.followerUserMaster.userId = ?2 and e.status = ?3");

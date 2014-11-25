@@ -21,7 +21,12 @@ vsmApp.service('DialogService', function($compile, $http, $rootScope, $templateC
             childScope.passValuesToDialog = options.passValuesToDialog;
 
 	        $('body').append($compile(template)(childScope));
-	        $('#dialogModal').modal();
+	        $('#dialogModal').modal(
+                {
+                    keyboard: false,
+                    backdrop: 'static'
+                }
+            );
 
 
             $('#dialogModal').on('shown.bs.modal', function (e) {
