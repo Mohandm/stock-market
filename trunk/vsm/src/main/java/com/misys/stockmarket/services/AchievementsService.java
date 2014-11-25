@@ -174,6 +174,18 @@ public class AchievementsService {
 		}
 		return userAchievements;
 	}
+	
+	public List<AchievementRule> findAllAchievementRule() {
+		List<AchievementRule> userAchievements = new ArrayList<AchievementRule>();
+		try {
+			userAchievements = achievementsDAO
+					.findAllAchievementRule();
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return userAchievements;
+	}
 
 	public List<UserAchievement> getUnpublishedAchievements(
 			UserMaster userMaster) {

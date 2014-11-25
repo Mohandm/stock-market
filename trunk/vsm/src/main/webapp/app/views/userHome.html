@@ -1,0 +1,76 @@
+<top-header title="User Dashboard" titledescription="Consolidated details for user"></top-header>
+
+<div class="row blockContainer">
+   	<div class = "col-md-4">
+	   	<div class="panel panel-default">
+			<div class="panel-heading">
+		        <h3 class="panel-title">
+		        	My Profile
+		        	<a href="#form/userprofile" class="pull-right"><i class="fa fa-edit fa-fw"></i></a>
+		        </h3>
+		    </div>
+		    <div class="panel-body">
+		    	<div class="row"><label>Email:</label> {{user.email}} </div>
+				<div class="row"><label>Name:</label> {{user.firstName}}  {{user.lastName}}</div>
+				<div class="row"><label>Achievement Coins:</label> {{user.coins}}</div>
+		    </div>
+	    </div>
+	</div>
+	<div class = "col-md-4">
+	   	<div class="panel panel-default">
+			<div class="panel-heading">
+		        <h3 class="panel-title">
+		        	My Achievements
+		        	<a href="#myAchievements" class="pull-right"><i class="fa fa-search-plus fa-fw"></i></a>
+		        </h3>
+		    </div>
+		    <div class="panel-body">
+		       	<div class="row"><label>Completed:</label> {{user.completedAchievements}}</div>
+				<div class="row"><label>Pending:</label> {{user.pendingAchievements}}</div>
+				<div class="row"><label>Total:</label> {{user.totalAchievements}}</div>
+		    </div>
+	    </div>
+	</div>
+	<div class = "col-md-4">
+	   	<div class="panel panel-default">
+			<div class="panel-heading">
+		        <h3 class="panel-title">
+		        	My Network
+		        	<a href="#followers" class="pull-right"><i class="fa fa-search-plus fa-fw"></i></a>
+		        </h3>
+		    </div>
+		    <div class="panel-body">
+		       	<div class="row"><label>Followers:</label> {{user.followers}}</div>
+				<div class="row"><label>Following:</label> {{user.following}}</div>
+				<div class="row"><label>Accepted Invites:</label> {{user.acceptedInvites}}</div>
+		    </div>
+	    </div>
+	</div>
+</div>
+<div class="row blockContainer">
+   	<div class = "col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+		        <h3 class="panel-title">My Leagues
+					<a href="#myDashboard" class="pull-right"><i class="fa fa-search-plus fa-fw"></i></a>
+		        </h3>
+		    </div>
+		    <div class="panel-body">
+		       	<div ng-repeat="league in user.leagues">
+		      	<div ng-class="leagueclass">
+		    		<div class="panel panel-default">
+						<div class="panel-heading">
+					        <h3 class="panel-title">{{league.name}}</h3>
+					    </div>
+					    <div class="panel-body">
+					       	<div class="row"><label>Rank:</label> {{league.rank}} / {{league.totalPlayers}}</div>
+							<div class="row"><label>Portfolio Value:</label> <i class="fa fa-usd fa-fw"/>{{league.portfolioValue}}</div>
+							<div class="row"><label>Cash Balance:</label> <i class="fa fa-usd fa-fw"/>{{league.remainingBalance}}</div>
+							<div class="row"><label>Total Value:</label> <i class="fa fa-usd fa-fw"/>{{league.totalValue}}</div>
+					    </div>
+				    </div>
+		    	</div>
+		    </div>
+	    </div>
+    </div>
+</div>
