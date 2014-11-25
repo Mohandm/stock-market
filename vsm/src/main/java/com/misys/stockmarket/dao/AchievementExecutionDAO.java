@@ -67,18 +67,22 @@ public class AchievementExecutionDAO extends BaseDAO {
 		}
 	}
 
-	public int findDistinctCompanytOrders(UserMaster user)throws DAOException
-	{
+	public int findDistinctCompanytOrders(UserMaster user) throws DAOException {
 		try {
 			Query q = entityManager
-					.createQuery("select COUNT(DISTINCT OrderMaster.stockMaster.stockId) from OrderMaster e where e.leagueUser.userMaster = ?1 and e.status = ?2");
+					.createQuery("select COUNT(DISTINCT e.stockMaster.stockId) from OrderMaster e where e.leagueUser.userMaster = ?1 and e.status = ?2");
 			q.setParameter(1, user);
 			q.setParameter(2, IApplicationConstants.ORDER_STATUS_COMPLETED);
-			return (Integer) q.getSingleResult();
+			Long count = (Long) q.getSingleResult();
+			if (count == null) {
+				count = 0L;
+			}
+			return count.intValue();
 		} catch (Exception e) {
 			throw new DAOException(e);
 		}
 	}
+
 	public List<UserInvitation> findAllAcceptedInvites(UserMaster userMaster)
 			throws DAOException {
 		try {
@@ -94,8 +98,7 @@ public class AchievementExecutionDAO extends BaseDAO {
 
 	public List<FollowerMaster> findAllFollowers(UserMaster userMaster)
 			throws DAOException {
-		try 
-		{
+		try {
 			Query q = entityManager
 					.createQuery("select e from FollowerMaster e where e.playerUserId = ?1 ");
 			q.setParameter(1, userMaster.getUserId());
@@ -104,11 +107,9 @@ public class AchievementExecutionDAO extends BaseDAO {
 			throw new DAOException(e);
 		}
 	}
-	
-	public int findSingleDayOrders(UserMaster user) throws DAOException
-	{
-		try 
-		{
+
+	public int findSingleDayOrders(UserMaster user) throws DAOException {
+		try {
 			Query q = entityManager
 					.createQuery("select max(count(OrderMaster.OrderId)) from OrderMaster e where e.leagueUser.userMaster = ?1 and e.status = ?2 group by Date(e.orderDate)");
 			q.setParameter(1, user);
@@ -118,5 +119,5 @@ public class AchievementExecutionDAO extends BaseDAO {
 			throw new DAOException(e);
 		}
 	}
-	
+
 }
