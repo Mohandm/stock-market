@@ -1045,3 +1045,6 @@ input[type="text"].ui-grid-filter-input{
     font-size: 30px;
     opacity: 1;
 }
+.achievementDialog{
+    margin : 10px;
+}
