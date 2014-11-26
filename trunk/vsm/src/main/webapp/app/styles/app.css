@@ -1006,6 +1006,9 @@ input[type="text"].ui-grid-filter-input{
 }
 .downloadApps img{
     width : 200px;
+    margin: 10px;
+    border: 1px solid white;
+    border-radius: 8px;
 }
 .downloadApps{
     margin: 15px 0px;
