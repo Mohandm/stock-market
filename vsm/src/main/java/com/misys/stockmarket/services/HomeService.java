@@ -55,8 +55,9 @@ public class HomeService {
 		bean.setEmail(user.getEmail());
 		bean.setFirstName(user.getFirstName());
 		bean.setLastName(user.getLastName());
-		bean.setCoins(user.getCoins());
-
+		if (user.getCoins()!=null) {
+			bean.setCoins(user.getCoins());
+		}
 		int completedAchievements = achievementsService
 				.getCompletedAchievements(user).size();
 		int totalAchievements = achievementsService.findAllAchievementRule()

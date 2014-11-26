@@ -134,7 +134,7 @@
         });
     });
     
-    vsmApp.run(function ($rootScope,$http, AlertsService, $location,TourService, AuthService, AUTH_EVENTS,$timeout) {
+    vsmApp.run(function ($rootScope,$http, AlertsService, $location,TourService, AuthService, AUTH_EVENTS,$timeout, AchievementService) {
 
         FastClick.attach(document.body);
 
