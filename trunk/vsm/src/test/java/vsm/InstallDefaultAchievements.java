@@ -117,7 +117,7 @@ public class InstallDefaultAchievements {
 		buyRule.setAchievementCategory(buyOrder);
 		buyRule.setLevel(3);
 		buyRule.setQuantity(Long.valueOf(100));
-		buyRule.setCoins(Long.valueOf(400));
+		buyRule.setCoins(Long.valueOf(500));
 		buyRule.setDescription("Complete 100 buy orders");
 		achievementsService.addRule(buyRule);
 
@@ -126,7 +126,7 @@ public class InstallDefaultAchievements {
 		buyRule.setAchievementCategory(buyOrder);
 		buyRule.setLevel(4);
 		buyRule.setQuantity(Long.valueOf(1000));
-		buyRule.setCoins(Long.valueOf(800));
+		buyRule.setCoins(Long.valueOf(1000));
 		buyRule.setDescription("Complete 1000 buy orders");
 		achievementsService.addRule(buyRule);
 
@@ -135,7 +135,7 @@ public class InstallDefaultAchievements {
 		buyRule.setAchievementCategory(buyOrder);
 		buyRule.setLevel(5);
 		buyRule.setQuantity(Long.valueOf(10000));
-		buyRule.setCoins(Long.valueOf(1600));
+		buyRule.setCoins(Long.valueOf(2000));
 		buyRule.setDescription("Complete 10000 buy orders");
 		achievementsService.addRule(buyRule);
 	}
@@ -174,7 +174,7 @@ public class InstallDefaultAchievements {
 		rule.setAchievementCategory(category);
 		rule.setLevel(3);
 		rule.setQuantity(Long.valueOf(20));
-		rule.setCoins(Long.valueOf(400));
+		rule.setCoins(Long.valueOf(500));
 		rule.setDescription("Hold stocks of 20 different companies");
 		achievementsService.addRule(rule);
 
@@ -183,7 +183,7 @@ public class InstallDefaultAchievements {
 		rule.setAchievementCategory(category);
 		rule.setLevel(4);
 		rule.setQuantity(Long.valueOf(50));
-		rule.setCoins(Long.valueOf(800));
+		rule.setCoins(Long.valueOf(1000));
 		rule.setDescription("Hold stocks of 50 different companies");
 		achievementsService.addRule(rule);
 
@@ -192,7 +192,7 @@ public class InstallDefaultAchievements {
 		rule.setAchievementCategory(category);
 		rule.setLevel(5);
 		rule.setQuantity(Long.valueOf(100));
-		rule.setCoins(Long.valueOf(1600));
+		rule.setCoins(Long.valueOf(2500));
 		rule.setDescription("Hold stocks of 100 different companies");
 		achievementsService.addRule(rule);
 	}
@@ -230,7 +230,7 @@ public class InstallDefaultAchievements {
 		rule.setAchievementCategory(category);
 		rule.setLevel(3);
 		rule.setQuantity(Long.valueOf(20));
-		rule.setCoins(Long.valueOf(400));
+		rule.setCoins(Long.valueOf(500));
 		rule.setDescription("Invite 20 friends");
 		achievementsService.addRule(rule);
 
@@ -239,7 +239,7 @@ public class InstallDefaultAchievements {
 		rule.setAchievementCategory(category);
 		rule.setLevel(4);
 		rule.setQuantity(Long.valueOf(50));
-		rule.setCoins(Long.valueOf(800));
+		rule.setCoins(Long.valueOf(1000));
 		rule.setDescription("Invite 50 friends");
 		achievementsService.addRule(rule);
 
@@ -248,7 +248,7 @@ public class InstallDefaultAchievements {
 		rule.setAchievementCategory(category);
 		rule.setLevel(5);
 		rule.setQuantity(Long.valueOf(100));
-		rule.setCoins(Long.valueOf(1600));
+		rule.setCoins(Long.valueOf(2000));
 		rule.setDescription("Invite 100 friends");
 		achievementsService.addRule(rule);
 	}
@@ -286,7 +286,7 @@ public class InstallDefaultAchievements {
 		rule.setAchievementCategory(category);
 		rule.setLevel(3);
 		rule.setQuantity(Long.valueOf(20));
-		rule.setCoins(Long.valueOf(400));
+		rule.setCoins(Long.valueOf(500));
 		rule.setDescription("Have 20 followers");
 		achievementsService.addRule(rule);
 
@@ -295,7 +295,7 @@ public class InstallDefaultAchievements {
 		rule.setAchievementCategory(category);
 		rule.setLevel(4);
 		rule.setQuantity(Long.valueOf(50));
-		rule.setCoins(Long.valueOf(800));
+		rule.setCoins(Long.valueOf(1000));
 		rule.setDescription("Have 50 followers");
 		achievementsService.addRule(rule);
 
@@ -304,7 +304,7 @@ public class InstallDefaultAchievements {
 		rule.setAchievementCategory(category);
 		rule.setLevel(5);
 		rule.setQuantity(Long.valueOf(100));
-		rule.setCoins(Long.valueOf(1600));
+		rule.setCoins(Long.valueOf(2000));
 		rule.setDescription("Have 100 followers");
 		achievementsService.addRule(rule);
 	}
@@ -324,7 +324,7 @@ public class InstallDefaultAchievements {
 		// Level 1
 		rule.setLevel(1);
 		rule.setQuantity(Long.valueOf(10));
-		rule.setCoins(Long.valueOf(100));
+		rule.setCoins(Long.valueOf(600));
 		rule.setDescription("Complete 10 orders in a single day");
 		achievementsService.addRule(rule);
 
@@ -334,7 +334,7 @@ public class InstallDefaultAchievements {
 		rule.setAchievementCategory(category);
 		rule.setLevel(2);
 		rule.setQuantity(Long.valueOf(25));
-		rule.setCoins(Long.valueOf(200));
+		rule.setCoins(Long.valueOf(1000));
 		rule.setDescription("Complete 25 orders in a single day");
 		achievementsService.addRule(rule);
 
@@ -343,7 +343,7 @@ public class InstallDefaultAchievements {
 		rule.setAchievementCategory(category);
 		rule.setLevel(3);
 		rule.setQuantity(Long.valueOf(50));
-		rule.setCoins(Long.valueOf(400));
+		rule.setCoins(Long.valueOf(1500));
 		rule.setDescription("Complete 50 orders in a single day");
 		achievementsService.addRule(rule);
 
@@ -352,7 +352,7 @@ public class InstallDefaultAchievements {
 		rule.setAchievementCategory(category);
 		rule.setLevel(4);
 		rule.setQuantity(Long.valueOf(100));
-		rule.setCoins(Long.valueOf(800));
+		rule.setCoins(Long.valueOf(2500));
 		rule.setDescription("Complete 100 orders in a single day");
 		achievementsService.addRule(rule);
 
@@ -361,7 +361,7 @@ public class InstallDefaultAchievements {
 		rule.setAchievementCategory(category);
 		rule.setLevel(5);
 		rule.setQuantity(Long.valueOf(500));
-		rule.setCoins(Long.valueOf(1600));
+		rule.setCoins(Long.valueOf(4000));
 		rule.setDescription("Complete 500 orders in a single day");
 		achievementsService.addRule(rule);
 	}
@@ -399,7 +399,7 @@ public class InstallDefaultAchievements {
 		sellRule.setAchievementCategory(sellOrder);
 		sellRule.setLevel(3);
 		sellRule.setQuantity(Long.valueOf(100));
-		sellRule.setCoins(Long.valueOf(400));
+		sellRule.setCoins(Long.valueOf(500));
 		sellRule.setDescription("Complete 100 sell orders");
 		achievementsService.addRule(sellRule);
 
@@ -408,7 +408,7 @@ public class InstallDefaultAchievements {
 		sellRule.setAchievementCategory(sellOrder);
 		sellRule.setLevel(4);
 		sellRule.setQuantity(Long.valueOf(1000));
-		sellRule.setCoins(Long.valueOf(800));
+		sellRule.setCoins(Long.valueOf(1000));
 		sellRule.setDescription("Complete 1000 sell orders");
 		achievementsService.addRule(sellRule);
 
@@ -417,7 +417,7 @@ public class InstallDefaultAchievements {
 		sellRule.setAchievementCategory(sellOrder);
 		sellRule.setLevel(5);
 		sellRule.setQuantity(Long.valueOf(10000));
-		sellRule.setCoins(Long.valueOf(1600));
+		sellRule.setCoins(Long.valueOf(2000));
 		sellRule.setDescription("Complete 10000 sell orders");
 		achievementsService.addRule(sellRule);
 	}
@@ -436,7 +436,7 @@ public class InstallDefaultAchievements {
 		// Level 1
 		rule.setLevel(1);
 		rule.setQuantity(Long.valueOf(10));
-		rule.setCoins(Long.valueOf(100));
+		rule.setCoins(Long.valueOf(200));
 		rule.setDescription("Complete 10 limit/stoploss orders");
 		achievementsService.addRule(rule);
 
@@ -446,7 +446,7 @@ public class InstallDefaultAchievements {
 		rule.setAchievementCategory(category);
 		rule.setLevel(2);
 		rule.setQuantity(Long.valueOf(50));
-		rule.setCoins(Long.valueOf(200));
+		rule.setCoins(Long.valueOf(500));
 		rule.setDescription("Complete 50 limit/stoploss orders");
 		achievementsService.addRule(rule);
 
@@ -455,7 +455,7 @@ public class InstallDefaultAchievements {
 		rule.setAchievementCategory(category);
 		rule.setLevel(3);
 		rule.setQuantity(Long.valueOf(100));
-		rule.setCoins(Long.valueOf(400));
+		rule.setCoins(Long.valueOf(1000));
 		rule.setDescription("Complete 100 limit/stoploss orders");
 		achievementsService.addRule(rule);
 
@@ -464,7 +464,7 @@ public class InstallDefaultAchievements {
 		rule.setAchievementCategory(category);
 		rule.setLevel(4);
 		rule.setQuantity(Long.valueOf(1000));
-		rule.setCoins(Long.valueOf(800));
+		rule.setCoins(Long.valueOf(1500));
 		rule.setDescription("Complete 1000 limit/stoploss orders");
 		achievementsService.addRule(rule);
 
@@ -473,7 +473,7 @@ public class InstallDefaultAchievements {
 		rule.setAchievementCategory(category);
 		rule.setLevel(5);
 		rule.setQuantity(Long.valueOf(10000));
-		rule.setCoins(Long.valueOf(1600));
+		rule.setCoins(Long.valueOf(2000));
 		rule.setDescription("Complete 10000 safe(limit/stoploss) orders");
 		achievementsService.addRule(rule);
 	}
@@ -492,7 +492,7 @@ public class InstallDefaultAchievements {
 		// Level 1
 		rule.setLevel(1);
 		rule.setQuantity(Long.valueOf(10));
-		rule.setCoins(Long.valueOf(100));
+		rule.setCoins(Long.valueOf(200));
 		rule.setDescription("Complete 10 orders at market price");
 		achievementsService.addRule(rule);
 
@@ -502,7 +502,7 @@ public class InstallDefaultAchievements {
 		rule.setAchievementCategory(category);
 		rule.setLevel(2);
 		rule.setQuantity(Long.valueOf(50));
-		rule.setCoins(Long.valueOf(200));
+		rule.setCoins(Long.valueOf(500));
 		rule.setDescription("Complete 50 orders at market price");
 		achievementsService.addRule(rule);
 
@@ -511,7 +511,7 @@ public class InstallDefaultAchievements {
 		rule.setAchievementCategory(category);
 		rule.setLevel(3);
 		rule.setQuantity(Long.valueOf(100));
-		rule.setCoins(Long.valueOf(400));
+		rule.setCoins(Long.valueOf(1000));
 		rule.setDescription("Complete 100 orders at market price");
 		achievementsService.addRule(rule);
 
@@ -520,7 +520,7 @@ public class InstallDefaultAchievements {
 		rule.setAchievementCategory(category);
 		rule.setLevel(4);
 		rule.setQuantity(Long.valueOf(1000));
-		rule.setCoins(Long.valueOf(800));
+		rule.setCoins(Long.valueOf(1500));
 		rule.setDescription("Complete 1000 orders at market price");
 		achievementsService.addRule(rule);
 
@@ -529,7 +529,7 @@ public class InstallDefaultAchievements {
 		rule.setAchievementCategory(category);
 		rule.setLevel(5);
 		rule.setQuantity(Long.valueOf(10000));
-		rule.setCoins(Long.valueOf(1600));
+		rule.setCoins(Long.valueOf(2500));
 		rule.setDescription("Complete 10000 orders at market price");
 		achievementsService.addRule(rule);
 	}

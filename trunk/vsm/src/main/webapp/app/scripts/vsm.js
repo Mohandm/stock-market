@@ -135,6 +135,9 @@
     });
     
     vsmApp.run(function ($rootScope,$http, AlertsService, $location,TourService, AuthService, AUTH_EVENTS,$timeout) {
+
+        FastClick.attach(document.body);
+
         //make current message accessible to root scope and therefore all scopes
         $rootScope.message = function () {
             return message;
