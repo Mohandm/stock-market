@@ -182,10 +182,11 @@ public class OrderExecutionService {
 						.getStockId());
 		if (IApplicationConstants.ORDER_PRICE_TYPE_MARKET.equals(orderMaster
 				.getPriceType())) {
-			if (stockCurrentQuotes.getUpdatedTimeStamp().after(
-					orderMaster.getOrderDate())) {
+			// TODO: Changed for demo need to revert back later
+			/*if (stockCurrentQuotes.getUpdatedTimeStamp().after(
+					orderMaster.getOrderDate())) {*/
 				isEligible = true;
-			}
+			//}
 		} else if (IApplicationConstants.ORDER_PRICE_TYPE_LIMIT
 				.equals(orderMaster.getPriceType())) {
 			if (stockCurrentQuotes.getUpdatedTimeStamp().after(

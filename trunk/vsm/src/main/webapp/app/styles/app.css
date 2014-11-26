@@ -1051,3 +1051,6 @@ input[type="text"].ui-grid-filter-input{
 .achievementDialog{
     margin : 10px;
 }
+.tour-tour{
+    background: rgba(62,109,146,1);
+}
