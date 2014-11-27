@@ -201,17 +201,26 @@
             }
         };
 
-        $rootScope.startTour = function(){
-            var steps = TourService.getCurrentPageSetup();
+        $rootScope.endTour = false;
 
-            $rootScope.tour = new Tour({
-                steps: steps,
-                storage : false
-            });
-            // Initialize the tour
-            $rootScope.tour.init();
+        $rootScope.startTour = function(forceStart){
+            if(!$rootScope.endTour || forceStart)
+            {
+                var steps = TourService.getCurrentPageSetup();
 
-            $rootScope.tour.start(true);
+                $rootScope.tour = new Tour({
+                    steps: steps,
+                    storage : false,
+                    orphan : true,
+                    onEnd: function(){
+                        $rootScope.endTour = true;
+                    }
+                });
+                // Initialize the tour
+                $rootScope.tour.init();
+
+                $rootScope.tour.start(true);
+            }
         };
 
         $rootScope.setTheme = function(theme){
@@ -272,10 +281,13 @@
         $rootScope.$on(AUTH_EVENTS.logoutSuccess, setLogoutMessage);
 
         $rootScope.$on('$routeChangeStart', function(event, currRoute, prevRoute){
-            if($rootScope.tour)
+            if($rootScope.tour && $rootScope.tour._state && !$rootScope.tour._state.end)
             {
+
                 $rootScope.tour.end();
+                $rootScope.endTour = false;
             }
+
             // Sync the session with the server side and show login modal dialog if required
             AuthService.syncSession().then(function () {
                 // If user is not logged in and the route needs login show the modal dialog
