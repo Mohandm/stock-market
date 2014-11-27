@@ -313,7 +313,7 @@ public class InstallDefaultAchievements {
 			AchievementsService achievementsService)
 			throws AchievementServiceException {
 		AchievementCategory category = new AchievementCategory();
-		category.setName("singleDayOrder");
+		category.setName("singleDayOrders");
 		category.setAlias("Busy Day");
 		achievementsService.addCategory(category);
 

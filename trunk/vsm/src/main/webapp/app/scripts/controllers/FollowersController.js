@@ -95,7 +95,7 @@ vsmApp.controller('FollowersController', ['$scope', '$rootScope','LeaguesService
         };
 
         $scope.accept = function(item){
-            console.debug("Accept");
+
             var actionUrl = 'acceptFollowRequest';
             actionUrl = $rootScope.getFinalURL(actionUrl);
             $http.post(actionUrl,{"userId" : item.userId, "leagueId" : $scope.myLeagueSelected.leagueId}).success(function (response) {
@@ -107,7 +107,7 @@ vsmApp.controller('FollowersController', ['$scope', '$rootScope','LeaguesService
         };
 
         $scope.reject = function(item){
-            console.debug("Reject");
+
             var actionUrl = 'rejectFollowRequest';
             actionUrl = $rootScope.getFinalURL(actionUrl);
             $http.post(actionUrl,{"userId" : item.userId, "leagueId" : $scope.myLeagueSelected.leagueId}).success(function (response) {
@@ -118,7 +118,7 @@ vsmApp.controller('FollowersController', ['$scope', '$rootScope','LeaguesService
         };
 
         $scope.disallow = function(item){
-            console.debug("Disallow");
+
             var actionUrl = 'disallowFollowRequest';
             actionUrl = $rootScope.getFinalURL(actionUrl);
             $http.post(actionUrl,{"userId" : item.userId, "leagueId" : $scope.myLeagueSelected.leagueId}).success(function (response) {
@@ -129,7 +129,7 @@ vsmApp.controller('FollowersController', ['$scope', '$rootScope','LeaguesService
         };
 
         $scope.stopFollowing = function(item){
-            console.debug("StopFollowing");
+
             var actionUrl = 'stopFollowingRequest';
             actionUrl = $rootScope.getFinalURL(actionUrl);
             $http.post(actionUrl,{"userId" : item.userId, "leagueId" : $scope.allLeagueSelected.leagueId}).success(function (response) {

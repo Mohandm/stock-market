@@ -34,12 +34,12 @@ angular.module('vsmApp')
         .success(function (res) {
           Session.destroy();
           $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
-          $location.path('#/');
+          $location.path('/');
         })
         .error(function (res) {
          Session.destroy();
          $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
-         $location.path('#/');
+         $location.path('/');
       });
   };
 

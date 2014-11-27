@@ -10,13 +10,13 @@ vsmApp.controller('ActionController', ['$scope','$http','$routeParams','$locatio
 		   	value = $routeParams.value;
             var actionUrl = $rootScope.getFinalURL(actionCode);
 		    $http.post(actionUrl+"/"+value).success(function (metaResponseBody) {
-				$location.path('#/');
+				$location.path('/');
 		   	}); 
 		}
 		else {
             var actionUrl = $rootScope.getFinalURL(actionCode);
 			 $http.post(actionUrl).success(function (metaResponseBody) {
-				$location.path('#/');
+				$location.path('/');
 		   	}); 
 		}
 	}
