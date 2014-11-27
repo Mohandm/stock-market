@@ -115,7 +115,7 @@
                     };
                 }
                 // Clear messages after some time
-                $timeout(function(){message = {show: false};}, 5000);
+                $timeout(function(){message = {show: false};}, 8000);
             };
             return function (promise) {
                 return promise.then(
