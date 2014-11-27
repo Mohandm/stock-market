@@ -6,6 +6,7 @@ vsmApp.controller('ChartsController', ['$scope', '$rootScope', '$log', 'ChartSer
         //Add this to all page controllers
         $rootScope.onPageLoad();
         TourService.setupTour('chart');
+        $rootScope.startTour();
 
         var stockListsPromise = StockQuotesService.getStockLists();
         stockListsPromise.then(function(data){

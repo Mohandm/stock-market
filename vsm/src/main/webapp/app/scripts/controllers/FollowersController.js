@@ -8,6 +8,7 @@ vsmApp.controller('FollowersController', ['$scope', '$rootScope','LeaguesService
         //Add this to all page controllers
         $rootScope.onPageLoad();
         TourService.setupTour('followers');
+        $rootScope.startTour();
 
         LeaguesService.getGameLeagues().then(function(data){
             var arrayMyLeagues = [];

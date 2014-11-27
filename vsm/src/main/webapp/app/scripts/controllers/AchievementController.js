@@ -3,6 +3,13 @@ var vsmApp = angular.module('vsmApp');
 vsmApp.controller('AchievementController', ['$scope', '$rootScope', 'modals','AchievementService','TourService','$timeout','$http',
     function ($scope, $rootScope, modals, AchievementService, TourService, $timeout, $http) {
 
+        $scope.$scope = $scope;
+
+        //Add this to all page controllers
+        $rootScope.onPageLoad();
+        TourService.setupTour('achievements');
+        $rootScope.startTour();
+
         $scope.formmodel = {};
         $scope.formcontrol = {};
         $scope.unpublishedAchievements = AchievementService.getUnpublishedAchievementsForUser();

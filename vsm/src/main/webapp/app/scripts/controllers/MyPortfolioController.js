@@ -13,6 +13,7 @@ vsmApp.controller('MyPortfolioController', ['$scope', '$rootScope', '$log', 'Sto
     //Add this to all page controllers
     $rootScope.onPageLoad(floatingShareOptions);
     TourService.setupTour('myPortfolio');
+    $rootScope.startTour();
 
     StockQuotesService.getMyLeagues().then(function(data){
 

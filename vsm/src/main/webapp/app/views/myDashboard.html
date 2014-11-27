@@ -3,7 +3,7 @@
 <div class="row blockContainer leagues-dashboard" id="leagueLeaguesBoard">
     <tabset justified="true">
         <tab select="selectLeague(leagueList1)">
-            <tab-heading class="leagues-lock-text-1 league-1">
+            <tab-heading class="leagues-lock-text-1 league-1" id="premierLeagueLeaguesBoard">
                 {{leagueList1.name}} League - <i class="fa fa-star fa-fw"></i>
                 <span ng-if="leagueList1.locked === 'true'" class="pull-right"><i class="fa fa-lock fa-fw"></i></span>
                 <span ng-if="leagueList1.locked !== 'true'" class="pull-right"><i class="fa fa-unlock fa-fw"></i></span>
@@ -167,7 +167,7 @@
             </div>
         </tab>
         <tab select="selectLeague(leagueList2)">
-            <tab-heading class="leagues-lock-text-2 league-2">
+            <tab-heading class="leagues-lock-text-2 league-2" id="championsLeagueLeaguesBoard">
                 {{leagueList2.name}} League - <i class="fa fa-trophy fa-fw"></i>
                 <span ng-if="leagueList2.locked === 'true'" class="pull-right"><i class="fa fa-lock fa-fw"></i></span>
                 <span ng-if="leagueList2.locked !== 'true'" class="pull-right"><i class="fa fa-unlock fa-fw"></i></span>
@@ -283,7 +283,7 @@
 
         </tab>
         <tab select="selectLeague(leagueList3)">
-            <tab-heading class="leagues-lock-text-3 league-3">
+            <tab-heading class="leagues-lock-text-3 league-3" id="legendLeagueLeaguesBoard">
                 {{leagueList3.name}} League - <i class="fa fa-flag-checkered fa-fw"></i>
                 <span ng-if="leagueList3.locked === 'true'" class="pull-right"><i class="fa fa-lock fa-fw"></i></span>
                 <span ng-if="leagueList3.locked !== 'true'" class="pull-right"><i class="fa fa-unlock fa-fw"></i></span>

@@ -8,6 +8,7 @@ vsmApp.controller('LeaderBoardController', ['$scope', '$rootScope', 'modals','Le
         //Add this to all page controllers
         $rootScope.onPageLoad();
         TourService.setupTour('leaderBoard');
+        $rootScope.startTour();
 
         $scope.league1 = {};
         $scope.league2 = {};

@@ -8,6 +8,7 @@ vsmApp.controller('MyDashboardController', ['$scope', '$rootScope', 'modals','Le
         //Add this to all page controllers
         $rootScope.onPageLoad();
         TourService.setupTour('leagues');
+        $rootScope.startTour();
 
         $scope.leagueList1 = {};
         $scope.leagueList2 = {};
