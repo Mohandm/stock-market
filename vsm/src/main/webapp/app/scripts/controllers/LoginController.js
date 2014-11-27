@@ -23,10 +23,7 @@ angular.module('vsmApp')
   };
 
   $scope.logout = function (){
-    AuthService.logout().then(function () {
-      $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
-      $location.path('#/');
-    })
+    AuthService.logout();
   };
 
   var setError = function () {
