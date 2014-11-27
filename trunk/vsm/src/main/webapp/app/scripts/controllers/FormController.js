@@ -68,7 +68,7 @@ angular.module('vsmApp')
         $scope.perform = function(action){
             if (action === 'cancel') {
                 modals.close();
-                $location.path('/'); 
+                $location.path('#/');
             }
             else {
                 if ($scope.mainForm.$invalid) {
@@ -90,7 +90,7 @@ angular.module('vsmApp')
                             });
                         }
                         modals.close();
-                        $location.path('/');
+                        $location.path('#/');
                     });
                 }
             }

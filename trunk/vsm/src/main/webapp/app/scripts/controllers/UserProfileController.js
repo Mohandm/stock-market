@@ -57,7 +57,7 @@ vsmApp.controller('UserProfileController', ['$scope', '$location','$http','$rout
         $scope.perform = function(action){
             if (action === 'cancel') {
                 modals.close();
-                $location.path('/');
+                $location.path('#/');
             }
             else {
                 if ($scope.mainForm.$invalid) {
@@ -78,7 +78,7 @@ vsmApp.controller('UserProfileController', ['$scope', '$location','$http','$rout
                             });
                         }
                         modals.close();
-                        $location.path('/');
+                        $location.path('#/');
                     });
                 }
             }
