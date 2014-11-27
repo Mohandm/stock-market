@@ -13,10 +13,10 @@ angular.module('vsmApp')
         $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
         if(angular.isDefined($scope.closeDialog)){
           modals.close();
-          $location.path('/userHome');
+          $location.path('#/userHome');
         }
         else {
-          $location.path('/userHome');
+          $location.path('#/userHome');
         }
       })
     }
@@ -25,7 +25,7 @@ angular.module('vsmApp')
   $scope.logout = function (){
     AuthService.logout().then(function () {
       $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
-      $location.path('/'); 
+      $location.path('#/');
     })
   };
 
