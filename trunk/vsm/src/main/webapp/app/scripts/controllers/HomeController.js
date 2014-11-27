@@ -2,6 +2,14 @@ var vsmApp = angular.module('vsmApp');
 
 vsmApp.controller('HomeController', ['$scope', '$rootScope', 'modals','AlertsService','TourService','$http',
     function ($scope, $rootScope, modals, AlertsService, TourService,$http) {
+
+        $scope.$scope = $scope;
+
+        //Add this to all page controllers
+        $rootScope.onPageLoad();
+        TourService.setupTour('userhome');
+        $rootScope.startTour();
+
         $scope.user = {};
         var actionUrl = 'getusersnapshot/';
             actionUrl = $rootScope.getFinalURL(actionUrl);

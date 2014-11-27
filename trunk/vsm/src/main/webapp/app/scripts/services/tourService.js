@@ -66,7 +66,7 @@ vsmApp.service('TourService', ['$http','$rootScope', function ($http, $rootScope
         {
             element: "#leagueLeaderBoard",
             title: "Leader Board",
-            content: "This is a Ranking Board which lists the Leagues and their corresponding Top 10 Ranked players. " +
+            content: "This is a Ranking Board which lists the Leagues and their corresponding Top 12 Ranked players. " +
                 "You can follow these players to get insights of what they are trading to be successful.",
             placement: "top"
         },
@@ -93,59 +93,12 @@ vsmApp.service('TourService', ['$http','$rootScope', function ($http, $rootScope
         {
             element: "#viewChampionsLeagueLeaderBoard",
             title: "Champions of League",
-            content: "Click here and view Champions corresponding Leagues.",
+            content: "Click here and view Champions corresponding to Leagues.",
             placement: "bottom"
-        }
-    ];
-
-    var leagues = [
-        {
-            element: "#leagueLeaguesBoard",
-            title: "Leagues",
-            content: "Unlock Leagues and view the Players under every League and start following them.",
-            placement: "top"
-        },
-        {
-            element: "#premierLeagueLeaguesBoard",
-            title: "Premier League",
-            content: "This is the starter league. Play this league and become a champion and you can unlock the next league to play with the " +
-                "Champions.",
-            placement: "bottom"
-        },
-        {
-            element: "#championsLeagueLeaguesBoard",
-            title: "Champions League",
-            content: "This is the mid league. Play this league and become a champion and you can unlock the next league to play with the " +
-                "Legends.",
-            placement: "bottom"
-        },
-        {
-            element: "#legendLeagueLeaguesBoard",
-            title: "Legends League",
-            content: "This is the Ultimate league for the Legends of Stock Market.",
-            placement: "bottom"
-        },
-        {
-            element: "#unlockLeagueLeaguesBoard",
-            title: "Unlock Leagues",
-            content: "Click here and learn how to unlock a League.",
-            placement: "top"
-        },
-        {
-            element: "#viewListUsersLeagueLeaguesBoard",
-            title: "Players of League",
-            content: "Click here and view Players corresponding Leagues.",
-            placement: "top"
         }
     ];
 
     var myPortfolio = [
-        {
-            element: "#selectLeagueMyPortfolio",
-            title: "Select Portfolio (League)",
-            content: "Select a portfolio for a league and start trading and increase your Portfolio Value and essentially the Total League Value",
-            placement: "bottom"
-        },
         {
             element: "#portfolioSummaryMyPortfolio",
             title: "Summary of Portfolio",
@@ -180,8 +133,16 @@ vsmApp.service('TourService', ['$http','$rootScope', function ($http, $rootScope
             content: "Select a stock and start watching the stock for price changes by setting a Higher Limit and Lower Limit. " +
                 "When the limit has been reached, you will be notified with a email and also a user notification in the top menu, .",
             placement: "top"
+        },
+        {
+            title: "Leader Board",
+            content: "Next lets see where you stand in the rankings!"
+        },
+        {
+            path: "#/leaderBoard"
         }
     ];
+
 
     var alerts = [
         {
@@ -207,6 +168,92 @@ vsmApp.service('TourService', ['$http','$rootScope', function ($http, $rootScope
         }
     ];
 
+    var leagues = [
+        {
+            element: "#leagueLeaguesBoard",
+            title: "Leagues",
+            content: "Unlock Leagues and view the Players under every League and start following them.",
+            placement: "top"
+        },
+        {
+            element: "#premierLeagueLeaguesBoard",
+            title: "Premier League",
+            content: "This is the starter league. Play this league and become a champion and you can unlock the next league to play with the " +
+                "Champions.",
+            placement: "bottom"
+        },
+        {
+            element: "#championsLeagueLeaguesBoard",
+            title: "Champions League",
+            content: "This is the mid league. Play this league and become a champion and you can unlock the next league to play with the " +
+                "Legends.",
+            placement: "bottom"
+        },
+        {
+            element: "#legendLeagueLeaguesBoard",
+            title: "Legends League",
+            content: "This is the Ultimate league for the Legends of Stock Market.",
+            placement: "bottom"
+        },
+        {
+            element: "#viewListUsersLeagueLeaguesBoard1",
+            title: "Players of League",
+            content: "Click here and view Players corresponding Leagues.",
+            placement: "top"
+        },
+        {
+            element: "#stockHoldingsMyPortfolio1",
+            title: "Stock Holdings",
+            content: "List of all your current Stocks that are in your Portfolio. You can sell them " +
+                "by clicking on the 'sell' button for a corresponding stocks",
+            placement: "top"
+        },
+        {
+            element: "#stockListsMyPortfolio1",
+            title: "Current Stock Lists",
+            content: "List of all the current stocks available to be bought. Click on 'buy' to make a trade.",
+            placement: "top"
+        },
+        {
+            element: "#recentTradesMyPortfolio1",
+            title: "Recent Trades",
+            content: "Your recent trades are listed here according to the date.",
+            placement: "top"
+        },
+        {
+            title: "Achievements",
+            content: "Check out your achievements completed and points you have won!"
+        },
+        {
+            path: "#/myAchievements"
+        }
+
+    ];
+
+    var userhome = [
+        {
+            title: "Welcome",
+            content: "Welcome to Misys Stock Market League. Take a tour of the game by clicking next and moving from one screen to another!Lets start by unlocking leagues and trade stocks!"
+        },
+        {
+           path: "#/myDashboard"
+        }
+    ];
+
+    var achievements = [
+        {
+            title: "Achievements",
+            content: "Complete the tasks or missions and win coins to make more money and win!"
+        },
+        {
+            title: "Watch Stocks",
+            content: "Next lets start Watching stocks to value changes and make profitable trades!"
+        },
+        {
+            path: "#/watchList"
+        }
+    ]
+
     var tourOptions = {
         'dashboard' : dashboard,
         'chart' : chart,
@@ -215,10 +262,12 @@ vsmApp.service('TourService', ['$http','$rootScope', function ($http, $rootScope
         'myPortfolio' : myPortfolio,
         'watchList' : watchList,
         'alerts' : alerts,
-        'followers' : followers
+        'followers' : followers,
+        'userhome' : userhome,
+        'achievements' : achievements
     };
 
-    var currentPage = 'dashboard';
+    var currentPage;
 
     this.setupTour = function(page){
         currentPage = page;

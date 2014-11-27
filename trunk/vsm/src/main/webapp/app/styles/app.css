@@ -19,6 +19,7 @@ body > .page-container {
 
 a{
     color : white;
+    cursor: pointer;
 }
 
 a:hover, a:focus{
@@ -1038,6 +1039,30 @@ input[type="text"].ui-grid-filter-input{
     background: rgba(0,0,0,0.25);
 }
 
+.tourGame{
+    background: rgba(0,0,0,0.25);
+    position: fixed;
+    top: 20%;
+    right: 0px;
+    z-index: 9999;
+    width: 75px;
+    border-radius: 0px 0px 0px 4px;
+}
+.tourGame .tourLink{
+    outline: none;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    right: 0px;
+    top: 0;
+    font-size: 24px;
+    text-align: center;
+    line-height: 50px;
+    color: white;
+    border-radius: 8px 0px 0px 8px;
+    background: rgba(0,0,0,0.25);
+}
+
 .hint{
     padding: 0px 15px;
     font-size: 12px;
@@ -1053,4 +1078,11 @@ input[type="text"].ui-grid-filter-input{
 }
 .tour-tour{
     background: rgba(62,109,146,1);
+}
+.redeemCoins{
+    font-weight: bold;
+}
+.popover[class*=tour-].orphan{
+    margin-top: 50px !important;
+    top: 0px !important;
 }

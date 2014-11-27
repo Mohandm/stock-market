@@ -8,6 +8,7 @@ vsmApp.controller('WatchListController', ['$scope', '$rootScope', 'StockQuotesSe
     //Add this to all page controllers
     $rootScope.onPageLoad();
     TourService.setupTour('watchList');
+    $rootScope.startTour();
 
     $scope.stockListGridOptions = {
         enableSorting: true,

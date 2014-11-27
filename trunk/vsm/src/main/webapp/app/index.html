@@ -149,10 +149,6 @@
                             <li ng-show="isAuthenticated()">
                                 <a href="#form/userprofile"><i class="fa fa-user fa-fw"></i> User Profile</a>
                             </li>
-                            <li>
-                                <a ng-click="startTour()"><i class="fa fa-binoculars fa-fw"></i> Tour</a>
-                            </li>
-                            <li class="divider"></li>
                             <li ng-controller="LoginController" ng-show="isAuthenticated()">
                                 <a ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                             </li>
@@ -265,6 +261,10 @@
 
         <div ng-controller="LoginController" class="inviteFriends" ng-show="isAuthenticated()">
             <a class="invite" ng-click="inviteUser()" popover="Invite Friends" popover-trigger="mouseenter" popover-placement="left"><i class="fa fa-send fa-fw"></i></a>
+        </div>
+
+        <div class="tourGame">
+            <a class="tourLink" ng-click="startTour(true)" popover="Tour the Game" popover-trigger="mouseenter" popover-placement="left"><i class="fa fa-binoculars fa-fw"></i></a>
         </div>
 
         <!--<div id="footer">
