@@ -93,7 +93,7 @@ vsmApp.controller('LeaguesDialogController', ['$scope','$http','modals','$locati
                     action = $rootScope.getFinalURL(action);
                     $http.post(action, {leagueId : $scope.formmodel.leagueId}).success(function (response) {
                         modals.close();
-                        $location.path('#/myPortfolio');
+                        $location.path('/myPortfolio');
                     });
                 }
                 else

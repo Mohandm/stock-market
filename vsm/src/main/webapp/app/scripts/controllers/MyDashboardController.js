@@ -120,7 +120,7 @@ vsmApp.controller('MyDashboardController', ['$scope', '$rootScope', 'modals','Le
 
                 var stockListData = [];
                 $($scope.stockLists).each(function(index,item){
-                    console.debug(item.stockId);
+
                     stockListData.push({tikerSymbol : item.tikerSymbol, name : item.name, lastTradePrice : quotes[item.stockId].lastTradePriceOnly});
                 });
                 $scope.stockListGridOptions1.data = stockListData;

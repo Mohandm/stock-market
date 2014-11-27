@@ -160,6 +160,8 @@ public class OrderExecutionService {
 				categories.add("sellOrder");
 				categories.add("safeOrders");
 				categories.add("marketOrders");
+				categories.add("differentCompanies");
+				categories.add("singleDayOrders");
 				achievementFacade.evaluate(leagueUser.getUserMaster(),
 						categories);
 			} catch (LeagueException e) {
