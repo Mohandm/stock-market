@@ -14,7 +14,7 @@ angular.module('vsmApp')
 });
 
 angular.module('vsmApp')
-  .factory('AuthService', function ($http, Session, $rootScope, $q) {
+  .factory('AuthService', function ($http, Session, $rootScope, $q, $location, AUTH_EVENTS) {
   var authService = {};
  
   authService.login = function (credentials) {
@@ -29,9 +29,17 @@ angular.module('vsmApp')
   authService.logout = function () {
     var actionUrl = 'j_spring_security_logout';
     actionUrl = $rootScope.getFinalURL(actionUrl);
-    return $http.post(actionUrl, {})
-      .then(function (res) {   
-        Session.destroy();
+      /*TODO - Bipin : Logout is not working fine after deploying CORS*/
+    $http.post(actionUrl, {})
+        .success(function (res) {
+          Session.destroy();
+          $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
+          $location.path('#/');
+        })
+        .error(function (res) {
+         Session.destroy();
+         $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
+         $location.path('#/');
       });
   };
 
