@@ -20,6 +20,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
         'bower_components/jquery/dist/jquery.js',
+        'app/scripts/thirdparty/fastclick.js',
       'bower_components/angular/angular.js',
     'bower_components/json3/lib/json3.js',
       'bower_components/angular-mocks/angular-mocks.js',
